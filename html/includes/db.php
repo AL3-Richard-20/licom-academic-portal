@@ -8,11 +8,11 @@
     }
 
     // ============== Error Handlers ==================
-    error_reporting(E_ALL);
+    // error_reporting(E_ALL);
     // ============== Error Handlers END ==============
 
 
-    $appname = "App Name";
+    $appname = "LICOM Academic Portal";
     $author  = "AL3 Web Solutions";
     $website = "";
 
@@ -37,7 +37,7 @@
 
             $db_user = "root";
             $db_pass = "";
-            $db_name = "test";
+            $db_name = "licom";
         }
         else{
 
@@ -54,7 +54,6 @@
         foreach($db as $key => $value){
             
             define(strtoupper($key), $value);
-            
         }
         
         $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
