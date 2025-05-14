@@ -213,7 +213,8 @@
                                                 echo "<td class='text-center'>
                                                     <button 
                                                         type='button' 
-                                                        class='btn btn-outline-light btn-sm text-primary'>
+                                                        class='btn btn-outline-light btn-sm text-primary' 
+                                                        onclick='location.href=`student_info.php?studid=".$user_Id."`;'>
                                                         <span class='fa fa-pencil-alt'></span>
                                                     </button>
                                                     <button 

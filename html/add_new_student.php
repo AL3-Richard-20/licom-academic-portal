@@ -231,8 +231,8 @@
                                                 id="sex" 
                                                 required>
                                                 <option value="" selected disabled>Select sex here</option>
-                                                <option value="Single">Male</option>
-                                                <option value="Married">Female</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
