@@ -53,6 +53,7 @@
                     'LName' => $lname,       
                     'Suffix' => $suffix,      
                     'BDate' => dateFormat($bdate),       
+                    'BDate2' => $bdate,       
                     'CivilStat' => $civil_stat,  
                     'Sex' => $sex,         
                     'Nationality' => $nationality, 
@@ -74,6 +75,52 @@
             }
 
             echo json_encode($results_arr);
+        }
+
+        else if($_POST['action'] == 'edit_personal_info'){
+
+            if(isset($_POST['userid'])){
+
+                $user_Id = $_POST['userid'];
+
+                $fname       = $_POST['e_fname'];
+                $mname       = $_POST['e_mname'];
+                $lname       = $_POST['e_lname'];
+                $suffix      = $_POST['e_suffix'];
+                $bdate       = $_POST['e_bdate'];
+                $civil_stat  = $_POST['e_civil_status'];
+                $sex         = $_POST['e_sex'];
+                $nationality = $_POST['e_nationality'];
+
+                $data1   = [
+                    "FName" => $fname,
+                    "MName" => $mname,
+                    "LName" => $lname,
+                    "Suffix" => $suffix,
+                    "Birthdate" => $bdate,
+                    "Civil_status" => $civil_stat,
+                    "Sex" => $sex,
+                    "Nationality" => $nationality,
+                    "Last_update" => $server_date
+                ];
+                $where1  = [ "User_Id" => $user_Id ];
+                $update1 = update($users, $data1, $where1);
+
+                if($update1 == 1){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+            }
+            else{
+
+                $res_req = 3;
+            }
+
+            echo json_encode($res_req);
         }
     }
 
