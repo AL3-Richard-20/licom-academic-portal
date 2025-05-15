@@ -214,9 +214,8 @@
                                                 <button 
                                                     type="button" 
                                                     class="btn btn-outline-light" 
-                                                    title="Edit Information"
-                                                    data-toggle="modal" 
-                                                    data-target="#editInfo1Mod">
+                                                    title="Edit Information" 
+                                                    onclick="editPersonalInfo()">
                                                     <span class="fa fa-pencil-alt text-primary"></span>
                                                 </button>
                                             </div>
@@ -242,6 +241,7 @@
                                                     <tr>
                                                         <td class="font-weight-bold">Birthdate:</td>
                                                         <td id="bdate_txt">---</td>
+                                                        <input type="hidden" id="bdate_txt_val">
                                                     </tr>
                                                     <tr>
                                                         <td class="font-weight-bold">Civil Status:</td>
@@ -261,7 +261,7 @@
                                             <!-- ================ Edit Personal Information ============== -->
                                                 <div class="modal fade" id="editInfo1Mod" tabindex="-1" role="dialog" aria-labelledby="editInfo1Mod" aria-hidden="true">
 
-                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-dialog modal-lg" role="document">
 
                                                         <form method="POST" id="editInfo1Form">
 
@@ -275,7 +275,109 @@
                                                                 </div>
 
                                                                 <div class="modal-body">
-                                                                    Body
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-3">
+                                                                            <div class="form-group">
+                                                                                <p><b>First Name: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_fname" 
+                                                                                    id="e_fname"
+                                                                                    placeholder="Input first name here" 
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-3">
+                                                                            <div class="form-group">
+                                                                                <p><b>Middle Name: <small>(Optional)</small></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_mname" 
+                                                                                    id="e_mname"
+                                                                                    placeholder="Input middle name here">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-3">
+                                                                            <div class="form-group">
+                                                                                <p><b>Last Name: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_lname" 
+                                                                                    id="e_lname"
+                                                                                    placeholder="Input last name here" 
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-3">
+                                                                            <div class="form-group">
+                                                                                <p><b>Suffix: <small>(Optional)</small></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_suffix" 
+                                                                                    id="e_suffix"
+                                                                                    placeholder="Input suffix here (e.g. Jr. III)">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Birthdate: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="date" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_bdate" 
+                                                                                    id="e_bdate" 
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Civil Status: <span class="text-danger">(*)</span></b></p>
+                                                                                <select 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_civil_status" 
+                                                                                    id="e_civil_status">
+                                                                                    <option value="" selected disabled>Select civil status here</option>
+                                                                                    <option value="Single">Single</option>
+                                                                                    <option value="Married">Married</option>
+                                                                                    <option value="Widowed">Widowed</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Sex: <span class="text-danger">(*)</span></b></p>
+                                                                                <select 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_sex" 
+                                                                                    id="e_sex">
+                                                                                    <option value="" selected disabled>Select sex here</option>
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Nationality: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_nationality" 
+                                                                                    id="e_nationality" 
+                                                                                    placeholder="Input nationality here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                                 </div>
 
                                                                 <div class="modal-footer">
@@ -305,6 +407,17 @@
                                         </div>
 
                                         <div class="tab-pane container fade" id="menu2"><br>
+
+                                            <div class="text-right">
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-outline-light" 
+                                                    title="Edit Contact Information"
+                                                    data-toggle="modal" 
+                                                    data-target="#editInfo1Mod">
+                                                    <span class="fa fa-pencil-alt text-primary"></span>
+                                                </button>
+                                            </div>
 
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
@@ -451,6 +564,40 @@
             $(document).ready(function () {
                 
                 fetchStudentInfo()
+
+                $('#editInfo1Form').on('submit', function(aa){
+
+                    aa.preventDefault()
+
+                    var data = $('#editInfo1Form').serializeArray()
+
+                    data.push(
+                        { name:'action', value:'edit_personal_info' },
+                        { name:'userid', value:student_Id }
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/UserModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                fetchStudentInfo()
+
+                                $('#editInfo1Mod').modal('hide')
+
+                                toastr.success('You changed student information', 'Successfully Updated')
+                            }
+                            else if(response == 2 || response == 3){
+
+                                toastr.error('Something went wrong', 'Please contact your developer')
+                            }
+                        }
+                    });
+                })
             })
 
             function fetchStudentInfo(){
@@ -475,6 +622,7 @@
                             $('#lname_txt').html(value.LName)
                             $('#suffix_txt').html(value.Suffix)
                             $('#bdate_txt').html(value.BDate)
+                            $('#bdate_txt_val').val(value.BDate2)
                             $('#civil_stat_txt').html(value.CivilStat)
                             $('#sex_txt').html(value.Sex)
                             $('#nationality_txt').html(value.Nationality)
@@ -491,6 +639,29 @@
                         })
                     }
                 })
+            }
+
+            function editPersonalInfo(){
+
+                $('#editInfo1Mod').modal('show')
+
+                var fname       = $('#fname_txt').text()
+                var mname       = $('#mname_txt').text()
+                var lname       = $('#lname_txt').text()
+                var suffix      = $('#suffix_txt').text()
+                var bdate       = $('#bdate_txt_val').val()
+                var civil_stat  = $('#civil_stat_txt').text()
+                var sex         = $('#sex_txt').text()
+                var nationality = $('#nationality_txt').text()
+
+                $('#e_fname').val(fname)
+                $('#e_mname').val(mname)
+                $('#e_lname').val(lname)
+                $('#e_suffix').val(suffix)
+                $('#e_bdate').val(bdate)
+                $('#e_civil_status').val(civil_stat)
+                $('#e_sex').val(sex)
+                $('#e_nationality').val(nationality)
             }
 
         </script>
