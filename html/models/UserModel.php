@@ -47,6 +47,8 @@
                 $time_added   = $row['Time_added'];
                 $last_update  = $row['Last_update'];
 
+                $account_stat = $row['Status'];
+
                 $result_arr = array(
                     'FName' => $fname,       
                     'MName' => $mname,       
@@ -69,6 +71,7 @@
                     'DateAdded' => dateFormat($date_added),   
                     'TimeAdded' => timeFormat($time_added),   
                     'LastUpdate' => dateFormat($last_update),  
+                    'Status' => $account_stat
                 );
 
                 array_push($results_arr, $result_arr);
@@ -118,6 +121,70 @@
             else{
 
                 $res_req = 3;
+            }
+
+            echo json_encode($res_req);
+        }
+
+        else if($_POST['action'] == 'edit_contact_info'){
+
+            $user_Id        = $_POST['userid'];
+            $email          = $_POST['e_email'];
+            $phone_no       = $_POST['e_phoneno'];
+            $address        = $_POST['e_address'];
+            $guardian       = $_POST['e_guardian'];
+            $relationship   = $_POST['e_relationship'];
+            $occupation     = $_POST['e_occupation'];
+            $g_email        = $_POST['e_g_email'];
+            $g_phone_no     = $_POST['e_g_phoneno'];
+            $g_address      = $_POST['e_g_address'];
+
+            $data1   = [
+                "Email" => $email,
+                "Phone_no" => $phone_no,
+                "Address" => $address,
+                "Guardian" => $guardian,
+                "G_relation" => $relationship,
+                "G_contactno" => $g_phone_no,
+                "G_email" => $g_email,
+                "G_occupation" => $occupation,
+                "G_address" => $g_address,
+                "Last_update" => $server_date
+            ];
+            $where1  = [ "User_Id" => $user_Id ];
+            $update1 = update($users, $data1, $where1);
+
+            if($update1){
+
+                $res_req = 1;
+            }
+            else{
+
+                $res_req = 2;
+            }
+
+            echo json_encode($res_req);
+        }
+
+        else if($_POST['action'] == 'set_as_inactive'){
+
+            $user_Id = $_POST['userid'];
+            $status  = $_POST['statusval'];
+
+            $data1   = [ 
+                "Status" => $status,
+                "Last_update" => $server_date 
+            ];
+            $where1  = [ "User_Id" => $user_Id ];
+            $update1 = update($users, $data1, $where1);
+
+            if($update1 == 1){
+
+                $res_req = 1;
+            }
+            else{
+
+                $res_req = 2;
             }
 
             echo json_encode($res_req);
