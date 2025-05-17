@@ -491,13 +491,19 @@
 
                             if(response == 1){
 
-                                toastr.success('You added a new student', 'Successfully Added')
+                                // toastr.success('You added a new student', 'Successfully Added')
+
+                                swal("SAVED SUCCESSFULLY", "You added a new student", "success")
+                                .then((isConfirm) => {
+
+                                    if (isConfirm) { location.href='students.php' }
+                                }) 
                                 
-                                setTimeout(function(){
+                                // setTimeout(function(){
 
-                                    location.href='students.php'
+                                //     location.href='students.php'
 
-                                }, 2000)
+                                // }, 2000)
                             }
                             else if(response == 2 || response == 3){
 

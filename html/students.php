@@ -209,7 +209,17 @@
                                                 echo "<td>".$phone_no."</td>";
                                                 echo "<td>".dateFormat($date_added)."</td>";
                                                 echo "<td>".timeFormat($time_added)."</td>";
-                                                echo "<td>".$status."</td>";
+
+                                                if($status == 1){
+
+                                                    $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
+                                                }
+                                                else if($status == 2){
+
+                                                    $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
+                                                }
+
+                                                echo "<td>".$status_txt."</td>";
                                                 echo "<td class='text-center'>
                                                     <button 
                                                         type='button' 
@@ -217,14 +227,15 @@
                                                         onclick='location.href=`student_info.php?studid=".$user_Id."`;'>
                                                         <span class='fa fa-pencil-alt'></span>
                                                     </button>
-                                                    <button 
-                                                        type='button' 
-                                                        class='btn btn-outline-light btn-sm text-danger'>
-                                                        <span class='fa fa-trash'></span>
-                                                    </button>
                                                 </td>";
                                                 echo "</tr>";
                                             }
+                                        }
+                                        else{
+
+                                            echo "<tr>";
+                                            echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
+                                            echo "</tr>";
                                         }
                                     ?>
 

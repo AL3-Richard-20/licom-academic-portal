@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2025 at 11:00 AM
+-- Generation Time: May 17, 2025 at 04:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,10 +31,19 @@ CREATE TABLE `accounts` (
   `Account_Id` int(11) NOT NULL,
   `Level_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
+  `Username` varchar(255) DEFAULT NULL,
+  `Password` text NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Password`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 3, 5, 'C20255', 'student123', '2025-05-17', '09:58:35', 1);
 
 -- --------------------------------------------------------
 
@@ -213,6 +222,7 @@ CREATE TABLE `users` (
   `FName` varchar(255) NOT NULL,
   `MName` varchar(255) DEFAULT NULL,
   `LName` varchar(255) NOT NULL,
+  `Suffix` varchar(255) DEFAULT NULL,
   `Birthdate` date DEFAULT NULL,
   `Civil_status` varchar(255) DEFAULT NULL,
   `Sex` varchar(255) DEFAULT NULL,
@@ -222,7 +232,7 @@ CREATE TABLE `users` (
   `Address` varchar(255) DEFAULT NULL,
   `Guardian` varchar(255) DEFAULT NULL,
   `G_relation` varchar(255) DEFAULT NULL,
-  `G_contactno` int(11) DEFAULT NULL,
+  `G_contactno` varchar(255) DEFAULT NULL,
   `G_email` varchar(255) DEFAULT NULL,
   `G_occupation` varchar(255) DEFAULT NULL,
   `G_address` varchar(255) DEFAULT NULL,
@@ -236,8 +246,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
-(4, 'Richard del', 'Sanidad', 'Altre', '1998-12-20', 'Single', 'Single', 'Filipno/Spanish', 'monterorichard09@gmail.com', '09631753678', 'Masipag, GMA, Cavite, 4117', 'Aurelia Altre', 'Mother', 2147483647, 'aurelia.altre@gmail.com', 'Business Owner', 'Masipag, GMA, Cavite, 4117', '2025-05-12', '11:08:06', '2025-05-12', 1);
+INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
+(4, 'Richard del', 'Sanidad', 'Altre', '', '1998-12-20', 'Single', 'Male', 'Filipno/Spanish', 'monterorichard09@gmail.com', '09631753678', 'Masipag, GMA, Cavite, 4117', 'Aurelia Altre', 'Mother', '09095218573', 'aurelia.altre@gmail.com', 'Business Owner', 'Masipag, GMA, Cavite, 4117', '2025-05-12', '11:08:06', '2025-05-17', 0),
+(5, 'Richard del', 'Sanidad', 'Altre', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite, Blk 21, Lot, B.Pulido', 'Aurelia Altre', 'Mother', '09095218573', 'aurelia.sanidadaltre@gmail', 'Business Owner', 'GMA, Cavite, Blk 21, Lot, B.Pulido', '2025-05-17', '09:58:35', '2025-05-17', 1);
 
 --
 -- Indexes for dumped tables
@@ -323,7 +334,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class_schedules`
@@ -389,7 +400,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

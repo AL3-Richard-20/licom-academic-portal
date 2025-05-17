@@ -41,6 +41,9 @@
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-solid.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fontawesome.min.css"> -->
 
+        <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+
 
         <title><?= $appname ?></title>
 
@@ -153,11 +156,13 @@
                                 <div class="col-lg-4">
                                     <div class="text-center">
                                         <h1 style="font-size:100px;"><span class="fa fa-user"></span></h1>
-                                        <h4 class="font-weight-bold mb-4">Full name</h4>
+                                        <h4 class="font-weight-bold mb-4" id="user_fullname_txt">Full name</h4>
                                         <button 
                                             type="button" 
-                                            class="btn btn-primary btn-sm font-weight-bold text-uppercase">
-                                            Set as Inactive
+                                            class="btn btn-primary btn-sm font-weight-bold text-uppercase" 
+                                            accstat="0"
+                                            id="status_change_btn">
+                                            <span id="status_change_txt">Set as Inactive</span>
                                         </button>
                                     </div>
                                     <table class="table table-sm mt-4">
@@ -169,6 +174,10 @@
                                             <tr>
                                                 <td class="font-weight-bold">Last Updated:</td>
                                                 <td id="last_update_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Status:</td>
+                                                <td id="acc_stat_txt">---</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -413,8 +422,8 @@
                                                     type="button" 
                                                     class="btn btn-outline-light" 
                                                     title="Edit Contact Information"
-                                                    data-toggle="modal" 
-                                                    data-target="#editInfo1Mod">
+                                                    data-toggle="tooltip" 
+                                                    onclick="editContactInfo()">
                                                     <span class="fa fa-pencil-alt text-primary"></span>
                                                 </button>
                                             </div>
@@ -459,18 +468,192 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+
+                                            <!-- ================ Edit Contact Information ============== -->
+                                                <div class="modal fade" id="editInfo2Mod" tabindex="-1" role="dialog" aria-labelledby="editInfo1Mod" aria-hidden="true">
+
+                                                    <div class="modal-dialog modal-lg" role="document">
+
+                                                        <form method="POST" id="editInfo2Form">
+
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title font-weight-bold text-uppercase">Edit Contact Information</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+
+                                                                <div class="modal-body">
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Email: <small>(Optional)</small></b></p>
+                                                                                <input 
+                                                                                    type="email" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_email" 
+                                                                                    id="e_email"
+                                                                                    placeholder="Input email here">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Phone No.: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="number" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_phoneno" 
+                                                                                    id="e_phoneno"
+                                                                                    placeholder="Input phone number here" 
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Address: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_address" 
+                                                                                    id="e_address"
+                                                                                    placeholder="Input address here" 
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <hr>
+
+                                                                    <h6 class="font-weight-bold text-uppercase">Guardian Information</h6>
+
+                                                                    <br>
+
+                                                                    <div class="row">
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Guardian: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_guardian" 
+                                                                                    id="e_guardian" 
+                                                                                    placeholder="Input guardian here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Relationship: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_relationship" 
+                                                                                    id="e_relationship" 
+                                                                                    placeholder="Input relationship here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Occupation: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_occupation" 
+                                                                                    id="e_occupation" 
+                                                                                    placeholder="Input occupation here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Email: <small>(Optional)</small></b></p>
+                                                                                <input 
+                                                                                    type="email" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_g_email" 
+                                                                                    id="e_g_email" 
+                                                                                    placeholder="Input email here">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Phone No.: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="number" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_g_phoneno" 
+                                                                                    id="e_g_phoneno" 
+                                                                                    placeholder="Input phone number here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <p><b>Address: <span class="text-danger">(*)</span></b></p>
+                                                                                <input 
+                                                                                    type="text" 
+                                                                                    class="form-control form-control-sm" 
+                                                                                    name="e_g_address" 
+                                                                                    id="e_g_address" 
+                                                                                    placeholder="Input address here"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button 
+                                                                        type="submit" 
+                                                                        class="btn btn-success font-weight-bold text-uppercase">
+                                                                        <span class="fa fa-check"></span>
+                                                                        Save
+                                                                    </button>
+                                                                    <button 
+                                                                        type="button" 
+                                                                        class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                                                        data-dismiss="modal">
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+                                            <!-- ================ Edit Personal Information END ========== -->
                                         </div>
 
                                         <div class="tab-pane container fade" id="menu3"><br>
+
+                                            <!-- <div class="text-right">
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-outline-light" 
+                                                    title="Edit Account Information"
+                                                    data-toggle="tooltip" 
+                                                    onclick="editAccountInfo()">
+                                                    <span class="fa fa-pencil-alt text-primary"></span>
+                                                </button>
+                                            </div> -->
+
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
                                                     <tr>
                                                         <td class="font-weight-bold">Username:</td>
-                                                        <td>---</td>
+                                                        <td id="username_txt">---</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="font-weight-bold">Password:</td>
-                                                        <td>---</td>
+                                                        <td id="password_txt">---</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -545,6 +728,10 @@
         <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+        <script src="../assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+        <!-- <script src="../assets/libs/sweetalert2/sweet-alert.init.js"></script> -->
+        <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -564,6 +751,8 @@
             $(document).ready(function () {
                 
                 fetchStudentInfo()
+
+                fetchAccountInfo()
 
                 $('#editInfo1Form').on('submit', function(aa){
 
@@ -598,6 +787,89 @@
                         }
                     });
                 })
+
+                $('#editInfo2Form').on('submit', function(ab){
+
+                    ab.preventDefault()
+
+                    var data = $('#editInfo2Form').serializeArray()
+
+                    data.push(
+                        { name:'action', value:'edit_contact_info' },
+                        { name:'userid', value:student_Id }
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/UserModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                fetchStudentInfo()
+
+                                $('#editInfo2Mod').modal('hide')
+
+                                toastr.success('You changed contact information', 'Successfully Updated')
+                            }
+                            else if(response == 2 || response == 3){
+
+                                toastr.error('Something went wrong', 'Please contact your developer')
+                            }
+                        }
+                    })
+                })
+
+                $('#status_change_btn').on('click', function(){
+
+                    var status_val = $(this).attr('accstat')
+
+                    var swal_title_action = (status_val == 1) ? 'INACTIVE' : 'ACTIVE'
+
+                    swal({   
+                        title: "SET AS "+ swal_title_action +"?",   
+                        text: "This record will be set as inactive",   
+                        type: "question",   
+                        showCancelButton: true,   
+                        confirmButtonColor: "#DD6B55",   
+                        confirmButtonText: "YES",   
+                        cancelButtonText: "NO",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false 
+                    }).then((isConfirm) => {
+
+                        if (isConfirm.value == true) {     
+
+                            $.ajax({
+                                type: "POST",
+                                url: "models/UserModel.php",
+                                data: {
+                                    userid:student_Id,
+                                    statusval:status_val,
+                                    action:"set_as_inactive"
+                                },
+                                dataType: "JSON",
+                                success: function (response) {
+                                    
+                                    if(response == 1){
+
+                                        swal("SAVED SUCCESSFULLY", "This record is now inactive", "success")
+                                        .then((isConfirm) => {
+
+                                            if (isConfirm) { fetchStudentInfo() }
+                                        }) 
+                                    }
+                                    else if(response == 2 || response == 3){
+
+                                        toastr.error('Please contact your developer', 'Something went wrong')
+                                    }
+                                }
+                            });  
+                        }  
+                    })
+                })
             })
 
             function fetchStudentInfo(){
@@ -608,7 +880,7 @@
                     data: {
                         userid:student_Id,
                         action:"fetch_user_info"
-                    },
+                    },  
                     dataType: "JSON",
                     success: function (response) {
 
@@ -616,7 +888,8 @@
 
                             $('#date_created_txt').html(value.DateAdded+' | '+value.TimeAdded)
                             $('#last_update_txt').html(value.LastUpdate)
-                            
+
+                            $('#user_fullname_txt').html(value.FName+" "+value.LName)
                             $('#fname_txt').html(value.FName)
                             $('#mname_txt').html(value.MName)
                             $('#lname_txt').html(value.LName)
@@ -636,7 +909,44 @@
                             $('#g_email_txt').html(value.GEmail)
                             $('#g_phoneno_txt').html(value.GPhoneNo)
                             $('#g_address_txt').html(value.GAddress)
+
+                            var status_txt=''
+
+                            if(value.Status == 1){
+
+                                status_txt='<span class="badge badge-success font-weight-bold text-uppercase">Active</span>'
+
+                                $('#status_change_btn').attr('accstat', 0)
+                                $('#status_change_txt').html('Set as inactive')
+                            }
+                            else if(value.Status == 0){
+
+                                status_txt='<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>'
+
+                                $('#status_change_btn').attr('accstat', 1)
+                                $('#status_change_txt').html('Set as Active')
+                            }
+
+                            $('#acc_stat_txt').html(status_txt)
                         })
+                    }
+                })
+            }
+
+            function fetchAccountInfo(){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/AccountsModel.php",
+                    data: {
+                        userid:student_Id,
+                        action:"fetch_account_info"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        $('#username_txt').html(response.Username)
+                        $('#password_txt').html(response.Password)
                     }
                 })
             }
@@ -662,6 +972,31 @@
                 $('#e_civil_status').val(civil_stat)
                 $('#e_sex').val(sex)
                 $('#e_nationality').val(nationality)
+            }
+
+            function editContactInfo(){
+
+                $('#editInfo2Mod').modal('show')
+
+                var email_txt        = $('#email_txt').text()
+                var phoneno_txt      = $('#phoneno_txt').text()
+                var address_txt      = $('#address_txt').text()
+                var guardian_txt     = $('#guardian_txt').text()
+                var relationship_txt = $('#relationship_txt').text()
+                var occupation_txt   = $('#occupation_txt').text()
+                var g_email_txt      = $('#g_email_txt').text()
+                var g_phoneno_txt    = $('#g_phoneno_txt').text()
+                var g_address_txt    = $('#g_address_txt').text()
+
+                $('#e_email').val(email_txt)
+                $('#e_phoneno').val(phoneno_txt)
+                $('#e_address').val(address_txt)
+                $('#e_guardian').val(guardian_txt)
+                $('#e_relationship').val(relationship_txt)
+                $('#e_occupation').val(occupation_txt)
+                $('#e_g_email').val(g_email_txt)
+                $('#e_g_phoneno').val(g_phoneno_txt)
+                $('#e_g_address').val(g_address_txt)
             }
 
         </script>

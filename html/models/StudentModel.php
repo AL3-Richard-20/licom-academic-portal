@@ -83,9 +83,30 @@
                     ];
                     $insert2 = insert($users, $data2);
 
+                    $last_Id = $insert2['LastId'];
+
+                    $username = "C".date("Y", strtotime("now")).$last_Id;
+
                     if($insert2['Result'] == 1){
 
-                        $res_req = 1;
+                        $data3   = [
+                            "Level_Id" => 3,
+                            "User_Id" => $last_Id,
+                            "Username" => $username,
+                            "Password" => "student123",
+                            "Date_added" => $server_date,
+                            "Time_added" => $server_time
+                        ];
+                        $insert3 = insert($accounts, $data3);
+
+                        if($insert3['Result'] == 1){
+
+                            $res_req = 1;
+                        }
+                        else{
+
+                            $res_req = 2;
+                        }
                     }
                     else{
 
