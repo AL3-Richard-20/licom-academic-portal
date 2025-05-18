@@ -224,6 +224,7 @@
                                                     type="button" 
                                                     class="btn btn-outline-light" 
                                                     title="Edit Information" 
+                                                    data-toggle="tooltip"
                                                     onclick="editPersonalInfo()">
                                                     <span class="fa fa-pencil-alt text-primary"></span>
                                                 </button>
@@ -826,11 +827,11 @@
 
                     var status_val = $(this).attr('accstat')
 
-                    var swal_title_action = (status_val == 1) ? 'INACTIVE' : 'ACTIVE'
+                    var swal_title_action = (status_val == 1) ? 'ACTIVE' : 'INACTIVE'
 
                     swal({   
                         title: "SET AS "+ swal_title_action +"?",   
-                        text: "This record will be set as inactive",   
+                        text: "This record will be set as "+ swal_title_action.toLowerCase(),   
                         type: "question",   
                         showCancelButton: true,   
                         confirmButtonColor: "#DD6B55",   

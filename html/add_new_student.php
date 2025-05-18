@@ -34,7 +34,6 @@
 
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
 
 
@@ -453,7 +452,6 @@
 
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
-
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
 
 

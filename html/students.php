@@ -33,6 +33,11 @@
         <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
 
 
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
         <!-- Custom CSS -->
         <link href="../dist/css/style.min.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -154,94 +159,101 @@
 
                         <div class="card-body">
 
-                            <table class="table table-hover">
+                            <div class="table-responsive">
 
-                                <thead class="table-bordered font-weight-bold text-uppercase">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Contact No.</th>
-                                        <th>Date Added</th>
-                                        <th>Time Added</th>
-                                        <th>Status</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
+                                <table class="table table-hover" style="width:100%;" id="students_tbl">
 
-                                <tbody class="table-sm">
+                                    <thead class="table-bordered font-weight-bold text-uppercase">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Contact No.</th>
+                                            <th>Date Added</th>
+                                            <th>Time Added</th>
+                                            <th>Status</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
 
-                                    <?php
+                                    <tbody class="table-sm">
 
-                                        $query="SELECT 
-                                                    User_Id,
-                                                    FName, 
-                                                    MName, 
-                                                    LName, 
-                                                    Phone_no,
-                                                    Date_added, 
-                                                    Time_added,
-                                                    Status  
-                                                FROM 
-                                                    users 
-                                                WHERE 
-                                                    Status = 1 ";
+                                        <?php
 
-                                        $fetch = mysqli_query($con, $query);
+                                            $query="SELECT 
+                                                        User_Id,
+                                                        FName, 
+                                                        MName, 
+                                                        LName, 
+                                                        Phone_no,
+                                                        Date_added, 
+                                                        Time_added,
+                                                        Status  
+                                                    FROM 
+                                                        users 
+                                                    WHERE 
+                                                        Status = 1 
+                                                    ORDER BY 
+                                                        Date_added DESC, 
+                                                        Time_added DESC ";
 
-                                        $count = mysqli_num_rows($fetch);
+                                            $fetch = mysqli_query($con, $query);
 
-                                        if($count > 0){
+                                            $count = mysqli_num_rows($fetch);
 
-                                            while($row = mysqli_fetch_assoc($fetch)){
+                                            if($count > 0){
 
-                                                $user_Id    = $row['User_Id'];
-                                                $fname      = $row['FName'];
-                                                $mname      = $row['MName'];
-                                                $lname      = $row['LName'];
-                                                $phone_no   = $row['Phone_no'];
-                                                $date_added = $row['Date_added'];
-                                                $time_added = $row['Time_added'];
-                                                $status     = $row['Status'];
+                                                while($row = mysqli_fetch_assoc($fetch)){
+
+                                                    $user_Id    = $row['User_Id'];
+                                                    $fname      = $row['FName'];
+                                                    $mname      = $row['MName'];
+                                                    $lname      = $row['LName'];
+                                                    $phone_no   = $row['Phone_no'];
+                                                    $date_added = $row['Date_added'];
+                                                    $time_added = $row['Time_added'];
+                                                    $status     = $row['Status'];
+
+                                                    echo "<tr>";
+                                                    echo "<td>#".$user_Id."</td>";
+                                                    echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
+                                                    echo "<td>".$phone_no."</td>";
+                                                    echo "<td>".dateFormat($date_added)."</td>";
+                                                    echo "<td>".timeFormat($time_added)."</td>";
+
+                                                    if($status == 1){
+
+                                                        $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
+                                                    }
+                                                    else if($status == 2){
+
+                                                        $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
+                                                    }
+
+                                                    echo "<td>".$status_txt."</td>";
+                                                    echo "<td class='text-center'>
+                                                        <button 
+                                                            type='button' 
+                                                            class='btn btn-outline-light btn-sm text-primary' 
+                                                            onclick='location.href=`student_info.php?studid=".$user_Id."`;'>
+                                                            <span class='fa fa-pencil-alt'></span>
+                                                        </button>
+                                                    </td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                            else{
 
                                                 echo "<tr>";
-                                                echo "<td>#".$user_Id."</td>";
-                                                echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
-                                                echo "<td>".$phone_no."</td>";
-                                                echo "<td>".dateFormat($date_added)."</td>";
-                                                echo "<td>".timeFormat($time_added)."</td>";
-
-                                                if($status == 1){
-
-                                                    $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
-                                                }
-                                                else if($status == 2){
-
-                                                    $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
-                                                }
-
-                                                echo "<td>".$status_txt."</td>";
-                                                echo "<td class='text-center'>
-                                                    <button 
-                                                        type='button' 
-                                                        class='btn btn-outline-light btn-sm text-primary' 
-                                                        onclick='location.href=`student_info.php?studid=".$user_Id."`;'>
-                                                        <span class='fa fa-pencil-alt'></span>
-                                                    </button>
-                                                </td>";
+                                                echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
                                                 echo "</tr>";
                                             }
-                                        }
-                                        else{
+                                        ?>
 
-                                            echo "<tr>";
-                                            echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
-                                            echo "</tr>";
-                                        }
-                                    ?>
+                                    </tbody>
 
-                                </tbody>
+                                </table>
 
-                            </table>
+                            </div>
 
                         </div>
 
@@ -306,6 +318,10 @@
         <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -317,6 +333,22 @@
 
         <!--Custom JavaScript -->
         <script src="../dist/js/custom.min.js"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                
+                $('#students_tbl').DataTable({
+
+                    "aaSorting": [],
+                    "columnDefs": [ {
+                        "targets": 6,
+                        "orderable": false
+                    } ]
+                })
+            });
+
+        </script>
 
     </body>
 
