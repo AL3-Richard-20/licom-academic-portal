@@ -141,20 +141,6 @@
 
                             <div class="card">
 
-                                <!-- <div class="card-header bg-white">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <button 
-                                                type="button" 
-                                                class="btn btn-secondary btn-sm font-weight-bold text-uppercase">
-                                                <span class="fa fa-calendar"></span>
-                                                &nbspFilter
-                                            </button>
-                                        </div>
-                                        <div class="col-lg-6 text-right"></div>
-                                    </div>
-                                </div> -->
-
                                 <div class="card-body">
 
                                     <div class="table-responsive">
@@ -210,6 +196,13 @@
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>
+                                                                        <button 
+                                                                            type='button' 
+                                                                            class='btn btn-outline-light btn-sm text-dark'
+                                                                            title='Subjects' 
+                                                                            onclick='subjectsMod(`".$course_Id."`, `".$course_code."`, `".$course_name."`)'>
+                                                                            <span class='fa fa-list'></span>
+                                                                        </button>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
@@ -352,6 +345,124 @@
                         </div>
 
                     </div>
+
+                    <!-- ================ Subjects Modal ============== -->
+                        <div class="modal fade" 
+                            id="subjectsMod" 
+                            style="padding-right: 17px;">
+
+                            <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
+
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title font-weight-bold text-uppercase">Subjects under <span class="text-info" id="course_sub_header">(---)</span></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <input type="hidden" name="course_Id_val" id="course_Id_val">
+                                    
+                                        <div class="row">
+
+                                            <div class="col-lg-8">
+
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-hover display nowrap" style="width:100%;">
+
+                                                        <thead class="table-bordered font-weight-bold text-uppercase">
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Code</th>
+                                                                <th>Date Added</th>
+                                                                <th>Time Added</th>
+                                                                <th class="text-center">Action</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="table-sm text-muted" id="subjects_tbl"></tbody>
+
+                                                    </table>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-4">
+
+                                                <div class="card">
+
+                                                    <form method="POST" id="newSubjectForm">
+
+                                                        <div class="card-header bg-white">
+                                                            <h4 class="font-weight-bold text-uppercase">Add New</h4>
+                                                        </div>
+
+                                                        <div class="card-body"> 
+
+                                                            <div class="form-group">
+                                                                <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control form-control-sm"
+                                                                    name="subject_name" 
+                                                                    id="subject_name"
+                                                                    placeholder="Input subject name here" 
+                                                                    autocomplete="off"
+                                                                    required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control form-control-sm"
+                                                                    name="subject_code" 
+                                                                    id="subject_code"
+                                                                    placeholder="Input subject code here" 
+                                                                    autocomplete="off"
+                                                                    required>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="card-footer bg-white text-right">
+                                                            <button 
+                                                                type="submit" 
+                                                                class="btn btn-success btn-sm font-weight-bold text-uppercase">
+                                                                <span class="fa fa-check"></span>
+                                                                Submit
+                                                            </button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                            data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- ================ Subjects Modal END ========== -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -512,6 +623,81 @@
                         }
                     });
                 })
+
+                $('#newSubjectForm').on('submit', function(aa){
+
+                    aa.preventDefault()
+
+                    var data = $('#newSubjectForm').serializeArray()
+
+                    var course_Id = $('#course_Id_val').val()
+
+                    data.push(
+                        { name:'action', value:'new_subject'},
+                        { name:'course_Id', value:course_Id},
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/SubjectsModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                $('#newSubjectForm')[0].reset()
+
+                                toastr.success('You added a new subject', 'SAVED SUCCESSFULLY')
+
+                                fetchSubjects()
+                            }
+                            else if(response == 2 || response == 3){
+                                
+                                toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                            }
+                            else if(response == 4){
+                                
+                                toastr.info('Record already exist', 'CANNOT BE ADDED')
+                            }
+                        }
+                    })
+                })
+
+                // $('#editSubjectForm').on('submit', function(ab){
+
+                //     ab.preventDefault()
+
+                //     var data = $('#editSubjectForm').serializeArray()
+
+                //     data.push(
+                //         { name:'action', value:'edit_subject' }
+                //     )
+
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "models/SubjectsModel.php",
+                //         data: data,
+                //         dataType: "JSON",
+                //         success: function (response) {
+                            
+                //             if(response == 1){
+
+                //                 toastr.success('You updated a subject', 'SAVED SUCCESSFULLY')
+
+                //                 setTimeout(() => {
+
+                //                     location.reload()
+
+                //                 }, 2000);
+                //             }
+                //             else if(response == 2 || response == 3){
+
+                //                 toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                //             }
+                //         }
+                //     });
+                // })
             })
 
 
@@ -574,6 +760,107 @@
                                         location.reload()
 
                                     }, 2000);
+                                }
+                                else if(response == 2 || response == 3){
+
+                                    toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+
+
+            function fetchSubjects(){
+
+                var output=''
+                var course_Id = $('#course_Id_val').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/SubjectsModel.php",
+                    data: {
+                        courseid:course_Id,
+                        action:"fetch_subjects"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response.length > 0){
+
+                            $.each(response, function(key, value){
+
+                                output+='<tr>'
+                                output+='<td>'+ value.SubjectName +'</td>'
+                                output+='<td>'+ value.SubjectCode +'</td>'
+                                output+='<td>'+ value.DateAdded +'</td>'
+                                output+='<td>'+ value.TimeAdded +'</td>'
+
+                                var deleteSubject = 'deleteSubject(`'+ value.SubjectId +'`)'
+
+                                output+='<td class="text-center">'
+                                output+='<button type="button" class="btn btn-outline-light btn-sm" onclick="'+ deleteSubject +'"><span class="fa fa-trash text-danger"></span></button>'
+                                output+='</td>'
+                                output+='</tr>'
+                            })
+                        }
+                        else{
+
+                            output+='<tr>'
+                            output+='<td class="text-center" colspan="5">No data available in the table.</td>'
+                            output+='</tr>'
+                        }
+
+                        $('#subjects_tbl').html(output)
+                    }
+                })
+            }
+
+
+            function subjectsMod(course_Id, course_code, course_name){
+
+                $('#subjectsMod').modal('show')
+
+                $('#course_sub_header').html('('+course_code+' | '+ course_name +')')
+
+                $('#course_Id_val').val(course_Id)
+
+                fetchSubjects()
+            }
+
+
+            function deleteSubject(subject_Id){
+
+                swal({   
+                    title: "DELETE SUBJECT?",   
+                    text: "This cannot be reverted",   
+                    type: "question",   
+                    showCancelButton: true,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "YES",   
+                    cancelButtonText: "NO",   
+                    closeOnConfirm: false,   
+                    closeOnCancel: false 
+                }).then((isConfirm) => {
+
+                    if (isConfirm.value == true) { 
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/SubjectsModel.php",
+                            data: {
+                                subjectid:subject_Id,
+                                action:"delete_subject"
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+                                
+                                if(response == 1){
+
+                                    toastr.success('You deleted a subject. Refreshing the page.', 'REMOVED SUCCESSFULLY')
+
+                                    fetchSubjects()
                                 }
                                 else if(response == 2 || response == 3){
 

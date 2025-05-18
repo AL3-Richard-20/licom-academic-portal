@@ -5,7 +5,61 @@
 
     if(isset($_POST['action'])){
 
-        if($_POST['action'] == 'new_subject'){
+        if($_POST['action'] == 'fetch_subjects'){;
+
+            $query="SELECT 
+                        Subject_Id, 
+                        Subject_name, 
+                        Subject_code, 
+                        Date_added, 
+                        Time_added
+                    FROM 
+                        subjects 
+                    WHERE 
+                        Status = 1 ";
+
+            if($_POST['courseid'] != ''){
+
+                $course_Id = $_POST['courseid'];
+                
+                $query .="AND Course_Id = '".$course_Id."' ";
+            }
+
+            $query .="ORDER BY 
+                        Date_added DESC, 
+                        Time_added DESC ";
+
+            $fetch = mysqli_query($con, $query);
+
+            if($fetch){
+
+                $results_arr = array();
+
+                while($row = mysqli_fetch_assoc($fetch)){
+
+                    $subject_Id     = $row['Subject_Id'];
+                    $subject_name   = $row['Subject_name'];
+                    $subject_code   = $row['Subject_code'];
+                    $date_added     = dateFormat($row['Date_added']);
+                    $time_added     = timeFormat($row['Time_added']);
+
+                    $result_arr = array(
+                        'SubjectId' => $subject_Id,
+                        'SubjectName' => $subject_name,
+                        'SubjectCode' => $subject_code,
+                        'DateAdded' => $date_added,
+                        'TimeAdded' => $time_added
+                    );
+
+                    array_push($results_arr, $result_arr);
+                }
+
+                echo json_encode($results_arr);
+            }
+        }
+
+
+        else if($_POST['action'] == 'new_subject'){
 
             $course_Id    = $_POST['course_Id'];
             $subject_name = $_POST['subject_name'];
