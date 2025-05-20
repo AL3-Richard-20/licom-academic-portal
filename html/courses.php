@@ -191,7 +191,7 @@
                                                                 $time_added     = timeFormat($row['Time_added']);
 
                                                                 echo "<tr>";
-                                                                echo "<td>".$course_name."</td>";
+                                                                echo "<td class='font-weight-bold'>".$course_name."</td>";
                                                                 echo "<td>".$course_code."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
@@ -792,7 +792,7 @@
                             $.each(response, function(key, value){
 
                                 output+='<tr>'
-                                output+='<td>'+ value.SubjectName +'</td>'
+                                output+='<td class="font-weight-bold">'+ value.SubjectName +'</td>'
                                 output+='<td>'+ value.SubjectCode +'</td>'
                                 output+='<td>'+ value.DateAdded +'</td>'
                                 output+='<td>'+ value.TimeAdded +'</td>'

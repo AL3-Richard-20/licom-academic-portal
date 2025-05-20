@@ -105,7 +105,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Subjects</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Rooms</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -115,7 +115,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Subjects</a>
+                                            <a href="#">Rooms</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -145,13 +145,12 @@
 
                                     <div class="table-responsive">
 
-                                        <table class="table table-hover display nowrap" style="width:100%;" id="subjects_tbl">
+                                        <table class="table table-hover display nowrap" style="width:100%;" id="rooms_tbl">
 
                                             <thead class="table-bordered font-weight-bold text-uppercase">
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Code</th>
-                                                    <th>Course</th>
+                                                    <th>Details</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
                                                     <th class="text-center">Action</th>
@@ -162,25 +161,18 @@
                                                 <?php
 
                                                     $query="SELECT 
-                                                                subjects.Subject_Id,
-                                                                courses.Course_Id, 
-                                                                courses.Course_name, 
-                                                                courses.Course_code,
-                                                                subjects.Subject_name,
-                                                                subjects.Subject_code,
-                                                                subjects.Date_added,
-                                                                subjects.Time_added
+                                                                Room_Id, 
+                                                                Room_name, 
+                                                                Room_details, 
+                                                                Date_added, 
+                                                                Time_added
                                                             FROM 
-                                                                courses 
-                                                            LEFT JOIN 
-                                                                subjects 
-                                                            ON 
-                                                                courses.Course_Id = subjects.Course_Id
+                                                                rooms 
                                                             WHERE 
-                                                                subjects.Status = 1 
+                                                                Status = 1 
                                                             ORDER BY 
-                                                                subjects.Date_added DESC, 
-                                                                subjects.Time_added DESC ";
+                                                                Date_added DESC, 
+                                                                Time_added DESC ";
 
                                                     $fetch = mysqli_query($con, $query);
 
@@ -192,32 +184,28 @@
 
                                                             while($row = mysqli_fetch_assoc($fetch)){
 
-                                                                $subject_Id     = $row['Subject_Id'];
-                                                                $course_Id      = $row['Course_Id'];
-                                                                $course_name    = $row['Course_name'];
-                                                                $course_code    = $row['Course_code'];
-                                                                $subject_name   = $row['Subject_name'];
-                                                                $subject_code   = $row['Subject_code'];
+                                                                $room_Id        = $row['Room_Id'];
+                                                                $room_name      = $row['Room_name'];
+                                                                $room_details   = $row['Room_details'];
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
                                                                 echo "<tr>";
-                                                                echo "<td class='font-weight-bold'>".$subject_name."</td>";
-                                                                echo "<td>".$subject_code."</td>";
-                                                                echo "<td><span title='".$course_name."' data-toggle='tooltip'>".$course_code."</span></td>";
+                                                                echo "<td class='font-weight-bold'>".$room_name."</td>";
+                                                                echo "<td>".$room_details."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSubject(`".$subject_Id."`, `".$course_Id."`, `".$subject_name."`, `".$subject_code."`)'>
+                                                                            onclick='editRoom(`".$room_Id."`, `".$room_name."`, `".$room_details."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-danger' 
-                                                                            onclick='deleteSubject(`".$subject_Id."`)'>
+                                                                            onclick='deleteRoom(`".$room_Id."`)'>
                                                                             <span class='fa fa-trash'></span>
                                                                         </button>
                                                                     </td>";
@@ -242,69 +230,33 @@
 
                             <div class="card" style="position:sticky; top:0;">
 
-                                <form method="POST" id="newSubjectForm">
+                                <form method="POST" id="newRoomForm">
 
                                     <div class="card-header bg-white">
                                         <h4 class="font-weight-bold text-uppercase">Add New</h4>
                                     </div>
 
-                                    <div class="card-body"> 
+                                    <div class="card-body">
 
                                         <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="course_Id" 
-                                                id="course_Id" 
-                                                required>
-                                                <option value="">Select course here</option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Course_Id, 
-                                                                Course_name, 
-                                                                Course_code 
-                                                            FROM 
-                                                                courses 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    if($fetch){
-
-                                                        while($row = mysqli_fetch_assoc($fetch)){
-
-                                                            $course_Id      = $row['Course_Id'];
-                                                            $course_name    = $row['Course_name'];
-                                                            $course_code    = $row['Course_code'];
-
-                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
-                                                        }
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Room Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="subject_name" 
-                                                id="subject_name"
-                                                placeholder="Input subject name here" 
+                                                name="room_name" 
+                                                id="room_name"
+                                                placeholder="Input room name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Room Details: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="subject_code" 
-                                                id="subject_code"
-                                                placeholder="Input subject code here" 
+                                                name="room_details" 
+                                                id="room_details"
+                                                placeholder="Input room details here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -322,10 +274,10 @@
 
                                 </form>
 
-                                <form method="POST" id="editSubjectForm" style="display:none;">
+                                <form method="POST" id="editRoomForm" style="display:none;">
 
                                     <div class="card-header bg-white">
-                                        <h4 class="font-weight-bold text-uppercase">Edit Subject</h4>
+                                        <h4 class="font-weight-bold text-uppercase">Edit Room</h4>
                                     </div>
 
                                     <div class="card-body">
@@ -333,64 +285,28 @@
                                         <input 
                                             type="hidden" 
                                             class="form-control form-control-sm"
-                                            name="e_subject_Id" 
-                                            id="e_subject_Id">
-
-                                         <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="e_course_Id" 
-                                                id="e_course_Id" 
-                                                required>
-                                                <option value="">Select course here</option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Course_Id, 
-                                                                Course_name, 
-                                                                Course_code 
-                                                            FROM 
-                                                                courses 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    if($fetch){
-
-                                                        while($row = mysqli_fetch_assoc($fetch)){
-
-                                                            $course_Id      = $row['Course_Id'];
-                                                            $course_name    = $row['Course_name'];
-                                                            $course_code    = $row['Course_code'];
-
-                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
-                                                        }
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
+                                            name="e_room_Id" 
+                                            id="e_room_Id">
 
                                         <div class="form-group">
-                                            <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Room Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="e_subject_name" 
-                                                id="e_subject_name"
-                                                placeholder="Input subject name here" 
+                                                name="e_room_name" 
+                                                id="e_room_name"
+                                                placeholder="Input room name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Room Details: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="e_subject_code" 
-                                                id="e_subject_code"
-                                                placeholder="Input subject code here" 
+                                                name="e_room_details" 
+                                                id="e_room_details"
+                                                placeholder="Input room details here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -408,8 +324,8 @@
                                             type="button" 
                                             class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase"
                                             onclick="
-                                                $('#editSubjectForm').hide()
-                                                $('#newSubjectForm').show()
+                                                $('#editSemesterForm').hide()
+                                                $('#newSemesterForm').show()
                                             ">
                                             Discard
                                         </button>
@@ -507,28 +423,28 @@
 
             $(document).ready(function () {
 
-                subjectsTbl()
+                roomsTbl()
             
-                $('#newSubjectForm').on('submit', function(aa){
+                $('#newRoomForm').on('submit', function(aa){
 
                     aa.preventDefault()
 
-                    var data = $('#newSubjectForm').serializeArray()
+                    var data = $('#newRoomForm').serializeArray()
 
                     data.push(
-                        { name:'action', value:'new_subject'}
+                        { name:'action', value:'new_room'}
                     )
 
                     $.ajax({
                         type: "POST",
-                        url: "models/SubjectsModel.php",
+                        url: "models/RoomsModel.php",
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
                             
                             if(response == 1){
 
-                                toastr.success('You added a new subject', 'SAVED SUCCESSFULLY')
+                                toastr.success('You added a new room', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -548,26 +464,26 @@
                     })
                 })
 
-                $('#editSubjectForm').on('submit', function(ab){
+                $('#editRoomForm').on('submit', function(ab){
 
                     ab.preventDefault()
 
-                    var data = $('#editSubjectForm').serializeArray()
+                    var data = $('#editRoomForm').serializeArray()
 
                     data.push(
-                        { name:'action', value:'edit_subject' }
+                        { name:'action', value:'edit_room' }
                     )
 
                     $.ajax({
                         type: "POST",
-                        url: "models/SubjectsModel.php",
+                        url: "models/RoomsModel.php",
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
                             
                             if(response == 1){
 
-                                toastr.success('You updated a subject', 'SAVED SUCCESSFULLY')
+                                toastr.success('You updated a room', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -585,35 +501,34 @@
             })
 
 
-            function subjectsTbl(){
+            function roomsTbl(){
 
-                $('#subjects_tbl').DataTable({
+                $('#rooms_tbl').DataTable({
 
                     "aaSorting": [],
                     "columnDefs": [ {
-                        "targets": 5,
+                        "targets": 3,
                         "orderable": false
                     } ]
                 })
             }
 
 
-            function editSubject(subject_Id, course_Id, subject_name, subject_code){
+            function editRoom(room_Id, room_name, room_details){
 
-                $('#newSubjectForm').hide()
-                $('#editSubjectForm').show()
+                $('#newRoomForm').hide()
+                $('#editRoomForm').show()
 
-                $('#e_subject_Id').val(subject_Id)
-                $('#e_course_Id').val(course_Id)
-                $('#e_subject_name').val(subject_name)
-                $('#e_subject_code').val(subject_code)
+                $('#e_room_Id').val(room_Id)
+                $('#e_room_name').val(room_name)
+                $('#e_room_details').val(room_details)
             }
 
 
-            function deleteSubject(subject_Id){
+            function deleteRoom(room_Id){
 
                 swal({   
-                    title: "DELETE SUBJECT?",   
+                    title: "DELETE ROOM?",   
                     text: "This cannot be reverted",   
                     type: "question",   
                     showCancelButton: true,   
@@ -628,17 +543,17 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "models/SubjectsModel.php",
+                            url: "models/RoomsModel.php",
                             data: {
-                                subjectid:subject_Id,
-                                action:"delete_subject"
+                                roomid:room_Id,
+                                action:"delete_room"
                             },
                             dataType: "JSON",
                             success: function (response) {
                                 
                                 if(response == 1){
 
-                                    toastr.success('You deleted a subject. Refreshing the page.', 'REMOVED SUCCESSFULLY')
+                                    toastr.success('You deleted a room. Refreshing the page.', 'REMOVED SUCCESSFULLY')
 
                                     setTimeout(() => {
 

@@ -105,7 +105,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Subjects</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Semesters</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -115,7 +115,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Subjects</a>
+                                            <a href="#">Semesters</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -145,13 +145,11 @@
 
                                     <div class="table-responsive">
 
-                                        <table class="table table-hover display nowrap" style="width:100%;" id="subjects_tbl">
+                                        <table class="table table-hover display nowrap" style="width:100%;" id="semesters_tbl">
 
                                             <thead class="table-bordered font-weight-bold text-uppercase">
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Code</th>
-                                                    <th>Course</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
                                                     <th class="text-center">Action</th>
@@ -162,25 +160,17 @@
                                                 <?php
 
                                                     $query="SELECT 
-                                                                subjects.Subject_Id,
-                                                                courses.Course_Id, 
-                                                                courses.Course_name, 
-                                                                courses.Course_code,
-                                                                subjects.Subject_name,
-                                                                subjects.Subject_code,
-                                                                subjects.Date_added,
-                                                                subjects.Time_added
+                                                                Semester_Id, 
+                                                                Semester_name, 
+                                                                Date_added, 
+                                                                Time_added
                                                             FROM 
-                                                                courses 
-                                                            LEFT JOIN 
-                                                                subjects 
-                                                            ON 
-                                                                courses.Course_Id = subjects.Course_Id
+                                                                semesters 
                                                             WHERE 
-                                                                subjects.Status = 1 
+                                                                Status = 1 
                                                             ORDER BY 
-                                                                subjects.Date_added DESC, 
-                                                                subjects.Time_added DESC ";
+                                                                Date_added DESC, 
+                                                                Time_added DESC ";
 
                                                     $fetch = mysqli_query($con, $query);
 
@@ -192,32 +182,26 @@
 
                                                             while($row = mysqli_fetch_assoc($fetch)){
 
-                                                                $subject_Id     = $row['Subject_Id'];
-                                                                $course_Id      = $row['Course_Id'];
-                                                                $course_name    = $row['Course_name'];
-                                                                $course_code    = $row['Course_code'];
-                                                                $subject_name   = $row['Subject_name'];
-                                                                $subject_code   = $row['Subject_code'];
+                                                                $semester_Id    = $row['Semester_Id'];
+                                                                $semester_name  = $row['Semester_name'];
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
                                                                 echo "<tr>";
-                                                                echo "<td class='font-weight-bold'>".$subject_name."</td>";
-                                                                echo "<td>".$subject_code."</td>";
-                                                                echo "<td><span title='".$course_name."' data-toggle='tooltip'>".$course_code."</span></td>";
+                                                                echo "<td class='font-weight-bold'>".$semester_name."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSubject(`".$subject_Id."`, `".$course_Id."`, `".$subject_name."`, `".$subject_code."`)'>
+                                                                            onclick='editSemester(`".$semester_Id."`, `".$semester_name."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-danger' 
-                                                                            onclick='deleteSubject(`".$subject_Id."`)'>
+                                                                            onclick='deleteSemester(`".$semester_Id."`)'>
                                                                             <span class='fa fa-trash'></span>
                                                                         </button>
                                                                     </td>";
@@ -242,69 +226,22 @@
 
                             <div class="card" style="position:sticky; top:0;">
 
-                                <form method="POST" id="newSubjectForm">
+                                <form method="POST" id="newSemesterForm">
 
                                     <div class="card-header bg-white">
                                         <h4 class="font-weight-bold text-uppercase">Add New</h4>
                                     </div>
 
-                                    <div class="card-body"> 
+                                    <div class="card-body">
 
                                         <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="course_Id" 
-                                                id="course_Id" 
-                                                required>
-                                                <option value="">Select course here</option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Course_Id, 
-                                                                Course_name, 
-                                                                Course_code 
-                                                            FROM 
-                                                                courses 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    if($fetch){
-
-                                                        while($row = mysqli_fetch_assoc($fetch)){
-
-                                                            $course_Id      = $row['Course_Id'];
-                                                            $course_name    = $row['Course_name'];
-                                                            $course_code    = $row['Course_code'];
-
-                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
-                                                        }
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Semester Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="subject_name" 
-                                                id="subject_name"
-                                                placeholder="Input subject name here" 
-                                                autocomplete="off"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-sm"
-                                                name="subject_code" 
-                                                id="subject_code"
-                                                placeholder="Input subject code here" 
+                                                name="semester_name" 
+                                                id="semester_name"
+                                                placeholder="Input semester name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -322,10 +259,10 @@
 
                                 </form>
 
-                                <form method="POST" id="editSubjectForm" style="display:none;">
+                                <form method="POST" id="editSemesterForm" style="display:none;">
 
                                     <div class="card-header bg-white">
-                                        <h4 class="font-weight-bold text-uppercase">Edit Subject</h4>
+                                        <h4 class="font-weight-bold text-uppercase">Edit Semester</h4>
                                     </div>
 
                                     <div class="card-body">
@@ -333,64 +270,17 @@
                                         <input 
                                             type="hidden" 
                                             class="form-control form-control-sm"
-                                            name="e_subject_Id" 
-                                            id="e_subject_Id">
-
-                                         <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="e_course_Id" 
-                                                id="e_course_Id" 
-                                                required>
-                                                <option value="">Select course here</option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Course_Id, 
-                                                                Course_name, 
-                                                                Course_code 
-                                                            FROM 
-                                                                courses 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    if($fetch){
-
-                                                        while($row = mysqli_fetch_assoc($fetch)){
-
-                                                            $course_Id      = $row['Course_Id'];
-                                                            $course_name    = $row['Course_name'];
-                                                            $course_code    = $row['Course_code'];
-
-                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
-                                                        }
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
+                                            name="e_semester_Id" 
+                                            id="e_semester_Id">
 
                                         <div class="form-group">
-                                            <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Semster Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="e_subject_name" 
-                                                id="e_subject_name"
-                                                placeholder="Input subject name here" 
-                                                autocomplete="off"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
-                                            <input 
-                                                type="text" 
-                                                class="form-control form-control-sm"
-                                                name="e_subject_code" 
-                                                id="e_subject_code"
-                                                placeholder="Input subject code here" 
+                                                name="e_semester_name" 
+                                                id="e_semester_name"
+                                                placeholder="Input semester name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -408,8 +298,8 @@
                                             type="button" 
                                             class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase"
                                             onclick="
-                                                $('#editSubjectForm').hide()
-                                                $('#newSubjectForm').show()
+                                                $('#editSemesterForm').hide()
+                                                $('#newSemesterForm').show()
                                             ">
                                             Discard
                                         </button>
@@ -422,6 +312,124 @@
                         </div>
 
                     </div>
+
+                    <!-- ================ Subjects Modal ============== -->
+                        <div class="modal fade" 
+                            id="subjectsMod" 
+                            style="padding-right: 17px;">
+
+                            <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
+
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title font-weight-bold text-uppercase">Subjects under <span class="text-info" id="course_sub_header">(---)</span></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <input type="hidden" name="course_Id_val" id="course_Id_val">
+                                    
+                                        <div class="row">
+
+                                            <div class="col-lg-8">
+
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-hover display nowrap" style="width:100%;">
+
+                                                        <thead class="table-bordered font-weight-bold text-uppercase">
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Code</th>
+                                                                <th>Date Added</th>
+                                                                <th>Time Added</th>
+                                                                <th class="text-center">Action</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="table-sm text-muted" id="subjects_tbl"></tbody>
+
+                                                    </table>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-4">
+
+                                                <div class="card">
+
+                                                    <form method="POST" id="newSubjectForm">
+
+                                                        <div class="card-header bg-white">
+                                                            <h4 class="font-weight-bold text-uppercase">Add New</h4>
+                                                        </div>
+
+                                                        <div class="card-body"> 
+
+                                                            <div class="form-group">
+                                                                <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control form-control-sm"
+                                                                    name="subject_name" 
+                                                                    id="subject_name"
+                                                                    placeholder="Input subject name here" 
+                                                                    autocomplete="off"
+                                                                    required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control form-control-sm"
+                                                                    name="subject_code" 
+                                                                    id="subject_code"
+                                                                    placeholder="Input subject code here" 
+                                                                    autocomplete="off"
+                                                                    required>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="card-footer bg-white text-right">
+                                                            <button 
+                                                                type="submit" 
+                                                                class="btn btn-success btn-sm font-weight-bold text-uppercase">
+                                                                <span class="fa fa-check"></span>
+                                                                Submit
+                                                            </button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                            data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- ================ Subjects Modal END ========== -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -507,28 +515,28 @@
 
             $(document).ready(function () {
 
-                subjectsTbl()
+                semestersTbl()
             
-                $('#newSubjectForm').on('submit', function(aa){
+                $('#newSemesterForm').on('submit', function(aa){
 
                     aa.preventDefault()
 
-                    var data = $('#newSubjectForm').serializeArray()
+                    var data = $('#newSemesterForm').serializeArray()
 
                     data.push(
-                        { name:'action', value:'new_subject'}
+                        { name:'action', value:'new_semester'}
                     )
 
                     $.ajax({
                         type: "POST",
-                        url: "models/SubjectsModel.php",
+                        url: "models/SemesterModel.php",
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
                             
                             if(response == 1){
 
-                                toastr.success('You added a new subject', 'SAVED SUCCESSFULLY')
+                                toastr.success('You added a new semester', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -548,26 +556,26 @@
                     })
                 })
 
-                $('#editSubjectForm').on('submit', function(ab){
+                $('#editSemesterForm').on('submit', function(ab){
 
                     ab.preventDefault()
 
-                    var data = $('#editSubjectForm').serializeArray()
+                    var data = $('#editSemesterForm').serializeArray()
 
                     data.push(
-                        { name:'action', value:'edit_subject' }
+                        { name:'action', value:'edit_semester' }
                     )
 
                     $.ajax({
                         type: "POST",
-                        url: "models/SubjectsModel.php",
+                        url: "models/SemesterModel.php",
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
                             
                             if(response == 1){
 
-                                toastr.success('You updated a subject', 'SAVED SUCCESSFULLY')
+                                toastr.success('You updated a semester', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -585,35 +593,33 @@
             })
 
 
-            function subjectsTbl(){
+            function semestersTbl(){
 
-                $('#subjects_tbl').DataTable({
+                $('#semesters_tbl').DataTable({
 
                     "aaSorting": [],
                     "columnDefs": [ {
-                        "targets": 5,
+                        "targets": 3,
                         "orderable": false
                     } ]
                 })
             }
 
 
-            function editSubject(subject_Id, course_Id, subject_name, subject_code){
+            function editSemester(semester_Id, semester_name){
 
-                $('#newSubjectForm').hide()
-                $('#editSubjectForm').show()
+                $('#newSemesterForm').hide()
+                $('#editSemesterForm').show()
 
-                $('#e_subject_Id').val(subject_Id)
-                $('#e_course_Id').val(course_Id)
-                $('#e_subject_name').val(subject_name)
-                $('#e_subject_code').val(subject_code)
+                $('#e_semester_Id').val(semester_Id)
+                $('#e_semester_name').val(semester_name)
             }
 
 
-            function deleteSubject(subject_Id){
+            function deleteSemester(semester_Id){
 
                 swal({   
-                    title: "DELETE SUBJECT?",   
+                    title: "DELETE SEMESTER?",   
                     text: "This cannot be reverted",   
                     type: "question",   
                     showCancelButton: true,   
@@ -628,17 +634,17 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "models/SubjectsModel.php",
+                            url: "models/SemesterModel.php",
                             data: {
-                                subjectid:subject_Id,
-                                action:"delete_subject"
+                                semesterid:semester_Id,
+                                action:"delete_semester"
                             },
                             dataType: "JSON",
                             success: function (response) {
                                 
                                 if(response == 1){
 
-                                    toastr.success('You deleted a subject. Refreshing the page.', 'REMOVED SUCCESSFULLY')
+                                    toastr.success('You deleted a semester. Refreshing the page.', 'REMOVED SUCCESSFULLY')
 
                                     setTimeout(() => {
 

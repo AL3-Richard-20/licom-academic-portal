@@ -118,9 +118,9 @@
                                 </a>
                             </li>
 
-                            <!-- <li class="sidebar-item">
+                            <li class="sidebar-item">
                                 <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                    href="asd" 
+                                    href="semesters.php" 
                                     aria-expanded="false">
                                     <i class="fa fa-chart-line"></i>
                                     <span class="hide-menu">Semesters</span>
@@ -129,12 +129,12 @@
 
                             <li class="sidebar-item">
                                 <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                                    href="asd" 
+                                    href="rooms.php" 
                                     aria-expanded="false">
                                     <i class="fa fa-building"></i>
                                     <span class="hide-menu">Rooms</span>
                                 </a>
-                            </li> -->
+                            </li>
 
                             <!-- <li class="sidebar-item">
                                 <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
