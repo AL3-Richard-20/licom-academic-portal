@@ -5,7 +5,7 @@
 
     if(isset($_POST['action'])){
 
-        if($_POST['action'] == 'fetch_subjects'){;
+        if($_POST['action'] == 'fetch_subjects'){
 
             $query="SELECT 
                         Subject_Id, 
@@ -57,7 +57,6 @@
                 echo json_encode($results_arr);
             }
         }
-
 
         else if($_POST['action'] == 'new_subject'){
 
