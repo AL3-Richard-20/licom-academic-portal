@@ -35,7 +35,16 @@
                             <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
                         </span> -->
                         <span class="logo-text">
-                        <h3 style="color: white; margin-top: 10px; text-transform: uppercase; font-weight: bold; text-shadow: 2px 2px 4px black;" id="brand">Brand</h3>
+                        <h3 
+                            style=" color: white; 
+                                    margin-top: 10px; 
+                                    text-transform: uppercase; 
+                                    font-weight: bold; 
+                                    text-shadow: 2px 2px 4px black;
+                                    font-size:13px;" 
+                            id="brand">
+                            <?= $appname ?>
+                        </h3>
                         </span>
 
 

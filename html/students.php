@@ -180,21 +180,26 @@
                                         <?php
 
                                             $query="SELECT 
-                                                        User_Id,
-                                                        FName, 
-                                                        MName, 
-                                                        LName, 
-                                                        Phone_no,
-                                                        Date_added, 
-                                                        Time_added,
-                                                        Status  
+                                                        users.User_Id,
+                                                        users.FName, 
+                                                        users.MName, 
+                                                        users.LName, 
+                                                        users.Phone_no,
+                                                        users.Date_added, 
+                                                        users.Time_added,
+                                                        users.Status  
                                                     FROM 
                                                         users 
+                                                    LEFT JOIN 
+                                                        accounts 
+                                                    ON 
+                                                        users.User_Id = accounts.User_Id
                                                     WHERE 
-                                                        Status = 1 
+                                                        users.Status = 1 
+                                                        AND accounts.Level_Id = 3 
                                                     ORDER BY 
-                                                        Date_added DESC, 
-                                                        Time_added DESC ";
+                                                        users.Date_added DESC, 
+                                                        users.Time_added DESC ";
 
                                             $fetch = mysqli_query($con, $query);
 

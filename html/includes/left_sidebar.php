@@ -57,6 +57,15 @@
 
                         </li> -->
 
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="index.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-tachometer-alt"></i>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+
                         <!-- =============== Registrar =================== -->
                             <li class="sidebar-item">
 
@@ -162,8 +171,9 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.php
-                                   " aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="authpage.php" 
+                                aria-expanded="false">
                                 <i class="fa fa-power-off"></i>
                                 <span class="hide-menu">Log Out</span>
                             </a>
