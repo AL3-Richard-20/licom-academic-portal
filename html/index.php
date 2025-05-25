@@ -1,6 +1,7 @@
 <?php
 
     include "includes/db.php";
+    include "includes/sessions.php";
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +26,6 @@
 
 
         <title><?= $appname ?></title>
-
-
-        <!-- Custom CSS -->
-        <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-        <link href="../assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
 
 
         <!-- Custom CSS -->
@@ -201,24 +196,6 @@
 
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
-
-
-    <!--This page JavaScript -->
-    <!--chartis chart-->
-    <script src="../assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="../assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-
-
-    <!--c3 charts -->
-    <script src="../assets/extra-libs/c3/d3.min.js"></script>
-    <script src="../assets/extra-libs/c3/c3.min.js"></script>
-
-
-    <!--chartjs -->
-    <script src="../assets/libs/raphael/raphael.min.js"></script>
-    <script src="../assets/libs/morris.js/morris.min.js"></script>
-
-    <script src="../dist/js/pages/dashboards/dashboard1.js"></script>
 
 </body>
 

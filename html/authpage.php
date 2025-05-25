@@ -1,6 +1,11 @@
 <?php
-
+    
     include "includes/db.php";
+
+    if(isset($_SESSION["licom_usr_level"])){
+
+        echo "<script>location.href='index.php';</script>";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +91,8 @@
                                         class="form-control form-control-lg" 
                                         placeholder="Username" 
                                         aria-label="Username" 
+                                        name="username" 
+                                        id="username"
                                         aria-describedby="basic-addon1" 
                                         Required>
                                 </div>
@@ -98,6 +105,8 @@
                                         class="form-control form-control-lg" 
                                         placeholder="Password" 
                                         aria-label="Password" 
+                                        name="password" 
+                                        id="password"
                                         aria-describedby="basic-addon1" 
                                         Required>
                                 </div>
@@ -199,26 +208,64 @@
 
         $(".preloader").fadeOut();
 
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                // Force reload if page was loaded from cache
+                window.location.replace('authpage.php')
+            }
+        });
+
         $(document).ready(function () {
             
             $('#loginForm').on('submit', function(aa){
 
                 aa.preventDefault()
 
-                swal({
-                    title:"LOGGED IN SUCCESSFULLY",
-                    html:"Redirecting...<br><br>",
-                    type:"success",
-                    showConfirmButton: false
+                var data = $(this).serializeArray()
+
+                data.push(
+                    { name:'action', value:'login' }
+                )   
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/AuthModel.php",
+                    data: data,
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response == 1){
+
+                            swal({
+                                title:"LOGGED IN SUCCESSFULLY",
+                                html:"Redirecting...<br><br>",
+                                type:"success",
+                                showConfirmButton: false
+                            })
+
+                            setTimeout(() => {
+                                
+                                location.reload()
+
+                            }, 2000);
+                        }
+                        else if(response == 4){
+
+                            swal({
+                                title:"INVALID USERNAME OR PASSWORD",
+                                html:"Please try again.<br>",
+                                type:"error",
+                                showConfirmButton: true
+                            })
+                        }
+                        else{
+
+                            toastr.error('Please contact your developer', 'Something went wrong')
+                        }
+                    }
                 })
-
-                setTimeout(() => {
-                    
-                    location.href='index.php'
-
-                }, 2000);
             })
-        });
+        })
 
     </script>
 

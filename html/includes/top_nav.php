@@ -1,4 +1,8 @@
+     <?php
 
+        include "includes/sessions.php";
+     ?>
+     
         <header class="topbar">
 
             <nav class="navbar top-navbar navbar-expand-md">
@@ -233,7 +237,7 @@
                                     </div>
 
                                     <div class="m-l-10">
-                                        <h4 class="m-b-0">Steave Jobs</h4>
+                                        <h4 class="m-b-0"><?= $_SESSION["licom_usr_fname"]." ".$_SESSION["licom_usr_lname"] ?></h4>
                                         <p class=" m-b-0">varun@gmail.com</p>
                                     </div>
 
