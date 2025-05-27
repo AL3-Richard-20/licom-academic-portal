@@ -324,8 +324,8 @@
                                             type="button" 
                                             class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase"
                                             onclick="
-                                                $('#editSemesterForm').hide()
-                                                $('#newSemesterForm').show()
+                                                $('#editRoomForm').hide()
+                                                $('#newRoomForm').show()
                                             ">
                                             Discard
                                         </button>
