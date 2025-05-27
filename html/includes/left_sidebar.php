@@ -114,23 +114,14 @@
 
                 </li>
 
-                <!-- <li class="sidebar-item">
+                <li class="sidebar-item">
                     <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                        href="instructors.php" 
-                        aria-expanded="false">
-                        <i class="fa fa-users"></i>
-                        <span class="hide-menu">Instructors</span>
-                    </a>
-                </li> -->
-
-                <!-- <li class="sidebar-item">
-                    <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                        href="asd" 
+                        href="class_schedules.php" 
                         aria-expanded="false">
                         <i class="fa fa-calendar"></i>
                         <span class="hide-menu">Class Schedules</span>
                     </a>
-                </li> -->
+                </li>
 
                 <li class="sidebar-item">
                     <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
