@@ -25,6 +25,9 @@
 
         <title><?= $appname ?></title>
 
+        <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="../dist/css/style.min.css" rel="stylesheet">
@@ -228,7 +231,7 @@
                 </div>
 
                 <!-- ================ Add New Class Modal ============== -->
-                    <div class="modal fade" id="newClassMod" style="padding-right: 17px;">
+                    <div class="modal fade" id="newClassMod" style="padding-right: 17px;" data-backdrop="static" data-keyboard="false">
 
                         <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
 
@@ -257,6 +260,7 @@
                                                         class="form-control form-control-sm"
                                                         name="semester_Id" 
                                                         id="semester_Id" 
+                                                        style="width:100%;"
                                                         required>
                                                         <option value=""></option>
                                                         <?php
@@ -295,6 +299,7 @@
                                                         class="form-control form-control-sm"
                                                         name="room_Id" 
                                                         id="room_Id" 
+                                                        style="width:100%;"
                                                         required>
                                                         <option value=""></option>
                                                         <?php
@@ -358,6 +363,8 @@
                                                 <input 
                                                     type="time" 
                                                     class="form-control form-control-sm" 
+                                                    name="time_start_val"
+                                                    id="time_start_val"
                                                     required>
                                             </div>
                                             <div class="col-lg-4">
@@ -365,6 +372,8 @@
                                                 <input 
                                                     type="time" 
                                                     class="form-control form-control-sm" 
+                                                    name="time_end_val"
+                                                    id="time_end_val"
                                                     required>
                                             </div>
 
@@ -381,8 +390,9 @@
                                                     <p><b>Course: <span class="text-danger">(*)</span></b></p>
                                                     <select 
                                                         class="form-control form-control-sm"
-                                                        name="subject_Id" 
-                                                        id="subject_Id" 
+                                                        name="course_Id" 
+                                                        id="course_Id" 
+                                                        style="width:100%;"
                                                         required>
                                                         <option value=""></option>
                                                         <?php
@@ -423,6 +433,7 @@
                                                         class="form-control form-control-sm"
                                                         name="subject_Id" 
                                                         id="subject_Id" 
+                                                        style="width:100%;"
                                                         required>
                                                         <option value=""></option>
                                                         <?php
@@ -463,7 +474,52 @@
                                                         class="form-control form-control-sm"
                                                         name="instructor_Id" 
                                                         id="instructor_Id" 
+                                                        style="width:100%;"
                                                         required>
+                                                        <option value=""></option>
+                                                        <?php
+
+                                                            $query="SELECT 
+                                                                        users.User_Id,
+                                                                        users.FName, 
+                                                                        users.MName, 
+                                                                        users.LName, 
+                                                                        users.Phone_no,
+                                                                        users.Date_added, 
+                                                                        users.Time_added,
+                                                                        users.Status  
+                                                                    FROM 
+                                                                        users 
+                                                                    LEFT JOIN 
+                                                                        accounts 
+                                                                    ON 
+                                                                        users.User_Id = accounts.User_Id
+                                                                    WHERE 
+                                                                        users.Status = 1 
+                                                                        AND accounts.Level_Id = 4 
+                                                                    ORDER BY 
+                                                                        users.Date_added DESC, 
+                                                                        users.Time_added DESC ";
+
+                                                            $fetch = mysqli_query($con, $query);
+
+                                                            $count = mysqli_num_rows($fetch);
+
+                                                            if($fetch && $count > 0){
+
+                                                                while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                    $user_Id    = $row['User_Id'];
+                                                                    $fname      = $row['FName'];
+                                                                    $mname      = $row['MName'];
+                                                                    $lname      = $row['LName'];
+
+                                                                    $fullname = $fname." ".$mname." ".$lname;
+                                                                    
+                                                                    echo "<option value='".$user_Id."'>".$fullname."</option>";
+                                                                }
+                                                            }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -563,6 +619,10 @@
     <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+    <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+    <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
+
 
     <!--Wave Effects -->
     <script src="../dist/js/waves.js"></script>
@@ -574,6 +634,83 @@
 
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            // ================= Select2 =================
+                $('#semester_Id').select2({
+                    "placeholder":"Select semester here",
+                    "allowClear":true
+                })
+
+                $('#room_Id').select2({
+                    "placeholder":"Select room here",
+                    "allowClear":true
+                })
+
+                $('#course_Id').select2({
+                    "placeholder":"Select course here",
+                    "allowClear":true
+                })
+
+                $('#subject_Id').select2({
+                    "placeholder":"Select subject here",
+                    "allowClear":true
+                })
+
+                $('#instructor_Id').select2({
+                    "placeholder":"Select instructor here",
+                    "allowClear":true
+                })
+            // ================= Select2 END =============
+
+            $('#newClassForm').on('submit', function(aa){
+
+                aa.preventDefault()
+
+                var data = $('#newClassForm').serializeArray()
+
+                data.push(
+                    { name:'action', value:'new_class_schedule' }
+                )
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/ClassSchedulesModel.php",
+                    data: data,
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response == 1){
+
+                            $('#newClassMod').modal('hide')
+
+                            swal("SAVED SUCCESSFULLY", "You added a new class schedule", "success")
+                            .then((isConfirm) => {
+
+                                if (isConfirm) { 
+                                
+                                    // Refresh records
+                                }
+                            }) 
+                        }
+                        else if(response == 2 || response == 3){
+
+                            toastr.error('Please contact your developer', 'Something went wrong')
+                        }
+                        else if(response == 4 || response == 5){
+
+                            toastr.error('Class schedule already occupied.', 'Already Exists')
+                        }
+                    }
+                });
+            })
+
+        });
+
+    </script>
 
 
 </body>
