@@ -598,6 +598,13 @@
 
             return date('h:i A', strtotime($time));
         }
+
+        function stringEllip($string, $limit){
+
+            $result = (strlen($string) > $limit) ? substr($string, 0, $limit)."..." : $string;
+
+            return $result;
+        }
     // ==================== Others END =======================
 
 ?>

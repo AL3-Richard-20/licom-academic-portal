@@ -129,15 +129,114 @@
 
                 <div class="row">
 
-                    <div class="col-lg-6">
-                        <button 
-                            type="button" 
-                            class="btn btn-secondary btn-sm text-uppercase font-weight-bold">
-                            <span class="fa fa-calendar"></span>
-                            &nbspFilter By
-                        </button>
+                    <div class="col-lg-3">
+                        <p><b>Semester:</b></p>
+                        <select 
+                            class="form-control form-control-sm"
+                            name="semester_dd_val"
+                            id="semester_dd_val">
+                            <option value=""></option>
+                            <?php
+
+                                $query="SELECT 
+                                            Semester_Id, 
+                                            Semester_name 
+                                        FROM 
+                                            semesters 
+                                        WHERE 
+                                            Status = 1 ";
+
+                                $fetch = mysqli_query($con, $query);
+
+                                $count = mysqli_num_rows($fetch);
+
+                                if($fetch && $count > 0){
+
+                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                        $semester_Id    = $row['Semester_Id'];
+                                        $semester_name  = $row['Semester_name'];
+                                        
+                                        echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
                     </div>
-                    <div class="col-lg-6 text-right">
+                    <div class="col-lg-3">
+                        <p><b>Room:</b></p>
+                        <select 
+                            class="form-control form-control-sm"
+                            name="room_dd_val"
+                            id="room_dd_val">
+                            <option value=""></option>
+                            <?php
+
+                                $query="SELECT 
+                                            Room_Id, 
+                                            Room_name,
+                                            Room_details
+                                        FROM 
+                                            rooms 
+                                        WHERE 
+                                            Status = 1 ";
+
+                                $fetch = mysqli_query($con, $query);
+
+                                $count = mysqli_num_rows($fetch);
+
+                                if($fetch && $count > 0){
+
+                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                        $room_Id        = $row['Room_Id'];
+                                        $room_name      = $row['Room_name'];
+                                        $room_details   = $row['Room_details'];
+                                        
+                                        echo "<option value='".$room_Id."'>".$room_name." | ".$room_details."</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <p><b>Course:</b></p>
+                        <select 
+                            class="form-control form-control-sm"
+                            name="course_dd_val"
+                            id="course_dd_val">
+                            <option value=""></option>
+                            <?php
+
+                                $query="SELECT 
+                                            Course_Id, 
+                                            Course_name, 
+                                            Course_code 
+                                        FROM 
+                                            courses 
+                                        WHERE 
+                                            Status = 1 ";
+
+                                $fetch = mysqli_query($con, $query);
+
+                                $count = mysqli_num_rows($fetch);
+
+                                if($fetch && $count > 0){
+
+                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                        $course_Id    = $row['Course_Id'];
+                                        $course_name  = $row['Course_name'];
+                                        $course_code  = $row['Course_code'];
+                                        
+                                        echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 text-right">
+                        <p style="color:transparent;">Action</p>
                         <button 
                             type="button" 
                             class="btn btn-success btn-sm text-uppercase font-weight-bold" 
@@ -154,79 +253,82 @@
 
                 <div class="d-flex flex-row" style="max-width:100%; overflow-x:auto;">
 
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Monday</h5>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
+                    <!-- ================== Monday ================= -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Monday</h5>
+                                </div>
+                                <div id="monday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Tuesday</h5>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
-                            </div>
-                            <div class="bg-info p-2 mt-1 mb-1 text-white" style="cursor:pointer;">
-                                <span class="font-weight-bold"><h5>Cyber Security 101</h5></span>
-                                <span>08:30 AM - 09:30 AM</span>
+                    <!-- ================== Monday END ============= -->
+
+                    <!-- ================== Tuesday ================ -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Tuesday</h5>
+                                </div>
+                                <div id="tuesday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Wednesday</h5>
+                    <!-- ================== Tuesday END ============ -->
+
+                    <!-- ================== Wednesday ============== -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Wednesday</h5>
+                                </div>
+                                <div id="wednesday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Thursday</h5>
+                    <!-- ================== Wednesday END ========== -->
+                    
+                    <!-- ================== Thursday =============== -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Thursday</h5>
+                                </div>
+                                <div id="thursday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Friday</h5>
+                    <!-- ================== Thursday END =========== -->
+
+                    <!-- ================== Friday ================= -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Friday</h5>
+                                </div>
+                                <div id="friday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Saturday</h5>
+                    <!-- ================== Friday END ============= -->
+
+                    <!-- ================== Saturday =============== -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Saturday</h5>
+                                </div>
+                                <div id="saturday_schedules"></div>
                             </div>
                         </div>
-                    </div>
-                    <div style="width:200px;">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="font-weight-bold text-uppercase text-center">Sunday</h5>
+                    <!-- ================== Saturday END =========== -->
+                    
+                    <!-- ================== Sunday ================= -->
+                        <div style="width:200px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="font-weight-bold text-uppercase text-center">Sunday</h5>
+                                </div>
+                                <div id="sunday_schedules"></div>
                             </div>
                         </div>
-                    </div>
+                    <!-- ================== Sunday END ============= -->
 
                 </div>
 
@@ -434,36 +536,7 @@
                                                         name="subject_Id" 
                                                         id="subject_Id" 
                                                         style="width:100%;"
-                                                        required>
-                                                        <option value=""></option>
-                                                        <?php
-
-                                                            $query="SELECT 
-                                                                        Subject_Id, 
-                                                                        Subject_name, 
-                                                                        Subject_code 
-                                                                    FROM 
-                                                                        subjects 
-                                                                    WHERE 
-                                                                        Status = 1 ";
-
-                                                            $fetch = mysqli_query($con, $query);
-
-                                                            $count = mysqli_num_rows($fetch);
-
-                                                            if($fetch && $count > 0){
-
-                                                                while($row = mysqli_fetch_assoc($fetch)){
-
-                                                                    $subject_Id    = $row['Subject_Id'];
-                                                                    $subject_name  = $row['Subject_name'];
-                                                                    $subject_code  = $row['Subject_code'];
-                                                                    
-                                                                    echo "<option value='".$subject_Id."'>".$subject_name." | ".$subject_code."</option>";
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </select>
+                                                        required></select>
                                                 </div>
                                             </div>
 
@@ -551,6 +624,96 @@
 
                     </div>
                 <!-- ================ Add New Class Modal END ========== -->
+
+                <!-- ================ Schedule Information Modal ================ -->
+                    <div class="modal fade" id="scheduleInfoMod">
+                        
+                        <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
+
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title font-weight-bold text-uppercase">
+                                        <span class="fa fa-info-circle"></span>
+                                        &nbspClass Schedule Information
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <table class="table table-sm" style="width:50%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Semester: </td>
+                                                <td id="semester_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Room: </td>
+                                                <td id="room_txt">---</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <br>
+                                    
+                                    <h5>Schedule Details:</h5>
+                                    <table class="table table-sm" style="width:50%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Day: </td>
+                                                <td id="day_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Time Start: </td>
+                                                <td id="time_start_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Time End: </td>
+                                                <td id="time_end_txt">---</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <br>
+
+                                    <h5>Subject Details:</h5>
+                                    <table class="table table-sm" style="width:50%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Course: </td>
+                                                <td id="course_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Subject: </td>
+                                                <td id="subject_txt">---</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Instructor: </td>
+                                                <td id="instructor_txt">---</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                        data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>                             
+                <!-- ================ Schedule Information Modal END ============ -->
 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -664,6 +827,22 @@
                     "placeholder":"Select instructor here",
                     "allowClear":true
                 })
+
+
+                $('#semester_dd_val').select2({
+                    "placeholder":"Select semester here",
+                    "allowClear":true
+                })
+
+                $('#room_dd_val').select2({
+                    "placeholder":"Select room here",
+                    "allowClear":true
+                })
+
+                $('#course_dd_val').select2({
+                    "placeholder":"Select course here",
+                    "allowClear":true
+                })
             // ================= Select2 END =============
 
             $('#newClassForm').on('submit', function(aa){
@@ -692,7 +871,17 @@
 
                                 if (isConfirm) { 
                                 
-                                    // Refresh records
+                                    var semester_Id = $('#semester_dd_val').val()
+                                    var room_Id     = $('#room_dd_val').val()
+                                    var course_Id   = $('#course_dd_val').val()
+
+                                    fetchSchedule('monday_schedules', 1, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('tuesday_schedules', 2, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('wednesday_schedules', 3, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('thursday_schedules', 4, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('friday_schedules', 5, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('saturday_schedules', 6, semester_Id, course_Id, room_Id)
+                                    fetchSchedule('sunday_schedules', 7, semester_Id, course_Id, room_Id)
                                 }
                             }) 
                         }
@@ -708,7 +897,141 @@
                 });
             })
 
-        });
+            // ============== Record Filter ================
+                $('#semester_dd_val, #room_dd_val, #course_dd_val').on('change', function(){
+
+                    var semester_Id = $('#semester_dd_val').val()
+                    var room_Id     = $('#room_dd_val').val()
+                    var course_Id   = $('#course_dd_val').val()
+
+                    fetchSchedule('monday_schedules', 1, semester_Id, course_Id, room_Id)
+                    fetchSchedule('tuesday_schedules', 2, semester_Id, course_Id, room_Id)
+                    fetchSchedule('wednesday_schedules', 3, semester_Id, course_Id, room_Id)
+                    fetchSchedule('thursday_schedules', 4, semester_Id, course_Id, room_Id)
+                    fetchSchedule('friday_schedules', 5, semester_Id, course_Id, room_Id)
+                    fetchSchedule('saturday_schedules', 6, semester_Id, course_Id, room_Id)
+                    fetchSchedule('sunday_schedules', 7, semester_Id, course_Id, room_Id)
+                })
+            // ============== Record Filter END ============
+
+            $('#course_Id').on('change', function(){
+
+                var course_Id = $('#course_Id').val()
+
+                subjectDD(course_Id)
+            })
+
+        })
+
+
+        function fetchSchedule(day_div, day_Id, semester_Id, course_Id, room_Id){
+
+            var output=''
+
+            $.ajax({
+                type: "POST",
+                url: "models/ClassSchedulesModel.php",
+                data: {
+                    semesterid:semester_Id,
+                    courseid:course_Id,
+                    roomid:room_Id,
+                    dayid:day_Id,
+                    action:"fetch_class_schedules"
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    
+                    $.each(response, function(key, value){
+
+                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.SemesterName +'`, `'+ value.RoomName +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
+
+                        output+='<div class="bg-info p-2 mt-1 mb-1 text-white" style="min-height:80px;cursor:pointer;" onclick="'+ scheduleInfoModal +'">'
+                        output+='<span class="font-weight-bold"><h5>'+ value.SubjectName +'</h5></span>'
+                        output+='<span>'+ value.TimeStart +' - '+ value.TimeEnd +'</span>'
+                        output+='</div>'
+                    })
+
+                    $('#'+day_div).html(output)
+                }
+            })
+        }
+
+        function subjectDD(course_Id){
+
+            var output=''
+
+            $.ajax({
+                type: "POST",
+                url: "models/SubjectsModel.php",
+                data: {
+                    courseid:course_Id,
+                    action:"fetch_subjects"
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    
+                    if(response.length > 0){
+
+                        output+='<option value=""></option>'
+
+                        $.each(response, function(key, value){
+
+                            output+='<option value="'+ value.SubjectId +'">'+ value.SubjectName +' | '+ value.SubjectCode +'</option>'
+                        })
+                    }
+                    else{
+
+                        output+='<option value=""></option>'
+                    }
+
+                    $('#subject_Id').html(output)
+                }
+            });
+        }
+
+        function scheduleInfoModal(semester, room, day, time_start, time_end, course, course_code, subject, subject_code, instructor){
+
+            $('#scheduleInfoMod').modal('show')
+
+            $('#semester_txt').html(semester)
+            $('#room_txt').html(room)
+
+            if(day == 1){
+
+                day = 'Monday'
+            }
+            else if(day == 2){
+
+                day = 'Tuesday'
+            }
+            else if(day == 3){
+
+                day = 'Wednesday'
+            }
+            else if(day == 4){
+
+                day = 'Thursday'
+            }
+            else if(day == 5){
+
+                day = 'Friday'
+            }
+            else if(day == 6){
+
+                day = 'Saturday'
+            }
+            else if(day == 7){
+
+                day = 'Sunday'
+            }
+
+            $('#day_txt').html(day)
+            $('#time_start_txt').html(time_start)
+            $('#time_end_txt').html(time_end)
+            $('#course_txt').html(course+' | '+course_code)
+            $('#subject_txt').html(subject+' | '+subject_code)
+            $('#instructor_txt').html(instructor)
+        }
 
     </script>
 
