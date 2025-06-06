@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 04:14 PM
+-- Generation Time: Jun 06, 2025 at 09:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,9 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Password`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 3, 5, 'C20255', 'student123', '2025-05-17', '09:58:35', 1);
+(1, 3, 5, 'C20255', 'student123', '2025-05-17', '09:58:35', 1),
+(2, 2, 4, 'registrar1', 'admin123', '2025-05-22', '20:56:25', 1),
+(3, 4, 6, 'B20256', 'admin123', '2025-05-25', '02:29:30', 1);
 
 -- --------------------------------------------------------
 
@@ -57,10 +59,23 @@ CREATE TABLE `class_schedules` (
   `Subject_Id` int(11) NOT NULL,
   `Room_Id` int(11) NOT NULL,
   `Instructor_Id` int(11) NOT NULL,
+  `Day` int(11) NOT NULL,
   `Time_start` time NOT NULL,
   `Time_end` time NOT NULL,
+  `Date_added` date DEFAULT NULL,
+  `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_schedules`
+--
+
+INSERT INTO `class_schedules` (`Class_Schedule_Id`, `Semester_Id`, `Subject_Id`, `Room_Id`, `Instructor_Id`, `Day`, `Time_start`, `Time_end`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 1, 1, 1, 1, 1, '08:00:00', '09:30:00', NULL, '00:00:00', 1),
+(2, 1, 2, 1, 6, 1, '10:30:00', '10:00:00', '2025-06-01', '02:49:52', 1),
+(3, 1, 3, 1, 6, 1, '10:01:00', '11:30:00', '2025-06-01', '02:53:19', 1),
+(4, 1, 3, 1, 6, 2, '09:30:00', '11:30:00', '2025-06-01', '02:53:43', 1);
 
 -- --------------------------------------------------------
 
@@ -76,6 +91,19 @@ CREATE TABLE `courses` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`Course_Id`, `Course_name`, `Course_code`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 'Bachelor of Science in Information Technology', 'BSIT', '2025-05-18', '02:58:18', 1),
+(2, 'Bachelor of Science in Hotel and Restaurant Management', 'BSHRM', '2025-05-18', '03:12:31', 1),
+(3, 'Bachelor of Science in Business Administration', 'BSBA', '2025-05-18', '03:13:15', 1),
+(4, 'Bachelor of Science in Business Management', 'BSBM', '2025-05-18', '03:13:53', 1),
+(5, 'Bachelor of Science in Computer Engineering', 'BSCoE', '2025-05-18', '03:14:24', 1),
+(6, 'Bachelor of Science in Computer Science', 'BSCS', '2025-05-18', '03:14:41', 1),
+(7, 'Bachelor of Science in Education', 'BSE', '2025-05-18', '03:15:14', 1);
 
 -- --------------------------------------------------------
 
@@ -145,6 +173,21 @@ CREATE TABLE `rooms` (
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`Room_Id`, `Room_name`, `Room_details`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, '1FA ', 'First Floor Section A', '2025-05-20', '09:01:57', 1),
+(2, '1FB', 'First Floor Section B', '2025-05-20', '09:02:51', 1),
+(3, '1FC', 'First Floor Section C', '2025-05-20', '09:03:11', 1),
+(4, '2FA', 'Second Floor Section A', '2025-05-20', '09:03:45', 1),
+(5, '2FB', 'Second Floor Section B', '2025-05-20', '09:03:55', 1),
+(6, '2FC', 'Second Floor Section C', '2025-05-20', '09:04:03', 1),
+(7, '3FA', 'Third Floor Section A', '2025-05-20', '09:04:16', 1),
+(8, '3FB', 'Third Floor Section B', '2025-05-20', '09:04:25', 1),
+(9, '3FC', 'Third Floor Section C', '2025-05-20', '09:04:32', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -156,6 +199,29 @@ CREATE TABLE `semesters` (
   `Semester_name` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `semesters`
+--
+
+INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, '1 Year 1st Semester A.Y. 2025-2026', '2025-05-19', '06:49:52', 1),
+(2, '1 Year 2nd Semester A.Y. 2025-2026', '2025-05-19', '07:11:56', 1),
+(3, '2 Year 1st Semester A.Y. 2026-2027', '2025-05-22', '09:12:21', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `Sett_Id` int(11) NOT NULL,
+  `Sett_desc` varchar(255) NOT NULL,
+  `Sett_val` varchar(255) NOT NULL,
+  `Last_update` date NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -211,6 +277,15 @@ CREATE TABLE `subjects` (
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`Subject_Id`, `Course_Id`, `Subject_name`, `Subject_code`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 1, 'Data Structures and Algorithms', 'BSIT-DSA', '2025-05-18', '04:30:26', 1),
+(2, 1, 'Cyber Security 101', 'BSIT-CS', '2025-05-18', '06:30:41', 1),
+(3, 7, 'Feynman 101', 'BSE-FEYN', '2025-05-18', '06:31:17', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -247,8 +322,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
-(4, 'Richard del', 'Sanidad', 'Altre', '', '1998-12-20', 'Single', 'Male', 'Filipno/Spanish', 'monterorichard09@gmail.com', '09631753678', 'Masipag, GMA, Cavite, 4117', 'Aurelia Altre', 'Mother', '09095218573', 'aurelia.altre@gmail.com', 'Business Owner', 'Masipag, GMA, Cavite, 4117', '2025-05-12', '11:08:06', '2025-05-17', 0),
-(5, 'Richard del', 'Sanidad', 'Altre', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite, Blk 21, Lot, B.Pulido', 'Aurelia Altre', 'Mother', '09095218573', 'aurelia.sanidadaltre@gmail', 'Business Owner', 'GMA, Cavite, Blk 21, Lot, B.Pulido', '2025-05-17', '09:58:35', '2025-05-17', 1);
+(4, 'Richard del', 'Sanidad', 'Altre', '', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-05-17', 1),
+(5, 'Richard del', 'Sanidad', 'Altre', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite, Blk 21, Lot, B.Pulido', 'Aurelia Altre', 'Mother', '09095218573', 'aurelia.sanidadaltre@gmail', 'Business Owner', 'GMA, Cavite, Blk 21, Lot, B.Pulido', '2025-05-17', '09:58:35', '2025-05-18', 1),
+(6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-05-25', 1);
 
 --
 -- Indexes for dumped tables
@@ -303,6 +379,12 @@ ALTER TABLE `semesters`
   ADD PRIMARY KEY (`Semester_Id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`Sett_Id`);
+
+--
 -- Indexes for table `student_classes`
 --
 ALTER TABLE `student_classes`
@@ -334,19 +416,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `class_schedules`
 --
 ALTER TABLE `class_schedules`
-  MODIFY `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `Course_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Course_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `file_attachments`
@@ -370,13 +452,19 @@ ALTER TABLE `levels`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `Room_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Room_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `semesters`
 --
 ALTER TABLE `semesters`
-  MODIFY `Semester_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Semester_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `Sett_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `student_classes`
@@ -394,13 +482,13 @@ ALTER TABLE `student_grades`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `Subject_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Subject_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
