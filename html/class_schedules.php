@@ -353,9 +353,11 @@
 
                                     <div class="modal-body">
 
+
+
                                         <div class="row">
 
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <p><b>Semester: <span class="text-danger">(*)</span></b></p>
                                                     <select 
@@ -394,7 +396,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <p><b>Room: <span class="text-danger">(*)</span></b></p>
                                                     <select 
@@ -642,64 +644,111 @@
                                     </button>
                                 </div>
 
-                                <div class="modal-body">
+                                <div class="modal-body" style="max-height:70vh; overflow:auto;">
 
-                                    <table class="table table-sm" style="width:50%;">
-                                        <tbody>
-                                            <tr>
-                                                <td class="font-weight-bold">Semester: </td>
-                                                <td id="semester_txt">---</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-bold">Room: </td>
-                                                <td id="room_txt">---</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <input type="hidden" name="class_sched_val" id="class_sched_val">
 
-                                    <br>
-                                    
-                                    <h5>Schedule Details:</h5>
-                                    <table class="table table-sm" style="width:50%;">
-                                        <tbody>
-                                            <tr>
-                                                <td class="font-weight-bold">Day: </td>
-                                                <td id="day_txt">---</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-bold">Time Start: </td>
-                                                <td id="time_start_txt">---</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-bold">Time End: </td>
-                                                <td id="time_end_txt">---</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="row">
 
-                                    <br>
+                                        <div class="col-lg-6">
+                                                
+                                            <table class="table table-sm" style="width:100%;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Semester: </td>
+                                                        <td id="semester_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Room: </td>
+                                                        <td id="room_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><h5 class="mt-4 mb-4">Schedule Details:</h5></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Day: </td>
+                                                        <td id="day_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Time Start: </td>
+                                                        <td id="time_start_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Time End: </td>
+                                                        <td id="time_end_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><h5 class="mt-4 mb-4">Subject Details:</h5></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Course: </td>
+                                                        <td id="course_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Subject: </td>
+                                                        <td id="subject_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Instructor: </td>
+                                                        <td id="instructor_txt">---</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                    <h5>Subject Details:</h5>
-                                    <table class="table table-sm" style="width:50%;">
-                                        <tbody>
-                                            <tr>
-                                                <td class="font-weight-bold">Course: </td>
-                                                <td id="course_txt">---</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-bold">Subject: </td>
-                                                <td id="subject_txt">---</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-weight-bold">Instructor: </td>
-                                                <td id="instructor_txt">---</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        </div>
+
+                                        <div class="col-lg-6">
+
+                                            <h5 class="font-weight-bold text-uppercase">
+                                                <span class="fa fa-users"></span>
+                                                &nbspStudents List
+                                            </h5>
+
+                                            <hr>
+
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="font-weight-bold">TOTAL:</h5>
+                                                <h4 class="ml-2">( <span id="total_students">0</span> )</h4>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="form-group">
+                                                <p><b>Search:</b></p>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control form-control-sm"
+                                                    name="search_student_val" 
+                                                    id="search_student_val"
+                                                    placeholder="Search student name here (e.g. First Middle Last)"
+                                                    autocomplete="off">
+
+                                                <!-- ========= Search Suggestions ============= -->
+                                                    <div style="position:absolute; width:96%;">
+                                                        <ul class="list-group" id="search_results_div"></ul>
+                                                    </div>
+                                                <!-- ========= Search Suggestions END ========= -->
+                                            </div>
+
+                                            <table class="table table-hover">
+
+                                                <tbody class="table-sm" id="class_student_lists"></tbody>
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
 
                                 <div class="modal-footer">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger font-weight-bold text-uppercase delete-class-sched-btn">
+                                        <span class="fa fa-trash"></span>
+                                        &nbspDelete
+                                    </button>
                                     <button 
                                         type="button" 
                                         class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
@@ -802,6 +851,8 @@
 
         $(document).ready(function () {
 
+            // scheduleInfoModal(`1`, `1 Year 1st Semester A.Y. 2025-2026`, `1FA `, `1`, `08:00 AM`, `09:30 AM`, `Bachelor of Science in Information Technology`, `BSIT`,  `Data Structures and Algorithms`, `BSIT-DSA`, ``)
+
             // ================= Select2 =================
                 $('#semester_Id').select2({
                     "placeholder":"Select semester here",
@@ -900,17 +951,7 @@
             // ============== Record Filter ================
                 $('#semester_dd_val, #room_dd_val, #course_dd_val').on('change', function(){
 
-                    var semester_Id = $('#semester_dd_val').val()
-                    var room_Id     = $('#room_dd_val').val()
-                    var course_Id   = $('#course_dd_val').val()
-
-                    fetchSchedule('monday_schedules', 1, semester_Id, course_Id, room_Id)
-                    fetchSchedule('tuesday_schedules', 2, semester_Id, course_Id, room_Id)
-                    fetchSchedule('wednesday_schedules', 3, semester_Id, course_Id, room_Id)
-                    fetchSchedule('thursday_schedules', 4, semester_Id, course_Id, room_Id)
-                    fetchSchedule('friday_schedules', 5, semester_Id, course_Id, room_Id)
-                    fetchSchedule('saturday_schedules', 6, semester_Id, course_Id, room_Id)
-                    fetchSchedule('sunday_schedules', 7, semester_Id, course_Id, room_Id)
+                    fetchSelectedSchedule()
                 })
             // ============== Record Filter END ============
 
@@ -921,8 +962,218 @@
                 subjectDD(course_Id)
             })
 
+            // ============== Search Student ==============
+                $('#search_student_val').on('keyup paste input', function(){
+
+                    var output=''
+
+                    var student_query   = $('#search_student_val').val()
+                    var class_sched_val = $('#class_sched_val').val()
+
+                    if(student_query != ''){
+
+                        $('#search_results_div').show()
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/UserModel.php",
+                            data: {
+                                queryval:student_query,
+                                levelid:3,
+                                limitval:5,
+                                action:"fetch_user_info"
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+                                
+                                if(response.length > 0){
+    
+                                    $.each(response, function(key, value){
+    
+                                        var fname = value.FName
+                                        var mname = value.MName
+                                        var lname = value.LName
+    
+                                        var fullname = fname+" "+mname+" "+lname
+    
+                                        output+='<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">'
+                                        output+='<div>'
+                                        output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                                        output+='&nbsp <span>'+ fullname +'</span>'
+                                        output+='</div>'
+
+                                        output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase add-stud-btn" userid="'+ value.UserId +'" classschedid="'+ class_sched_val +'">'
+                                        output+='Add'
+                                        output+='</button>'
+
+                                        output+='</li>'
+                                    })
+                                }
+                                else{
+
+                                    output+='<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-center">'
+                                    output+='<span>No Result.</span>'
+                                    output+='</li>'
+                                }
+    
+                                $('#search_results_div').html(output)
+                            }
+                        })
+                    }
+                    else{
+
+                        $('#search_results_div').hide()
+                    }
+                })
+            // ============== Search Student END ==========
+
+
+            // ============== Add New Student to Class ===============
+                $('#search_results_div').on('click', '.add-stud-btn', function() {
+
+                    var user_Id         = $(this).attr('userid')
+                    var class_sched_Id  = $(this).attr('classschedid')
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/ClassSchedulesModel.php",
+                        data: {
+                            userid:user_Id,
+                            classschedid:class_sched_Id, 
+                            action:"new_class_student"
+                        },
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                $('#search_student_val').val('')
+                                $('#search_results_div').hide()
+
+                                fetchClassStudents(class_sched_Id)
+
+                                toastr.success('You added a new student in a class', 'SAVED SUCCESSFULLY')
+                            }
+                            else if(response == 2 || response == 3){
+
+                                toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                            }
+                            else if(response == 4){
+
+                                toastr.info('Record already exists', 'CANNOT BE ADDED')
+                            }
+                        }
+                    })
+                })
+            // ============== Add New Student to Class END ===========
+
+            // ============== Delete Class Student ===============
+                $('#class_student_lists').on('click', '.delete-class-stud_btn', function(){
+
+                    var stud_class_Id = $(this).attr('studclassid')
+
+                    swal({   
+                        title: "DELETE STUDENT?",   
+                        text: "This is cannot be reverted",   
+                        type: "question",   
+                        showCancelButton: true,   
+                        confirmButtonColor: "#DD6B55",   
+                        confirmButtonText: "YES",   
+                        cancelButtonText: "NO",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false 
+                    }).then((isConfirm) => {
+
+                        if (isConfirm.value == true) {  
+
+                            $.ajax({
+                                type: "POST",
+                                url: "models/ClassSchedulesModel.php",
+                                data: {
+                                    studclassid:stud_class_Id,
+                                    action:"delete_class_student"
+                                },
+                                dataType: "JSON",
+                                success: function (response) {
+                                
+                                    if(response == 1){
+
+                                        toastr.success('You removed a student from a class', 'REMOVED SUCCESSFULLY')
+                                    }
+                                    else if(response == 2 || response == 3){
+
+                                        toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                    }
+                                }
+                            });
+                        }
+                    })
+                })
+            // ============== Delete Class Student END ===========
+
+            // ============== Delete Class Schedule ===============
+                $('.delete-class-sched-btn').on('click', function(){
+
+                    var class_sched_Id = $('#class_sched_val').val()
+
+                    swal({   
+                        title: "DELETE CLASS SCHEDULE?",   
+                        text: "This is cannot be reverted",   
+                        type: "question",   
+                        showCancelButton: true,   
+                        confirmButtonColor: "#DD6B55",   
+                        confirmButtonText: "YES",   
+                        cancelButtonText: "NO",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false 
+                    }).then((isConfirm) => {
+
+                        if (isConfirm.value == true) {  
+
+                            $.ajax({
+                                type: "POST",
+                                url: "models/ClassSchedulesModel.php",
+                                data: {
+                                    classschedid:class_sched_Id,
+                                    action:"delete_class_schedule"
+                                },
+                                dataType: "JSON",
+                                success: function (response) {
+                                    
+                                    if(response == 1){
+
+                                        fetchSelectedSchedule()
+
+                                        $('#scheduleInfoMod').modal('hide')
+
+                                        toastr.success('You removed a class schedule', 'REMOVED SUCCESSFULLY')
+                                    }
+                                    else if(response == 2 || response == 3){
+
+                                        toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+            // ============== Delete Class Schedule END ===========
         })
 
+        function fetchSelectedSchedule(){
+
+            var semester_Id = $('#semester_dd_val').val()
+            var room_Id     = $('#room_dd_val').val()
+            var course_Id   = $('#course_dd_val').val()
+
+            fetchSchedule('monday_schedules', 1, semester_Id, course_Id, room_Id)
+            fetchSchedule('tuesday_schedules', 2, semester_Id, course_Id, room_Id)
+            fetchSchedule('wednesday_schedules', 3, semester_Id, course_Id, room_Id)
+            fetchSchedule('thursday_schedules', 4, semester_Id, course_Id, room_Id)
+            fetchSchedule('friday_schedules', 5, semester_Id, course_Id, room_Id)
+            fetchSchedule('saturday_schedules', 6, semester_Id, course_Id, room_Id)
+            fetchSchedule('sunday_schedules', 7, semester_Id, course_Id, room_Id)
+        }
 
         function fetchSchedule(day_div, day_Id, semester_Id, course_Id, room_Id){
 
@@ -943,7 +1194,7 @@
                     
                     $.each(response, function(key, value){
 
-                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.SemesterName +'`, `'+ value.RoomName +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
+                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ value.RoomName +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
 
                         output+='<div class="bg-info p-2 mt-1 mb-1 text-white" style="min-height:80px;cursor:pointer;" onclick="'+ scheduleInfoModal +'">'
                         output+='<span class="font-weight-bold"><h5>'+ value.SubjectName +'</h5></span>'
@@ -989,9 +1240,14 @@
             });
         }
 
-        function scheduleInfoModal(semester, room, day, time_start, time_end, course, course_code, subject, subject_code, instructor){
+        function scheduleInfoModal(class_schedule_Id, semester, room, day, time_start, time_end, course, course_code, subject, subject_code, instructor){
 
             $('#scheduleInfoMod').modal('show')
+
+            $('#class_sched_val').val(class_schedule_Id)
+
+            $('#search_student_val').val('')
+            $('#search_results_div').hide()
 
             $('#semester_txt').html(semester)
             $('#room_txt').html(room)
@@ -1031,6 +1287,59 @@
             $('#course_txt').html(course+' | '+course_code)
             $('#subject_txt').html(subject+' | '+subject_code)
             $('#instructor_txt').html(instructor)
+
+            fetchClassStudents(class_schedule_Id)
+        }
+
+        function fetchClassStudents(class_schedule_Id){
+
+            var output=''
+
+            $.ajax({
+                type: "POST",
+                url: "models/ClassSchedulesModel.php",
+                data: {
+                    classschedid:class_schedule_Id,
+                    action:"fetch_class_students"
+                },
+                dataType: "JSON",
+                success: function (response) {
+
+                    var total_records = response.length
+
+                    $('#total_students').html(total_records)
+                    
+                    if(total_records > 0){
+
+                        $.each(response, function(key, value){
+
+                            var fullname = value.FName+" "+value.MName+" "+value.LName
+
+                            output+='<tr>'
+                            output+='<td>'
+                            output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                            output+='&nbsp <span>'+ fullname +'</span>'
+                            output+='</td>'
+
+                            output+='<td class="text-right">'
+                            output+='<button type="button" class="btn btn-outline-light btn-sm text-danger delete-class-stud_btn" studclassid="'+ value.StudentClassId +'">'
+                            output+='<span class="fa fa-trash"></span>'
+                            output+='</button>'
+                            output+='</td>'
+
+                            output+='</tr>'
+                        })
+                    }
+                    else{
+
+                        output+='<tr>'
+                        output+='<td colspan="2" class="text-center">No data available in the table.</td>'
+                        output+='</tr>'
+                    }
+
+                    $('#class_student_lists').html(output)
+                }
+            })
         }
 
     </script>

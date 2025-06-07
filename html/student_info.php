@@ -41,8 +41,13 @@
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-solid.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fontawesome.min.css"> -->
 
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
 
         <title><?= $appname ?></title>
@@ -670,6 +675,101 @@
 
                     </div>
 
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link font-weight-bold text-dark active" data-toggle="tab" href="#csmenu1">
+                                        <span class="fa fa-calendar"></span>
+                                        &nbspClass Schedules
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link font-weight-bold text-dark" data-toggle="tab" href="#sgmenu2">
+                                        <span class="fa fa-file-alt"></span>
+                                        &nbspGrades
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+                                </li> -->
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="csmenu1"><br><br>
+
+                                    <div class="row">
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <p><b>Semester:</b></p>
+                                                <select 
+                                                    class="form-control form-control-sm" 
+                                                    name="semester_dd" 
+                                                    id="semester_dd">
+                                                    <option value=""></option>
+                                                    <?php
+    
+                                                        $query="SELECT 
+                                                                    Semester_Id, 
+                                                                    Semester_name 
+                                                                FROM 
+                                                                    semesters 
+                                                                WHERE 
+                                                                    Status = 1 ";
+    
+                                                        $fetch = mysqli_query($con, $query);
+    
+                                                        $count = mysqli_num_rows($fetch);
+    
+                                                        if($fetch && $count > 0){
+    
+                                                            while($row = mysqli_fetch_assoc($fetch)){
+    
+                                                                $semester_Id    = $row['Semester_Id'];
+                                                                $semester_name  = $row['Semester_name'];
+                                                                
+                                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                            }
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-4"></div>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <table class="table table-hover display nowrap" style="width:100%;" id="class_schedules_tbl">
+                                        <thead class="table-bordered font-weight-bold text-uppercase">
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>Day</th>
+                                                <th>Time</th>
+                                                <th>Room</th>
+                                                <th>Instructor</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="sgmenu2">...</div>
+                                <!-- <div class="tab-pane container fade" id="menu2">...</div> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Container fluid  -->
@@ -729,9 +829,13 @@
         <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
-        <!-- <script src="../assets/libs/sweetalert2/sweet-alert.init.js"></script> -->
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+        <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
 
 
         <!--Wave Effects -->
@@ -754,6 +858,20 @@
                 fetchStudentInfo()
 
                 fetchAccountInfo()
+
+                // ============ Select2 ===============
+                    $('#semester_dd').select2({
+                        "placeholder":"Select semester here",
+                        "allowClear":true
+                    })
+                // ============ Select2 END ===========
+
+                $('#semester_dd').on('change', function(){
+
+                    $('#class_schedules_tbl').DataTable().destroy()
+
+                    classSchedulesTbl()
+                })
 
                 $('#editInfo1Form').on('submit', function(aa){
 
@@ -871,6 +989,54 @@
                         }  
                     })
                 })
+
+                // ============== Delete Class Student ===============
+                    $('#class_schedules_tbl').on('click', '.delete-class-stud_btn', function(){
+
+                        var stud_class_Id = $(this).attr('studclassid')
+
+                        swal({   
+                            title: "DELETE STUDENT?",   
+                            text: "This is cannot be reverted",   
+                            type: "question",   
+                            showCancelButton: true,   
+                            confirmButtonColor: "#DD6B55",   
+                            confirmButtonText: "YES",   
+                            cancelButtonText: "NO",   
+                            closeOnConfirm: false,   
+                            closeOnCancel: false 
+                        }).then((isConfirm) => {
+
+                            if (isConfirm.value == true) {  
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "models/ClassSchedulesModel.php",
+                                    data: {
+                                        studclassid:stud_class_Id,
+                                        action:"delete_class_student"
+                                    },
+                                    dataType: "JSON",
+                                    success: function (response) {
+                                    
+                                        if(response == 1){
+
+                                            // $(this).DataTable().row('#scs_item_'+stud_class_Id).remove().draw()
+
+                                            $('#class_schedules_tbl').DataTable().ajax.reload()
+
+                                            toastr.success('You removed a student from a class', 'REMOVED SUCCESSFULLY')
+                                        }
+                                        else if(response == 2 || response == 3){
+
+                                            toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                    })
+                // ============== Delete Class Student END ===========
             })
 
             function fetchStudentInfo(){
@@ -998,6 +1164,52 @@
                 $('#e_g_email').val(g_email_txt)
                 $('#e_g_phoneno').val(g_phoneno_txt)
                 $('#e_g_address').val(g_address_txt)
+            }
+
+            function classSchedulesTbl(){
+
+                var semester_dd = $('#semester_dd').val()
+
+                $('#class_schedules_tbl').DataTable({
+
+                    "responsive":true,
+                    "bInfo":false,
+                    "aaSorting": [],
+                    "columnDefs": [
+                        { className: "font-weight-bold", "targets": [0, 4] },
+                        // { orderable: false, targets: [5] }
+                        // { "width": "20%", "targets": 4 }
+                    ],
+                    "ajax": {
+                        'type':'POST',
+                        'url':'models/ClassSchedulesModel.php',
+                        'data':{
+                            action:"fetch_user_class_schedules",
+                            semesterid:semester_dd,
+                            studid:student_Id
+                        },
+                    },
+                    "columns": [
+                        { "data": "SubjectName2" },
+                        { "data": "SchedDay" },
+                        { "data": "TimeSched" },
+                        { "data": "RoomName" },
+                        { "data": "InstructorName" },
+                        { "data": "StudentClassId", 
+                        
+                            render : function ( data, type, row, meta) {
+
+                                var output=''
+
+                                output+='<button type="button" class="btn btn-outline-light text-danger btn-sm delete-class-stud_btn" studclassid="'+ data +'" title="Delete schedule">'
+                                output+='<span class="fas fa-trash"></span>'
+                                output+='</button>'
+
+                                return output
+                            }
+                        },
+                    ],
+                })
             }
 
         </script>
