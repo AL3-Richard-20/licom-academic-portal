@@ -158,7 +158,7 @@
                 $query .="AND class_schedules.Day = '".$day_Id."' ";
             }
 
-            if($_POST['instructorid'] != ''){
+            if(isset($_POST['instructorid']) && $_POST['instructorid'] != ''){
 
                 $instructor_Id = $_POST['instructorid'];
 
@@ -281,42 +281,42 @@
                         class_schedules.Status = 1 
                         AND student_classes.Status = 1 ";
             
-            if($_POST['semesterid'] != ''){
+            if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
 
                 $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
             }
 
-            if($_POST['courseid'] != ''){
+            if(isset($_POST['courseid']) && $_POST['courseid'] != ''){
 
                 $course_Id = $_POST['courseid'];
 
                 $query .="AND subjects.Course_Id = '".$course_Id."' ";
             }
 
-            if($_POST['roomid'] != ''){
+            if(isset($_POST['roomid']) && $_POST['roomid'] != ''){
 
                 $room_Id = $_POST['roomid'];
 
                 $query .="AND class_schedules.Room_Id = '".$room_Id."' ";
             }
 
-            if($_POST['dayid'] != ''){
+            if(isset($_POST['dayid']) && $_POST['dayid'] != ''){
 
                 $day_Id = $_POST['dayid'];
 
                 $query .="AND class_schedules.Day = '".$day_Id."' ";
             }
 
-            if($_POST['studid'] != ''){
+            if(isset($_POST['studid']) && $_POST['studid'] != ''){
 
                 $student_Id = $_POST['studid'];
 
                 $query .="AND student_classes.Student_Id = '".$student_Id."' ";
             }
 
-            if($_POST['instructorid'] != ''){
+            if(isset($_POST['instructorid']) && $_POST['instructorid'] != ''){
 
                 $instructor_Id = $_POST['instructorid'];
 
@@ -328,7 +328,7 @@
 
             $fetch = mysqli_query($con, $query);
 
-            $results_arr = array();
+            $data = array();
 
             if($fetch){
 

@@ -193,7 +193,7 @@
                                         $room_name      = $row['Room_name'];
                                         $room_details   = $row['Room_details'];
                                         
-                                        echo "<option value='".$room_Id."'>".$room_name." | ".$room_details."</option>";
+                                        echo "<option value='".$room_Id."' roomnametxt='".$room_name."'>".$room_name." | ".$room_details."</option>";
                                     }
                                 }
                             ?>
@@ -249,7 +249,14 @@
 
                 </div>
 
-                <hr>
+                <hr><br>
+
+                <div class="text-center">
+                    <span>Schedules from </span><br>
+                    <span class="font-weight-bold" id="room_txt">---</span>
+                </div>
+
+                <br>
 
                 <div class="d-flex flex-row" style="max-width:100%; overflow-x:auto;">
 
@@ -886,8 +893,7 @@
                 })
 
                 $('#room_dd_val').select2({
-                    "placeholder":"Select room here",
-                    "allowClear":true
+                    "placeholder":"Select room here"
                 })
 
                 $('#course_dd_val').select2({
@@ -951,7 +957,19 @@
             // ============== Record Filter ================
                 $('#semester_dd_val, #room_dd_val, #course_dd_val').on('change', function(){
 
-                    fetchSelectedSchedule()
+                    var semester_Id = $('#semester_dd_val').val()
+                    var room_Id     = $('#room_dd_val').val()
+                    var course_Id   = $('#course_dd_val').val()
+
+                    var data = $('#room_dd_val').select2('data')
+                    var room_txt = data[0].text
+
+                    $('#room_txt').html(room_txt)
+
+                    if(semester_Id != '' && room_Id != ''){
+
+                        fetchSelectedSchedule()
+                    }
                 })
             // ============== Record Filter END ============
 
@@ -1070,7 +1088,8 @@
             // ============== Delete Class Student ===============
                 $('#class_student_lists').on('click', '.delete-class-stud_btn', function(){
 
-                    var stud_class_Id = $(this).attr('studclassid')
+                    var class_schedule_Id   = $('#class_sched_val').val()
+                    var stud_class_Id       = $(this).attr('studclassid')
 
                     swal({   
                         title: "DELETE STUDENT?",   
@@ -1097,6 +1116,8 @@
                                 success: function (response) {
                                 
                                     if(response == 1){
+
+                                        fetchClassStudents(class_schedule_Id)
 
                                         toastr.success('You removed a student from a class', 'REMOVED SUCCESSFULLY')
                                     }
