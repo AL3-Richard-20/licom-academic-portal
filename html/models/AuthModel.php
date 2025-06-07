@@ -30,7 +30,8 @@
                 $query2 = "SELECT 
                                 FName, 
                                 MName, 
-                                LName 
+                                LName,
+                                Email 
                             FROM 
                                 users 
                             WHERE 
@@ -44,11 +45,13 @@
                 $first_name  = $fetch2_results['Results'][0]['FName'];
                 $middle_name = $fetch2_results['Results'][0]['MName'];
                 $last_name   = $fetch2_results['Results'][0]['LName'];
+                $email_addr  = $fetch2_results['Results'][0]['Email'];
 
                 $_SESSION["licom_usr_Id"]    = $user_Id;
                 $_SESSION["licom_usr_fname"] = $first_name;
                 $_SESSION["licom_usr_mname"] = $middle_name;
                 $_SESSION["licom_usr_lname"] = $last_name;
+                $_SESSION["licom_usr_email"] = $email_addr;
                 $_SESSION["licom_usr_level"] = $level_Id;
 
                 $res_req = 1;

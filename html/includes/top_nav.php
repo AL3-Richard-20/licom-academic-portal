@@ -221,24 +221,24 @@
 
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <img src="../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31">
+                                <img src="../assets/images/users/user-icon-512x512-x23sj495.png" alt="user" class="rounded-circle" width="31">
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
 
                                 <span class="with-arrow">
-                                    <span class="bg-primary"></span>
+                                    <span class="bg-info"></span>
                                 </span>
 
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                <div class="d-flex no-block align-items-center p-15 bg-info text-white m-b-10">
 
                                     <div class="">
-                                        <img src="../assets/images/users/1.jpg" alt="user" class="img-circle" width="60">
+                                        <img src="../assets/images/users/user-icon-512x512-x23sj495.png" alt="user" class="img-circle" width="60">
                                     </div>
 
                                     <div class="m-l-10">
                                         <h4 class="m-b-0"><?= $_SESSION["licom_usr_fname"]." ".$_SESSION["licom_usr_lname"] ?></h4>
-                                        <p class=" m-b-0">varun@gmail.com</p>
+                                        <p class=" m-b-0"><?= $_SESSION["licom_usr_email"] ?></p>
                                     </div>
 
                                 </div>
@@ -258,7 +258,7 @@
                                 <div class="dropdown-divider"></div>
 
 
-                                <a class="dropdown-item" href="javascript:void(0)">
+                                <a class="dropdown-item" href="includes/logout.php">
                                     <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
                                 </a>
 

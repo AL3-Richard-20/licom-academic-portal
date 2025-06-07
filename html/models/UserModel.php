@@ -7,74 +7,115 @@
 
         if($_POST['action'] == 'fetch_user_info'){
 
-            $user_Id = $_POST['userid'];
-
             $query="SELECT 
-                       * 
+                       users.*,
+                       accounts.Level_Id  
                     FROM 
                         users 
+                    LEFT JOIN 
+                        accounts 
+                    ON 
+                        users.User_Id = accounts.User_Id
                     WHERE 
-                        User_Id = '".$user_Id."' 
-                    LIMIT 1 ";
+                        NOT ISNULL(users.User_Id) ";
+
+
+            if($_POST['userid'] != ''){
+
+                $user_Id = $_POST['userid'];
+
+                $query .="AND users.User_Id = '".$user_Id."' ";
+            }
+            
+            if($_POST['queryval'] != ''){
+
+                $query_val = $_POST['queryval'];
+
+                $query .="AND (users.FName LIKE '%".$query_val."%' 
+                        OR users.MName LIKE '%".$query_val."%' 
+                        OR users.LName LIKE '%".$query_val."%' 
+                        OR users.Email LIKE '%".$query_val."%' 
+                        OR CONCAT(users.FName, ' ', users.MName, ' ', users.LName) LIKE '%".$query_val."%'   
+                        OR CONCAT(users.FName, ' ', users.LName) LIKE '%".$query_val."%' ) ";
+            }
+
+            if($_POST['levelid'] != ''){
+
+                $level_Id_val = $_POST['levelid'];
+
+                $query .="AND accounts.Level_Id = '".$level_Id_val."' ";
+            }
+
+            if($_POST['limitval'] != ''){
+
+                $limit_val = $_POST['limitval'];
+
+                $query .="LIMIT ".$limit_val;
+            }
 
             $fetch = mysqli_query($con, $query);
 
+            $count = mysqli_num_rows($fetch);
+
             $results_arr = array();
 
-            if($fetch){
+            if($fetch && $count > 0){
 
-                $row = mysqli_fetch_assoc($fetch);
+                while($row = mysqli_fetch_assoc($fetch)){
 
-                $fname       = $row['FName'];
-                $mname       = $row['MName'];
-                $lname       = $row['LName'];
-                $suffix      = $row['Suffix'];
-                $bdate       = $row['Birthdate'];
-                $civil_stat  = $row['Civil_status'];
-                $sex         = $row['Sex'];
-                $nationality = $row['Nationality'];
-                $email       = $row['Email'];
-                $phone_no    = $row['Phone_no'];
-                $address     = $row['Address'];
+                    $db_user_Id  = $row['User_Id'];
+                    $fname       = $row['FName'];
+                    $mname       = $row['MName'];
+                    $lname       = $row['LName'];
+                    $suffix      = $row['Suffix'];
+                    $bdate       = $row['Birthdate'];
+                    $civil_stat  = $row['Civil_status'];
+                    $sex         = $row['Sex'];
+                    $nationality = $row['Nationality'];
+                    $email       = $row['Email'];
+                    $phone_no    = $row['Phone_no'];
+                    $address     = $row['Address'];
 
-                $guardian     = $row['Guardian'];
-                $relation     = $row['G_relation'];
-                $g_phone_no   = $row['G_contactno'];
-                $g_email      = $row['G_email'];
-                $g_occupation = $row['G_occupation'];
-                $g_address    = $row['G_address'];
-                $date_added   = $row['Date_added'];
-                $time_added   = $row['Time_added'];
-                $last_update  = $row['Last_update'];
+                    $guardian     = $row['Guardian'];
+                    $relation     = $row['G_relation'];
+                    $g_phone_no   = $row['G_contactno'];
+                    $g_email      = $row['G_email'];
+                    $g_occupation = $row['G_occupation'];
+                    $g_address    = $row['G_address'];
+                    $date_added   = $row['Date_added'];
+                    $time_added   = $row['Time_added'];
+                    $last_update  = $row['Last_update'];
 
-                $account_stat = $row['Status'];
+                    $account_stat = $row['Status'];
 
-                $result_arr = array(
-                    'FName' => $fname,       
-                    'MName' => $mname,       
-                    'LName' => $lname,       
-                    'Suffix' => $suffix,      
-                    'BDate' => dateFormat($bdate),       
-                    'BDate2' => $bdate,       
-                    'CivilStat' => $civil_stat,  
-                    'Sex' => $sex,         
-                    'Nationality' => $nationality, 
-                    'Email' => $email,       
-                    'PhoneNo' => $phone_no,    
-                    'Address' => $address,    
-                    'Guardian' => $guardian,     
-                    'Relation' => $relation,     
-                    'GPhoneNo' => $g_phone_no,   
-                    'GEmail' => $g_email,      
-                    'Occupation' => $g_occupation, 
-                    'GAddress' => $g_address,    
-                    'DateAdded' => dateFormat($date_added),   
-                    'TimeAdded' => timeFormat($time_added),   
-                    'LastUpdate' => dateFormat($last_update),  
-                    'Status' => $account_stat
-                );
+                    $result_arr = array(
+                        'UserId' => $db_user_Id,
+                        'FName' => $fname,       
+                        'MName' => ($mname != NULL) ? $mname : "",       
+                        'LName' => $lname,       
+                        'Suffix' => $suffix,      
+                        'BDate' => dateFormat($bdate),       
+                        'BDate2' => $bdate,       
+                        'CivilStat' => $civil_stat,  
+                        'Sex' => $sex,         
+                        'Nationality' => $nationality, 
+                        'Email' => $email,       
+                        'PhoneNo' => $phone_no,    
+                        'Address' => $address,    
+                        'Guardian' => $guardian,     
+                        'Relation' => $relation,     
+                        'GPhoneNo' => $g_phone_no,   
+                        'GEmail' => $g_email,      
+                        'Occupation' => $g_occupation, 
+                        'GAddress' => $g_address,    
+                        'DateAdded' => dateFormat($date_added),   
+                        'TimeAdded' => timeFormat($time_added),   
+                        'LastUpdate' => dateFormat($last_update),  
+                        'Status' => $account_stat
+                    );
 
-                array_push($results_arr, $result_arr);
+                    array_push($results_arr, $result_arr);
+                }
             }
 
             echo json_encode($results_arr);

@@ -165,7 +165,7 @@
 
                                     <thead class="table-bordered font-weight-bold text-uppercase">
                                         <tr>
-                                            <th>ID</th>
+                                            <th>ID #</th>
                                             <th>Name</th>
                                             <th>Contact No.</th>
                                             <th>Date Added</th>
@@ -198,6 +198,7 @@
                                                         users.Status = 1 
                                                         AND accounts.Level_Id = 3 
                                                     ORDER BY 
+                                                        users.User_Id DESC,
                                                         users.Date_added DESC, 
                                                         users.Time_added DESC ";
 
@@ -219,7 +220,7 @@
                                                     $status     = $row['Status'];
 
                                                     echo "<tr>";
-                                                    echo "<td>#".$user_Id."</td>";
+                                                    echo "<td>".$user_Id."</td>";
                                                     echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
                                                     echo "<td>".$phone_no."</td>";
                                                     echo "<td>".dateFormat($date_added)."</td>";
