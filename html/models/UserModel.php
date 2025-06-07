@@ -20,14 +20,14 @@
                         NOT ISNULL(users.User_Id) ";
 
 
-            if($_POST['userid'] != ''){
+            if(isset($_POST['userid']) && $_POST['userid'] != ''){
 
                 $user_Id = $_POST['userid'];
 
                 $query .="AND users.User_Id = '".$user_Id."' ";
             }
             
-            if($_POST['queryval'] != ''){
+            if(isset($_POST['queryval']) && $_POST['queryval'] != ''){
 
                 $query_val = $_POST['queryval'];
 
@@ -39,14 +39,14 @@
                         OR CONCAT(users.FName, ' ', users.LName) LIKE '%".$query_val."%' ) ";
             }
 
-            if($_POST['levelid'] != ''){
+            if(isset($_POST['levelid']) && $_POST['levelid'] != ''){
 
                 $level_Id_val = $_POST['levelid'];
 
                 $query .="AND accounts.Level_Id = '".$level_Id_val."' ";
             }
 
-            if($_POST['limitval'] != ''){
+            if(isset($_POST['limitval']) && $_POST['limitval'] != ''){
 
                 $limit_val = $_POST['limitval'];
 
