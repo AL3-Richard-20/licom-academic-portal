@@ -22,6 +22,10 @@
         <!-- Favicon icon -->
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
 
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
 
         <title><?= $appname ?></title>
 
@@ -130,7 +134,7 @@
                 <div class="row">
 
                     <div class="col-lg-3">
-                        <p><b>Semester:</b></p>
+                        <p><b>Semester: <span class="text-danger">(*)</span></b></p>
                         <select 
                             class="form-control form-control-sm"
                             name="semester_dd_val"
@@ -164,7 +168,7 @@
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <p><b>Room:</b></p>
+                        <p><b>Room: <span class="text-danger">(*)</span></b></p>
                         <select 
                             class="form-control form-control-sm"
                             name="room_dd_val"
@@ -253,7 +257,7 @@
 
                 <div class="text-center">
                     <span>Schedules from </span><br>
-                    <span class="font-weight-bold" id="room_txt">---</span>
+                    <span class="font-weight-bold" id="room_txt2">---</span>
                 </div>
 
                 <br>
@@ -358,9 +362,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="modal-body">
-
-
+                                    <div class="modal-body" style="max-height:70vh; overflow:auto;">
 
                                         <div class="row">
 
@@ -731,15 +733,15 @@
                                                     autocomplete="off">
 
                                                 <!-- ========= Search Suggestions ============= -->
-                                                    <div style="position:absolute; width:96%;">
+                                                    <div class="bg-white" style="position:absolute; width:96%; z-index:1000;">
                                                         <ul class="list-group" id="search_results_div"></ul>
                                                     </div>
                                                 <!-- ========= Search Suggestions END ========= -->
                                             </div>
 
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="class_student_lists">
 
-                                                <tbody class="table-sm" id="class_student_lists"></tbody>
+                                                <!-- <tbody class="table-sm"></tbody> -->
 
                                             </table>
 
@@ -838,6 +840,10 @@
     <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+    <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+
     <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="../assets/libs/toastr/build/toastr.min.js"></script>
     <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
@@ -888,8 +894,7 @@
 
 
                 $('#semester_dd_val').select2({
-                    "placeholder":"Select semester here",
-                    "allowClear":true
+                    "placeholder":"Select semester here"
                 })
 
                 $('#room_dd_val').select2({
@@ -964,9 +969,9 @@
                     var data = $('#room_dd_val').select2('data')
                     var room_txt = data[0].text
 
-                    $('#room_txt').html(room_txt)
-
                     if(semester_Id != '' && room_Id != ''){
+                        
+                        $('#room_txt2').html(room_txt)
 
                         fetchSelectedSchedule()
                     }
@@ -1068,9 +1073,15 @@
                                 $('#search_student_val').val('')
                                 $('#search_results_div').hide()
 
-                                fetchClassStudents(class_sched_Id)
+                                $('#class_student_lists').DataTable().ajax.reload()
 
                                 toastr.success('You added a new student in a class', 'SAVED SUCCESSFULLY')
+
+                                setTimeout(() => {
+                                            
+                                    countClassStudents()
+                                    
+                                }, 1000)
                             }
                             else if(response == 2 || response == 3){
 
@@ -1117,9 +1128,15 @@
                                 
                                     if(response == 1){
 
-                                        fetchClassStudents(class_schedule_Id)
+                                        $('#class_student_lists').DataTable().ajax.reload()
 
                                         toastr.success('You removed a student from a class', 'REMOVED SUCCESSFULLY')
+
+                                        setTimeout(() => {
+                                            
+                                            countClassStudents()
+
+                                        }, 1000);
                                     }
                                     else if(response == 2 || response == 3){
 
@@ -1215,7 +1232,9 @@
                     
                     $.each(response, function(key, value){
 
-                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ value.RoomName +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
+                        var room_name_val = value.RoomName+" | "+value.RoomDetails
+
+                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ room_name_val +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
 
                         output+='<div class="bg-info p-2 mt-1 mb-1 text-white" style="min-height:80px;cursor:pointer;" onclick="'+ scheduleInfoModal +'">'
                         output+='<span class="font-weight-bold"><h5>'+ value.SubjectName +'</h5></span>'
@@ -1312,55 +1331,64 @@
             fetchClassStudents(class_schedule_Id)
         }
 
+        function countClassStudents(){
+
+            var total_records = $('#class_student_lists').DataTable().data().count()
+
+            $('#total_students').html(total_records)
+        }
+
         function fetchClassStudents(class_schedule_Id){
 
-            var output=''
+            var cs_table = $('#class_student_lists').DataTable({
 
-            $.ajax({
-                type: "POST",
-                url: "models/ClassSchedulesModel.php",
-                data: {
-                    classschedid:class_schedule_Id,
-                    action:"fetch_class_students"
+                "responsive":true,
+                "bInfo":false,
+                "searching":false,
+                "bDestroy": true,
+                "aaSorting": [],
+                "dom": 'rtp',
+                "ajax": {
+                    'type':'POST',
+                    'url':'models/ClassSchedulesModel.php',
+                    'data':{
+                        classschedid:class_schedule_Id,
+                        action:"fetch_class_students"
+                    },
                 },
-                dataType: "JSON",
-                success: function (response) {
+                "columns": [
+                    { "data": "FullName", 
 
-                    var total_records = response.length
+                        render : function ( data, type, row, meta ) {
 
-                    $('#total_students').html(total_records)
-                    
-                    if(total_records > 0){
+                            var output=''
 
-                        $.each(response, function(key, value){
-
-                            var fullname = value.FName+" "+value.MName+" "+value.LName
-
-                            output+='<tr>'
-                            output+='<td>'
                             output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
-                            output+='&nbsp <span>'+ fullname +'</span>'
-                            output+='</td>'
+                            output+='&nbsp <span>'+ data +'</span>'
 
-                            output+='<td class="text-right">'
-                            output+='<button type="button" class="btn btn-outline-light btn-sm text-danger delete-class-stud_btn" studclassid="'+ value.StudentClassId +'">'
+                            return output
+                        }
+                    },
+                    { "data": "StudentClassId", 
+                    
+                        render : function ( data, type, row, meta) {
+
+                            var output=''
+
+                            output+='<button type="button" class="btn btn-outline-light btn-sm text-danger delete-class-stud_btn" studclassid="'+ data +'">'
                             output+='<span class="fa fa-trash"></span>'
                             output+='</button>'
-                            output+='</td>'
 
-                            output+='</tr>'
-                        })
-                    }
-                    else{
-
-                        output+='<tr>'
-                        output+='<td colspan="2" class="text-center">No data available in the table.</td>'
-                        output+='</tr>'
-                    }
-
-                    $('#class_student_lists').html(output)
-                }
+                            return output
+                        }
+                    },
+                ],
             })
+
+            setTimeout(() => {
+                
+                countClassStudents()
+            }, 1000)
         }
 
     </script>
