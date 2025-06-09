@@ -705,7 +705,7 @@
 
                                     <div class="row">
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <p><b>Semester:</b></p>
                                                 <select 
@@ -741,8 +741,43 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4"></div>
-                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-3">
+                                            <p><b>Room:</b></p>
+                                            <select 
+                                                class="form-control form-control-sm"
+                                                name="room_dd_val"
+                                                id="room_dd_val">
+                                                <option value=""></option>
+                                                <?php
+
+                                                    $query="SELECT 
+                                                                Room_Id, 
+                                                                Room_name,
+                                                                Room_details
+                                                            FROM 
+                                                                rooms 
+                                                            WHERE 
+                                                                Status = 1 ";
+
+                                                    $fetch = mysqli_query($con, $query);
+
+                                                    $count = mysqli_num_rows($fetch);
+
+                                                    if($fetch && $count > 0){
+
+                                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                                            $room_Id        = $row['Room_Id'];
+                                                            $room_name      = $row['Room_name'];
+                                                            $room_details   = $row['Room_details'];
+                                                            
+                                                            echo "<option value='".$room_Id."' roomnametxt='".$room_name."'>".$room_name." | ".$room_details."</option>";
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3"></div>
 
                                     </div>
 
@@ -864,13 +899,24 @@
                         "placeholder":"Select semester here",
                         "allowClear":true
                     })
+
+                    $('#room_dd_val').select2({
+                        "placeholder":"Select room here",
+                        "allowClear":true
+                    })
                 // ============ Select2 END ===========
 
-                $('#semester_dd').on('change', function(){
+                $('#semester_dd, #room_dd_val').on('change', function(){
 
-                    $('#class_schedules_tbl').DataTable().destroy()
+                    var semester_Id = $('#semester_dd').val()
+                    var room_Id     = $('#room_dd_val').val()
 
-                    classSchedulesTbl()
+                    // if(semester_Id != '' && room_Id != ''){
+
+                        $('#class_schedules_tbl').DataTable().destroy()
+
+                        classSchedulesTbl()
+                    // }
                 })
 
                 $('#editInfo1Form').on('submit', function(aa){
@@ -996,7 +1042,7 @@
                         var stud_class_Id = $(this).attr('studclassid')
 
                         swal({   
-                            title: "DELETE STUDENT?",   
+                            title: "DELETE STUDENT CLASS?",   
                             text: "This is cannot be reverted",   
                             type: "question",   
                             showCancelButton: true,   
@@ -1169,6 +1215,7 @@
             function classSchedulesTbl(){
 
                 var semester_dd = $('#semester_dd').val()
+                var room_dd     = $('#room_dd_val').val()
 
                 $('#class_schedules_tbl').DataTable({
 
@@ -1186,6 +1233,7 @@
                         'data':{
                             action:"fetch_user_class_schedules",
                             semesterid:semester_dd,
+                            roomid:room_dd,
                             studid:student_Id
                         },
                     },

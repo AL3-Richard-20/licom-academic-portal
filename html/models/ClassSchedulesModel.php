@@ -428,7 +428,7 @@
 
             $count = mysqli_num_rows($fetch);
 
-            $results_arr = array();
+            $data = array();
 
             if($count > 0){
 
@@ -443,19 +443,18 @@
                     $mname = $student_info[0]['MName'];
                     $lname = $student_info[0]['LName'];
 
-                    $result_arr = array(
+                    $data[] = array(
                         'StudentClassId' => $student_class_Id,
                         'StudentId' => $student_Id,
                         'FName' => $fname,
                         'MName' => $mname,
-                        'LName' => $lname
+                        'LName' => $lname,
+                        'FullName' => $fname." ".$mname." ".$lname
                     );
-
-                    array_push($results_arr, $result_arr);
                 }
             }
 
-            echo json_encode($results_arr);
+            echo json_encode(array('data' => $data));
         }
 
         else if($_POST['action'] == 'new_class_student'){
