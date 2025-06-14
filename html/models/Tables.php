@@ -5,9 +5,13 @@
     $accounts           = 'accounts';
     $class_schedules    = 'class_schedules';
     $courses            = 'courses';
+    $evaluation_grades  = 'evaluation_grades';
+    $evaluation_headers = 'evaluation_headers';
+    $evaluation_metrics = 'evaluation_metrics';
     $file_attachments   = 'file_attachments';
     $file_types         = 'file_types';
     $levels             = 'levels';
+    $metric_values      = 'metric_values';
     $rooms              = 'rooms';
     $semesters          = 'semesters';
     $student_classes    = 'student_classes';

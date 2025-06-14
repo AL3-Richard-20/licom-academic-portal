@@ -161,12 +161,54 @@
 
                 <!-- <li class="sidebar-item">
                     <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                        href="asd" 
+                        href="evaluation_form.php" 
                         aria-expanded="false">
                         <i class="fa fa-file-alt"></i>
                         <span class="hide-menu">Evaluation Form</span>
                     </a>
                 </li> -->
+
+                <li class="sidebar-item">
+
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                    <i class="fa fa-file-alt"></i>
+                        <span class="hide-menu">Evaluation Form </span>
+                    </a>
+
+                    <ul aria-expanded="false" class="collapse  first-level">
+                        <li class="sidebar-item">
+                            <a href="eval_headers.php" class="sidebar-link">
+                                <i class="icon-Record"></i>
+                                <span class="hide-menu">Headers</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="eval_metrics.php" class="sidebar-link">
+                                <i class="icon-Record"></i>
+                                <span class="hide-menu">Metrics</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="eval_scales.php" class="sidebar-link">
+                                <i class="icon-Record"></i>
+                                <span class="hide-menu">Scale</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="eval_instructions.php" class="sidebar-link">
+                                <i class="icon-Record"></i>
+                                <span class="hide-menu">Instructions</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="eval_preview.php" class="sidebar-link">
+                                <i class="icon-Record"></i>
+                                <span class="hide-menu">Preview</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
             <!-- =============== Registrar END =============== -->
 
             <!-- =============== Student ===================== -->
