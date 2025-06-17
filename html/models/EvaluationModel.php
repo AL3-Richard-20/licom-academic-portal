@@ -311,5 +311,69 @@
                 echo json_encode($res_req);
             }
         // =================== Scale Functions END ===============
+
+        // =================== Settings Functions ================
+            else if($_POST['action'] == 'instructions_form'){
+
+                $instruction_txt = $_POST['instructiontxt'];
+
+                $data1   = [ "Sett_val" => $instruction_txt ];
+                $where1  = [ "Sett_Id" => 1 ];
+                $update1 = update($settings, $data1, $where1);
+
+                if($update1 == 1){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+
+                echo json_encode($res_req);
+            }
+
+            else if($_POST['action'] == 'popups_form'){
+
+                $popup_txt = $_POST['popuptxt'];
+
+                $data1   = [ "Sett_val" => $popup_txt ];
+                $where1  = [ "Sett_Id" => 3 ];
+                $update1 = update($settings, $data1, $where1);
+
+                if($update1 == 1){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+
+                echo json_encode($res_req);
+            }
+
+
+            else if($_POST['action'] == 'change_sett_value'){
+
+                $sett_Id  = $_POST['settid'];
+                $sett_val = $_POST['settval'];
+
+                $data1   = [ "Sett_val" => $sett_val ];
+                $where1  = [ "Sett_Id" => $sett_Id ];
+                $update1 = update($settings, $data1, $where1);
+
+                if($update1 == 1){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+
+                echo json_encode($res_req);
+            }
+        // =================== Settings Functions END ============
     }
 ?>
