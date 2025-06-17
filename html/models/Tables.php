@@ -14,6 +14,7 @@
     $metric_values      = 'metric_values';
     $rooms              = 'rooms';
     $semesters          = 'semesters';
+    $settings           = 'settings';
     $student_classes    = 'student_classes';
     $student_grades     = 'student_grades';
     $subjects           = 'subjects';

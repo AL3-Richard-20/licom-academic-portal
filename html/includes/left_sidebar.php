@@ -195,7 +195,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="eval_instructions.php" class="sidebar-link">
+                            <a href="eval_settings.php" class="sidebar-link">
                                 <i class="icon-Record"></i>
                                 <span class="hide-menu">Instructions</span>
                             </a>

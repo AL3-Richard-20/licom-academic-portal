@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2025 at 09:26 AM
+-- Generation Time: Jun 17, 2025 at 04:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -333,10 +333,19 @@ INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Date_added`, `Time_add
 CREATE TABLE `settings` (
   `Sett_Id` int(11) NOT NULL,
   `Sett_desc` varchar(255) NOT NULL,
-  `Sett_val` varchar(255) NOT NULL,
+  `Sett_val` text NOT NULL,
   `Last_update` date NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Status`) VALUES
+(1, 'Evaluation_Instructions', '<p>Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.</p>\n\n<p><br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.</p>\n\n<p><br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:<br />\n<strong>5</strong> indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong> indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong> indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong> indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong> indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
+(2, 'Evaluation_popup', 'Enable', '2025-06-17', 1),
+(3, 'Evaluation_popup_content', '<h3><strong>Attention!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-17', 1);
 
 -- --------------------------------------------------------
 
@@ -668,7 +677,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `Sett_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Sett_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `student_classes`
