@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2025 at 04:29 PM
+-- Generation Time: Jun 20, 2025 at 12:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -188,7 +188,7 @@ INSERT INTO `evaluation_metrics` (`Eval_Metric_Id`, `Eval_Header_Id`, `Metric_de
 (3, 1, 'Makes self available to students beyond official time', '2025-06-14', '01:36:43', 1),
 (4, 1, 'Regularly communicates with individual students, to check  whether topics are received and well understood to attain the objectives.', '2025-06-14', '01:36:51', 1),
 (5, 1, 'Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:01', 1),
-(6, 3, 'edited  - Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:26', 0);
+(6, 3, 'edited  - Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:26', 1);
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Status`) VALUES
-(1, 'Evaluation_Instructions', '<p>Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.</p>\n\n<p><br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.</p>\n\n<p><br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:<br />\n<strong>5</strong> indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong> indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong> indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong> indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong> indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
+(1, 'Evaluation_Instructions', '<p>Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
 (2, 'Evaluation_popup', 'Enable', '2025-06-17', 1),
 (3, 'Evaluation_popup_content', '<h3><strong>Attention!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-17', 1);
 

@@ -135,128 +135,265 @@
                 <!-- ============================================================== -->
                 <div class="container-fluid">
 
-                    <ul class="nav nav-pills nav-justified">
-                        
-                        <li class="nav-item d-flex align-items-center bg-light" style="min-height:40px; cursor:pointer">
-                            <span class="ml-1 mr-1 bg-info text-white" style="border-radius:10%; padding:15px;"><h4>1</h4></span>
-                            <span class="ml-1 mr-1 font-weight-bold text-info">Directions for this Survey</span>
-                        </li>
-
-                        <?php
-
-                            $query ="SELECT 
-                                        Eval_Header_Id, 
-                                        Eval_header_name,
-                                        Order_val  
-                                    FROM 
-                                        evaluation_headers 
-                                    WHERE 
-                                        Status = 1 
-                                    ORDER BY 
-                                        Order_val ASC ";
-
-                            $fetch = mysqli_query($con, $query);
-
-                            if($fetch){
-
-                                while($row = mysqli_fetch_assoc($fetch)){
-
-                                    $eval_header_Id     = $row['Eval_Header_Id'];
-                                    $eval_header_name   = $row['Eval_header_name'];
-                                    $order_val          = $row['Order_val'];
-
-                                    echo '<li class="nav-item d-flex align-items-center bg-light" style="min-height:40px; cursor:pointer">
-                                            <span class="ml-1 mr-1 bg-secondary text-white" style="border-radius:10%; padding:15px;"><h4>'.$order_val.'</h4></span>
-                                            <span class="ml-1 mr-1 font-weight-bold">'.$eval_header_name.'</span>
-                                        </li>';
-                                }
-                            }
-                        ?>
-
-                    </ul>
-
-                    <br><br>
-
-                    <div class="row">
-
-                        <div class="col-lg-6">
-
-                            <h2>Instruction</h2><br>
+                    <!-- ================= Evaluation Headers ================= -->
+                        <ul class="nav nav-pills nav-justified">
                             
+                            <li class="nav-item d-flex align-items-center bg-light" style="min-height:40px; cursor:pointer" onclick="viewHeaderMetrics(0)">
+                                <span class="ml-1 mr-1 bg-info text-white header-link-ind" id="header_link_ind_0" style="border-radius:10%; padding:15px;"><h4>1</h4></span>
+                                <span class="ml-1 mr-1 font-weight-bold text-info header-link-txt" id="header_link_txt_0">Directions for this Survey</span>
+                            </li>
+
                             <?php
 
                                 $query ="SELECT 
-                                            Sett_val 
+                                            Eval_Header_Id, 
+                                            Eval_header_name,
+                                            Order_val  
                                         FROM 
-                                            settings 
+                                            evaluation_headers 
                                         WHERE 
-                                            Sett_Id = 1 
-                                        LIMIT 1 ";
+                                            Status = 1 
+                                        ORDER BY 
+                                            Order_val ASC ";
 
                                 $fetch = mysqli_query($con, $query);
 
                                 if($fetch){
 
-                                    $row = mysqli_fetch_assoc($fetch);
+                                    while($row = mysqli_fetch_assoc($fetch)){
 
-                                    $instruction_txt = $row['Sett_val'];
+                                        $eval_header_Id     = $row['Eval_Header_Id'];
+                                        $eval_header_name   = $row['Eval_header_name'];
+                                        $order_val          = $row['Order_val'];
 
-                                    echo $instruction_txt;
+                                        echo '<li class="nav-item d-flex align-items-center bg-light" style="min-height:40px; cursor:pointer" onclick="viewHeaderMetrics(`'.$eval_header_Id.'`)">
+                                                <span class="ml-1 mr-1 bg-secondary text-white header-link-ind" id="header_link_ind_'.$eval_header_Id.'" style="border-radius:10%; padding:15px;"><h4>'.$order_val.'</h4></span>
+                                                <span class="ml-1 mr-1 font-weight-bold header-link-txt" id="header_link_txt_'.$eval_header_Id.'">'.$eval_header_name.'</span>
+                                            </li>';
+                                    }
                                 }
                             ?>
 
+                        </ul>
+                    <!-- ================= Evaluation Headers END ============= -->
+
+                    <br><br>
+
+                    <!-- ================= Instructions ================= -->       
+                        <div class="row metric-items-div" id="metric_items_0">
+
+                            <div class="col-lg-6">
+
+                                <h2>Instruction</h2><br>
+                                
+                                <?php
+
+                                    $query ="SELECT 
+                                                Sett_val 
+                                            FROM 
+                                                settings 
+                                            WHERE 
+                                                Sett_Id = 1 
+                                            LIMIT 1 ";
+
+                                    $fetch = mysqli_query($con, $query);
+
+                                    if($fetch){
+
+                                        $row = mysqli_fetch_assoc($fetch);
+
+                                        $instruction_txt = $row['Sett_val'];
+
+                                        echo $instruction_txt;
+                                    }
+                                ?>
+
+                            </div>
+
+                            <div class="col-lg-6"><br>
+
+                                <div style="height:100%; position:sticky; top:0;">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center font-weight-bold" style="vertical-align: middle;">Scale</th>
+                                                <th class="text-center font-weight-bold" style="vertical-align: middle;">Descriptive Rating</th>
+                                                <th class="text-center font-weight-bold" style="vertical-align: middle;">Qualitative Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-sm">
+
+                                            <?php
+
+                                                $query ="SELECT 
+                                                            Metric_val_no, 
+                                                            Metric_val_desc, 
+                                                            Metric_Q_desc 
+                                                        FROM 
+                                                            metric_values 
+                                                        WHERE 
+                                                            Status = 1 
+                                                        ORDER BY 
+                                                            Metric_val_no DESC ";
+
+                                                $fetch = mysqli_query($con, $query);
+
+                                                if($fetch){
+
+                                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                                        $metric_val_no   = $row['Metric_val_no'];
+                                                        $metric_val_desc = $row['Metric_val_desc'];
+                                                        $metric_q_desc   = $row['Metric_Q_desc'];
+
+                                                        echo '<tr>';
+                                                        echo '<td class="text-center" style="vertical-align: middle;">'.$metric_val_no.'</td>';
+                                                        echo '<td class="text-center font-weight-bold" style="vertical-align: middle;">'.$metric_val_desc.'</td>';
+                                                        echo '<td style="vertical-align: middle;">'.$metric_q_desc.'</td>';
+                                                        echo '</tr>';
+                                                    }
+                                                }
+                                            ?>
+                                            
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
                         </div>
+                    <!-- ================= Instructions END ============= -->
 
-                        <div class="col-lg-6"><br>
+                    <!-- ================= Metrics ======================= -->
+                        <div id="metrics_div">
 
-                            <table class="table table-bordered">
-                                <thead class="font-weight-bold">
-                                    <tr>
-                                        <th class="text-center" style="vertical-align: middle;">Scale</th>
-                                        <th class="text-center" style="vertical-align: middle;">Descriptive Rating</th>
-                                        <th class="text-center" style="vertical-align: middle;">Qualitative Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-sm">
-                                    <?php
+                            <?php
 
-                                        $query ="SELECT 
-                                                    Metric_val_no, 
-                                                    Metric_val_desc, 
-                                                    Metric_Q_desc 
-                                                FROM 
-                                                    metric_values 
-                                                WHERE 
-                                                    Status = 1 
-                                                ORDER BY 
-                                                    Metric_val_no DESC ";
+                                $queryz ="SELECT     
+                                            Eval_Header_Id,
+                                            Order_val  
+                                        FROM 
+                                            evaluation_headers 
+                                        WHERE 
+                                            Status = 1 ";
+                                
+                                $fetchz = mysqli_query($con, $queryz);
 
-                                        $fetch = mysqli_query($con, $query);
+                                if($fetchz){
 
-                                        if($fetch){
+                                    while($rowz = mysqli_fetch_assoc($fetchz)){
 
-                                            while($row = mysqli_fetch_assoc($fetch)){
+                                        $db_eval_header    = $rowz['Eval_Header_Id'];
+                                        $eval_header_order = $rowz['Order_val']; ?>
 
-                                                $metric_val_no   = $row['Metric_val_no'];
-                                                $metric_val_desc = $row['Metric_val_desc'];
-                                                $metric_q_desc   = $row['Metric_Q_desc'];
+                                        <div class="metric-items-div" id="metric_items_<?= $db_eval_header ?>" style="display:none;">
 
-                                                echo '<tr>';
-                                                echo '<td class="text-center" style="vertical-align: middle;">'.$metric_val_no.'</td>';
-                                                echo '<td class="text-center font-weight-bold" style="vertical-align: middle;">'.$metric_val_desc.'</td>';
-                                                echo '<td style="vertical-align: middle;">'.$metric_q_desc.'</td>';
-                                                echo '</tr>';
-                                            }
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
+                                            <table class="table table-sm">
+
+                                                <tbody>
+
+                                                    <?php
+
+                                                        $query ="SELECT 
+                                                                    Eval_Metric_Id, 
+                                                                    Metric_desc 
+                                                                FROM 
+                                                                    evaluation_metrics 
+                                                                WHERE 
+                                                                    Status = 1 
+                                                                    AND Eval_Header_Id = '".$db_eval_header."' ";
+
+                                                        $fetch = mysqli_query($con, $query);
+
+                                                        if($fetch){
+
+                                                            while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                $eval_metric_Id = $row['Eval_Metric_Id'];
+                                                                $metric_desc    = $row['Metric_desc'];
+
+                                                                echo '<tr>';
+
+                                                                echo '<td style="vertical-align:middle; max-width:500px;">'.$metric_desc.'</td>';
+
+                                                                echo '<td class="d-flex align-items-center" style="margin-left:50px;">';
+
+                                                                $query2="SELECT 
+                                                                            Metric_Val_Id, 
+                                                                            Metric_val_no, 
+                                                                            Metric_val_desc 
+                                                                        FROM 
+                                                                            metric_values 
+                                                                        WHERE 
+                                                                            Status = 1 ";
+                                                                
+                                                                $fetch2 = mysqli_query($con, $query2);
+
+                                                                $count2 = mysqli_num_rows($fetch2);
+
+                                                                if($fetch2){
+
+                                                                    $counter2 = 1;
+
+                                                                    while($row2 = mysqli_fetch_assoc($fetch2)){
+
+                                                                        $metric_val_Id  = $row2['Metric_Val_Id'];
+                                                                        $metric_val_no  = $row2['Metric_val_no'];
+                                                                        $metric_val_desc= $row2['Metric_val_desc'];
+
+                                                                        if($counter2 == 1){
+
+                                                                            echo "<p style='vertical-align: top;'>".$metric_val_desc." - </p>";
+                                                                        }
+                                                                        
+                                                                        echo "<div class='mr-4 ml-4 text-center'>
+                                                                                <input type='radio' name='metric_Id_val_".$eval_metric_Id."' evalmetricid='".$eval_metric_Id."' metricvalid='".$metric_val_Id."'><br>
+                                                                                <h4 class='font-weight-bold'>".$metric_val_no."</h4>
+                                                                            </div>";
+
+                                                                        if($counter2 == $count2){
+
+                                                                            echo "<p style='vertical-align: top;'> - ".$metric_val_desc."</p>";
+                                                                        }
+
+                                                                        $counter2++;
+                                                                    }
+                                                                }
+
+
+                                                                echo '</td>';
+                                                                echo '</tr>';
+
+                                                            }
+                                                        }
+                                                    ?>
+                                                    
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    <?php }
+                                }
+                                                
+                            ?>
 
                         </div>
-
-                    </div>
+                    <!-- ================= Metrics END =================== -->
 
                     <hr>
+
+                    <!-- <div class="text-right">
+
+                        <button 
+                            type="button" 
+                            class="btn btn-primary font-weight-bold text-uppercase">
+                            Next
+                        </button>
+
+                    </div> -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -343,6 +480,21 @@
 
             $(document).ready(function () {
             })
+
+
+            function viewHeaderMetrics(header_Id){
+
+                $('.metric-items-div').hide()
+
+                $('#metric_items_'+header_Id).show()
+
+                $('.header-link-ind').removeClass('bg-info')
+                $('.header-link-ind').addClass('bg-secondary')
+                $('.header-link-txt').removeClass('text-info')
+
+                $('#header_link_ind_'+header_Id).addClass('bg-info')
+                $('#header_link_txt_'+header_Id).addClass('text-info')
+            }
 
         </script>
 
