@@ -217,15 +217,15 @@
 
                                     $popup_val = $row['Sett_val'];
 
-                                    if($popup_val == 'Enabled'){
+                                    if($popup_val == 'Enable'){
 
                                         $enabled  = 'checked';
                                         $disabled = '';
                                     }
                                     else{
 
-                                        $enabled  = '';
                                         $disabled = 'checked';
+                                        $enabled  = '';
                                     }
                                 }
                             ?>
