@@ -374,6 +374,31 @@
 
                 echo json_encode($res_req);
             }
+
+
+            else if($_POST['action'] == 'check_popup_enabled'){
+
+                $query ="SELECT 
+                            Sett_val 
+                        FROM 
+                            settings 
+                        WHERE 
+                            Sett_Id = 2 
+                        LIMIT 1 ";
+
+                $fetch = mysqli_query($con, $query);
+
+                if($fetch){
+
+                    $row = mysqli_fetch_assoc($fetch);
+
+                    $sett_val = $row['Sett_val'];
+
+                    $result = ($sett_val == 'Enable') ? 1 : 0;
+
+                    echo json_encode($result);
+                }
+            }
         // =================== Settings Functions END ============
     }
 ?>

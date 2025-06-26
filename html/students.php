@@ -28,14 +28,19 @@
 
 
         <!-- Custom CSS -->
-        <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+        <!-- <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
+        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet"> -->
 
 
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+        <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
 
         <!-- Custom CSS -->
@@ -171,7 +176,7 @@
                                             <th>Date Added</th>
                                             <th>Time Added</th>
                                             <th>Status</th>
-                                            <th class="text-center">Action</th>
+                                            <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
 
@@ -219,6 +224,8 @@
                                                     $time_added = $row['Time_added'];
                                                     $status     = $row['Status'];
 
+                                                    $student_fullname = $fname." ".$lname;
+
                                                     echo "<tr>";
                                                     echo "<td>".$user_Id."</td>";
                                                     echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
@@ -237,13 +244,21 @@
 
                                                     echo "<td>".$status_txt."</td>";
                                                     echo "<td class='text-center'>
-                                                        <button 
-                                                            type='button' 
-                                                            class='btn btn-outline-light btn-sm text-primary' 
-                                                            onclick='location.href=`student_info.php?studid=".$user_Id."`;'>
-                                                            <span class='fa fa-pencil-alt'></span>
-                                                        </button>
-                                                    </td>";
+                                                            <button 
+                                                                type='button' 
+                                                                class='btn btn-outline-light btn-sm text-primary' 
+                                                                onclick='location.href=`student_info.php?studid=".$user_Id."`;' 
+                                                                title='Edit record'>
+                                                                <span class='fa fa-pencil-alt'></span>
+                                                            </button>
+                                                            <button 
+                                                                type='button' 
+                                                                class='btn btn-outline-light btn-sm text-dark' 
+                                                                title='Input grades' 
+                                                                onclick='inputGradesModal(`".$user_Id."`, `".$student_fullname."`)'>
+                                                                <span class='fa fa-file-alt'></span>
+                                                            </button>
+                                                        </td>";
                                                     echo "</tr>";
                                                 }
                                             }
@@ -260,6 +275,199 @@
                                 </table>
 
                             </div>
+
+                            <!-- =============== Grades Modal ================= -->
+                                <div class="modal fade" id="gradesModal" style="padding-right: 17px;" data-backdrop="static" data-keyboard="false">
+
+                                    <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
+
+                                        <div class="modal-content" style="min-height:90vh;">
+
+                                            <div class="modal-header">
+                                                <h4 class="modal-title font-weight-bold text-uppercase">Grades of (<span class="text-info" id="student_fname_txt"></span>)</h4>
+                                            </div>
+
+                                            <div class="modal-body" style="overflow:auto; max-height:70vh;">
+
+                                                <div class="row">
+
+                                                    <div class="col-lg-8">
+
+                                                        <input type="hidden" name="stud_Id_val" id="stud_Id_val">
+
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <p><b>Semester:</b></p>
+                                                                <select 
+                                                                    class="form-control form-control-sm"
+                                                                    name="semester_dd_val"
+                                                                    id="semester_dd_val" 
+                                                                    style="width:100%;">
+                                                                    <option value=""></option>
+                                                                    <?php
+
+                                                                        $query="SELECT 
+                                                                                    Semester_Id, 
+                                                                                    Semester_name 
+                                                                                FROM 
+                                                                                    semesters 
+                                                                                WHERE 
+                                                                                    Status = 1 ";
+
+                                                                        $fetch = mysqli_query($con, $query);
+
+                                                                        $count = mysqli_num_rows($fetch);
+
+                                                                        if($fetch && $count > 0){
+
+                                                                            while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                                $semester_Id    = $row['Semester_Id'];
+                                                                                $semester_name  = $row['Semester_name'];
+                                                                                
+                                                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                                            }
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-lg-6"></div>
+                                                        </div>
+
+                                                        <br>
+
+                                                        <table 
+                                                            class="table table-hover display nowrap" 
+                                                            style="width:100%;">
+                                                            <thead class="font-weight-bold text-uppercase table-bordered">
+                                                                <tr>
+                                                                    <th>Subject</th>
+                                                                    <th>Grade</th>
+                                                                    <th>Remarks</th>
+                                                                    <th class="text-center">Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="table-sm" id="student_subjects"></tbody>
+                                                        </table>
+
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+
+                                                        <div class="card" id="add_new_grade_form" style="display:none;">
+
+                                                            <div class="card-header bg-white">
+                                                                <h5 class="font-weight-bold text-uppercase">Set Subject Grade</h5>
+                                                            </div>
+
+                                                            <div class="card-body">
+
+                                                                <table class="table table-sm">
+                                                                    <tbody>
+                                                                        <!-- <tr>
+                                                                            <td class="font-weight-bold">Semester:</td>
+                                                                            <td id="ssg_subject_semester">---</td>
+                                                                        </tr> -->
+                                                                        <tr>
+                                                                            <td class="font-weight-bold">Subject:</td>
+                                                                            <td id="ssg_subject_txt">---</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <br>
+
+                                                                <form method="POST" id="newSubjectGradeForm">
+
+                                                                    <input type="hidden" name="ssg_student_Id" id="ssg_student_Id">
+                                                                    <input type="hidden" name="ssg_semester_Id" id="ssg_semester_Id">
+                                                                    <input type="hidden" name="ssg_subject_Id" id="ssg_subject_Id">
+
+                                                                    <div class="form-group">
+                                                                        <p><b>Grade: <span class="text-danger">(*)</span></b></p>
+                                                                        <input 
+                                                                            type="number" 
+                                                                            class="form-control form-control-sm"
+                                                                            placeholder="Input grade here" 
+                                                                            required>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <p><b>Remarks: <span class="text-danger">(*)</span></b></p>
+                                                                        <select 
+                                                                            class="form-control form-control-sm" 
+                                                                            name="remarks_dd" 
+                                                                            id="remarks_dd" 
+                                                                            required>
+
+                                                                            <option value="" selected disabled>Select remark here</option>
+
+                                                                            <?php
+
+                                                                                $query="SELECT 
+                                                                                            Grade_Remark_Id, 
+                                                                                            Grade_Remark 
+                                                                                        FROM 
+                                                                                            grade_remarks 
+                                                                                        WHERE 
+                                                                                            Status = 1 ";
+
+                                                                                $fetch = mysqli_query($con, $query);
+
+                                                                                $count = mysqli_num_rows($fetch);
+
+                                                                                if($fetch && $count > 0){
+
+                                                                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                                        $grade_remark_Id = $row['Grade_Remark_Id'];
+                                                                                        $grade_remark    = $row['Grade_Remark'];
+
+                                                                                        echo "<option value='".$grade_remark_Id."'>".$grade_remark."</option>";
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <hr>
+
+                                                                    <div class="text-right">
+                                                                        <button 
+                                                                            type="button" 
+                                                                            class="btn btn-success btn-sm font-weight-bold text-uppercase">
+                                                                            <span class="fa fa-check"></span>
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+
+                                                                </form>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                                    data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            <!-- =============== Grades Modal END ============= -->
 
                         </div>
 
@@ -328,6 +536,9 @@
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 
+        <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+        <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -343,7 +554,14 @@
         <script>
 
             $(document).ready(function () {
+
+                // ============ Select2 ================
+                    $('#semester_dd_val').select2({
+                        "placeholder":"Select semester here"
+                    })
+                // ============ Select2 END ============
                 
+
                 $('#students_tbl').DataTable({
 
                     "aaSorting": [],
@@ -352,7 +570,117 @@
                         "orderable": false
                     } ]
                 })
-            });
+
+                $('#semester_dd_val').on('change', function(){
+
+                    var semester_Id = $(this).val()
+
+                    fetchStudentSubjects(semester_Id)
+
+                    $('#add_new_grade_form').hide()
+                })
+            })
+
+
+            function fetchStudentSubjects(semester_Id){
+
+                var student_Id = $('#stud_Id_val').val()
+
+                var output=''
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/ClassSchedulesModel.php",
+                    data: {
+                        studid:student_Id,
+                        semesterid:semester_Id,
+                        action:"fetch_user_class_schedules"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        if(response.data.length > 0){
+
+                            $.each(response.data, function(key, value){
+
+                                var subject_Id   = value.SubjectId
+                                var subject_name = value.SubjectName2
+
+                                output+='<tr>'
+                                output+='<td>'+ subject_name +'</td>'
+
+                                var stud_grade_info = fetchStudentGrades(semester_Id, subject_Id, student_Id)
+
+                                output+='<td id="stud_subj_grade_txt'+ subject_Id +'">---</td>'
+                                output+='<td id="stud_subj_remark_txt'+ subject_Id +'">---</td>'
+                                output+='<td class="text-center">'
+
+                                var editStudentGrade = 'editStudentGrade(`'+semester_Id+'`, `'+subject_Id+'`, `'+subject_name+'`, `'+student_Id+'`)'
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" onclick="'+ editStudentGrade +'">'
+                                output+='<span class="fa fa-pencil-alt"></span>'
+                                output+='</button>'
+                                output+='</td>'
+                                output+='</tr>'
+                            })
+                        }
+                        else{
+
+                            output+='<tr>'
+                            output+='<td class="text-center" colspan="4">No data available in the table.</td>'
+                            output+='<tr>'
+                        }
+                        
+                        $('#student_subjects').html(output)
+                    }
+                })
+            }
+
+
+            function inputGradesModal(student_Id, student_name){
+
+                $('#gradesModal').modal('show')
+
+                $('#student_fname_txt').html(student_name)
+
+                $('#stud_Id_val').val(student_Id)
+            }
+
+
+            function fetchStudentGrades(semester_Id, subject_Id, student_Id){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/GradesModel.php",
+                    data: {
+                        semesterid:semester_Id,
+                        subjectid:subject_Id,
+                        studentid:student_Id,
+                        action:"fetch_student_grades"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        $.each(response, function(key, value){
+
+                            $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
+                            $('#stud_subj_remark_txt'+subject_Id).html(value.Remarks)
+                        })                        
+                    }
+                })
+            }
+
+
+            function editStudentGrade(semester_Id, subject_Id, subject_name, student_Id){
+
+                $('#add_new_grade_form').show()
+
+                $('#ssg_student_Id').val(student_Id)
+                $('#ssg_semester_Id').val(semester_Id)
+                $('#ssg_subject_Id').val(subject_Id)
+
+                $('#ssg_subject_txt').html(subject_name)
+            }
 
         </script>
 

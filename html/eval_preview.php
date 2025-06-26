@@ -349,7 +349,12 @@
                                                                         }
                                                                         
                                                                         echo "<div class='mr-4 ml-4 text-center'>
-                                                                                <input type='radio' name='metric_Id_val_".$eval_metric_Id."' evalmetricid='".$eval_metric_Id."' metricvalid='".$metric_val_Id."'><br>
+                                                                                <input 
+                                                                                    type='radio' 
+                                                                                    name='metric_Id_val_".$eval_metric_Id."' 
+                                                                                    evalmetricid='".$eval_metric_Id."' 
+                                                                                    metricvalid='".$metric_val_Id."' 
+                                                                                    style='height:20px; width:20px;'><br>
                                                                                 <h4 class='font-weight-bold'>".$metric_val_no."</h4>
                                                                             </div>";
 
@@ -384,16 +389,52 @@
                     <!-- ================= Metrics END =================== -->
 
                     <hr>
+                    
+                    <!-- =================== Attention Modal ===================== -->
+                        <div class="modal fade" id="attentionModal" data-backdrop="static" data-keyboard="false">
 
-                    <!-- <div class="text-right">
+                            <div class="modal-dialog" role="document">
 
-                        <button 
-                            type="button" 
-                            class="btn btn-primary font-weight-bold text-uppercase">
-                            Next
-                        </button>
+                                <div class="modal-content">
 
-                    </div> -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-bold">Attention</h5>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <?php
+
+                                            $query ="SELECT 
+                                                        Sett_val 
+                                                    FROM 
+                                                        settings 
+                                                    WHERE 
+                                                        Sett_Id = 3 
+                                                    LIMIT 1 ";
+
+                                            $fetch = mysqli_query($con, $query);
+
+                                            if($fetch){
+
+                                                $row = mysqli_fetch_assoc($fetch);
+
+                                                $popup_content = $row['Sett_val'];
+
+                                                echo $popup_content;
+                                            }
+                                        ?>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">I Understand</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- =================== Attention Modal END ================= -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -479,6 +520,8 @@
         <script>
 
             $(document).ready(function () {
+
+                checkIfPopUpEnabled()
             })
 
 
@@ -494,6 +537,25 @@
 
                 $('#header_link_ind_'+header_Id).addClass('bg-info')
                 $('#header_link_txt_'+header_Id).addClass('text-info')
+            }
+
+            function checkIfPopUpEnabled(){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/EvaluationModel.php",
+                    data: {
+                        action:"check_popup_enabled"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response == 1){
+
+                            $('#attentionModal').modal('show')
+                        }
+                    }   
+                })
             }
 
         </script>

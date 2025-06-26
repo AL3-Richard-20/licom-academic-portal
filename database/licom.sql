@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2025 at 12:44 PM
+-- Generation Time: Jun 26, 2025 at 03:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -89,7 +89,8 @@ INSERT INTO `class_schedules` (`Class_Schedule_Id`, `Semester_Id`, `Subject_Id`,
 (4, 1, 3, 1, 6, 2, '09:30:00', '11:30:00', '2025-06-01', '02:53:43', 1),
 (5, 1, 3, 2, 6, 1, '09:30:00', '11:30:00', '2025-06-07', '01:02:02', 1),
 (6, 1, 1, 3, 16, 3, '09:00:00', '10:00:00', '2025-06-07', '02:46:22', 1),
-(7, 4, 5, 10, 16, 5, '08:00:00', '09:30:00', '2025-06-07', '02:52:21', 1);
+(7, 4, 5, 10, 16, 5, '08:00:00', '09:30:00', '2025-06-07', '02:52:21', 1),
+(8, 1, 1, 1, 16, 1, '13:00:00', '14:30:00', '2025-06-26', '08:56:22', 1);
 
 -- --------------------------------------------------------
 
@@ -220,6 +221,28 @@ CREATE TABLE `file_types` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grade_remarks`
+--
+
+CREATE TABLE `grade_remarks` (
+  `Grade_Remark_Id` int(11) NOT NULL,
+  `Grade_remark` varchar(255) NOT NULL,
+  `Date_added` date NOT NULL,
+  `Time_added` time NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `grade_remarks`
+--
+
+INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 'Passed', '2025-06-23', '21:02:30', 1),
+(2, 'Incomplete', '2025-06-23', '21:02:30', 1);
 
 -- --------------------------------------------------------
 
@@ -392,7 +415,8 @@ INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student
 (21, 2, 10, 4, '2025-06-09', '09:12:45', '2025-06-09', 0),
 (22, 2, 11, 4, '2025-06-09', '09:12:59', '2025-06-09', 0),
 (23, 2, 10, 4, '2025-06-09', '09:22:12', '2025-06-09', 0),
-(24, 4, 5, 4, '2025-06-09', '09:26:55', '2025-06-09', 0);
+(24, 4, 5, 4, '2025-06-09', '09:26:55', '2025-06-09', 0),
+(25, 8, 5, 4, '2025-06-26', '08:56:29', '2025-06-26', 1);
 
 -- --------------------------------------------------------
 
@@ -544,6 +568,12 @@ ALTER TABLE `file_types`
   ADD PRIMARY KEY (`File_Type_Id`);
 
 --
+-- Indexes for table `grade_remarks`
+--
+ALTER TABLE `grade_remarks`
+  ADD PRIMARY KEY (`Grade_Remark_Id`);
+
+--
 -- Indexes for table `levels`
 --
 ALTER TABLE `levels`
@@ -611,7 +641,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `class_schedules`
 --
 ALTER TABLE `class_schedules`
-  MODIFY `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -650,6 +680,12 @@ ALTER TABLE `file_types`
   MODIFY `File_Type_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `grade_remarks`
+--
+ALTER TABLE `grade_remarks`
+  MODIFY `Grade_Remark_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `levels`
 --
 ALTER TABLE `levels`
@@ -683,7 +719,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `student_classes`
 --
 ALTER TABLE `student_classes`
-  MODIFY `Student_Class_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `Student_Class_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `student_grades`

@@ -246,6 +246,7 @@
                         class_schedules.Time_start, 
                         class_schedules.Time_end, 
                         semesters.Semester_name, 
+                        subjects.Subject_Id, 
                         subjects.Subject_name, 
                         subjects.Subject_code, 
                         courses.Course_name,
@@ -350,6 +351,7 @@
                     $time_start     = $row['Time_start'];
                     $time_end       = $row['Time_end'];
                     $semester_name  = $row['Semester_name'];
+                    $subject_Id     = $row['Subject_Id'];
                     $subject_name   = $row['Subject_name'];
                     $subject_code   = $row['Subject_code'];
                     $course_name    = $row['Course_name'];
@@ -396,6 +398,7 @@
                         'TimeEnd' => timeFormat($time_end),
                         'TimeSched' => timeFormat($time_start)." - ".timeFormat($time_end),
                         'SemesterName' => $semester_name,
+                        'SubjectId' => $subject_Id,
                         'SubjectName' => stringEllip($subject_name, 15),
                         'SubjectName2' => $subject_name,
                         'SubjectCode' => $subject_code,
