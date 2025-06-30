@@ -387,8 +387,11 @@
                                                                         <p><b>Grade: <span class="text-danger">(*)</span></b></p>
                                                                         <input 
                                                                             type="number" 
-                                                                            class="form-control form-control-sm"
+                                                                            class="form-control form-control-sm" 
+                                                                            name="ssg_grade_val"
+                                                                            id="ssg_grade_val" 
                                                                             placeholder="Input grade here" 
+                                                                            step="any" 
                                                                             required>
                                                                     </div>
 
@@ -434,10 +437,16 @@
 
                                                                     <div class="text-right">
                                                                         <button 
-                                                                            type="button" 
+                                                                            type="submit" 
                                                                             class="btn btn-success btn-sm font-weight-bold text-uppercase">
                                                                             <span class="fa fa-check"></span>
                                                                             Submit
+                                                                        </button>
+                                                                        <button 
+                                                                            type="button" 
+                                                                            class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase" 
+                                                                            onclick="$('#add_new_grade_form').hide();">
+                                                                            Discard
                                                                         </button>
                                                                     </div>
 
@@ -575,9 +584,52 @@
 
                     var semester_Id = $(this).val()
 
-                    fetchStudentSubjects(semester_Id)
+                    if(semester_Id != ''){
 
-                    $('#add_new_grade_form').hide()
+                        fetchStudentSubjects(semester_Id)
+    
+                        $('#add_new_grade_form').hide()
+                    }
+                })
+
+                $('#newSubjectGradeForm').on('submit', function(aa){
+
+                    aa.preventDefault()
+
+                    var data = $(this).serializeArray()
+
+                    data.push(
+                        { name:'action', value:'new_student_grade' }
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/GradesModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                $('#newSubjectGradeForm')[0].reset()
+
+                                var semester_Id = $('#semester_dd_val').val()
+
+                                if(semester_Id != ''){
+
+                                    fetchStudentSubjects(semester_Id)
+                
+                                    $('#add_new_grade_form').hide()
+                                }
+
+                                toastr.success('You added student grade record', 'SUCCESSFULLY ADDED')
+                            }
+                            else if(response == 2 || response == 3){
+
+                                toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                            }
+                        }
+                    });
                 })
             })
 
@@ -613,6 +665,7 @@
 
                                 output+='<td id="stud_subj_grade_txt'+ subject_Id +'">---</td>'
                                 output+='<td id="stud_subj_remark_txt'+ subject_Id +'">---</td>'
+                                output+='<td style="display:none;" id="stud_subj_remark_Id_txt'+ subject_Id +'">---</td>'
                                 output+='<td class="text-center">'
 
                                 var editStudentGrade = 'editStudentGrade(`'+semester_Id+'`, `'+subject_Id+'`, `'+subject_name+'`, `'+student_Id+'`)'
@@ -641,9 +694,21 @@
 
                 $('#gradesModal').modal('show')
 
+                $("#semester_dd_val").val('').trigger('change')
+
                 $('#student_fname_txt').html(student_name)
 
                 $('#stud_Id_val').val(student_Id)
+
+                $('#add_new_grade_form').hide()
+
+                var output=''
+
+                output+='<tr>'
+                output+='<td class="text-center" colspan="4">No data available in the table.</td>'
+                output+='<tr>'
+
+                $('#student_subjects').html(output)
             }
 
 
@@ -665,6 +730,7 @@
 
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
                             $('#stud_subj_remark_txt'+subject_Id).html(value.Remarks)
+                            $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
                         })                        
                     }
                 })
@@ -679,7 +745,13 @@
                 $('#ssg_semester_Id').val(semester_Id)
                 $('#ssg_subject_Id').val(subject_Id)
 
+                var subject_grade  = $('#stud_subj_grade_txt'+subject_Id).text()
+                var subject_remark = $('#stud_subj_remark_Id_txt'+subject_Id).text()
+
                 $('#ssg_subject_txt').html(subject_name)
+
+                $('#ssg_grade_val').val(subject_grade)
+                $('#remarks_dd').val(subject_remark)
             }
 
         </script>
