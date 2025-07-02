@@ -797,7 +797,181 @@
                                         <tbody></tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="sgmenu2">...</div>
+
+                                <div class="tab-pane fade" id="sgmenu2"><br><br>
+
+                                    <div class="row">
+
+                                        <div class="col-lg-8">
+
+                                            <div class="row">
+
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <p><b>Semester:</b></p>
+                                                        <select 
+                                                            class="form-control form-control-sm" 
+                                                            name="sg_semester_dd_val" 
+                                                            id="sg_semester_dd_val" 
+                                                            style="width:100%;">
+                                                            <option value=""></option>
+                                                            <?php
+
+                                                                $query="SELECT 
+                                                                            Semester_Id, 
+                                                                            Semester_name 
+                                                                        FROM 
+                                                                            semesters 
+                                                                        WHERE 
+                                                                            Status = 1 ";
+
+                                                                $fetch = mysqli_query($con, $query);
+
+                                                                $count = mysqli_num_rows($fetch);
+
+                                                                if($fetch && $count > 0){
+
+                                                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                        $semester_Id    = $row['Semester_Id'];
+                                                                        $semester_name  = $row['Semester_name'];
+                                                                        
+                                                                        echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <hr>
+
+                                            <table 
+                                                class="table table-hover display nowrap" 
+                                                style="width:100%;">
+                                                <thead class="font-weight-bold text-uppercase table-bordered">
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <th>Grade</th>
+                                                        <th>Remarks</th>
+                                                        <th class="text-center">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-sm" id="student_subjects"></tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-lg-4">
+
+                                            <div class="card" id="add_new_grade_form" style="display:none;">
+
+                                                <div class="card-header bg-white">
+                                                    <h5 class="font-weight-bold text-uppercase">Set Subject Grade</h5>
+                                                </div>
+
+                                                <div class="card-body">
+
+                                                    <table class="table table-sm">
+                                                        <tbody>
+                                                            <!-- <tr>
+                                                                <td class="font-weight-bold">Semester:</td>
+                                                                <td id="ssg_subject_semester">---</td>
+                                                            </tr> -->
+                                                            <tr>
+                                                                <td class="font-weight-bold">Subject:</td>
+                                                                <td id="ssg_subject_txt">---</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <br>
+
+                                                    <form method="POST" id="newSubjectGradeForm">
+
+                                                        <input type="hidden" name="ssg_student_Id" id="ssg_student_Id">
+                                                        <input type="hidden" name="ssg_semester_Id" id="ssg_semester_Id">
+                                                        <input type="hidden" name="ssg_subject_Id" id="ssg_subject_Id">
+
+                                                        <div class="form-group">
+                                                            <p><b>Grade: <span class="text-danger">(*)</span></b></p>
+                                                            <input 
+                                                                type="number" 
+                                                                class="form-control form-control-sm" 
+                                                                name="ssg_grade_val"
+                                                                id="ssg_grade_val" 
+                                                                placeholder="Input grade here" 
+                                                                step="any" 
+                                                                required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <p><b>Remarks: <span class="text-danger">(*)</span></b></p>
+                                                            <select 
+                                                                class="form-control form-control-sm" 
+                                                                name="remarks_dd" 
+                                                                id="remarks_dd" 
+                                                                required>
+
+                                                                <option value="" selected disabled>Select remark here</option>
+
+                                                                <?php
+
+                                                                    $query="SELECT 
+                                                                                Grade_Remark_Id, 
+                                                                                Grade_Remark 
+                                                                            FROM 
+                                                                                grade_remarks 
+                                                                            WHERE 
+                                                                                Status = 1 ";
+
+                                                                    $fetch = mysqli_query($con, $query);
+
+                                                                    $count = mysqli_num_rows($fetch);
+
+                                                                    if($fetch && $count > 0){
+
+                                                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                                                            $grade_remark_Id = $row['Grade_Remark_Id'];
+                                                                            $grade_remark    = $row['Grade_Remark'];
+
+                                                                            echo "<option value='".$grade_remark_Id."'>".$grade_remark."</option>";
+                                                                        }
+                                                                    }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+
+                                                        <hr>
+
+                                                        <div class="text-right">
+                                                            <button 
+                                                                type="submit" 
+                                                                class="btn btn-success btn-sm font-weight-bold text-uppercase">
+                                                                <span class="fa fa-check"></span>
+                                                                Submit
+                                                            </button>
+                                                            <button 
+                                                                type="button" 
+                                                                class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase" 
+                                                                onclick="$('#add_new_grade_form').hide();">
+                                                                Discard
+                                                            </button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                        
+                                </div>
                                 <!-- <div class="tab-pane container fade" id="menu2">...</div> -->
                             </div>
 
@@ -900,6 +1074,11 @@
                         "allowClear":true
                     })
 
+                    $('#sg_semester_dd_val').select2({
+                        "placeholder":"Select semester here",
+                        "allowClear":true
+                    })
+
                     $('#room_dd_val').select2({
                         "placeholder":"Select room here",
                         "allowClear":true
@@ -917,6 +1096,18 @@
 
                         classSchedulesTbl()
                     // }
+                })
+
+                $('#sg_semester_dd_val').on('change', function(){
+
+                    var semester_Id = $(this).val()
+
+                    if(semester_Id != ''){
+
+                        fetchStudentSubjects(semester_Id)
+
+                        $('#add_new_grade_form').hide()
+                    }
                 })
 
                 $('#editInfo1Form').on('submit', function(aa){
@@ -985,6 +1176,46 @@
                             }
                         }
                     })
+                })
+
+                $('#newSubjectGradeForm').on('submit', function(aa){
+
+                    aa.preventDefault()
+
+                    var data = $(this).serializeArray()
+
+                    data.push(
+                        { name:'action', value:'new_student_grade' }
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/GradesModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            if(response == 1){
+
+                                $('#newSubjectGradeForm')[0].reset()
+
+                                var semester_Id = $('#sg_semester_dd_val').val()
+
+                                if(semester_Id != ''){
+
+                                    fetchStudentSubjects(semester_Id)
+
+                                    $('#add_new_grade_form').hide()
+                                }
+
+                                toastr.success('You added student grade record', 'SUCCESSFULLY ADDED')
+                            }
+                            else if(response == 2 || response == 3){
+
+                                toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                            }
+                        }
+                    });
                 })
 
                 $('#status_change_btn').on('click', function(){
@@ -1258,6 +1489,102 @@
                         },
                     ],
                 })
+            }
+
+            function fetchStudentSubjects(semester_Id){
+
+                var student_Id = $('#student_Id_val').val()
+
+                var output=''
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/ClassSchedulesModel.php",
+                    data: {
+                        studid:student_Id,
+                        semesterid:semester_Id,
+                        action:"fetch_user_class_schedules"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        if(response.data.length > 0){
+
+                            $.each(response.data, function(key, value){
+
+                                var subject_Id   = value.SubjectId
+                                var subject_name = value.SubjectName2
+
+                                output+='<tr>'
+                                output+='<td>'+ subject_name +'</td>'
+
+                                var stud_grade_info = fetchStudentGrades(semester_Id, subject_Id, student_Id)
+
+                                output+='<td id="stud_subj_grade_txt'+ subject_Id +'">---</td>'
+                                output+='<td id="stud_subj_remark_txt'+ subject_Id +'">---</td>'
+                                output+='<td style="display:none;" id="stud_subj_remark_Id_txt'+ subject_Id +'">---</td>'
+                                output+='<td class="text-center">'
+
+                                var editStudentGrade = 'editStudentGrade(`'+semester_Id+'`, `'+subject_Id+'`, `'+subject_name+'`, `'+student_Id+'`)'
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" onclick="'+ editStudentGrade +'">'
+                                output+='<span class="fa fa-pencil-alt"></span>'
+                                output+='</button>'
+                                output+='</td>'
+                                output+='</tr>'
+                            })
+                        }
+                        else{
+
+                            output+='<tr>'
+                            output+='<td class="text-center" colspan="4">No data available in the table.</td>'
+                            output+='<tr>'
+                        }
+                        
+                        $('#student_subjects').html(output)
+                    }
+                })
+            }
+
+            function fetchStudentGrades(semester_Id, subject_Id, student_Id){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/GradesModel.php",
+                    data: {
+                        semesterid:semester_Id,
+                        subjectid:subject_Id,
+                        studentid:student_Id,
+                        action:"fetch_student_grades"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        $.each(response, function(key, value){
+
+                            $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
+                            $('#stud_subj_remark_txt'+subject_Id).html(value.Remarks)
+                            $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
+                        })                        
+                    }
+                })
+            }
+
+            function editStudentGrade(semester_Id, subject_Id, subject_name, student_Id){
+
+                $('#add_new_grade_form').show()
+
+                $('#ssg_student_Id').val(student_Id)
+                $('#ssg_semester_Id').val(semester_Id)
+                $('#ssg_subject_Id').val(subject_Id)
+
+                var subject_grade  = $('#stud_subj_grade_txt'+subject_Id).text()
+                var subject_remark = $('#stud_subj_remark_Id_txt'+subject_Id).text()
+
+                $('#ssg_subject_txt').html(subject_name)
+
+                $('#ssg_grade_val').val(subject_grade)
+                $('#remarks_dd').val(subject_remark)
             }
 
         </script>
