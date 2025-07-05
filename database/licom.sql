@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2025 at 03:51 PM
+-- Generation Time: Jul 05, 2025 at 08:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -162,7 +162,8 @@ INSERT INTO `evaluation_headers` (`Eval_Header_Id`, `Eval_header_name`, `Order_v
 (3, 'Knowledge of Subject', 3, '2025-06-14', '12:38:08', 1),
 (4, 'Teaching for Independent Learning', 4, '2025-06-14', '12:38:38', 1),
 (5, 'Management of Learning - edited', 5, '2025-06-14', '12:38:53', 1),
-(6, 'Sample Header 6', 6, '2025-06-14', '12:39:03', 0);
+(6, 'Sample Header 6', 6, '2025-06-14', '12:39:03', 0),
+(7, 'Sample Header', 6, '2025-07-05', '02:05:40', 0);
 
 -- --------------------------------------------------------
 
@@ -189,7 +190,8 @@ INSERT INTO `evaluation_metrics` (`Eval_Metric_Id`, `Eval_Header_Id`, `Metric_de
 (3, 1, 'Makes self available to students beyond official time', '2025-06-14', '01:36:43', 1),
 (4, 1, 'Regularly communicates with individual students, to check  whether topics are received and well understood to attain the objectives.', '2025-06-14', '01:36:51', 1),
 (5, 1, 'Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:01', 1),
-(6, 3, 'edited  - Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:26', 1);
+(6, 3, 'edited  - Keeps accurate records of students\' performance and prompt submission of their grades on time. ', '2025-06-14', '01:37:26', 1),
+(7, 4, 'Sample metric', '2025-07-05', '02:07:02', 1);
 
 -- --------------------------------------------------------
 
@@ -285,12 +287,13 @@ CREATE TABLE `metric_values` (
 --
 
 INSERT INTO `metric_values` (`Metric_Val_Id`, `Metric_val_no`, `Metric_val_desc`, `Metric_Q_desc`, `Status`) VALUES
-(3, 1, 'Poor', 'The faculty fails to meet job requirements. ', 1),
+(3, 1, 'Edited - Poor', 'The faculty fails to meet job requirements. ', 1),
 (4, 2, 'Fair', 'The performance needs some development to meet job requirements.', 1),
 (5, 3, 'Satisfactory', 'The performance meets job requirements.', 1),
 (6, 4, 'Very Satisfactory', 'The performance meets and often exceeds the job requirements.', 1),
 (7, 5, 'Outstanding', 'The performance almost always exceeds the job requirements. The faculty is an exceptional role model.', 1),
-(8, 6, 'Random', 'Lorem Ipsum', 0);
+(8, 6, 'Random', 'Lorem Ipsum', 0),
+(9, 6, 'Sample rating', 'Sample description', 1);
 
 -- --------------------------------------------------------
 
@@ -366,9 +369,9 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Status`) VALUES
-(1, 'Evaluation_Instructions', '<p>Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
+(1, 'Evaluation_Instructions', '<p>Edited - - - - Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
 (2, 'Evaluation_popup', 'Enable', '2025-06-17', 1),
-(3, 'Evaluation_popup_content', '<h3><strong>Attention!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-17', 1);
+(3, 'Evaluation_popup_content', '<h3><strong>EDITED!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-17', 1);
 
 -- --------------------------------------------------------
 
@@ -436,6 +439,14 @@ CREATE TABLE `student_grades` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_grades`
+--
+
+INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_Id`, `Grade_val`, `Remarks`, `Evaluated_by`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 1, 5, 2, 2.75, '1', 4, '2025-07-05', '02:12:03', 1),
+(2, 1, 5, 1, 1.00, '1', 4, '2025-07-02', '08:50:39', 1);
 
 -- --------------------------------------------------------
 
@@ -659,13 +670,13 @@ ALTER TABLE `evaluation_grades`
 -- AUTO_INCREMENT for table `evaluation_headers`
 --
 ALTER TABLE `evaluation_headers`
-  MODIFY `Eval_Header_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Eval_Header_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `evaluation_metrics`
 --
 ALTER TABLE `evaluation_metrics`
-  MODIFY `Eval_Metric_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Eval_Metric_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `file_attachments`
@@ -695,7 +706,7 @@ ALTER TABLE `levels`
 -- AUTO_INCREMENT for table `metric_values`
 --
 ALTER TABLE `metric_values`
-  MODIFY `Metric_Val_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Metric_Val_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -725,7 +736,7 @@ ALTER TABLE `student_classes`
 -- AUTO_INCREMENT for table `student_grades`
 --
 ALTER TABLE `student_grades`
-  MODIFY `Grade_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Grade_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `subjects`
