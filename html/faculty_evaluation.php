@@ -133,6 +133,47 @@
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
                     <div class="row">
+                        <div class="col-lg-4">
+                            <p><b>Semester: <span class="text-danger">(*)</span></b></p>
+                            <select 
+                                class="form-control form-control-sm"
+                                name="semester_dd_val"
+                                id="semester_dd_val">
+                                <option value=""></option>
+                                <?php
+
+                                    $query="SELECT 
+                                                Semester_Id, 
+                                                Semester_name 
+                                            FROM 
+                                                semesters 
+                                            WHERE 
+                                                Status = 1 ";
+
+                                    $fetch = mysqli_query($con, $query);
+
+                                    $count = mysqli_num_rows($fetch);
+
+                                    if($fetch && $count > 0){
+
+                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                            $semester_Id    = $row['Semester_Id'];
+                                            $semester_name  = $row['Semester_name'];
+                                            
+                                            echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4"></div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
 
                         <div class="col-12">
 
@@ -147,90 +188,9 @@
                                 </thead>
 
                                 <tbody>
-
-                                    <?php
-
-                                        $query ="SELECT 
-                                                    class_schedules.Class_Schedule_Id, 
-                                                    class_schedules.Day, 
-                                                    class_schedules.Time_start, 
-                                                    class_schedules.Time_end, 
-                                                    semesters.Semester_name, 
-                                                    subjects.Subject_Id, 
-                                                    subjects.Subject_name, 
-                                                    subjects.Subject_code, 
-                                                    courses.Course_name,
-                                                    courses.Course_code,
-                                                    rooms.Room_name, 
-                                                    rooms.Room_details, 
-                                                    class_schedules.Instructor_Id,
-                                                    student_classes.Student_Class_Id,  
-                                                    student_classes.Student_Id  
-                                                FROM 
-                                                    class_schedules 
-                                                LEFT JOIN 
-                                                    semesters 
-                                                ON 
-                                                    class_schedules.Semester_Id = semesters.Semester_Id 
-                                                LEFT JOIN 
-                                                    subjects 
-                                                ON 
-                                                    class_schedules.Subject_Id = subjects.Subject_Id 
-                                                LEFT JOIN 
-                                                    courses 
-                                                ON 
-                                                    subjects.Course_Id = courses.Course_Id 
-                                                LEFT JOIN 
-                                                    rooms 
-                                                ON 
-                                                    class_schedules.Room_Id = rooms.Room_Id 
-                                                LEFT JOIN 
-                                                    student_classes 
-                                                ON 
-                                                    class_schedules.Class_Schedule_Id = student_classes.Class_Schedule_Id 
-                                                WHERE 
-                                                    class_schedules.Status = 1 
-                                                    AND student_classes.Status = 1 
-                                                    AND student_classes.Student_Id = '".$_SESSION["licom_usr_Id"]."' 
-                                                GROUP BY 
-                                                    class_schedules.Instructor_Id ";
-
-                                        $fetch = mysqli_query($con, $query);
-
-                                        while($row = mysqli_fetch_assoc($fetch)){
-
-                                            $instructor_Id = $row['Instructor_Id'];
-
-                                            $instructor_info = fetchUserInfo($instructor_Id, "", 4, 1);
-
-                                            $ins_fname = $instructor_info[0]['FName'];
-                                            $ins_mname = $instructor_info[0]['MName'];
-                                            $ins_lname = $instructor_info[0]['LName'];
-
-                                            $instructor_fullname = $ins_lname.", ".$ins_fname." ".$ins_mname;
-
-                                            echo "<tr>";
-                                            echo "<td class='d-flex align-items-center'>
-                                                    <img 
-                                                        src='../assets/images/users/user-icon-512x512-x23sj495.png' 
-                                                        class='mr-2'
-                                                        height='30' 
-                                                        alt='Profilem Picture'>
-                                                    <h5>".$instructor_fullname."</h5>
-                                                </td>";
-                                            echo "<td>---</td>";
-                                            echo "<td class='text-center'>
-                                                    <button 
-                                                        type='button' 
-                                                        class='btn btn-success btn-sm font-weight-bold text-uppercase'>
-                                                        Evaluate
-                                                    </button>    
-                                                </td>";
-                                            echo "</tr>";
-                                        }
-
-                                    ?>
-
+                                    <tr>
+                                        <td class="text-center" colspan="3">No data available in the table.</td>
+                                    </tr>
                                 </tbody>
 
                             </table>
@@ -286,7 +246,7 @@
 
 
 
-        <div class="chat-windows"></div>
+        <!-- <div class="chat-windows"></div> -->
 
 
 
@@ -334,17 +294,74 @@
         <script>
 
             $(document).ready(function () {
-                
-                classInstructors()
+
+                // ================= Select2 =====================
+                    $('#semester_dd_val').select2({
+                        "placeholder":"Select semester here"
+                    })
+                // ================= Select2 END =================
+
+                $('#semester_dd_val').on('change', function(){
+
+                    var semester_Id = $(this).val()
+
+                    classInstructors(semester_Id)
+                })
             })
 
 
-            function classInstructors(){
+            function classInstructors(semester_Id){
+
+                var output=''
 
                 $('#class_instructors_tbl').DataTable({
 
                     "responsive":true,
-                    "bInfo":false
+                    "bInfo":false,
+                    "searching":false,
+                    "bDestroy": true,
+                    "aaSorting": [],
+                    "dom": 'rtp',
+                    "ajax": {
+                        'type':'POST',
+                        'url':'models/ClassSchedulesModel.php',
+                        'data':{
+                            semesterid:semester_Id,
+                            action:"fetch_class_instructors"
+                        },
+                    },
+                    "columns": [
+                        { "data": "InstructorFullName",
+
+                            render : function (data, type, row, meta){
+
+                                var output=''
+
+                                output+='<div class="d-flex align-items-center">'
+                                output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" class="mr-2" height="30" alt="Profile Picture">'
+                                output+='<h5 class="ml-2">'+ row.InstructorFullName +'</h5>'
+                                output+='</div>'
+
+                                return output
+                            }
+                        },
+                        { "data": "DateEvaluated" },
+                        { "data": "InstructorId",
+
+                            render : function (data, type, row, meta){
+
+                                var evaluateInstructor = "location.href='faculty_evaluation_form.php?instructorid="+ data +"';"
+
+                                var output=''
+
+                                output+='<div class="text-center">'
+                                output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase" onclick="'+ evaluateInstructor +'">Evaluate</button>'
+                                output+='</div>'
+
+                                return output
+                            }
+                        },
+                    ],
                 })
             }
 
