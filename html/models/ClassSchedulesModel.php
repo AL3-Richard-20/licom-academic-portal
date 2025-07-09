@@ -544,6 +544,87 @@
 
             echo json_encode($res_req);
         }
+
+        else if($_POST['action'] == 'fetch_class_instructors'){
+
+            $query ="SELECT 
+                        class_schedules.Class_Schedule_Id, 
+                        class_schedules.Day, 
+                        class_schedules.Time_start, 
+                        class_schedules.Time_end, 
+                        semesters.Semester_name, 
+                        subjects.Subject_Id, 
+                        subjects.Subject_name, 
+                        subjects.Subject_code, 
+                        courses.Course_name,
+                        courses.Course_code,
+                        rooms.Room_name, 
+                        rooms.Room_details, 
+                        class_schedules.Instructor_Id,
+                        student_classes.Student_Class_Id,  
+                        student_classes.Student_Id  
+                    FROM 
+                        class_schedules 
+                    LEFT JOIN 
+                        semesters 
+                    ON 
+                        class_schedules.Semester_Id = semesters.Semester_Id 
+                    LEFT JOIN 
+                        subjects 
+                    ON 
+                        class_schedules.Subject_Id = subjects.Subject_Id 
+                    LEFT JOIN 
+                        courses 
+                    ON 
+                        subjects.Course_Id = courses.Course_Id 
+                    LEFT JOIN 
+                        rooms 
+                    ON 
+                        class_schedules.Room_Id = rooms.Room_Id 
+                    LEFT JOIN 
+                        student_classes 
+                    ON 
+                        class_schedules.Class_Schedule_Id = student_classes.Class_Schedule_Id 
+                    WHERE 
+                        class_schedules.Status = 1 
+                        AND student_classes.Status = 1 
+                        AND student_classes.Student_Id = '".$_SESSION["licom_usr_Id"]."' ";
+
+            if($_POST['semesterid'] != ''){
+
+                $semester_Id = $_POST['semesterid'];
+
+                $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+            }
+
+            $query .="GROUP BY 
+                        class_schedules.Instructor_Id ";
+
+            $fetch = mysqli_query($con, $query);
+
+            $data = array();
+
+            while($row = mysqli_fetch_assoc($fetch)){
+
+                $instructor_Id = $row['Instructor_Id'];
+
+                $instructor_info = fetchUserInfo($instructor_Id, "", 4, 1);
+
+                $ins_fname = $instructor_info[0]['FName'];
+                $ins_mname = $instructor_info[0]['MName'];
+                $ins_lname = $instructor_info[0]['LName'];
+
+                $instructor_fullname = $ins_lname.", ".$ins_fname." ".$ins_mname;
+
+                $data[] = array(
+                    'InstructorId' => $instructor_Id,
+                    'InstructorFullName' => $instructor_fullname,
+                    "DateEvaluated" => "---"
+                );
+            }
+
+            echo json_encode(array('data' => $data));
+        }
     }
 
 ?>

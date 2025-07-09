@@ -104,6 +104,60 @@
 
                 echo json_encode($res_req);
             }
+
+            else if($_POST['action'] == 'next_order_val'){
+
+                $order_val = $_POST['orderval'];
+
+                $query ="SELECT 
+                            Eval_Header_Id, 
+                            Order_val
+                        FROM 
+                            evaluation_headers 
+                        WHERE 
+                            Status = 1 ";
+
+                if(isset($_POST['operator']) && $_POST['operator'] != ''){
+
+                    $operator = $_POST['operator'];
+
+                    if($operator == 'plus'){
+
+                        $query .="AND Order_val > '".$order_val."' ";
+                    }
+                    else{
+
+                        $query .="AND Order_val < '".$order_val."' 
+                                    ORDER BY 
+                                        Order_val DESC ";
+                    }
+                }
+
+                $query .="LIMIT 1 ";
+
+                $fetch = mysqli_query($con, $query);
+
+                $count = mysqli_num_rows($fetch);
+
+                $eval_header_Id = 0;
+                $order_val = 0;
+
+                if($count > 0){
+
+                    $row = mysqli_fetch_assoc($fetch);
+
+                    $eval_header_Id = $row['Eval_Header_Id'];
+                    $order_val      = $row['Order_val'];
+                }
+
+                echo json_encode(
+                    array(
+                        'EvalHeaderId' => $eval_header_Id,
+                        'OrderVal' => $order_val
+                    )
+                );
+
+            }
         // ==================== Header Functions END ==============
 
         // =================== Metric Functions ==================
