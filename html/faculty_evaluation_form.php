@@ -301,9 +301,20 @@
                                 
                                 $fetchz = mysqli_query($con, $queryz);
 
+                                $countz = mysqli_num_rows($fetchz);
+
                                 if($fetchz){
 
+                                    $counterz = 1;
+
+                                    $last_slide= false;
+
                                     while($rowz = mysqli_fetch_assoc($fetchz)){
+
+                                        if($counterz == $countz){
+
+                                            $last_slide = true;
+                                        }
 
                                         $db_eval_header    = $rowz['Eval_Header_Id'];
                                         $eval_header_order = $rowz['Order_val']; ?>
@@ -334,7 +345,7 @@
                                                                 $eval_metric_Id = $row['Eval_Metric_Id'];
                                                                 $metric_desc    = $row['Metric_desc'];
 
-                                                                echo '<tr id="eval_header_metrics_'.$db_eval_header.'">';
+                                                                echo '<tr class="eval_header_metrics_'.$db_eval_header.'" evalmetricid="'.$eval_metric_Id.'">';
 
                                                                 echo '<td style="vertical-align:middle; min-width:500px; max-width:500px;">'.$metric_desc.'</td>';
 
@@ -403,25 +414,53 @@
                                                 <div class="col-lg-6"></div>
 
                                                 <div class="col-lg-6 text-right">
-                                                    <button 
-                                                        type="button" 
-                                                        class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
-                                                        onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
-                                                        Prev
-                                                    </button>
-                                                    <button 
-                                                        type="button" 
-                                                        class="btn btn-primary font-weight-bold text-uppercase"
-                                                        onclick="navigateHeader('<?= $eval_header_order ?>', 'plus')">
-                                                        Next
-                                                    </button>
+                                                    <?php
+
+                                                        if($last_slide){ ?>
+
+                                                            <button 
+                                                                type="button" 
+                                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
+                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
+                                                                Prev
+                                                            </button>
+                                                            <button 
+                                                                type="submit" 
+                                                                class="btn btn-primary font-weight-bold text-uppercase">
+                                                                Submit
+                                                            </button>
+
+                                                            <?php 
+                                                        }
+                                                        else{ ?>
+
+                                                            <button 
+                                                                type="button" 
+                                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
+                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
+                                                                Prev
+                                                            </button>
+                                                            <button 
+                                                                type="button" 
+                                                                class="btn btn-primary font-weight-bold text-uppercase"
+                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'plus', '<?= $db_eval_header ?>')">
+                                                                Next
+                                                            </button>
+
+                                                            <?php 
+                                                        }
+                                                    ?>
+                                                    
                                                 </div>
 
                                             </div>
 
                                         </div>
 
-                                    <?php }
+                                        <?php 
+                                    
+                                        $counterz++;
+                                    }
                                 }
                                                 
                             ?>
@@ -601,22 +640,44 @@
                 })
             }
 
-            function navigateHeader(order_val, operator_val){
+            function navigateHeader(order_val, operator_val, metric_header_val){
 
-                $.ajax({
-                    type: "POST",
-                    url: "models/EvaluationModel.php",
-                    data: {
-                        orderval:order_val,
-                        operator:operator_val,
-                        action:"next_order_val"
-                    },
-                    dataType: "JSON",
-                    success: function (response) {
-                        
-                        viewHeaderMetrics(response.EvalHeaderId)
-                    }
-                })
+                var is_valid = []
+
+                if(operator_val == 'plus'){
+
+                    $('.eval_header_metrics_'+metric_header_val).each(function(){
+    
+                        var metric_Id = $(this).attr('evalmetricid')
+    
+                        if($('input[name=metric_Id_val_'+metric_Id+']:checked').length === 0){
+    
+                            is_valid.push(0)
+                        }
+                    })
+                }
+
+                if($.inArray(0, is_valid) !== -1){
+
+                    toastr.error('Please fill up all the metrics', 'CANNOT PROCEED')
+                }
+                else{
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/EvaluationModel.php",
+                        data: {
+                            orderval:order_val,
+                            operator:operator_val,
+                            action:"next_order_val"
+                        },
+                        dataType: "JSON",
+                        success: function (response) {
+                            
+                            viewHeaderMetrics(response.EvalHeaderId)
+                        }
+                    })
+                }
             }
 
         </script>
