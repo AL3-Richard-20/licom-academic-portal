@@ -454,5 +454,58 @@
                 }
             }
         // =================== Settings Functions END ============
+
+        // =================== Evaluation Form ==================
+            else if($_POST['action'] == 'submit_evaluation'){
+
+                $instructor_Id = $_POST['instructorid'];
+                $semester_Id   = $_POST['semesterid'];
+
+                $results_arr = array();
+
+                foreach($_POST as $metric_Id => $value){
+
+                    // echo "VALUE: ".$value."<br>";
+
+                    if( $metric_Id != 'action' && 
+                        $metric_Id != 'instructorid' && 
+                        $metric_Id != 'semesterid'){
+
+                        // echo "METRIC ID: ".$metric_Id."<br>";
+
+                        $data1 = [
+                            "Semester_Id" => $semester_Id,
+                            "Eval_Metric_Id" => substr($metric_Id, 14),
+                            "Metric_Val_Id" => $value,
+                            "User_Id" => $instructor_Id,
+                            "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                            "Date_added" => $server_date,
+                            "Time_added" => $server_time
+                        ];
+                        $insert1 = insert($evaluation_grades, $data1);
+
+                        if($insert1['Result'] == 1){
+
+                            array_push($results_arr, 1);
+                        }
+                        else{
+
+                            array_push($results_arr, 2);
+                        }
+                    }
+                }
+
+                if(!in_array(2, $results_arr)){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+
+                echo json_encode($res_req);
+            }
+        // =================== Evaluation Form END ==============
     }
 ?>
