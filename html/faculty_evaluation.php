@@ -350,7 +350,7 @@
 
                             render : function (data, type, row, meta){
 
-                                var evaluateInstructor = "location.href='faculty_evaluation_form.php?instructorid="+ data +"';"
+                                var evaluateInstructor = "location.href='faculty_evaluation_form.php?instructorid="+ data +"&semesterid="+ semester_Id +"';"
 
                                 var output=''
 

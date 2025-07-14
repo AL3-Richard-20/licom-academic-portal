@@ -1,6 +1,21 @@
 <?php
 
     include "includes/db.php";
+
+    if(isset($_GET['instructorid'], $_GET['semesterid'])){
+
+        $instructor_Id  = $_GET['instructorid'];
+        $semester_Id    = $_GET['semesterid'];
+
+        if($instructor_Id == '' || $semester_Id == ''){
+
+            echo "<script>location.href='faculty_evaluation.php';</script>";
+        }
+    }
+    else{
+
+        echo "<script>location.href='faculty_evaluation.php';</script>";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -134,6 +149,9 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
+
+                    <input type="hidden" name="instructor_Id" id="instructor_Id" value="<?= $instructor_Id ?>">
+                    <input type="hidden" name="semester_Id" id="semester_Id" value="<?= $semester_Id ?>">
 
                     <!-- ================= Evaluation Headers ================= -->
                         <ul class="nav nav-pills nav-justified">
@@ -289,181 +307,187 @@
                     <!-- ================= Metrics ======================= -->
                         <div id="metrics_div">
 
-                            <?php
+                            <form method="POST" id="evalForm">
 
-                                $queryz ="SELECT     
-                                            Eval_Header_Id,
-                                            Order_val  
-                                        FROM 
-                                            evaluation_headers 
-                                        WHERE 
-                                            Status = 1 ";
-                                
-                                $fetchz = mysqli_query($con, $queryz);
+                                <?php
 
-                                $countz = mysqli_num_rows($fetchz);
+                                    $queryz ="SELECT     
+                                                Eval_Header_Id,
+                                                Order_val  
+                                            FROM 
+                                                evaluation_headers 
+                                            WHERE 
+                                                Status = 1 ";
+                                    
+                                    $fetchz = mysqli_query($con, $queryz);
 
-                                if($fetchz){
+                                    $countz = mysqli_num_rows($fetchz);
 
-                                    $counterz = 1;
+                                    if($fetchz){
 
-                                    $last_slide= false;
+                                        $counterz = 1;
 
-                                    while($rowz = mysqli_fetch_assoc($fetchz)){
+                                        $last_slide= false;
 
-                                        if($counterz == $countz){
+                                        while($rowz = mysqli_fetch_assoc($fetchz)){
 
-                                            $last_slide = true;
-                                        }
+                                            if($counterz == $countz){
 
-                                        $db_eval_header    = $rowz['Eval_Header_Id'];
-                                        $eval_header_order = $rowz['Order_val']; ?>
+                                                $last_slide = true;
+                                            }
 
-                                        <div class="metric-items-div" id="metric_items_<?= $db_eval_header ?>" style="display:none;">
+                                            $db_eval_header    = $rowz['Eval_Header_Id'];
+                                            $eval_header_order = $rowz['Order_val']; ?>
 
-                                            <table class="table table-sm">
+                                            <div class="metric-items-div" id="metric_items_<?= $db_eval_header ?>" style="display:none;">
 
-                                                <tbody>
+                                                <table class="table table-sm">
 
-                                                    <?php
+                                                    <tbody>
 
-                                                        $query ="SELECT 
-                                                                    Eval_Metric_Id, 
-                                                                    Metric_desc 
-                                                                FROM 
-                                                                    evaluation_metrics 
-                                                                WHERE 
-                                                                    Status = 1 
-                                                                    AND Eval_Header_Id = '".$db_eval_header."' ";
+                                                        <?php
 
-                                                        $fetch = mysqli_query($con, $query);
+                                                            $query ="SELECT 
+                                                                        Eval_Metric_Id, 
+                                                                        Metric_desc 
+                                                                    FROM 
+                                                                        evaluation_metrics 
+                                                                    WHERE 
+                                                                        Status = 1 
+                                                                        AND Eval_Header_Id = '".$db_eval_header."' ";
 
-                                                        if($fetch){
+                                                            $fetch = mysqli_query($con, $query);
 
-                                                            while($row = mysqli_fetch_assoc($fetch)){
+                                                            if($fetch){
 
-                                                                $eval_metric_Id = $row['Eval_Metric_Id'];
-                                                                $metric_desc    = $row['Metric_desc'];
+                                                                while($row = mysqli_fetch_assoc($fetch)){
 
-                                                                echo '<tr class="eval_header_metrics_'.$db_eval_header.'" evalmetricid="'.$eval_metric_Id.'">';
+                                                                    $eval_metric_Id = $row['Eval_Metric_Id'];
+                                                                    $metric_desc    = $row['Metric_desc'];
 
-                                                                echo '<td style="vertical-align:middle; min-width:500px; max-width:500px;">'.$metric_desc.'</td>';
+                                                                    echo '<tr class="eval_header_metrics_'.$db_eval_header.'" evalmetricid="'.$eval_metric_Id.'">';
 
-                                                                echo '<td class="d-flex align-items-center" style="margin-left:50px;">';
+                                                                    echo '<td style="vertical-align:middle; min-width:500px; max-width:500px;">'.$metric_desc.'</td>';
 
-                                                                $query2="SELECT 
-                                                                            Metric_Val_Id, 
-                                                                            Metric_val_no, 
-                                                                            Metric_val_desc 
-                                                                        FROM 
-                                                                            metric_values 
-                                                                        WHERE 
-                                                                            Status = 1 ";
-                                                                
-                                                                $fetch2 = mysqli_query($con, $query2);
+                                                                    echo '<td class="d-flex align-items-center" style="margin-left:50px;">';
 
-                                                                $count2 = mysqli_num_rows($fetch2);
+                                                                    $query2="SELECT 
+                                                                                Metric_Val_Id, 
+                                                                                Metric_val_no, 
+                                                                                Metric_val_desc 
+                                                                            FROM 
+                                                                                metric_values 
+                                                                            WHERE 
+                                                                                Status = 1 ";
+                                                                    
+                                                                    $fetch2 = mysqli_query($con, $query2);
 
-                                                                if($fetch2){
+                                                                    $count2 = mysqli_num_rows($fetch2);
 
-                                                                    $counter2 = 1;
+                                                                    if($fetch2){
 
-                                                                    while($row2 = mysqli_fetch_assoc($fetch2)){
+                                                                        $counter2 = 1;
 
-                                                                        $metric_val_Id  = $row2['Metric_Val_Id'];
-                                                                        $metric_val_no  = $row2['Metric_val_no'];
-                                                                        $metric_val_desc= $row2['Metric_val_desc'];
+                                                                        while($row2 = mysqli_fetch_assoc($fetch2)){
 
-                                                                        if($counter2 == 1){
+                                                                            $metric_val_Id  = $row2['Metric_Val_Id'];
+                                                                            $metric_val_no  = $row2['Metric_val_no'];
+                                                                            $metric_val_desc= $row2['Metric_val_desc'];
 
-                                                                            echo "<p style='vertical-align: top;'>".$metric_val_desc." - </p>";
+                                                                            if($counter2 == 1){
+
+                                                                                echo "<p style='vertical-align: top;'>".$metric_val_desc." - </p>";
+                                                                            }
+                                                                            
+                                                                            echo "<div class='mr-4 ml-4 text-center'>
+                                                                                    <input 
+                                                                                        type='radio' 
+                                                                                        name='metric_Id_val_".$eval_metric_Id."' 
+                                                                                        evalmetricid='".$eval_metric_Id."' 
+                                                                                        metricvalid='".$metric_val_Id."' 
+                                                                                        value='".$metric_val_Id."'
+                                                                                        style='height:20px; width:20px;'><br>
+                                                                                    <h4 class='font-weight-bold'>".$metric_val_no."</h4>
+                                                                                </div>";
+
+                                                                            if($counter2 == $count2){
+
+                                                                                echo "<p style='vertical-align: top;'> - ".$metric_val_desc."</p>";
+                                                                            }
+
+                                                                            $counter2++;
                                                                         }
-                                                                        
-                                                                        echo "<div class='mr-4 ml-4 text-center'>
-                                                                                <input 
-                                                                                    type='radio' 
-                                                                                    name='metric_Id_val_".$eval_metric_Id."' 
-                                                                                    evalmetricid='".$eval_metric_Id."' 
-                                                                                    metricvalid='".$metric_val_Id."' 
-                                                                                    style='height:20px; width:20px;'><br>
-                                                                                <h4 class='font-weight-bold'>".$metric_val_no."</h4>
-                                                                            </div>";
-
-                                                                        if($counter2 == $count2){
-
-                                                                            echo "<p style='vertical-align: top;'> - ".$metric_val_desc."</p>";
-                                                                        }
-
-                                                                        $counter2++;
                                                                     }
+
+
+                                                                    echo '</td>';
+                                                                    echo '</tr>';
+
                                                                 }
-
-
-                                                                echo '</td>';
-                                                                echo '</tr>';
-
                                                             }
-                                                        }
-                                                    ?>
-                                                    
-                                                </tbody>
-                                            </table>
+                                                        ?>
+                                                        
+                                                    </tbody>
+                                                </table>
 
-                                            <div class="row">
+                                                <div class="row">
 
-                                                <div class="col-lg-6"></div>
+                                                    <div class="col-lg-6"></div>
 
-                                                <div class="col-lg-6 text-right">
-                                                    <?php
+                                                    <div class="col-lg-6 text-right">
+                                                        <?php
 
-                                                        if($last_slide){ ?>
+                                                            if($last_slide){ ?>
 
-                                                            <button 
-                                                                type="button" 
-                                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
-                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
-                                                                Prev
-                                                            </button>
-                                                            <button 
-                                                                type="submit" 
-                                                                class="btn btn-primary font-weight-bold text-uppercase">
-                                                                Submit
-                                                            </button>
+                                                                <button 
+                                                                    type="button" 
+                                                                    class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
+                                                                    onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
+                                                                    Prev
+                                                                </button>
+                                                                <button 
+                                                                    type="button" 
+                                                                    class="btn btn-primary font-weight-bold text-uppercase" 
+                                                                    onclick="navigateHeader('<?= $eval_header_order ?>', 'plus', '<?= $db_eval_header ?>', 'last')">
+                                                                    Submit
+                                                                </button>
 
-                                                            <?php 
-                                                        }
-                                                        else{ ?>
+                                                                <?php 
+                                                            }
+                                                            else{ ?>
 
-                                                            <button 
-                                                                type="button" 
-                                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
-                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
-                                                                Prev
-                                                            </button>
-                                                            <button 
-                                                                type="button" 
-                                                                class="btn btn-primary font-weight-bold text-uppercase"
-                                                                onclick="navigateHeader('<?= $eval_header_order ?>', 'plus', '<?= $db_eval_header ?>')">
-                                                                Next
-                                                            </button>
+                                                                <button 
+                                                                    type="button" 
+                                                                    class="btn btn-outline-light text-dark font-weight-bold text-uppercase"
+                                                                    onclick="navigateHeader('<?= $eval_header_order ?>', 'minus')">
+                                                                    Prev
+                                                                </button>
+                                                                <button 
+                                                                    type="button" 
+                                                                    class="btn btn-primary font-weight-bold text-uppercase"
+                                                                    onclick="navigateHeader('<?= $eval_header_order ?>', 'plus', '<?= $db_eval_header ?>')">
+                                                                    Next
+                                                                </button>
 
-                                                            <?php 
-                                                        }
-                                                    ?>
-                                                    
+                                                                <?php 
+                                                            }
+                                                        ?>
+                                                        
+                                                    </div>
+
                                                 </div>
 
                                             </div>
 
-                                        </div>
-
-                                        <?php 
-                                    
-                                        $counterz++;
+                                            <?php 
+                                        
+                                            $counterz++;
+                                        }
                                     }
-                                }
-                                                
-                            ?>
+                                                    
+                                ?>
+
+                            </form>
 
                         </div>
                     <!-- ================= Metrics END =================== -->
@@ -599,11 +623,61 @@
 
         <script>
 
+            var instructor_Id = $('#instructor_Id').val()
+            var semester_Id   = $('#semester_Id').val()
+
             var headers_arr = [1, 2, 3, 4, 5]
 
             $(document).ready(function () {
 
                 checkIfPopUpEnabled()
+
+                // ============ Form Submission ==============
+                    $('#evalForm').on('submit', function(aa){
+
+                        aa.preventDefault()
+
+                        var data = $(this).serializeArray()
+
+                        data.push(
+                            { name:'action', value:'submit_evaluation' },
+                            { name:'instructorid', value:instructor_Id },
+                            { name:'semesterid', value:semester_Id }
+                        )
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/EvaluationModel.php",
+                            data: data,
+                            dataType: "JSON",
+                            success: function (response) {
+
+                                if(response == 1){
+
+                                    swal({   
+                                        title: "SAVED SUCCESSFULLY",   
+                                        text: "",   
+                                        type: "success",   
+                                        showCancelButton: false,    
+                                        confirmButtonText: "OKAY",   
+                                        closeOnConfirm: false,   
+                                        closeOnCancel: false 
+                                    }).then((isConfirm) => {
+
+                                        if (isConfirm.value == true) {  
+
+                                            location.href='faculty_evaluation.php'
+                                        }
+                                    })
+                                }
+                                else if(response == '2' || response == '3'){
+
+                                    toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                }
+                            }
+                        });
+                    })
+                // ============ Form Submission END ==========
             })
 
 
@@ -640,7 +714,7 @@
                 })
             }
 
-            function navigateHeader(order_val, operator_val, metric_header_val){
+            function navigateHeader(order_val, operator_val, metric_header_val, step=null){
 
                 var is_valid = []
 
@@ -663,20 +737,27 @@
                 }
                 else{
 
-                    $.ajax({
-                        type: "POST",
-                        url: "models/EvaluationModel.php",
-                        data: {
-                            orderval:order_val,
-                            operator:operator_val,
-                            action:"next_order_val"
-                        },
-                        dataType: "JSON",
-                        success: function (response) {
-                            
-                            viewHeaderMetrics(response.EvalHeaderId)
-                        }
-                    })
+                    if(step == 'last'){
+
+                        $('#evalForm').submit()
+                    }
+                    else{
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/EvaluationModel.php",
+                            data: {
+                                orderval:order_val,
+                                operator:operator_val,
+                                action:"next_order_val"
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+                                
+                                viewHeaderMetrics(response.EvalHeaderId)
+                            }
+                        })
+                    }
                 }
             }
 
