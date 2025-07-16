@@ -293,6 +293,12 @@
                                 <div class="col-lg-6 text-right">
                                     <button 
                                         type="button" 
+                                        class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                        onclick="location.href='faculty_evaluation.php';">
+                                        Back
+                                    </button>
+                                    <button 
+                                        type="button" 
                                         class="btn btn-primary font-weight-bold text-uppercase" 
                                         onclick="navigateHeader(1, 'plus')">
                                         Next

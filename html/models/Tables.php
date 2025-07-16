@@ -5,6 +5,7 @@
     $accounts           = 'accounts';
     $class_schedules    = 'class_schedules';
     $courses            = 'courses';
+    $evaluation_grade   = 'evaluation_grade';
     $evaluation_grades  = 'evaluation_grades';
     $evaluation_headers = 'evaluation_headers';
     $evaluation_metrics = 'evaluation_metrics';
