@@ -471,8 +471,6 @@
                         $metric_Id != 'instructorid' && 
                         $metric_Id != 'semesterid'){
 
-                        // echo "METRIC ID: ".$metric_Id."<br>";
-
                         $data1 = [
                             "Semester_Id" => $semester_Id,
                             "Eval_Metric_Id" => substr($metric_Id, 14),
@@ -497,7 +495,24 @@
 
                 if(!in_array(2, $results_arr)){
 
-                    $res_req = 1;
+                    // ========= Insert Evaluation Header Record =========
+                    $data2   = [
+                        "Semester_Id" => $semester_Id,
+                        "User_Id" => $instructor_Id,
+                        "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                        "Date_added" => $server_date,
+                        "Time_added" => $server_time
+                    ];
+                    $insert2 = insert($evaluation_grade, $data2);
+
+                    if($insert2['Result'] == 1){
+
+                        $res_req = 1;
+                    }
+                    else{
+
+                        $res_req = 2;
+                    }
                 }
                 else{
 

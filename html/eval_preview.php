@@ -316,10 +316,10 @@
 
                                                                 echo '<tr>';
 
-                                                                echo '<td style="vertical-align:middle; max-width:500px;">'.$metric_desc.'</td>';
+                                                                echo '<td style="vertical-align:middle; min-width:500px; max-width:500px;">'.$metric_desc.'</td>';
 
                                                                 echo '<td class="d-flex align-items-center" style="margin-left:50px;">';
-
+                                                                
                                                                 $query2="SELECT 
                                                                             Metric_Val_Id, 
                                                                             Metric_val_no, 

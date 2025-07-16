@@ -547,6 +547,8 @@
 
         else if($_POST['action'] == 'fetch_class_instructors'){
 
+            $semester_Id = NULL;
+
             $query ="SELECT 
                         class_schedules.Class_Schedule_Id, 
                         class_schedules.Day, 
@@ -556,8 +558,8 @@
                         subjects.Subject_Id, 
                         subjects.Subject_name, 
                         subjects.Subject_code, 
-                        courses.Course_name,
-                        courses.Course_code,
+                        courses.Course_name, 
+                        courses.Course_code, 
                         rooms.Room_name, 
                         rooms.Room_details, 
                         class_schedules.Instructor_Id,
@@ -616,10 +618,49 @@
 
                 $instructor_fullname = $ins_lname.", ".$ins_fname." ".$ins_mname;
 
+                $eval_Id = NULL;
+
+                $evalution_record_arr = array();
+
+                if($semester_Id != NULL){
+
+                    // Fetch Evaluation Record
+                    $query2 ="SELECT 
+                                Eval_Id,
+                                Date_added, 
+                                Time_added 
+                            FROM 
+                                evaluation_grade 
+                            WHERE 
+                                Semester_Id = '".$semester_Id."' 
+                                AND User_Id = '".$instructor_Id."' 
+                                AND Evaluated_by = '".$_SESSION["licom_usr_Id"]."' 
+                                AND Status = 1 ";
+                            
+                    $fetch2 = mysqli_query($con, $query2);
+                    $count2 = mysqli_num_rows($fetch2);
+
+                    if($count2 > 0){
+
+                        $row2 = mysqli_fetch_assoc($fetch2);
+
+                        $eval_Id    = $row2['Eval_Id'];
+                        $date_added = $row2['Date_added'];
+                        $time_added = $row2['Time_added'];
+
+                        $evalution_record_arr = array(
+                            'EvalId' => $eval_Id,
+                            'TotalRec' => $count2,
+                            'DateAdded' => dateFormat($date_added),
+                            'TimeAdded' => timeFormat($time_added)
+                        );
+                    }
+                }
+
                 $data[] = array(
                     'InstructorId' => $instructor_Id,
                     'InstructorFullName' => $instructor_fullname,
-                    "DateEvaluated" => "---"
+                    "EvalRecord" => $evalution_record_arr
                 );
             }
 
