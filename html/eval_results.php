@@ -15,7 +15,8 @@
         // ============ Evaluation Grade ===============
             $query ="SELECT 
                         Semester_Id, 
-                        User_Id 
+                        User_Id,
+                        Grade_val 
                     FROM 
                         evaluation_grade 
                     WHERE 
@@ -28,6 +29,7 @@
             
             $semester_Id    = $row['Semester_Id'];
             $instructor_Id  = $row['User_Id'];
+            $grade_val      = number_format($row['Grade_val'], 2);
         // ============ Evaluation Grade END ===========
     }
     else{
@@ -139,7 +141,10 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Evaluation Result</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">
+                                <span class="fa fa-arrow-left" onclick='location.href="faculty_evaluation.php";'></span>
+                                &nbspEvaluation Result
+                            </h4>
                             <div class="d-flex align-items-center"></div>
                         </div>
                         <div class="col-7 align-self-center">
@@ -283,6 +288,19 @@
                             echo '</table>';
                         }
                     ?>
+
+                    <hr><br>
+
+                    <div class="row">
+
+                        <div class="col-lg-6"></div>
+
+                        <div class="col-lg-6 text-right">
+                            <h4 class="font-weight-bold">Final Grade: </h4>
+                            <h2><span class="text-info"><?= $grade_val ?></span></h2>
+                        </div>
+
+                    </div>
 
                 </div>
                 <!-- ============================================================== -->

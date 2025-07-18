@@ -495,11 +495,38 @@
 
                 if(!in_array(2, $results_arr)){
 
+                    // ========= Compute Average ========== 
+                        $query1 = "SELECT 
+                                    COUNT(evaluation_grades.Eval_Grades_Id) AS TotalRec, 
+                                    SUM(metric_values.Metric_val_no) AS TOtalAmnt 
+                                FROM 
+                                    evaluation_grades 
+                                LEFT JOIN 
+                                    metric_values 
+                                ON 
+                                    evaluation_grades.Metric_Val_Id = metric_values.Metric_Val_Id 
+                                WHERE 
+                                    evaluation_grades.Semester_Id = '".$semester_Id."' 
+                                    AND evaluation_grades.User_Id = '".$instructor_Id."' 
+                                    AND evaluation_grades.Evaluated_by = '".$_SESSION["licom_usr_Id"]."' 
+                                    AND evaluation_grades.Status = 1 ";
+
+                        $fetch1 = mysqli_query($con, $query1);
+
+                        $row1 = mysqli_fetch_assoc($fetch1);
+
+                        $total_rec  = $row1['TotalRec'];
+                        $total_amnt = $row1['TOtalAmnt'];
+
+                        $average = ($total_amnt / $total_rec);
+                    // ========= Compute Average END ======
+
                     // ========= Insert Evaluation Header Record =========
                     $data2   = [
                         "Semester_Id" => $semester_Id,
                         "User_Id" => $instructor_Id,
                         "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                        "Grade_val" => $average,
                         "Date_added" => $server_date,
                         "Time_added" => $server_time
                     ];
