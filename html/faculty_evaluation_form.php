@@ -1,6 +1,7 @@
 <?php
 
     include "includes/db.php";
+    include "../html/helpers/Users.php";
 
     if(isset($_GET['instructorid'], $_GET['semesterid'])){
 
@@ -122,7 +123,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Evaluation Form Preview</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Evaluate Faculty</h4>
                             <div class="d-flex align-items-center"></div>
                         </div>
                         <div class="col-7 align-self-center">
@@ -132,7 +133,7 @@
                                         <li class="breadcrumb-item">
                                             <a href="#">Evaluation Form</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Preview</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Form</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -196,6 +197,38 @@
                     <!-- ================= Evaluation Headers END ============= -->
 
                     <br><br>
+
+                    <!-- ============= Instructor Information ============= -->
+                        <?php
+
+                            $instructor_info = fetchUserInfo($instructor_Id);
+
+                            $instrctr_fname = $instructor_info[0]['FName'];
+                            $instrctr_mname = $instructor_info[0]['MName'];
+                            $instrctr_lname = $instructor_info[0]['LName'];
+
+                            $instrctr_fullname = $instrctr_lname." ".$instrctr_fname.", ".$instrctr_mname;
+                        ?>
+
+                        <div class="row">
+
+                            <div class="col-lg-6 d-flex align-items-center">
+                                <img 
+                                    src="../assets/images/users/user-icon-512x512-x23sj495.png" 
+                                    class="mr-4"
+                                    height="70"
+                                    alt="Profile photo">
+                                <div>
+                                    <h5><?= $instrctr_fullname ?></h5>
+                                    <p>Faculty</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6"></div>
+                                
+                        </div>
+                    <!-- ============= Instructor Information END ========= -->
+
+                    <hr>
 
                     <!-- ================= Instructions ================= -->       
                         <div class="metric-items-div" id="metric_items_0">
