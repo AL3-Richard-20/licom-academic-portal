@@ -1,6 +1,7 @@
 <?php
 
     include "includes/db.php";
+    include "../html/helpers/Users.php";
 
     if(isset($_GET['evalid'])){
 
@@ -165,6 +166,38 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid"><br><br>
+
+                    <!-- ============= Instructor Information ============= -->
+                        <?php
+
+                            $instructor_info = fetchUserInfo($instructor_Id);
+
+                            $instrctr_fname = $instructor_info[0]['FName'];
+                            $instrctr_mname = $instructor_info[0]['MName'];
+                            $instrctr_lname = $instructor_info[0]['LName'];
+
+                            $instrctr_fullname = $instrctr_lname." ".$instrctr_fname.", ".$instrctr_mname;
+                        ?>
+
+                        <div class="row">
+
+                            <div class="col-lg-6 d-flex align-items-center">
+                                <img 
+                                    src="../assets/images/users/user-icon-512x512-x23sj495.png" 
+                                    class="mr-4"
+                                    height="70"
+                                    alt="Profile photo">
+                                <div>
+                                    <h5><?= $instrctr_fullname ?></h5>
+                                    <p>Faculty</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6"></div>
+                                
+                        </div>
+                    <!-- ============= Instructor Information END ========= -->
+
+                    <hr>
 
                     <?php
 
