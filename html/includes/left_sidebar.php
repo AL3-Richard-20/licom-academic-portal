@@ -248,6 +248,31 @@
             <!-- =============== Student END ================= -->
 
             <!-- =============== Instructor ================= -->
+                <?php
+
+                    if($_SESSION["licom_usr_level"] == 4){ ?>
+
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="faculty_class_schedules.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-calendar"></i>
+                                <span class="hide-menu">Class Schedules</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="faculty_grades.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-file-alt"></i>
+                                <span class="hide-menu">Evaluation Grades</span>
+                            </a>
+                        </li>
+                        
+                        <?php
+                    }
+                ?>
             <!-- =============== Instructor END ============= -->
 
             <!-- =============== Administrator ============== -->

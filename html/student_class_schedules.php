@@ -97,7 +97,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Class Schedules</h4>
+                        <h4 class="page-title font-weight-bold text-uppercase">Class Schedules</h4>
                         <div class="d-flex align-items-center">
 
                         </div>
