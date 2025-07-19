@@ -16,6 +16,7 @@
             $query ="SELECT 
                         Semester_Id, 
                         User_Id,
+                        Evaluated_by,
                         Grade_val 
                     FROM 
                         evaluation_grade 
@@ -29,6 +30,7 @@
             
             $semester_Id    = $row['Semester_Id'];
             $instructor_Id  = $row['User_Id'];
+            $evaluated_by   = $row['Evaluated_by'];
             $grade_val      = number_format($row['Grade_val'], 2);
         // ============ Evaluation Grade END ===========
     }
@@ -142,7 +144,7 @@
                     <div class="row">
                         <div class="col-5 align-self-center">
                             <h4 class="page-title font-weight-bold text-uppercase">
-                                <span class="fa fa-arrow-left" onclick='location.href="faculty_evaluation.php";'></span>
+                                <span class="fa fa-arrow-left" onclick='history.back();'></span>
                                 &nbspEvaluation Result
                             </h4>
                             <div class="d-flex align-items-center"></div>
@@ -251,7 +253,7 @@
                                         WHERE 
                                             evaluation_grades.Semester_Id = '".$semester_Id."' 
                                             AND evaluation_grades.User_Id = '".$instructor_Id."' 
-                                            AND evaluation_grades.Evaluated_by = '".$_SESSION["licom_usr_Id"]."' 
+                                            AND evaluation_grades.Evaluated_by = '".$evaluated_by."' 
                                             AND evaluation_metrics.Eval_Header_Id = '".$eval_header_Id."' 
                                             AND evaluation_grades.Status = 1 ";
 
@@ -296,8 +298,17 @@
                         <div class="col-lg-6"></div>
 
                         <div class="col-lg-6 text-right">
-                            <h4 class="font-weight-bold">Final Grade: </h4>
-                            <h2><span class="text-info"><?= $grade_val ?></span></h2>
+
+                            <?php
+
+                                if($_SESSION["licom_usr_level"] == 4){ ?>
+
+                                    <h4 class="font-weight-bold">Final Grade: </h4>
+                                    <h2><span class="text-info"><?= $grade_val ?></span></h2>
+
+                                    <?php
+                                }
+                            ?>
                         </div>
 
                     </div>

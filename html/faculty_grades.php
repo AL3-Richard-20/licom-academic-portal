@@ -1,7 +1,6 @@
 <?php
 
     include "includes/db.php";
-    include "../../app/html/helpers/Users.php";
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +13,7 @@
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
@@ -24,12 +24,19 @@
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
 
 
+        <title><?= $appname ?></title>
+
+
+        <!-- Custom CSS -->
+        <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
+
+
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
-
-        <title><?= $appname ?></title>
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
@@ -43,11 +50,10 @@
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+    <![endif]-->
     </head>
 
     <body>
-
 
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
@@ -58,7 +64,6 @@
                 <div class="lds-pos"></div>
             </div>
         </div>
-
 
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
@@ -90,6 +95,7 @@
             <!-- ============================================================== -->
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
+
             <div class="page-wrapper">
 
 
@@ -100,7 +106,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Faculty Evaluation</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Evaluation Grades</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -110,7 +116,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Faculty Evaluation</a>
+                                            <a href="#">Grades</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -129,85 +135,81 @@
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->
                 <div class="container-fluid">
-                    <!-- ============================================================== -->
-                    <!-- Start Page Content -->
-                    <!-- ============================================================== -->
+
+                    <input type="hidden" name="instructor_Id_val" id="instructor_Id_val" value="<?= $_SESSION["licom_usr_Id"] ?>">
+
                     <div class="row">
+
                         <div class="col-lg-4">
-                            <p><b>Semester: <span class="text-danger">(*)</span></b></p>
-                            <select 
-                                class="form-control form-control-sm"
-                                name="semester_dd_val"
-                                id="semester_dd_val">
-                                <option value=""></option>
-                                <?php
+                            <div class="form-group">
+                                <p><b>Semester:</b></p>
+                                <select 
+                                    class="form-control form-control-sm" 
+                                    name="semester_dd" 
+                                    id="semester_dd">
+                                    <option value=""></option>
+                                    <?php
 
-                                    $query="SELECT 
-                                                Semester_Id, 
-                                                Semester_name 
-                                            FROM 
-                                                semesters 
-                                            WHERE 
-                                                Status = 1 ";
+                                        $query="SELECT 
+                                                    Semester_Id, 
+                                                    Semester_name 
+                                                FROM 
+                                                    semesters 
+                                                WHERE 
+                                                    Status = 1 ";
 
-                                    $fetch = mysqli_query($con, $query);
+                                        $fetch = mysqli_query($con, $query);
 
-                                    $count = mysqli_num_rows($fetch);
+                                        $count = mysqli_num_rows($fetch);
 
-                                    if($fetch && $count > 0){
+                                        if($fetch && $count > 0){
 
-                                        while($row = mysqli_fetch_assoc($fetch)){
+                                            while($row = mysqli_fetch_assoc($fetch)){
 
-                                            $semester_Id    = $row['Semester_Id'];
-                                            $semester_name  = $row['Semester_name'];
-                                            
-                                            echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                $semester_Id    = $row['Semester_Id'];
+                                                $semester_name  = $row['Semester_name'];
+                                                
+                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                            }
                                         }
-                                    }
-                                ?>
-                            </select>
+                                    ?>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4"></div>
+
                     </div>
 
                     <br>
 
+                    <table class="table table-bordered display nowrap" style="width:100%;">
+                        <thead class="font-weight-bold text-uppercase">
+                            <tr>
+                                <th>Date Added</th>
+                                <th>Grade</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="faculty_eval_grades">
+                            <tr>
+                                <td colspan="3" class="text-center">No data available in the table.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <hr>
+
                     <div class="row">
 
-                        <div class="col-12">
+                        <div class="col-lg-6"></div>
 
-                            <table class="table display nowrap" style="width:100%;" id="class_instructors_tbl">
+                        <div class="col-lg-6 text-right">
 
-                                <thead class="table-bordered font-weight-bold text-uppercase">
-                                    <tr>
-                                        <th>Instructor</th>
-                                        <th>Date Evaluated</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center" colspan="3">No data available in the table.</td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
-
+                            <h4 class="font-weight-bold">Final Grade: </h4>
+                            <h2><span class="text-info" id="final_grade_txt">0</span></h2>
                         </div>
 
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- End PAge Content -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Right sidebar -->
-                    <!-- ============================================================== -->
-                    <!-- .right-sidebar -->
-                    <!-- ============================================================== -->
-                    <!-- End Right sidebar -->
-                    <!-- ============================================================== -->
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Container fluid  -->
@@ -245,11 +247,7 @@
         <!-- ============================================================== -->
 
 
-
-        <!-- <div class="chat-windows"></div> -->
-
-
-
+        
         <!-- ============================================================== -->
         <!-- All Jquery -->
         <!-- ============================================================== -->
@@ -271,9 +269,11 @@
         <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
+
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
@@ -293,105 +293,71 @@
 
         <script>
 
+            var instructor_Id = $('#instructor_Id_val').val()
+
             $(document).ready(function () {
 
-                // ================= Select2 =====================
-                    $('#semester_dd_val').select2({
-                        "placeholder":"Select semester here"
-                    })
-                // ================= Select2 END =================
+                $('#semester_dd').select2({
+                    "placeholder":"Select semester here",
+                    "allowClear":true
+                })
 
-                $('#semester_dd_val').on('change', function(){
+                $('#semester_dd').on('change', function(){
 
                     var semester_Id = $(this).val()
 
-                    classInstructors(semester_Id)
+                    if(semester_Id != ''){
+
+                        facultyGrades(semester_Id)
+                    }
                 })
             })
 
+            function facultyGrades(semester_Id){
 
-            function classInstructors(semester_Id){
+                var output='';
 
-                var output=''
-
-                $('#class_instructors_tbl').DataTable({
-
-                    "responsive":true,
-                    "bInfo":false,
-                    "searching":false,
-                    "bDestroy": true,
-                    "aaSorting": [],
-                    "dom": 'rtp',
-                    "ajax": {
-                        'type':'POST',
-                        'url':'models/ClassSchedulesModel.php',
-                        'data':{
-                            semesterid:semester_Id,
-                            action:"fetch_class_instructors"
-                        },
+                $.ajax({
+                    type: "POST",
+                    url: "models/InstructorModel.php",
+                    data: {
+                        instructorid:instructor_Id,
+                        semesterid:semester_Id,
+                        action:"instructor_grades"
                     },
-                    "columns": [
-                        { "data": "InstructorFullName",
+                    dataType: "JSON",
+                    success: function (response) {
 
-                            render : function (data, type, row, meta){
+                        if(response.Total > 0){
 
-                                var output=''
+                            $.each(response.Records, function(key, value){
 
-                                output+='<div class="d-flex align-items-center">'
-                                output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" class="mr-2" height="30" alt="Profile Picture">'
-                                output+='<h5 class="ml-2">'+ row.InstructorFullName +'</h5>'
-                                output+='</div>'
+                                output+='<tr>'
+                                output+='<td>'+ value.DateAdded +' | '+ value.TimeAdded +'</td>'
+                                output+='<td><h5 class="font-weight-bold">'+ value.GradeVal +'</h5></td>'
+                                output+='<td class="text-center">'
 
-                                return output
-                            }
-                        },
-                        { "data": "EvalRecord",
+                                var eval_results_page = 'location.href=`eval_results.php?evalid='+value.EvalId+'`'
 
-                            render : function (data, type, row, meta){
+                                output+='<button type="button" class="btn btn-outline-light text-info" onclick="'+ eval_results_page +'">'
+                                output+='<span class="fa fa-info-circle"></span>'
+                                output+='</button>'
+                                output+='</td>'
+                                output+='</tr>'
 
-                                var output=''
+                            })
 
-                                if(data.DateAdded != null && data.TimeAdded != null ){
+                            $('#final_grade_txt').html(response.TotalGrade)
+                        }
+                        else{
 
-                                    output+='<div class="d-flex align-items-center">'
-                                    output+='<p class="ml-2">'+ data.DateAdded +' | '+ data.TimeAdded +'</p>'
-                                    output+='</div>'
-                                }
-                                else{
+                            output+='<tr>'
+                            output+='<td colspan="3" class="text-center">No data available in the table.</td>'
+                            output+='</tr>'
+                        }
 
-                                    output+='<div class="d-flex align-items-center">'
-                                    output+='<p class="ml-2">---</p>'
-                                    output+='</div>'
-                                }
-
-                                return output
-                            } 
-                        },
-                        { "data": "InstructorId",
-
-                            render : function (data, type, row, meta){
-
-                                var evaluateInstructor = "location.href='faculty_evaluation_form.php?instructorid="+ data +"&semesterid="+ semester_Id +"';"
-
-                                var output=''
-
-                                if(row.EvalRecord.DateAdded == '' || row.EvalRecord.DateAdded == null){
-
-                                    output+='<div class="text-center">'
-                                    output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase" onclick="'+ evaluateInstructor +'">Evaluate</button>'
-                                    output+='</div>'
-                                }
-                                else{
-
-                                    output+='<div class="text-center">'
-                                    output+='<button type="button" class="btn btn-info btn-sm font-weight-bold text-uppercase" onclick="location.href=`eval_results.php?evalid='+ row.EvalRecord.EvalId +'`;">View</button>'
-                                    output+='</div>'
-                                }
-
-                                return output
-                            }
-                        },
-                    ],
+                        $('#faculty_eval_grades').html(output)
+                    }
                 })
             }
 

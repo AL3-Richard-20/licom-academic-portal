@@ -125,6 +125,78 @@
 
             echo json_encode($res_req);
         }
+
+        else if($_POST['action'] == 'instructor_grades'){
+
+            $instructor_Id = $_POST['instructorid'];
+
+            $query ="SELECT 
+                        Eval_Id, 
+                        Remarks, 
+                        Grade_val, 
+                        Date_added, 
+                        Time_added
+                    FROM 
+                        evaluation_grade 
+                    WHERE 
+                        Status = 1 
+                        AND User_Id = '".$instructor_Id."' ";
+
+            if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
+
+                $semester_Id = $_POST['semesterid'];
+
+                $query .="AND Semester_Id = '".$semester_Id."' ";
+            }
+
+            $query .="ORDER BY 
+                        Date_added DESC, 
+                        Time_added DESC ";
+
+            $fetch = mysqli_query($con, $query);
+
+            $count = mysqli_num_rows($fetch);
+
+            $results_arr = array();
+
+            $total_grade = 0;
+
+            if($count > 0){
+
+                $grade_sum = 0;
+
+                while($row = mysqli_fetch_assoc($fetch)){
+
+                    $eval_Id    = $row['Eval_Id'];
+                    $remarks    = $row['Remarks'];
+                    $grade_val  = $row['Grade_val'];
+                    $date_added = $row['Date_added'];
+                    $time_added = $row['Time_added'];
+
+                    $result_arr = array(
+                        'EvalId' => $eval_Id,
+                        'Remarks' => $remarks,
+                        'GradeVal' => number_format($grade_val, 2),
+                        'DateAdded' => dateFormat($date_added),
+                        'TimeAdded' => timeFormat($time_added)
+                    );
+
+                    array_push($results_arr, $result_arr);
+
+                    $grade_sum+=$grade_val;
+                }
+
+                $total_grade = ($grade_sum / $count);
+            }
+
+            echo json_encode(
+                array(
+                    'Records' => $results_arr,
+                    'TotalGrade' => number_format($total_grade, 2),
+                    'Total' => $count
+                )
+            );
+        }
     }
 
 ?>
