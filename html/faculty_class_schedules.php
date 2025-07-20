@@ -305,7 +305,7 @@
                     <!-- ================ Schedule Information Modal ================ -->
                         <div class="modal fade" id="scheduleInfoMod">
                             
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog" role="document" style="max-width:1140px;">>
 
                                 <div class="modal-content">
 
@@ -325,7 +325,7 @@
 
                                         <div class="row">
 
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-6">
                                                     
                                                 <table class="table table-sm" style="width:100%;">
                                                     <tbody>
@@ -372,7 +372,46 @@
 
                                             </div>
 
-                                            <div class="col-lg-6"></div>
+                                            <div class="col-lg-6">
+
+                                                <h5 class="font-weight-bold text-uppercase">
+                                                    <span class="fa fa-users"></span>
+                                                    &nbspStudents List
+                                                </h5>
+
+                                                <hr>
+
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="font-weight-bold">TOTAL:</h5>
+                                                    <h4 class="ml-2">( <span id="total_students">0</span> )</h4>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="form-group">
+                                                    <p><b>Search:</b></p>
+                                                    <input 
+                                                        type="text" 
+                                                        class="form-control form-control-sm"
+                                                        name="search_student_val" 
+                                                        id="search_student_val"
+                                                        placeholder="Search student name here (e.g. First Middle Last)"
+                                                        autocomplete="off">
+
+                                                    <!-- ========= Search Suggestions ============= -->
+                                                        <div class="bg-white" style="position:absolute; width:96%; z-index:1000;">
+                                                            <ul class="list-group" id="search_results_div"></ul>
+                                                        </div>
+                                                    <!-- ========= Search Suggestions END ========= -->
+                                                </div>
+
+                                                <table class="table table-hover" id="class_student_lists">
+
+                                                    <!-- <tbody class="table-sm"></tbody> -->
+
+                                                </table>
+
+                                            </div>
 
                                         </div>
 
@@ -618,6 +657,53 @@
                 $('#instructor_txt').html(instructor)
 
                 fetchClassStudents(class_schedule_Id)
+            }
+
+            function fetchClassStudents(class_schedule_Id){
+
+                var cs_table = $('#class_student_lists').DataTable({
+
+                    "responsive":true,
+                    "bInfo":false,
+                    "searching":false,
+                    "bDestroy": true,
+                    "aaSorting": [],
+                    "dom": 'rtp',
+                    "ajax": {
+                        'type':'POST',
+                        'url':'models/ClassSchedulesModel.php',
+                        'data':{
+                            classschedid:class_schedule_Id,
+                            action:"fetch_class_students"
+                        },
+                    },
+                    "columns": [
+                        { "data": "FullName", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                                output+='&nbsp <span>'+ data +'</span>'
+
+                                return output
+                            }
+                        }
+                    ],
+                })
+
+                setTimeout(() => {
+                    
+                    countClassStudents()
+                }, 1000)
+            }
+
+            function countClassStudents(){
+
+                var total_records = $('#class_student_lists').DataTable().data().count()
+
+                $('#total_students').html(total_records)
             }
 
         </script>
