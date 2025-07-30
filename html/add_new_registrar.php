@@ -104,7 +104,7 @@
                                 <span 
                                     class="fa fa-arrow-left" 
                                     onclick="history.back();"></span>
-                                Add New Instructor
+                                Add New Student
                             </h4>
                             <div class="d-flex align-items-center"></div>
                         </div>
@@ -113,9 +113,9 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Instructors</a>
+                                            <a href="#">Students</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Add New Instructor</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Add New Student</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -146,7 +146,7 @@
 
                     <br>
 
-                    <form method="POST" id="newInstructorForm">
+                    <form method="POST" id="newRegistrarForm">
                       
                         <div class="row">
                             
@@ -470,26 +470,28 @@
 
             $(document).ready(function () {
                 
-                $('#newInstructorForm').on('submit', function(aa){
+                $('#newRegistrarForm').on('submit', function(aa){
 
                     aa.preventDefault()
 
                     var data = $(this).serializeArray()
 
                     data.push(
-                        { name:'action', value:'new_instructor'}
+                        { name:'action', value:'new_registrar'}
                     )
 
                     $.ajax({
                         type: "POST",
-                        url: "models/InstructorModel.php",
+                        url: "models/RegistrarModel.php",
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
 
                             if(response == 1){
 
-                                swal("SAVED SUCCESSFULLY", "You added a new instructor", "success")
+                                // toastr.success('You added a new student', 'Successfully Added')
+
+                                swal("SAVED SUCCESSFULLY", "You added a new registrar", "success")
                                 .then((isConfirm) => {
 
                                     if (isConfirm) { history.back() }

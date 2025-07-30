@@ -119,7 +119,7 @@
                             <h4 class="page-title font-weight-bold text-uppercase">
                                 <span 
                                     class="fa fa-arrow-left" 
-                                    onclick="location.href='students.php';"></span>
+                                    onclick="history.back();"></span>
                                 Student Information
                             </h4>
                             <div class="d-flex align-items-center">

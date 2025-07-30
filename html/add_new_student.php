@@ -103,7 +103,7 @@
                             <h4 class="page-title font-weight-bold text-uppercase">
                                 <span 
                                     class="fa fa-arrow-left" 
-                                    onclick="location.href='students.php';"></span>
+                                    onclick="history.back();"></span>
                                 Add New Student
                             </h4>
                             <div class="d-flex align-items-center"></div>
@@ -384,7 +384,7 @@
                             <button
                                 type="button" 
                                 class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
-                                onclick="location.href='students.php';">
+                                onclick="history.back();">
                                 Discard
                             </button>
                         </div>
@@ -494,7 +494,7 @@
                                 swal("SAVED SUCCESSFULLY", "You added a new student", "success")
                                 .then((isConfirm) => {
 
-                                    if (isConfirm) { location.href='students.php' }
+                                    if (isConfirm) { history.back() }
                                 }) 
                                 
                                 // setTimeout(function(){
