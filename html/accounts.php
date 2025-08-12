@@ -228,6 +228,8 @@
                                                 echo "<td class='font-weight-bold'>".$level_name."</td>";
                                                 echo "<td>".$date_mod."</td>";
 
+                                                $redir_link = NULL;
+
                                                 if($level_Id == 4){
 
                                                     $redir_link = 'instructor_info.php?instructorid='.$user_Id;
@@ -235,6 +237,10 @@
                                                 else if($level_Id == 3){
 
                                                     $redir_link = 'student_info.php?studid='.$user_Id;
+                                                } 
+                                                else if($level_Id == 2){
+
+                                                    $redir_link = 'registrar_info.php?registrarid='.$user_Id;
                                                 } 
 
                                                 echo "<td class='text-center'>
@@ -246,7 +252,8 @@
                                                         </button>
                                                         <button 
                                                             type='button' 
-                                                            class='btn btn-outline-light text-danger btn-sm'>
+                                                            class='btn btn-outline-light text-danger btn-sm' 
+                                                            onclick='deleteUser(`".$user_Id."`)'>
                                                             <span class='fa fa-trash'></span>
                                                         </button>
                                                     </td>";
@@ -343,6 +350,54 @@
 
             $(document).ready(function () {
             })
+
+
+            function deleteUser(user_Id){
+
+                swal({   
+                    title: "DELETE USER?",   
+                    text: "This cannot be reverted",   
+                    type: "question",   
+                    showCancelButton: true,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "YES",   
+                    cancelButtonText: "NO",   
+                    closeOnConfirm: false,   
+                    closeOnCancel: false 
+                }).then((isConfirm) => {
+
+                    if (isConfirm.value == true) { 
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/UserModel.php",
+                            data: {
+                                action:"set_as_inactive",
+                                userid:user_Id,
+                                statusval:0
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+                                
+                               if(response == 1){
+                               
+                                   toastr.success('You deleted a user. Refreshing the page.', 'REMOVED SUCCESSFULLY');
+                               
+                                   setTimeout(() => {
+                               
+                                       location.reload()
+                               
+                                   }, 2000);
+                               }
+                               else if(response == 2 || response == 3){
+                               
+                                   toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                               }
+                            }
+                        })
+                    }
+                })
+            }
 
         </script>
 
