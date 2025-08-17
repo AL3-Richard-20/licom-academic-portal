@@ -1563,7 +1563,7 @@
                         $.each(response, function(key, value){
 
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
-                            $('#stud_subj_remark_txt'+subject_Id).html(value.Remarks)
+                            $('#stud_subj_remark_txt'+subject_Id).html('<span class="font-weight-bold '+ value.ColorInd +'">'+value.Remarks+'</span>')
                             $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
                         })                        
                     }

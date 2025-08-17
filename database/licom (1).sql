@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2025 at 04:43 AM
+-- Generation Time: Aug 17, 2025 at 11:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,7 +56,9 @@ INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Passwo
 (11, 4, 14, 'B202514', 'admin123', '2025-06-07', '09:49:20', 1),
 (12, 4, 15, 'B202515', 'admin123', '2025-06-07', '09:49:20', 1),
 (13, 4, 16, 'B202516', 'admin123', '2025-06-07', '09:49:20', 1),
-(14, 3, 17, 'C202517', 'student123', '2025-06-07', '02:42:29', 1);
+(14, 3, 17, 'C202517', 'student123', '2025-06-07', '02:42:29', 1),
+(15, 1, 18, 'admin', 'admin123', '2025-07-23', '20:30:33', 1),
+(16, 2, 19, 'registrar19', 'admin123', '2025-07-30', '09:20:36', 1);
 
 -- --------------------------------------------------------
 
@@ -144,7 +146,10 @@ CREATE TABLE `evaluation_grade` (
 --
 
 INSERT INTO `evaluation_grade` (`Eval_Id`, `Semester_Id`, `User_Id`, `Evaluated_by`, `Remarks`, `Grade_val`, `Date_added`, `Time_added`, `Status`) VALUES
-(4, 1, 16, 5, NULL, 3.62500, '2025-07-18', '10:24:43', 1);
+(4, 1, 16, 5, NULL, 3.62500, '2025-07-18', '10:24:43', 1),
+(5, 1, 6, 5, NULL, 3.12500, '2025-07-18', '05:57:00', 1),
+(6, 1, 6, 7, NULL, 3.62500, '2025-07-19', '07:27:36', 1),
+(7, 1, 6, 8, NULL, 2.00000, '2025-07-19', '07:28:43', 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +181,31 @@ INSERT INTO `evaluation_grades` (`Eval_Grades_Id`, `Semester_Id`, `Eval_Metric_I
 (21, 1, 5, 6, 16, 5, '2025-07-18', '10:24:43', 1),
 (22, 1, 6, 6, 16, 5, '2025-07-18', '10:24:43', 1),
 (23, 1, 7, 5, 16, 5, '2025-07-18', '10:24:43', 1),
-(24, 1, 8, 6, 16, 5, '2025-07-18', '10:24:43', 1);
+(24, 1, 8, 6, 16, 5, '2025-07-18', '10:24:43', 1),
+(25, 1, 1, 5, 6, 5, '2025-07-18', '05:57:00', 1),
+(26, 1, 2, 6, 6, 5, '2025-07-18', '05:57:00', 1),
+(27, 1, 3, 5, 6, 5, '2025-07-18', '05:57:00', 1),
+(28, 1, 4, 5, 6, 5, '2025-07-18', '05:57:00', 1),
+(29, 1, 5, 5, 6, 5, '2025-07-18', '05:57:00', 1),
+(30, 1, 6, 4, 6, 5, '2025-07-18', '05:57:00', 1),
+(31, 1, 7, 6, 6, 5, '2025-07-18', '05:57:00', 1),
+(32, 1, 8, 5, 6, 5, '2025-07-18', '05:57:00', 1),
+(33, 1, 1, 5, 6, 7, '2025-07-19', '07:27:36', 1),
+(34, 1, 2, 5, 6, 7, '2025-07-19', '07:27:36', 1),
+(35, 1, 3, 6, 6, 7, '2025-07-19', '07:27:36', 1),
+(36, 1, 4, 6, 6, 7, '2025-07-19', '07:27:36', 1),
+(37, 1, 5, 5, 6, 7, '2025-07-19', '07:27:36', 1),
+(38, 1, 6, 6, 6, 7, '2025-07-19', '07:27:36', 1),
+(39, 1, 7, 6, 6, 7, '2025-07-19', '07:27:36', 1),
+(40, 1, 8, 6, 6, 7, '2025-07-19', '07:27:36', 1),
+(41, 1, 1, 3, 6, 8, '2025-07-19', '07:28:43', 1),
+(42, 1, 2, 4, 6, 8, '2025-07-19', '07:28:43', 1),
+(43, 1, 3, 5, 6, 8, '2025-07-19', '07:28:43', 1),
+(44, 1, 4, 4, 6, 8, '2025-07-19', '07:28:43', 1),
+(45, 1, 5, 4, 6, 8, '2025-07-19', '07:28:43', 1),
+(46, 1, 6, 3, 6, 8, '2025-07-19', '07:28:43', 1),
+(47, 1, 7, 4, 6, 8, '2025-07-19', '07:28:43', 1),
+(48, 1, 8, 5, 6, 8, '2025-07-19', '07:28:43', 1);
 
 -- --------------------------------------------------------
 
@@ -275,6 +304,7 @@ CREATE TABLE `grade_remarks` (
   `Grade_Remark_Id` int(11) NOT NULL,
   `Grade_remark` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
+  `Grade_indicator` varchar(255) DEFAULT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -283,9 +313,10 @@ CREATE TABLE `grade_remarks` (
 -- Dumping data for table `grade_remarks`
 --
 
-INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 'Passed', '2025-06-23', '21:02:30', 1),
-(2, 'Incomplete', '2025-06-23', '21:02:30', 1);
+INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `Grade_indicator`, `Time_added`, `Status`) VALUES
+(1, 'Passed', '2025-06-23', 'text-success', '21:02:30', 1),
+(2, 'Incomplete', '2025-06-23', 'text-warning', '21:02:30', 1),
+(3, 'Failed', '2025-08-17', 'text-danger', '04:38:22', 0);
 
 -- --------------------------------------------------------
 
@@ -389,7 +420,8 @@ INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Date_added`, `Time_add
 (1, '1 Year 1st Semester A.Y. 2025-2026', '2025-05-19', '06:49:52', 1),
 (2, '1 Year 2nd Semester A.Y. 2025-2026', '2025-05-19', '07:11:56', 1),
 (3, '2 Year 1st Semester A.Y. 2026-2027', '2025-05-22', '09:12:21', 1),
-(4, '2 Year 2nd Semester A.Y. 2026 -2027', '2025-06-07', '02:50:36', 1);
+(4, '2 Year 2nd Semester A.Y. 2026 -2027', '2025-06-07', '02:50:36', 1),
+(5, '3 Year 1st Semester A.Y. 2025 - 2026', '2025-07-30', '08:54:59', 1);
 
 -- --------------------------------------------------------
 
@@ -486,7 +518,7 @@ CREATE TABLE `student_grades` (
 --
 
 INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_Id`, `Grade_val`, `Remarks`, `Evaluated_by`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 1, 5, 2, 2.75, '1', 4, '2025-07-05', '02:12:03', 1),
+(1, 1, 5, 2, 2.75, '1', 18, '2025-08-17', '05:29:01', 1),
 (2, 1, 5, 1, 1.00, '1', 4, '2025-07-02', '08:50:39', 1);
 
 -- --------------------------------------------------------
@@ -553,7 +585,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
 (4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-05-17', 1),
-(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-06-07', 1),
+(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-08-12', 1),
 (6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-05-25', 1),
 (7, 'Test', '', 'Student 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent1@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
 (8, 'Test', '', 'Student 2', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent2@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
@@ -565,7 +597,9 @@ INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`
 (14, 'Test', '', 'Instructor 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'test.instructor1@gmail.com', '0909090909099', 'lorem Ipsum', 'Sample Guardian', 'Sample', '090999090909', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 3', '2025-06-07', '09:49:20', '2025-06-07', 1),
 (15, 'Test', '', 'Instructor 2', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'test.instructor2@gmail.com', '0909090909099', 'lorem Ipsum', 'Sample Guardian', 'Sample', '090999090909', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 3', '2025-06-07', '09:49:20', '2025-06-07', 1),
 (16, 'Test', '', 'Instructor 3', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'test.instructor3@gmail.com', '0909090909099', 'lorem Ipsum', 'Sample Guardian', 'Sample', '090999090909', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 3', '2025-06-07', '09:49:20', '2025-06-07', 1),
-(17, 'Test', '', 'Student 8', NULL, '2025-06-09', 'Single', 'Male', 'Filipno', 'test.student8@gmail.com', '09090909099', 'Sample address', 'Guardian Firstname Guardian Lastname', 'Mother', '09090909099', 'guardian.email@gmail.com', 'Sample', 'Sample address 2', '2025-06-07', '02:42:29', '2025-06-07', 1);
+(17, 'Test', '', 'Student 8', NULL, '2025-06-09', 'Single', 'Male', 'Filipno', 'test.student8@gmail.com', '09090909099', 'Sample address', 'Guardian Firstname Guardian Lastname', 'Mother', '09090909099', 'guardian.email@gmail.com', 'Sample', 'Sample address 2', '2025-06-07', '02:42:29', '2025-06-07', 1),
+(18, 'Admin ', NULL, 'User', NULL, NULL, 'Single', 'Male', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-07-23', '08:30:00', '0000-00-00', 1),
+(19, 'Edited - Sample', '', 'Registrar 2', '', '2025-07-30', 'Single', 'Male', 'Filipino', 'registrar2@gmail.com', '0909090909', 'Lorem IPsum DOlor Sit AMet', 'Edited - Sample Guardian', 'Mother', '09090909090', 'sample.guardian@gmail.com', 'Sample', 'Lorem IPsum DOlor Sit AMetSa', '2025-07-30', '09:20:36', '2025-08-12', 1);
 
 --
 -- Indexes for dumped tables
@@ -693,7 +727,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `class_schedules`
@@ -711,13 +745,13 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `evaluation_grade`
 --
 ALTER TABLE `evaluation_grade`
-  MODIFY `Eval_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Eval_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `evaluation_grades`
 --
 ALTER TABLE `evaluation_grades`
-  MODIFY `Eval_Grades_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `Eval_Grades_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `evaluation_headers`
@@ -747,7 +781,7 @@ ALTER TABLE `file_types`
 -- AUTO_INCREMENT for table `grade_remarks`
 --
 ALTER TABLE `grade_remarks`
-  MODIFY `Grade_Remark_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Grade_Remark_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `levels`
@@ -771,7 +805,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `semesters`
 --
 ALTER TABLE `semesters`
-  MODIFY `Semester_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Semester_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -801,7 +835,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
