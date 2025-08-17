@@ -11,6 +11,7 @@
     $evaluation_metrics = 'evaluation_metrics';
     $file_attachments   = 'file_attachments';
     $file_types         = 'file_types';
+    $grade_remarks      = 'grade_remarks';
     $levels             = 'levels';
     $metric_values      = 'metric_values';
     $rooms              = 'rooms';
