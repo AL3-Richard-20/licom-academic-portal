@@ -2,6 +2,70 @@
 
     include "includes/db.php";
     include "includes/sessions.php";
+
+    // =========== Total Users ==============
+        function countUserlevel($level_Id){
+
+            global $con;
+
+            $query="SELECT 
+                        COUNT(*) as Total 
+                    FROM 
+                        accounts 
+                    WHERE 
+                        Status = 1 
+                        AND Level_Id = '".$level_Id."' ";
+
+            $fetch  = mysqli_query($con, $query);
+            $row    = mysqli_fetch_assoc($fetch);
+
+            $total = $row['Total'];
+
+            return $total;
+        }
+    // =========== Total Users END ==========
+
+    // ========== Total Courses ==============  
+        function totalCourses(){
+
+            global $con;
+
+            $query ="SELECT 
+                        COUNT(*) as Total 
+                    FROM 
+                        courses
+                    WHERE 
+                        Status = 1 ";
+
+            $fetch  = mysqli_query($con, $query);
+            $row    = mysqli_fetch_assoc($fetch);
+
+            $total = $row['Total'];
+
+            return $total;
+        }
+    // ========== Total Courses END ==========
+
+    // ========== Total Subjects =============
+        function totalSubjects(){
+
+            global $con;
+
+            $query ="SELECT 
+                        COUNT(*) as Total 
+                    FROM 
+                        subjects
+                    WHERE 
+                        Status = 1 ";
+
+            $fetch  = mysqli_query($con, $query);
+            $row    = mysqli_fetch_assoc($fetch);
+
+            $total = $row['Total'];
+
+            return $total;
+        }
+    // ========== Total Subjects END =========
 ?>
 
 <!DOCTYPE html>
@@ -86,44 +150,129 @@
 
 
             <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-5 align-self-center">
-                        <h4 class="page-title">Dashboard</h4>
-                        <div class="d-flex align-items-center">
-
-                        </div>
-                    </div>
-                    <div class="col-7 align-self-center">
-                        <div class="d-flex no-block justify-content-end align-items-center">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="#">Dashboard</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">All</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-
-
-
-            <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
             
-                <div class="d-flex align-items-center flex-column justify-content-center border" style="height:70vh;">
+                <!-- <div class="d-flex align-items-center flex-column justify-content-center border" style="height:70vh;">
                     <img src="../assets/images/undraw_programming_65t2.png" height="200" alt="">
                     <h5>We are still working on the Dashboard</h5>
+                </div> -->
+
+                <h4 class="font-weight-bold text-uppercase">Dashboard</h4>
+
+                <br>
+
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-info">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="text-white">
+                                        <h2><?= countUserlevel(3) ?></h2>
+                                        <h6>Total Students</h6>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="text-white display-6"><i class="fa fa-users"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-success">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="text-white">
+                                        <h2><?= countUserlevel(4) ?></h2>
+                                        <h6>Total Instructors</h6>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="text-white display-6"><i class="fa fa-users"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-primary">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="text-white">
+                                        <h2><?= totalCourses() ?></h2>
+                                        <h6>Total Courses</h6>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-primary">
+                            <div class="card-body">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="text-white">
+                                        <h2><?= totalSubjects() ?></h2>
+                                        <h6>Total Subjects</h6>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="font-weight-bold text-uppercase">Student Demographics</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="studDemograph" style="height: 300px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="font-weight-bold text-uppercase">Instructor Demographics</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="instrucDemograph" style="height: 300px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="font-weight-bold text-uppercase">On Going Classes as of (time)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between p-2" style="border-bottom:2px solid #f4f4f4;">
+                                    <div class="text-left">
+                                        <span class="font-weight-bold">Subject</span><br>
+                                        <span><small>Instructor</small></span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="font-weight-bold">Room</span><br>
+                                        <span><small>09:00 - 10:00</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -196,6 +345,67 @@
 
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
+
+    <script src="../assets/libs/canvasjs/canvasjs.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            
+            studentsDemograph()
+
+            instrucDemograph()
+        })
+
+
+        function studentsDemograph(){
+
+            var chart = new CanvasJS.Chart("studDemograph", {
+                animationEnabled: true,
+                title:{
+                    horizontalAlign: "left"
+                },
+                data: [{
+                    type: "doughnut",
+                    startAngle: 60,
+                    //innerRadius: 60,
+                    indexLabelFontSize: 17,
+                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                    dataPoints: [
+                        { y: 37, label: "Male" },
+                        { y: 28, label: "Female" },
+                    ]
+                }]
+            });
+
+            chart.render();
+        }
+
+
+        function instrucDemograph(){
+
+            var chart = new CanvasJS.Chart("instrucDemograph", {
+                animationEnabled: true,
+                title:{
+                    horizontalAlign: "left"
+                },
+                data: [{
+                    type: "doughnut",
+                    startAngle: 60,
+                    //innerRadius: 60,
+                    indexLabelFontSize: 17,
+                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                    dataPoints: [
+                        { y: 37, label: "Male" },
+                        { y: 28, label: "Female" },
+                    ]
+                }]
+            });
+
+            chart.render();
+        }
+
+    </script>
 
 </body>
 

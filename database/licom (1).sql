@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2025 at 11:32 AM
+-- Generation Time: Aug 24, 2025 at 03:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -407,6 +407,7 @@ INSERT INTO `rooms` (`Room_Id`, `Room_name`, `Room_details`, `Date_added`, `Time
 CREATE TABLE `semesters` (
   `Semester_Id` int(11) NOT NULL,
   `Semester_name` varchar(255) NOT NULL,
+  `Is_default` int(11) DEFAULT 0,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1
@@ -416,12 +417,12 @@ CREATE TABLE `semesters` (
 -- Dumping data for table `semesters`
 --
 
-INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, '1 Year 1st Semester A.Y. 2025-2026', '2025-05-19', '06:49:52', 1),
-(2, '1 Year 2nd Semester A.Y. 2025-2026', '2025-05-19', '07:11:56', 1),
-(3, '2 Year 1st Semester A.Y. 2026-2027', '2025-05-22', '09:12:21', 1),
-(4, '2 Year 2nd Semester A.Y. 2026 -2027', '2025-06-07', '02:50:36', 1),
-(5, '3 Year 1st Semester A.Y. 2025 - 2026', '2025-07-30', '08:54:59', 1);
+INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Is_default`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, '1 Year 1st Semester A.Y. 2025-2026', 0, '2025-05-19', '06:49:52', 1),
+(2, '1 Year 2nd Semester A.Y. 2025-2026', 0, '2025-05-19', '07:11:56', 1),
+(3, '2 Year 1st Semester A.Y. 2026-2027', 0, '2025-05-22', '09:12:21', 1),
+(4, '2 Year 2nd Semester A.Y. 2026 -2027', 0, '2025-06-07', '02:50:36', 1),
+(5, '3 Year 1st Semester A.Y. 2025 - 2026', 0, '2025-07-30', '08:54:59', 1);
 
 -- --------------------------------------------------------
 
