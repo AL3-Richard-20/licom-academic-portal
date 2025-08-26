@@ -1,8 +1,11 @@
 <?php
 
     include "../includes/db.php";
+
     include "../models/Tables.php";
+
     include "../helpers/Users.php";
+    include "../helpers/Semester.php";
 
     if(isset($_POST['action'])){
 
@@ -165,6 +168,35 @@
                 $query .="AND class_schedules.Instructor_Id = '".$instructor_Id."' ";
             }
 
+            if(isset($_POST['timeval']) && $_POST['timeval'] != ''){
+
+                $time_val = $_POST['timeval'];
+
+                if($time_val == 'current'){
+
+                    $current_time = date('H:i:s', strtotime("now"));
+
+                    $query .="AND ('".$current_time."' BETWEEN class_schedules.Time_start AND class_schedules.Time_end 
+                            OR '".$current_time."' BETWEEN class_schedules.Time_start AND class_schedules.Time_end ) ";
+
+
+                    // ========== Current Day Number ==============
+                        $day_Id = date('N', strtotime("now"));
+                        
+                        $query .="AND class_schedules.Day = '".$day_Id."' ";
+                    // ========== Current Day Number END ==========
+
+                    // ========== Current Semester ============
+                        $sem_info = currentSemester();
+
+                        $semester_Id = $sem_info['SemId'];
+                    // ========== Current Semester END ========
+
+                    $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+
+                }
+            }
+
             $fetch = mysqli_query($con, $query);
 
             $results_arr = array();
@@ -228,7 +260,8 @@
                         'RoomName' => $room_name,
                         'RoomDetails' => $room_details,
                         'InstructorId' => $instructor_Id,
-                        'InstructorName' => $instructor_fullname
+                        'InstructorName' => $instructor_fullname,
+                        'CurrentTime' => date('h:i A', strtotime("now"))
                     );
 
                     array_push($results_arr, $result_arr);

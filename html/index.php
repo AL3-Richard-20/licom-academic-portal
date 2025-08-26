@@ -66,6 +66,7 @@
             return $total;
         }
     // ========== Total Subjects END =========
+
 ?>
 
 <!DOCTYPE html>
@@ -256,19 +257,12 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h5 class="font-weight-bold text-uppercase">On Going Classes as of (time)</h5>
+                                <h5 class="font-weight-bold text-uppercase">On Going Classes as of (<span id="current_time_txt">---</span>)</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between p-2" style="border-bottom:2px solid #f4f4f4;">
-                                    <div class="text-left">
-                                        <span class="font-weight-bold">Subject</span><br>
-                                        <span><small>Instructor</small></span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="font-weight-bold">Room</span><br>
-                                        <span><small>09:00 - 10:00</small></span>
-                                    </div>
-                                </div>
+                            <div class="card-body" id="dboard_class_sched_div" style="min-height: 340px; max-height: 340px; overflow:auto;">
+
+                                <!-- Class Schedules -->
+
                             </div>
                         </div>
                     </div>
@@ -352,57 +346,151 @@
 
         $(document).ready(function () {
             
-            studentsDemograph()
+            studentsDemograph('studDemograph')
 
-            instrucDemograph()
+            instrucDemograph('instrucDemograph')
+
+            currentClassSched()
         })
 
 
-        function studentsDemograph(){
+        function studentsDemograph(id){
 
-            var chart = new CanvasJS.Chart("studDemograph", {
-                animationEnabled: true,
-                title:{
-                    horizontalAlign: "left"
+            $.ajax({
+                type: "POST",
+                url: "models/UserModel.php",
+                data: {
+                    levelid:3,
+                    action:"users_demographics"
                 },
-                data: [{
-                    type: "doughnut",
-                    startAngle: 60,
-                    //innerRadius: 60,
-                    indexLabelFontSize: 17,
-                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-                    dataPoints: [
-                        { y: 37, label: "Male" },
-                        { y: 28, label: "Female" },
-                    ]
-                }]
-            });
+                dataType: "JSON",
+                success: function (response) {
 
-            chart.render();
+                    const results_arr = []
+
+                    $.each(response, function(key, value){
+
+                        var sex     = value.Sex
+                        var total   = value.Total
+
+                        results_arr.push( { y:total, label:sex } )
+                    })
+                    
+                    var chart = new CanvasJS.Chart(id, {
+                        animationEnabled: true,
+                        title:{
+                            horizontalAlign: "left"
+                        },
+                        data: [{
+                            type: "doughnut",
+                            startAngle: 60,
+                            //innerRadius: 60,
+                            indexLabelFontSize: 17,
+                            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                            dataPoints: results_arr
+                        }]
+                    });
+        
+                    chart.render();
+                }
+            })
         }
 
 
-        function instrucDemograph(){
+        function instrucDemograph(id){
 
-            var chart = new CanvasJS.Chart("instrucDemograph", {
-                animationEnabled: true,
-                title:{
-                    horizontalAlign: "left"
+            $.ajax({
+                type: "POST",
+                url: "models/UserModel.php",
+                data: {
+                    levelid:4,
+                    action:"users_demographics"
                 },
-                data: [{
-                    type: "doughnut",
-                    startAngle: 60,
-                    //innerRadius: 60,
-                    indexLabelFontSize: 17,
-                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-                    dataPoints: [
-                        { y: 37, label: "Male" },
-                        { y: 28, label: "Female" },
-                    ]
-                }]
-            });
+                dataType: "JSON",
+                success: function (response) {
 
-            chart.render();
+                    const results_arr = []
+
+                    $.each(response, function(key, value){
+
+                        var sex     = value.Sex
+                        var total   = value.Total
+
+                        results_arr.push( { y:total, label:sex } )
+                    })
+                    
+                    var chart = new CanvasJS.Chart(id, {
+                        animationEnabled: true,
+                        title:{
+                            horizontalAlign: "left"
+                        },
+                        data: [{
+                            type: "doughnut",
+                            startAngle: 60,
+                            //innerRadius: 60,
+                            indexLabelFontSize: 17,
+                            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                            dataPoints: results_arr
+                        }]
+                    });
+        
+                    chart.render();
+                }
+            })
+        }
+
+
+        function currentClassSched(){
+
+            var output=''
+
+            $.ajax({
+                type: "POST",
+                url: "models/ClassSchedulesModel.php",
+                data: {
+                    timeval:"current",
+                    action:"fetch_class_schedules"
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    
+                    if(response.length > 0){
+
+                        $.each(response, function(key, value){
+
+                            var subject_name = value.SubjectName
+                            var instructor   = value.InstructorName
+                            var room_name    = value.RoomDetails
+                            var time_start   = value.TimeStart
+                            var time_end     = value.TimeEnd
+    
+                            var time_range = time_start + ' - ' + time_end
+    
+                            output+='<div class="d-flex align-items-center justify-content-between p-2" style="border-bottom:2px solid #f4f4f4;">'
+                            output+='<div class="text-left">'
+                            output+='<span class="font-weight-bold">'+ subject_name +'</span><br>'
+                            output+='<span><small>'+ instructor +'</small></span>'
+                            output+='</div>'
+                            output+='<div class="text-right">'
+                            output+='<span class="font-weight-bold">'+ room_name +'</span><br>'
+                            output+='<span><small>'+ time_range +'</small></span>'
+                            output+='</div>'
+                            output+='</div>'
+
+                            $('#current_time_txt').html(value.CurrentTime)
+                        })
+
+                    }
+                    else{
+
+                        output+='<p>No Results</p>'
+
+                        $('#current_time_txt').html('<?= date('h:i A', strtotime("now")) ?>')
+                    }
+
+                    $('#dboard_class_sched_div').html(output)
+                }
+            })
         }
 
     </script>
