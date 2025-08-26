@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Users.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'fetch_user_info'){
@@ -229,6 +231,15 @@
             }
 
             echo json_encode($res_req);
+        }
+
+        else if($_POST['action'] == 'users_demographics'){
+
+            $level_Id = $_POST['levelid'];
+
+            $users_demograph = userSexDemographic($level_Id);
+
+            echo json_encode($users_demograph);
         }
     }
 

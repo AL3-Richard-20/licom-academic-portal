@@ -114,4 +114,50 @@
         return $results_arr;
     }
 
+    function userSexDemographic($level_Id){
+
+        global $con;
+
+        $query ="SELECT 
+                    users.Sex, 
+                    COUNT(*) as Total 
+                FROM 
+                    users 
+                LEFT JOIN 
+                    accounts 
+                ON 
+                    users.User_Id = accounts.User_Id
+                WHERE 
+                    users.Status = 1 
+                    AND accounts.Level_Id = ? 
+                GROUP BY 
+                    users.Sex 
+                ORDER BY 
+                    FIELD(users.Sex, 'Male', 'Female') ";
+
+        $fetch = $con->prepare($query);
+        $fetch->bind_param('i', $level_Id);
+        $fetch->execute();
+        $fetch->store_result();
+        $fetch->bind_result(
+            $sex, 
+            $total
+        );
+
+        $results_arr = array();
+
+        while($fetch->fetch()){
+
+            $result_arr = array(
+                'Sex' => $sex,
+                'Total' => $total
+            );
+
+            array_push($results_arr, $result_arr);
+        }
+
+        return $results_arr;
+
+    }
+
 ?>
