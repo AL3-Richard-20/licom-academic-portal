@@ -739,7 +739,7 @@
                                                 <!-- ========= Search Suggestions END ========= -->
                                             </div>
 
-                                            <table class="table table-hover" id="class_student_lists">
+                                            <table class="table table-hover" id="class_student_lists" style="width:100%;">
 
                                                 <!-- <tbody class="table-sm"></tbody> -->
 

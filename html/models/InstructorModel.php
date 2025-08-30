@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Semester.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'new_instructor'){
@@ -145,6 +147,16 @@
             if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
+
+                $query .="AND Semester_Id = '".$semester_Id."' ";
+            }
+            else{
+
+                // ========== Current Semester ============
+                    $sem_info = currentSemester();
+
+                    $semester_Id = $sem_info['SemId'];
+                // ========== Current Semester END ========
 
                 $query .="AND Semester_Id = '".$semester_Id."' ";
             }

@@ -3,6 +3,10 @@
     include "includes/db.php";
     include "includes/sessions.php";
 
+    // =========== Session Value ============
+        $user_level_Id = $_SESSION["licom_usr_level"];
+    // =========== Session Value END ========
+
     // =========== Total Users ==============
         function countUserlevel($level_Id){
 
@@ -162,110 +166,171 @@
 
                 <h4 class="font-weight-bold text-uppercase">Dashboard</h4>
 
+                <!-- ================ Parameters ============= -->
+                    <input type="hidden" name="level_Id_val" id="level_Id_val" value="<?= $user_level_Id ?>">
+                <!-- ================ Parameters END ========= -->
+
                 <br>
 
                 <div class="row">
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-info">
-                            <div class="card-body">
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="text-white">
-                                        <h2><?= countUserlevel(3) ?></h2>
-                                        <h6>Total Students</h6>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="text-white display-6"><i class="fa fa-users"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-success">
-                            <div class="card-body">
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="text-white">
-                                        <h2><?= countUserlevel(4) ?></h2>
-                                        <h6>Total Instructors</h6>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="text-white display-6"><i class="fa fa-users"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        if($user_level_Id == 1){ ?>
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-primary">
-                            <div class="card-body">
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="text-white">
-                                        <h2><?= totalCourses() ?></h2>
-                                        <h6>Total Courses</h6>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card bg-info">
+                                    <div class="card-body">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div class="text-white">
+                                                <h2><?= countUserlevel(3) ?></h2>
+                                                <h6>Total Students</h6>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <span class="text-white display-6"><i class="fa fa-users"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-primary">
-                            <div class="card-body">
-                                <div class="d-flex no-block align-items-center">
-                                    <div class="text-white">
-                                        <h2><?= totalSubjects() ?></h2>
-                                        <h6>Total Subjects</h6>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                            <?php
+                        }
+                    ?>
+                    
+                    <?php
+
+                        if($user_level_Id == 1){ ?>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card bg-success">
+                                    <div class="card-body">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div class="text-white">
+                                                <h2><?= countUserlevel(4) ?></h2>
+                                                <h6>Total Instructors</h6>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <span class="text-white display-6"><i class="fa fa-users"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+
+                            <?php
+                        }
+                    ?>
+
+                    <?php
+
+                        if($user_level_Id == 1){ ?>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card bg-primary">
+                                    <div class="card-body">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div class="text-white">
+                                                <h2><?= totalCourses() ?></h2>
+                                                <h6>Total Courses</h6>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                    ?>
+
+                    <?php
+
+                        if($user_level_Id == 1){ ?>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card bg-primary">
+                                    <div class="card-body">
+                                        <div class="d-flex no-block align-items-center">
+                                            <div class="text-white">
+                                                <h2><?= totalSubjects() ?></h2>
+                                                <h6>Total Subjects</h6>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <span class="text-white display-6"><i class="fa fa-list"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                    ?>
 
                 </div>
 
                 <div class="row">
 
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header bg-white">
-                                <h5 class="font-weight-bold text-uppercase">Student Demographics</h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="studDemograph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header bg-white">
-                                <h5 class="font-weight-bold text-uppercase">Instructor Demographics</h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="instrucDemograph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header bg-white">
-                                <h5 class="font-weight-bold text-uppercase">On Going Classes as of (<span id="current_time_txt">---</span>)</h5>
-                            </div>
-                            <div class="card-body" id="dboard_class_sched_div" style="min-height: 340px; max-height: 340px; overflow:auto;">
+                    <?php
 
-                                <!-- Class Schedules -->
+                        if($user_level_Id == 1){ ?>
 
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <h5 class="font-weight-bold text-uppercase">Student Demographics</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="studDemograph" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+
+                            <?php
+                        }
+                    ?>
+
+                    <?php
+
+                        if($user_level_Id == 1){ ?>
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <h5 class="font-weight-bold text-uppercase">Instructor Demographics</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="instrucDemograph" style="height: 300px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    ?>
+
+                    <?php
+
+                        if($user_level_Id == 1){ ?>
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header bg-white">
+                                        <h5 class="font-weight-bold text-uppercase">On Going Classes as of (<span id="current_time_txt">---</span>)</h5>
+                                    </div>
+                                    <div class="card-body" id="dboard_class_sched_div" style="min-height: 340px; max-height: 340px; overflow:auto;">
+
+                                        <!-- Class Schedules -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                    ?>
 
                 </div>
 
@@ -344,13 +409,20 @@
 
     <script>
 
+
+        var level_Id = $('#level_Id_val').val()
+
+
         $(document).ready(function () {
-            
-            studentsDemograph('studDemograph')
 
-            instrucDemograph('instrucDemograph')
+            if(level_Id == 1){ // Administrator
 
-            currentClassSched()
+                studentsDemograph('studDemograph')
+    
+                instrucDemograph('instrucDemograph')
+    
+                currentClassSched()
+            }
         })
 
 

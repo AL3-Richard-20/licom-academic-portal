@@ -161,7 +161,8 @@
 
                                                     $query="SELECT 
                                                                 Semester_Id, 
-                                                                Semester_name, 
+                                                                Semester_name,
+                                                                Is_default, 
                                                                 Date_added, 
                                                                 Time_added
                                                             FROM 
@@ -184,6 +185,7 @@
 
                                                                 $semester_Id    = $row['Semester_Id'];
                                                                 $semester_name  = $row['Semester_name'];
+                                                                $is_default     = $row['Is_default'];
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
@@ -191,20 +193,39 @@
                                                                 echo "<td class='font-weight-bold'>".$semester_name."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
-                                                                echo "<td>
-                                                                        <button 
+                                                                echo "<td>";
+
+                                                                if($is_default == 0){
+
+                                                                    echo "<button 
+                                                                            type='button' 
+                                                                            class='btn btn-outline-success btn-sm font-weight-bold text-uppercase' 
+                                                                            onclick='setAsActiveSemester(`".$semester_Id."`)'>
+                                                                            Set as Active
+                                                                        </button>";
+                                                                }
+                                                                else{
+                                                                    echo "<span class='badge badge-success font-weight-bold text-uppercase'>
+                                                                            Active
+                                                                        </span>";
+                                                                }
+
+                                                                echo "<button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
                                                                             onclick='editSemester(`".$semester_Id."`, `".$semester_name."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
-                                                                        </button>
-                                                                        <button 
+                                                                        </button>";
+
+                                                                echo "<button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-danger' 
                                                                             onclick='deleteSemester(`".$semester_Id."`)'>
                                                                             <span class='fa fa-trash'></span>
-                                                                        </button>
-                                                                    </td>";
+                                                                        </button>";
+
+                                                                echo "</td>";
+
                                                                 echo "</tr>";
                                                             }
                                                         }
@@ -654,6 +675,59 @@
                                 }
                                 else if(response == 2 || response == 3){
 
+                                    toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+
+
+            function setAsActiveSemester(semester_Id){
+
+                Swal.fire({ 
+                    title: 'SET AS ACTIVE', 
+                    text: 'This cannot be reverted', 
+                    type: 'question', 
+                    showCancelButton: true, 
+                    confirmButtonColor: '#3085d6', 
+                    cancelButtonColor: '#d33', 
+                    confirmButtonText: 'YES', 
+                    cancelButtonText: 'NO' 
+                }).then((isConfirm) => { 
+                
+                    if (isConfirm.value == true) {
+                    
+                        $.ajax({
+                            type: "POST",
+                            url: "models/SemesterModel.php",
+                            data: {
+                                semid:semester_Id,
+                                action:'set_as_active'
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+
+                                if(response == 1){
+                                
+                                    Swal.fire({ 
+                                            title: 'UPDATE SUCCESSFULLY', 
+                                            text: '', 
+                                            type: 'success', 
+                                            showCancelButton: false, 
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'OKAY', 
+                                    }).then((isConfirm) => { 
+                                        
+                                        if (isConfirm.value == true) {
+                                        
+                                            location.reload()
+                                        }
+                                    })
+                                }
+                                else if(response == 2 || response == 3){
+                                
                                     toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
                                 }
                             }

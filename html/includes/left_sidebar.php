@@ -328,6 +328,33 @@
                         </li>
 
                         <li class="sidebar-item">
+                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                            href="courses.php" 
+                            aria-expanded="false">
+                            <i class="fa fa-list"></i>
+                            <span class="hide-menu">Courses</span>
+                        </a>
+                    </li>
+    
+                    <li class="sidebar-item">
+                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                            href="subjects.php" 
+                            aria-expanded="false">
+                            <i class="fa fa-list"></i>
+                            <span class="hide-menu">Subjects</span>
+                        </a>
+                    </li>
+    
+                    <li class="sidebar-item">
+                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                            href="rooms.php" 
+                            aria-expanded="false">
+                            <i class="fa fa-building"></i>
+                            <span class="hide-menu">Rooms</span>
+                        </a>
+                    </li>
+
+                        <li class="sidebar-item">
             
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                             <i class="fa fa-file-alt"></i>
