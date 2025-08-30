@@ -717,7 +717,8 @@
     
                                                         $query="SELECT 
                                                                     Semester_Id, 
-                                                                    Semester_name 
+                                                                    Semester_name,
+                                                                    Is_default  
                                                                 FROM 
                                                                     semesters 
                                                                 WHERE 
@@ -733,8 +734,11 @@
     
                                                                 $semester_Id    = $row['Semester_Id'];
                                                                 $semester_name  = $row['Semester_name'];
+                                                                $is_default     = $row['Is_default'];
+
+                                                                $is_selected = ($is_default == 1) ? 'selected' : '';
                                                                 
-                                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
                                                             }
                                                         }
                                                     ?>
@@ -819,7 +823,8 @@
 
                                                                 $query="SELECT 
                                                                             Semester_Id, 
-                                                                            Semester_name 
+                                                                            Semester_name,
+                                                                            Is_default 
                                                                         FROM 
                                                                             semesters 
                                                                         WHERE 
@@ -835,8 +840,11 @@
 
                                                                         $semester_Id    = $row['Semester_Id'];
                                                                         $semester_name  = $row['Semester_name'];
+                                                                        $is_default     = $row['Is_default'];
+
+                                                                        $is_selected = ($is_default == 1) ? 'selected' : '';
                                                                         
-                                                                        echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                                        echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
                                                                     }
                                                                 }
                                                             ?>
@@ -1067,6 +1075,10 @@
                 fetchStudentInfo()
 
                 fetchAccountInfo()
+
+                classSchedulesTbl()
+
+                fetchStudentSubjects('')
 
                 // ============ Select2 ===============
                     $('#semester_dd').select2({

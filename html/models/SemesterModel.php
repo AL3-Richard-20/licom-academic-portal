@@ -82,5 +82,36 @@
 
             echo json_encode($res_req);
         }
+
+        else if($_POST['action'] == 'set_as_active'){
+
+            $sem_Id = $_POST['semid'];
+
+            $data1    = [ "Is_default" => 0 ];
+            $where1   = [ "Status" => 1 ];
+            $update1  = update($semesters, $data1, $where1);
+
+            if($update1 == 1){
+
+                $data2    = [ "Is_default" => 1 ];
+                $where2   = [ "Semester_Id" => $sem_Id ];
+                $update2  = update($semesters, $data2, $where2);
+
+                if($update2 == 1){
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
+            }
+            else{
+
+                $res_req = 2;
+            }
+
+            echo json_encode($res_req);
+        }
     }
 ?>

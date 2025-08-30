@@ -303,12 +303,15 @@
                                                                     name="semester_dd_val"
                                                                     id="semester_dd_val" 
                                                                     style="width:100%;">
+
                                                                     <option value=""></option>
+                                                                    
                                                                     <?php
 
                                                                         $query="SELECT 
                                                                                     Semester_Id, 
-                                                                                    Semester_name 
+                                                                                    Semester_name,
+                                                                                    Is_default  
                                                                                 FROM 
                                                                                     semesters 
                                                                                 WHERE 
@@ -324,8 +327,11 @@
 
                                                                                 $semester_Id    = $row['Semester_Id'];
                                                                                 $semester_name  = $row['Semester_name'];
+                                                                                $is_default     = $row['Is_default'];
+
+                                                                                $is_selected = ($is_default == 1) ? 'selected' : '';
                                                                                 
-                                                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
                                                                             }
                                                                         }
                                                                     ?>
@@ -694,13 +700,15 @@
 
                 $('#gradesModal').modal('show')
 
-                $("#semester_dd_val").val('').trigger('change')
+                // $("#semester_dd_val").val('').trigger('change')
 
                 $('#student_fname_txt').html(student_name)
 
                 $('#stud_Id_val').val(student_Id)
 
                 $('#add_new_grade_form').hide()
+
+                fetchStudentSubjects('')
 
                 var output=''
 
@@ -729,7 +737,7 @@
                         $.each(response, function(key, value){
 
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
-                            $('#stud_subj_remark_txt'+subject_Id).html(value.Remarks)
+                            $('#stud_subj_remark_txt'+subject_Id).html('<span class="font-weight-bold '+ value.ColorInd +'">'+value.Remarks+'</span>')
                             $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
                         })                        
                     }

@@ -93,7 +93,7 @@
                         <!-- ============================================================== -->
                         <!-- Notifications -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
 
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-bell font-20"></i>
@@ -118,7 +118,6 @@
                                         <div class="message-center notifications">
 
 
-                                            <!-- Message -->
                                             <a href="javascript:void(0)" class="message-item">
                                                 <span class="btn btn-danger btn-circle">
                                                     <i class="fa fa-link"></i>
@@ -131,7 +130,6 @@
                                             </a>
 
 
-                                            <!-- Message -->
                                             <a href="javascript:void(0)" class="message-item">
                                                 <span class="btn btn-success btn-circle">
                                                     <i class="ti-calendar"></i>
@@ -144,7 +142,6 @@
                                             </a>
 
 
-                                            <!-- Message -->
                                             <a href="javascript:void(0)" class="message-item">
                                                 <span class="btn btn-info btn-circle">
                                                     <i class="ti-settings"></i>
@@ -156,8 +153,6 @@
                                                 </div>
                                             </a>
 
-
-                                            <!-- Message -->
                                             <a href="javascript:void(0)" class="message-item">
                                                 <span class="btn btn-primary btn-circle">
                                                     <i class="ti-user"></i>
@@ -182,7 +177,7 @@
 
                             </div>
 
-                        </li>
+                        </li> -->
                         <!-- ============================================================== -->
                         <!-- End Notifications -->
                         <!-- ============================================================== -->

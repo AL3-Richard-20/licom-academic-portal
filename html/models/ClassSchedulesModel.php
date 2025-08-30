@@ -132,7 +132,17 @@
                         class_schedules.Room_Id = rooms.Room_Id 
                     WHERE 
                         class_schedules.Status = 1 ";
+
+
+            // ========== Current Semester ============
+                $sem_info = currentSemester();
+
+                $semester_Id = $sem_info['SemId'];
+            // ========== Current Semester END ========
+
+            $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
             
+
             if($_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
@@ -185,14 +195,6 @@
                         
                         $query .="AND class_schedules.Day = '".$day_Id."' ";
                     // ========== Current Day Number END ==========
-
-                    // ========== Current Semester ============
-                        $sem_info = currentSemester();
-
-                        $semester_Id = $sem_info['SemId'];
-                    // ========== Current Semester END ========
-
-                    $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
 
                 }
             }
@@ -314,6 +316,17 @@
                     WHERE 
                         class_schedules.Status = 1 
                         AND student_classes.Status = 1 ";
+
+
+            // ========== Current Semester ============
+                $sem_info = currentSemester();
+
+                $semester_Id = $sem_info['SemId'];
+            // ========== Current Semester END ========
+
+
+            $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+
             
             if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
@@ -355,6 +368,35 @@
                 $instructor_Id = $_POST['instructorid'];
 
                 $query .="AND class_schedules.Instructor_Id = '".$instructor_Id."' ";
+            }
+
+            if(isset($_POST['timeval']) && $_POST['timeval'] != ''){
+
+                $time_val = $_POST['timeval'];
+
+                if($time_val == 'current'){
+
+                    $current_time = date('H:i:s', strtotime("now"));
+
+                    $query .="AND ('".$current_time."' BETWEEN class_schedules.Time_start AND class_schedules.Time_end 
+                            OR '".$current_time."' BETWEEN class_schedules.Time_start AND class_schedules.Time_end ) ";
+                    
+
+                    // ========== Current Day Number ==============
+                        $day_Id = date('N', strtotime("now"));
+                        
+                        $query .="AND class_schedules.Day = '".$day_Id."' ";
+                    // ========== Current Day Number END ==========
+
+                    // ========== Current Semester ============
+                        // $sem_info = currentSemester();
+
+                        // $semester_Id = $sem_info['SemId'];
+                    // ========== Current Semester END ========
+
+                    // $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+
+                }
             }
 
             $query .="GROUP BY 
@@ -628,6 +670,16 @@
             if($_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
+
+                $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+            }
+            else{
+
+                // ========== Current Semester ============
+                    $sem_info = currentSemester();
+
+                    $semester_Id = $sem_info['SemId'];
+                // ========== Current Semester END ========
 
                 $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
             }

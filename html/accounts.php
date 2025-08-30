@@ -164,7 +164,7 @@
 
                         <div class="card-body">
 
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="accounts_tbl">
                                 <thead class="table-bordered font-weight-bold text-uppercase">
                                     <tr>
                                         <th>Name</th>
@@ -349,6 +349,11 @@
         <script>
 
             $(document).ready(function () {
+
+                $('#accounts_tbl').DataTable({
+                    "bSort":false,
+                    "bInfo":false
+                })
             })
 
 
