@@ -33,9 +33,12 @@
         <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
 
 
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+        <link href="../assets/libs/datatables/media/css/dataTable.dataTable.css" rel="stylesheet">
+        <link href="../assets/libs/datatables/media/css/buttons.dataTable.css" rel="stylesheet">
 
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -524,9 +527,17 @@
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
 
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
+        <!-- <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script> -->
+
+        <script src="../assets/libs/datatables/media/js/dataTable.js"></script>
+        <script src="../assets/libs/datatables/media/js/dataTables.buttons.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.dataTables.js"></script>
+        <script src="../assets/libs/datatables/media/js/jszip.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/pdfmake.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/vfs_fonts.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.html5.min.js"></script>
 
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
@@ -663,41 +674,6 @@
                         }
                     })
                 })
-
-                // $('#editSubjectForm').on('submit', function(ab){
-
-                //     ab.preventDefault()
-
-                //     var data = $('#editSubjectForm').serializeArray()
-
-                //     data.push(
-                //         { name:'action', value:'edit_subject' }
-                //     )
-
-                //     $.ajax({
-                //         type: "POST",
-                //         url: "models/SubjectsModel.php",
-                //         data: data,
-                //         dataType: "JSON",
-                //         success: function (response) {
-                            
-                //             if(response == 1){
-
-                //                 toastr.success('You updated a subject', 'SAVED SUCCESSFULLY')
-
-                //                 setTimeout(() => {
-
-                //                     location.reload()
-
-                //                 }, 2000);
-                //             }
-                //             else if(response == 2 || response == 3){
-
-                //                 toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
-                //             }
-                //         }
-                //     });
-                // })
             })
 
 
@@ -709,7 +685,12 @@
                     "columnDefs": [ {
                         "targets": 4,
                         "orderable": false
-                    } ]
+                    } ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    }
                 })
             }
 
