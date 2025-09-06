@@ -33,9 +33,12 @@
         <link href="../assets/libs/morris.js/morris.css" rel="stylesheet"> -->
 
 
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+        <link href="../assets/libs/datatables/media/css/dataTable.dataTable.css" rel="stylesheet">
+        <link href="../assets/libs/datatables/media/css/buttons.dataTable.css" rel="stylesheet">
 
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -170,9 +173,9 @@
 
                                     <thead class="table-bordered font-weight-bold text-uppercase">
                                         <tr>
-                                            <th>ID #</th>
+                                            <th class="text-left">ID #</th>
                                             <th>Name</th>
-                                            <th>Contact No.</th>
+                                            <th class="text-left">Contact No.</th>
                                             <th>Date Added</th>
                                             <th>Time Added</th>
                                             <th>Status</th>
@@ -227,9 +230,9 @@
                                                     $student_fullname = $fname." ".$lname;
 
                                                     echo "<tr>";
-                                                    echo "<td>".$user_Id."</td>";
+                                                    echo "<td class='text-left'>".$user_Id."</td>";
                                                     echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
-                                                    echo "<td>".$phone_no."</td>";
+                                                    echo "<td class='text-left'>".$phone_no."</td>";
                                                     echo "<td>".dateFormat($date_added)."</td>";
                                                     echo "<td>".timeFormat($time_added)."</td>";
 
@@ -547,9 +550,17 @@
         <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+        <!-- <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script> -->
+        <!-- <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script> -->
+        <!-- <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script> -->
+
+        <script src="../assets/libs/datatables/media/js/dataTable.js"></script>
+        <script src="../assets/libs/datatables/media/js/dataTables.buttons.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.dataTables.js"></script>
+        <script src="../assets/libs/datatables/media/js/jszip.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/pdfmake.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/vfs_fonts.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.html5.min.js"></script>
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
@@ -578,12 +589,18 @@
                 
 
                 $('#students_tbl').DataTable({
-
+                    
+                    "bInfo":false,
                     "aaSorting": [],
                     "columnDefs": [ {
                         "targets": 6,
                         "orderable": false
-                    } ]
+                    } ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    }
                 })
 
                 $('#semester_dd_val').on('change', function(){

@@ -33,9 +33,12 @@
         <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
 
 
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+        <link href="../assets/libs/datatables/media/css/dataTable.dataTable.css" rel="stylesheet">
+        <link href="../assets/libs/datatables/media/css/buttons.dataTable.css" rel="stylesheet">
 
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -483,9 +486,17 @@
         <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
 
 
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
+        <!-- <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap.min.js"></script>
         <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script> -->
+
+        <script src="../assets/libs/datatables/media/js/dataTable.js"></script>
+        <script src="../assets/libs/datatables/media/js/dataTables.buttons.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.dataTables.js"></script>
+        <script src="../assets/libs/datatables/media/js/jszip.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/pdfmake.min.js"></script>
+        <script src="../assets/libs/datatables/media/js/vfs_fonts.js"></script>
+        <script src="../assets/libs/datatables/media/js/buttons.html5.min.js"></script>
 
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
@@ -593,7 +604,12 @@
                     "columnDefs": [ {
                         "targets": 5,
                         "orderable": false
-                    } ]
+                    } ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    }
                 })
             }
 
