@@ -15,7 +15,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
         <title>Title Here</title>

@@ -35,7 +35,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
         <!-- <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fontawesome-all.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-regular.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-solid.min.css">

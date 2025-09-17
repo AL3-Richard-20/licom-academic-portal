@@ -22,7 +22,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -298,9 +298,11 @@
 
         <script>
 
-            $(document).ready(function () {
+            var semester_Id = $('#semester_dd_val').val()
 
-                classInstructors('')
+            $(document).ready(function () {  
+
+                classInstructors(semester_Id)
 
                 // ================= Select2 =====================
                     $('#semester_dd_val').select2({
