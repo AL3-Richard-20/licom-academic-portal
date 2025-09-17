@@ -30,7 +30,9 @@
         date_default_timezone_set("Asia/Manila");
 
         $server_date    = date('Y-m-d', strtotime("now"));
-        $server_time    = date('h:i:s', strtotime("now"));;
+        $server_time    = date('h:i:s', strtotime("now"));
+
+        $server_now     = date('Y-m-d H:i:s', strtotime("now"));
     // ================== TIMEZONE END ================
 
 
@@ -61,7 +63,50 @@
         }
         
         $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    // ================== DATABASE END =================
+    // ================== DATABASE END =================\
+
+
+    // ================== APP INFO ==================
+        function fetchAppInfo($sett_Id){
+
+            global $con;
+
+            $querya1 ="SELECT 
+                            Sett_val 
+                        FROM 
+                            settings 
+                        WHERE 
+                            Sett_Id = '".$sett_Id."'
+                            AND Status = 1 
+                        LIMIT 1 ";
+    
+            $fetcha1    = mysqli_query($con, $querya1);
+
+            $rowa1      = mysqli_fetch_assoc($fetcha1);
+
+            $sett_val   = $rowa1['Sett_val'];
+
+            return array(
+                'SettVal' => $sett_val
+            );
+        }
+
+        // ======= APP NAME ==========
+            $app_info = fetchAppInfo(4); 
+            $appname  = $app_info['SettVal'];
+        // ======= APP NAME END ======
+
+        // ======= APP ICON ==========
+            $app_info2 = fetchAppInfo(5);
+            $app_icon  = $app_info2['SettVal'];
+        // ======= APP ICON END ======
+
+        // ======= APP LOGIN BACKGROUND ==========
+            $app_info3      = fetchAppInfo(6);
+            $app_login_img  = "../assets/images/".$app_info3['SettVal'];
+        // ======= APP LOGIN BACKGROUND END ======
+
+    // ================== APP INFO END ==============
 
 
     // ================== JWT (TOKEN) =====================

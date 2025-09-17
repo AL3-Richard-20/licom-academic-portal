@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Semester.php";
+    include "../helpers/Evaluation.php";
 
     if(isset($_POST['action'])){
 
@@ -185,10 +186,23 @@
                     $date_added = $row['Date_added'];
                     $time_added = $row['Time_added'];
 
+                    $grade_val_formatted = number_format($grade_val, 2);
+                    $metric_val          = substr($grade_val_formatted, 0, 1);
+
+                    // ========== Fetch Metric Info ===========
+                        $metric_info = metricValues($metric_val);
+
+                        $metric_val_desc    = $metric_info['MetricDesc'];
+                        $metric_q_desc      = $metric_info['MetricQDesc'];
+                    // ========== Fetch Metric Info END =======
+
                     $result_arr = array(
                         'EvalId' => $eval_Id,
                         'Remarks' => $remarks,
-                        'GradeVal' => number_format($grade_val, 2),
+                        'GradeVal' => $grade_val_formatted,
+                        'MetricVal' => $metric_val,
+                        'MetricDesc' => $metric_val_desc,
+                        'MetricQDesc' => $metric_q_desc,
                         'DateAdded' => dateFormat($date_added),
                         'TimeAdded' => timeFormat($time_added)
                     );
@@ -199,12 +213,21 @@
                 }
 
                 $total_grade = ($grade_sum / $count);
+
+                // ========== Fetch Metric Info ===========
+                    $metric_info2 = metricValues($total_grade);
+
+                    $metric_val_desc2    = $metric_info2['MetricDesc'];
+                    $metric_q_desc2      = $metric_info2['MetricQDesc'];
+                // ========== Fetch Metric Info END =======
             }
 
             echo json_encode(
                 array(
                     'Records' => $results_arr,
                     'TotalGrade' => number_format($total_grade, 2),
+                    'MetricDesc2' => $metric_val_desc,
+                    'MetricQDesc2' => $metric_q_desc,
                     'Total' => $count
                 )
             );

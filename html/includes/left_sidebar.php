@@ -68,148 +68,148 @@
 
             
             <!-- =============== Registrar =================== -->
-             <?php
+                <?php
 
-                if($_SESSION["licom_usr_level"] == 2){ ?>
-    
-                    <li class="sidebar-item">
-    
-                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="fa fa-users"></i>
-                            <span class="hide-menu">Students </span>
-                        </a>
-    
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item">
-                                <a href="students.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">View All</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="add_new_student.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Add New</span>
-                                </a>
-                            </li>
-                        </ul>
-    
-                    </li>
-    
-                    <li class="sidebar-item">
-    
-                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="fa fa-users"></i>
-                            <span class="hide-menu">Instructors </span>
-                        </a>
-    
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item">
-                                <a href="instructors.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">View All</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="add_new_instructor.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Add New</span>
-                                </a>
-                            </li>
-                        </ul>
-    
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="class_schedules.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-calendar"></i>
-                            <span class="hide-menu">Class Schedules</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="courses.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-list"></i>
-                            <span class="hide-menu">Courses</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="subjects.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-list"></i>
-                            <span class="hide-menu">Subjects</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="semesters.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-chart-line"></i>
-                            <span class="hide-menu">Semesters</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="rooms.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-building"></i>
-                            <span class="hide-menu">Rooms</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-    
-                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="fa fa-file-alt"></i>
-                            <span class="hide-menu">Evaluation Form </span>
-                        </a>
-    
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item">
-                                <a href="eval_headers.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Headers</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="eval_metrics.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Metrics</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="eval_scales.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Scale</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="eval_settings.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Instructions</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="eval_preview.php" class="sidebar-link">
-                                    <i class="icon-Record"></i>
-                                    <span class="hide-menu">Preview</span>
-                                </a>
-                            </li>
-                        </ul>
-    
-                    </li>
-                    
-                    <?php 
-                }
-            ?>
+                    if($_SESSION["licom_usr_level"] == 2){ ?>
+        
+                        <li class="sidebar-item">
+        
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <i class="fa fa-users"></i>
+                                <span class="hide-menu">Students </span>
+                            </a>
+        
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item">
+                                    <a href="students.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">View All</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="add_new_student.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Add New</span>
+                                    </a>
+                                </li>
+                            </ul>
+        
+                        </li>
+        
+                        <li class="sidebar-item">
+        
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <i class="fa fa-users"></i>
+                                <span class="hide-menu">Instructors </span>
+                            </a>
+        
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item">
+                                    <a href="instructors.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">View All</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="add_new_instructor.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Add New</span>
+                                    </a>
+                                </li>
+                            </ul>
+        
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="class_schedules.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-calendar"></i>
+                                <span class="hide-menu">Class Schedule</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="courses.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-list"></i>
+                                <span class="hide-menu">Courses</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="subjects.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-list"></i>
+                                <span class="hide-menu">Subjects</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="semesters.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-chart-line"></i>
+                                <span class="hide-menu">Semesters</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="rooms.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-building"></i>
+                                <span class="hide-menu">Rooms</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+        
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <i class="fa fa-file-alt"></i>
+                                <span class="hide-menu">Evaluation Form </span>
+                            </a>
+        
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item">
+                                    <a href="eval_headers.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Headers</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="eval_metrics.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Metrics</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="eval_scales.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Scale</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="eval_settings.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Instructions</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="eval_preview.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Preview</span>
+                                    </a>
+                                </li>
+                            </ul>
+        
+                        </li>
+                        
+                        <?php 
+                    }
+                ?>
             <!-- =============== Registrar END =============== -->
 
             <!-- =============== Student ===================== -->
@@ -222,7 +222,7 @@
                                 href="student_class_schedules.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-calendar"></i>
-                                <span class="hide-menu">Class Schedules</span>
+                                <span class="hide-menu">Class Schedule</span>
                             </a>
                         </li>
 
@@ -259,7 +259,7 @@
                                 href="faculty_class_schedules.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-calendar"></i>
-                                <span class="hide-menu">Class Schedules</span>
+                                <span class="hide-menu">Class Schedule</span>
                             </a>
                         </li>
 
@@ -328,31 +328,31 @@
                         </li>
 
                         <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="courses.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-list"></i>
-                            <span class="hide-menu">Courses</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="subjects.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-list"></i>
-                            <span class="hide-menu">Subjects</span>
-                        </a>
-                    </li>
-    
-                    <li class="sidebar-item">
-                        <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="rooms.php" 
-                            aria-expanded="false">
-                            <i class="fa fa-building"></i>
-                            <span class="hide-menu">Rooms</span>
-                        </a>
-                    </li>
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="courses.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-list"></i>
+                                <span class="hide-menu">Courses</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="subjects.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-list"></i>
+                                <span class="hide-menu">Subjects</span>
+                            </a>
+                        </li>
+        
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="rooms.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-building"></i>
+                                <span class="hide-menu">Rooms</span>
+                            </a>
+                        </li>
 
                         <li class="sidebar-item">
             
@@ -396,24 +396,33 @@
 
                         </li>
 
-                        <li class="sidebar-item">
+                        <!-- <li class="sidebar-item">
                             <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
                                 href="eval_remarks.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-ribbon"></i>
                                 <span class="hide-menu">Evaluation Remarks</span>
                             </a>
-                        </li>
+                        </li> -->
 
-                    <?php 
-                }
-            ?>
+                        <?php 
+                    }
+                ?>
             <!-- =============== Administrator END ========== -->
 
 
             <li class="nav-small-cap">
                 <i class="mdi mdi-dots-horizontal"></i>
                 <span class="hide-menu">Shortcuts</span>
+            </li>
+
+            <li class="sidebar-item">
+                <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                    href="settings_menu.php" 
+                    aria-expanded="false">
+                    <i class="fa fa-cog"></i>
+                    <span class="hide-menu">Settings</span>
+                </a>
             </li>
 
             <li class="sidebar-item">

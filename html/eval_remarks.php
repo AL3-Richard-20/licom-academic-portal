@@ -21,7 +21,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
         <title><?= $appname ?></title>
@@ -105,7 +105,10 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Evaluation Remarks</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">
+                                <span class="fa fa-arrow-left" onclick="history.back();"></span>
+                                &nbspEvaluation Remarks
+                            </h4>
                             <div class="d-flex align-items-center">
 
                             </div>

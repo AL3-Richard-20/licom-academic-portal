@@ -91,7 +91,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
         <title><?= $appname ?></title>
@@ -277,7 +277,7 @@
                                         onclick="location.href='student_class_schedules.php';">
 
                                         <h1 style="font-size:110px;"><span class="fa fa-calendar"></span></h1>
-                                        <h2>Class Schedules</h2>
+                                        <h2>Class Schedule</h2>
 
                                     </div>
 
@@ -317,7 +317,7 @@
                                     onclick="location.href='faculty_class_schedules.php';">
 
                                     <h1 style="font-size:110px;"><span class="fa fa-calendar"></span></h1>
-                                    <h2>Class Schedules</h2>
+                                    <h2>Class Schedule</h2>
 
                                 </div>
 

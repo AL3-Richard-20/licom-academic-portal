@@ -21,7 +21,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
         <title><?= $appname ?></title>
@@ -210,6 +210,7 @@
 
                             <h4 class="font-weight-bold">Final Grade: </h4>
                             <h2><span class="text-info" id="final_grade_txt">0</span></h2>
+                            <span id="final_grade_desc"></span>
                         </div>
 
                     </div>
@@ -340,7 +341,7 @@
 
                                 output+='<tr>'
                                 output+='<td>'+ value.DateAdded +' | '+ value.TimeAdded +'</td>'
-                                output+='<td><h5 class="font-weight-bold">'+ value.GradeVal +'</h5></td>'
+                                output+='<td><h5 class="font-weight-bold">'+ value.GradeVal +' - '+ value.MetricDesc +'</h5></td>'
                                 output+='<td class="text-center">'
 
                                 var eval_results_page = 'location.href=`eval_results.php?evalid='+value.EvalId+'`'
@@ -354,6 +355,7 @@
                             })
 
                             $('#final_grade_txt').html(response.TotalGrade)
+                            $('#final_grade_desc').html("("+ response.MetricDesc2 +")")
                         }
                         else{
 

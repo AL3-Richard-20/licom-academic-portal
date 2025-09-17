@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 08, 2025 at 01:28 PM
+-- Generation Time: Sep 17, 2025 at 02:58 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -58,9 +58,9 @@ INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Passwo
 (11, 4, 14, 'B202514', 'admin123', '2025-06-07', '09:49:20', 1),
 (12, 4, 15, 'B202515', 'admin123', '2025-06-07', '09:49:20', 1),
 (13, 4, 16, 'B202516', 'admin123', '2025-06-07', '09:49:20', 1),
-(14, 3, 17, 'C202517', 'student123', '2025-06-07', '02:42:29', 1),
+(14, 3, 17, 'C202517', 'admin123', '2025-06-07', '02:42:29', 1),
 (15, 1, 18, 'admin', 'admin123', '2025-07-23', '20:30:33', 1),
-(16, 2, 19, 'registrar19', 'admin123', '2025-07-30', '09:20:36', 1);
+(16, 2, 19, 'registrar19e', 'admin1234', '2025-07-30', '09:20:36', 1);
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `evaluation_grade` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Eval_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_grade`
@@ -157,7 +157,8 @@ INSERT INTO `evaluation_grade` (`Eval_Id`, `Semester_Id`, `User_Id`, `Evaluated_
 (4, 1, 16, 5, NULL, '3.62500', '2025-07-18', '10:24:43', 1),
 (5, 1, 6, 5, NULL, '3.12500', '2025-07-18', '05:57:00', 1),
 (6, 1, 6, 7, NULL, '3.62500', '2025-07-19', '07:27:36', 1),
-(7, 1, 6, 8, NULL, '2.00000', '2025-07-19', '07:28:43', 1);
+(7, 1, 6, 8, NULL, '2.00000', '2025-07-19', '07:28:43', 1),
+(8, 1, 16, 7, NULL, '2.12500', '2025-09-09', '10:25:24', 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `evaluation_grades` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Eval_Grades_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `evaluation_grades`
@@ -215,7 +216,15 @@ INSERT INTO `evaluation_grades` (`Eval_Grades_Id`, `Semester_Id`, `Eval_Metric_I
 (45, 1, 5, 4, 6, 8, '2025-07-19', '07:28:43', 1),
 (46, 1, 6, 3, 6, 8, '2025-07-19', '07:28:43', 1),
 (47, 1, 7, 4, 6, 8, '2025-07-19', '07:28:43', 1),
-(48, 1, 8, 5, 6, 8, '2025-07-19', '07:28:43', 1);
+(48, 1, 8, 5, 6, 8, '2025-07-19', '07:28:43', 1),
+(49, 1, 1, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(50, 1, 2, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(51, 1, 3, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(52, 1, 4, 5, 16, 7, '2025-09-09', '10:25:24', 1),
+(53, 1, 5, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(54, 1, 6, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(55, 1, 7, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(56, 1, 8, 4, 16, 7, '2025-09-09', '10:25:24', 1);
 
 -- --------------------------------------------------------
 
@@ -463,19 +472,22 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `Sett_Id` int(11) NOT NULL AUTO_INCREMENT,
   `Sett_desc` varchar(255) NOT NULL,
   `Sett_val` text NOT NULL,
-  `Last_update` date NOT NULL,
+  `Last_update` timestamp NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Sett_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Status`) VALUES
-(1, 'Evaluation_Instructions', '<p>Edited - - - - Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14', 1),
-(2, 'Evaluation_popup', 'Enable', '2025-06-17', 1),
-(3, 'Evaluation_popup_content', '<h3><strong>EDITED!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-17', 1);
+(1, 'Evaluation_Instructions', '<p>Edited - - - - Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14 13:00:00', 1),
+(2, 'Evaluation_popup', 'Enable', '2025-06-16 16:00:00', 1),
+(3, 'Evaluation_popup_content', '<h3><strong>EDITED!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-16 16:00:00', 1),
+(4, 'Company Name', 'LICOM Academic Portal', '2025-09-17 14:53:02', 1),
+(5, 'Icon', '1758121095.png', '2025-09-17 14:58:15', 1),
+(6, 'Login Background', '1757945755.png', '2025-09-15 14:15:55', 1);
 
 -- --------------------------------------------------------
 
@@ -624,7 +636,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
 (4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-05-17', 1),
-(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-08-12', 1),
+(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-09-15', 1),
 (6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-05-25', 1),
 (7, 'Test', '', 'Student 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent1@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
 (8, 'Test', '', 'Student 2', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent2@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),

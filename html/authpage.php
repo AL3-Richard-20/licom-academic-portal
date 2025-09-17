@@ -26,7 +26,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -36,6 +36,18 @@
 
         <!-- Custom CSS -->
         <link href="../dist/css/style.min.css" rel="stylesheet">
+
+        <style>
+
+            .blurred-overlay {
+                background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+                padding: 20px;
+                border-radius: 10px;
+                backdrop-filter: blur(8px); /* Apply the blur effect */
+                -webkit-backdrop-filter: blur(8px); /* For Safari compatibility */
+            }
+
+        </style>
 
     </head>
 
@@ -63,15 +75,18 @@
         <!-- ============================================================== -->
         <!-- Login box.scss -->
         <!-- ============================================================== -->
-        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" 
-            style="background:url(../assets/images/university-stock.jpg) no-repeat center center; background-style:cover;">
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center blurred-overlay" 
+            style="
+                background-image:url('<?php echo $app_login_img; ?>'); 
+                background-repeat:no-repeat; 
+                background-size:cover;">
 
             <div class="auth-box">
 
                 <div id="loginform">
 
                     <div class="logo">
-                        <span class="db"><img src="../assets/images/logo-icon.png" alt="logo" /></span>
+                        <span class="db"><img src="../assets/images/<?= $app_icon ?>" alt="logo" /></span><br><br>
                         <h5 class="font-medium m-b-20"><?= $appname ?></h5>
                     </div>
 

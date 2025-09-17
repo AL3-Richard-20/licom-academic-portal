@@ -35,7 +35,7 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
         <!-- <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fontawesome-all.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-regular.min.css">
         <link rel="stylesheet" href="../dist/css/icons/font-awesome/css/fa-solid.min.css">
@@ -635,7 +635,7 @@
 
                                         <div class="tab-pane container fade" id="menu3"><br>
 
-                                            <!-- <div class="text-right">
+                                            <div class="text-right">
                                                 <button 
                                                     type="button" 
                                                     class="btn btn-outline-light" 
@@ -644,7 +644,7 @@
                                                     onclick="editAccountInfo()">
                                                     <span class="fa fa-pencil-alt text-primary"></span>
                                                 </button>
-                                            </div> -->
+                                            </div>
 
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
@@ -669,6 +669,66 @@
                         </div>
 
                     </div>
+
+                    <!-- ================ Edit Account Info ================= -->
+                        <div class="modal fade" id="editAccInfoMod" role="dialog">
+
+                            <div class="modal-dialog" role="document">
+
+                                <div class="modal-content">
+
+                                    <form method="POST" id="editAccInfoForm">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-bold text-uppercase">Edit Account Information</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <p><b>Username: <span class="text-danger">(*)</span></b></p>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control form-control-sm"
+                                                    name="e_username" 
+                                                    id="e_username" 
+                                                    placeholder="Input username here"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <p><b>Password: <em>(Leave blank if no changes)</em></b></p>
+                                                <input 
+                                                    type="password" 
+                                                    class="form-control form-control-sm"
+                                                    name="e_password" 
+                                                    id="e_password" 
+                                                    placeholder="Input password here">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button 
+                                                type="submit" 
+                                                class="btn btn-success font-weight-bold text-uppercase">
+                                                <span class="fa fa-check"></span>
+                                                Save
+                                            </button>
+                                            <button 
+                                                type="button" 
+                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                                data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                            </div>
+                            <!-- ================ Edit Account Info END ============= -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -823,6 +883,66 @@
                     })
                 })
 
+                $('#editAccInfoForm').on('submit', function(ad){
+
+                    ad.preventDefault()
+
+                    var username_val = $('#e_username').val()
+                    var password_val = $('#e_password').val()
+
+                    var is_valid = 1
+
+
+                    if(password_val != ''){
+
+                        if(password_val.length < 8){
+
+                            is_valid = 0
+
+                            toastr.error('Password must have atleast minimum 8 characters', 'CANNOT PROCEED')
+
+                            $('#e_password').addClass('is-invalid')
+                        }
+                    }
+
+
+                    if(is_valid){
+
+                        $('#e_password').removeClass('is-invalid')
+
+                        $.ajax({
+                            type: "POST",
+                            url: "models/UserModel.php",
+                            data: {
+                                userid:student_Id,
+                                username:username_val,
+                                password:password_val,
+                                action:"edit_account_info"
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+                                
+                                if(response == 1){
+
+                                    $('#editAccInfoMod').modal('hide')
+                                
+                                    fetchAccountInfo()
+
+                                    toastr.success('You changed account information', 'SUCCESSFULLY UPDATED')
+                                }
+                                else if(response == 2 || response == 3){
+                                
+                                    toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                                }
+                                else if(response == 4){
+                                
+                                    toastr.info('Username already taken', 'CANNOT PROCEED')
+                                }
+                            }
+                        })
+                    }
+                })
+
                 $('#status_change_btn').on('click', function(){
 
                     var status_val = $(this).attr('accstat')
@@ -948,6 +1068,8 @@
                         
                         $('#username_txt').html(response.Username)
                         $('#password_txt').html(response.Password)
+
+                        $('#e_username').val(response.Username)
                     }
                 })
             }
@@ -998,6 +1120,11 @@
                 $('#e_g_email').val(g_email_txt)
                 $('#e_g_phoneno').val(g_phoneno_txt)
                 $('#e_g_address').val(g_address_txt)
+            }
+
+            function editAccountInfo(){
+
+                $('#editAccInfoMod').modal('show')
             }
 
         </script>

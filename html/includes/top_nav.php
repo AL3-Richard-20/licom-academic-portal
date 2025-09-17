@@ -26,9 +26,9 @@
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <img src="../assets/images/<?= $app_icon ?>" alt="homepage" class="dark-logo" height="40" />
                             <!-- Light Logo icon -->
-                            <img src="../assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                            <img src="../assets/images/<?= $app_icon ?>" alt="homepage" class="light-logo" height="40" />
                         </b>
                         <!--End Logo icon -->
 
@@ -47,7 +47,7 @@
                                     text-shadow: 2px 2px 4px black;
                                     font-size:13px;" 
                             id="brand">
-                            <?= $appname ?>
+                            <?= stringEllip($appname, 21) ?>
                         </h3>
                         </span>
 
@@ -238,17 +238,24 @@
 
                                 </div>
 
-                                <a class="dropdown-item" href="javascript:void(0)">
+                                <!-- <a class="dropdown-item" href="javascript:void(0)">
                                     <i class="ti-user m-r-5 m-l-5"></i> My Profile
                                 </a>
 
 
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div> -->
 
+                                <?php
 
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="ti-settings m-r-5 m-l-5"></i> Account Setting
-                                </a>
+                                    if($_SESSION["licom_usr_level"] != 1){ ?>
+
+                                        <a class="dropdown-item" href="account_info.php">
+                                            <i class="ti-settings m-r-5 m-l-5"></i> Account Settings
+                                        </a>
+
+                                        <?php
+                                    }
+                                ?>
 
                                 <div class="dropdown-divider"></div>
 

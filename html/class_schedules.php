@@ -20,7 +20,8 @@
 
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <!-- <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png"> -->
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -97,7 +98,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title font-weight-bold text-uppercase">Class Schedules</h4>
+                        <h4 class="page-title font-weight-bold text-uppercase">Class Schedule</h4>
                         <div class="d-flex align-items-center">
 
                         </div>
@@ -107,7 +108,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="#">Class Schedules</a>
+                                        <a href="#">Class Schedule</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">Records</li>
                                 </ol>

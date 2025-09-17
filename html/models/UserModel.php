@@ -209,6 +209,34 @@
             echo json_encode($res_req);
         }
 
+        else if($_POST['action'] == 'edit_account_info'){
+
+            $user_Id  = $_POST['userid'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $data1    = [ "Username" => $username ];
+
+            if($password != NULL){
+
+                $data1["Password"] = $password;
+            }
+
+            $where1   = [ "User_Id" => $user_Id ];
+            $update1  = update($accounts, $data1, $where1);
+
+            if($update1 == 1){
+
+                $res_req = 1;
+            }
+            else{
+
+                $res_req = 2;
+            }
+
+            echo json_encode($res_req);
+        }
+
         else if($_POST['action'] == 'set_as_inactive'){
 
             $user_Id = $_POST['userid'];
