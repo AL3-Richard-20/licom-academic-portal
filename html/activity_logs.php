@@ -21,6 +21,7 @@
 
 
         <!-- Favicon icon -->
+        <!-- <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png"> -->
         <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/<?= $app_icon ?>">
 
 
@@ -28,9 +29,9 @@
 
 
         <!-- Custom CSS -->
-        <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+        <!-- <link href="../assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
         <link href="../assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet">
+        <link href="../assets/libs/morris.js/morris.css" rel="stylesheet"> -->
 
 
         <!-- <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -39,6 +40,11 @@
 
         <link href="../assets/libs/datatables/media/css/dataTable.dataTable.css" rel="stylesheet">
         <link href="../assets/libs/datatables/media/css/buttons.dataTable.css" rel="stylesheet">
+
+
+        <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
 
         <!-- Custom CSS -->
@@ -104,7 +110,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Instructor Records</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Activity Logs</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -114,7 +120,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Instructors</a>
+                                            <a href="#">Activity Logs</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -149,120 +155,83 @@
                                 </div>
                                 <div class="col-lg-6 text-right">
                                     <!-- <p style="color:transparent;">Action</p> -->
-                                    <button 
+                                    <!-- <button 
                                         type="button" 
                                         class="btn btn-success btn-sm font-weight-bold text-uppercase"
-                                        onclick="location.href='add_new_instructor.php';">
+                                        onclick="location.href='add_new_student.php';">
                                         <span class="fa fa-plus"></span>
                                         Add New
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </div>
 
                         <div class="card-body">
 
-                            <div class="table-responsive">
+                            <table class="table table-hover" id="accounts_tbl">
+                                <thead class="table-bordered font-weight-bold text-uppercase">
+                                    <tr>
+                                        <th>Detail</th>
+                                        <th>User</th>
+                                        <th>Date Added</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-sm">
+                                    <?php
 
-                                <table class="table table-hover" style="width:100%;" id="instructors_tbl">
+                                        $query="SELECT 
+                                                    users.FName, 
+                                                    users.LName, 
+                                                    activity_logs.Activity_Log_Id, 
+                                                    activity_logs.Log_detail, 
+                                                    activity_logs.User_Id, 
+                                                    activity_logs.Date_added, 
+                                                    activity_logs.Time_added  
+                                                FROM 
+                                                    activity_logs
+                                                LEFT JOIN 
+                                                    users 
+                                                ON 
+                                                    activity_logs.User_Id = users.User_Id 
+                                                WHERE 
+                                                    activity_logs.Status = 1 ";
 
-                                    <thead class="table-bordered font-weight-bold text-uppercase">
-                                        <tr>
-                                            <th class='text-left'>ID #</th>
-                                            <th>Name</th>
-                                            <th class='text-left'>Contact No.</th>
-                                            <th>Date Added</th>
-                                            <th>Time Added</th>
-                                            <th>Status</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
+                                        $fetch = mysqli_query($con, $query);
 
-                                    <tbody class="table-sm">
+                                        if($fetch){
 
-                                        <?php
+                                            while($row = mysqli_fetch_assoc($fetch)){
 
-                                            $query="SELECT 
-                                                        users.User_Id,
-                                                        users.FName, 
-                                                        users.MName, 
-                                                        users.LName, 
-                                                        users.Phone_no,
-                                                        users.Date_added, 
-                                                        users.Time_added,
-                                                        users.Status  
-                                                    FROM 
-                                                        users 
-                                                    LEFT JOIN 
-                                                        accounts 
-                                                    ON 
-                                                        users.User_Id = accounts.User_Id
-                                                    WHERE 
-                                                        users.Status = 1 
-                                                        AND accounts.Level_Id = 4 
-                                                    ORDER BY 
-                                                        users.User_Id DESC,
-                                                        users.Date_added DESC, 
-                                                        users.Time_added DESC ";
-
-                                            $fetch = mysqli_query($con, $query);
-
-                                            $count = mysqli_num_rows($fetch);
-
-                                            if($count > 0){
-
-                                                while($row = mysqli_fetch_assoc($fetch)){
-
-                                                    $user_Id    = $row['User_Id'];
-                                                    $fname      = $row['FName'];
-                                                    $mname      = $row['MName'];
-                                                    $lname      = $row['LName'];
-                                                    $phone_no   = $row['Phone_no'];
-                                                    $date_added = $row['Date_added'];
-                                                    $time_added = $row['Time_added'];
-                                                    $status     = $row['Status'];
-
-                                                    echo "<tr>";
-                                                    echo "<td class='text-left'>".$user_Id."</td>";
-                                                    echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
-                                                    echo "<td class='text-left'>".$phone_no."</td>";
-                                                    echo "<td>".dateFormat($date_added)."</td>";
-                                                    echo "<td>".timeFormat($time_added)."</td>";
-
-                                                    if($status == 1){
-
-                                                        $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
-                                                    }
-                                                    else if($status == 2){
-
-                                                        $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
-                                                    }
-
-                                                    echo "<td>".$status_txt."</td>";
-                                                    echo "<td class='text-center'>
-                                                        <button 
-                                                            type='button' 
-                                                            class='btn btn-outline-light btn-sm text-primary' 
-                                                            onclick='location.href=`instructor_info.php?instructorid=".$user_Id."`;'>
-                                                            <span class='fa fa-pencil-alt'></span>
-                                                        </button>
-                                                    </td>";
-                                                    echo "</tr>";
-                                                }
-                                            }
-                                            else{
+                                                $user_Id    = $row['User_Id'];
+                                                $user_fname = $row['FName'];
+                                                $user_lname = $row['LName'];
+                                                
+                                                $activity_Log_Id    = $row['Activity_Log_Id'];
+                                                $log_detail         = $row['Log_detail'];
+                                                $date_added         = dateFormat($row['Date_added']);
+                                                $time_added         = timeFormat($row['Time_added']);
 
                                                 echo "<tr>";
-                                                echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
+
+                                                echo "<td class='font-weight-bold'>".$log_detail."</td>";
+                                                echo "<td>".$user_fname." ".$user_lname."</td>";
+                                                echo "<td>".$date_added." | ".$time_added."</td>";
+
+                                                // echo "<td class='text-center'>
+                                                //         <button 
+                                                //             type='button' 
+                                                //             class='btn btn-outline-light text-danger btn-sm' 
+                                                //             onclick='deleteUser(`".$user_Id."`)'>
+                                                //             <span class='fa fa-trash'></span>
+                                                //         </button>
+                                                //     </td>";
+
                                                 echo "</tr>";
                                             }
-                                        ?>
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
 
                         </div>
 
@@ -339,6 +308,9 @@
         <script src="../assets/libs/datatables/media/js/vfs_fonts.js"></script>
         <script src="../assets/libs/datatables/media/js/buttons.html5.min.js"></script>
 
+        <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+        <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -354,21 +326,17 @@
         <script>
 
             $(document).ready(function () {
-                
-                $('#instructors_tbl').DataTable({
 
-                    "aaSorting": [],
-                    "columnDefs": [ {
-                        "targets": 5,
-                        "orderable": false
-                    } ],
+                $('#accounts_tbl').DataTable({
+                    "bSort":false,
+                    "bInfo":false,
                     layout: {
                         topStart: {
                             buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
                         }
                     }
                 })
-            });
+            })
 
         </script>
 

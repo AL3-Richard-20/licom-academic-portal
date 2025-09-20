@@ -6,6 +6,7 @@
 
     include "../helpers/Users.php";
     include "../helpers/Semester.php";
+    include "../helpers/Logs.php";
 
     if(isset($_POST['action'])){
 
@@ -22,26 +23,6 @@
             $instructor_Id  = $_POST['instructor_Id'];
 
             $is_valid = 1;
-
-            // ========== Check Semester and Room ===============
-                // $columns1 = [ "Class_Schedule_Id" ];
-                // $where1   = [
-                //     "Semester_Id" => $semester_Id,
-                //     "Room_Id" => $room_Id,
-                //     "Day" => $day_Id,
-                //     "Status" => 1
-                // ];
-                // $exists1  = exists($class_schedules, $columns1, $where1);
-
-                // $exists1 = ($exists1 == 0) ? 0 : 1;
-
-                // if($exists1 == 1){
-
-                //     $is_valid   = 0;
-                    
-                //     $res_req    = 4;
-                // }
-            // ========== Check Semester and Room END ===========
 
             // ========== Check Class Date and Time =============
                 $query2 ="SELECT 
@@ -86,6 +67,11 @@
                 $insert3 = insert($class_schedules, $data3);
 
                 if($insert3['Result'] == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Added a new class schedule. ID: '.$insert3['LastId'];
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }
@@ -562,6 +548,11 @@
 
                 if($insert2['Result'] == 1){
 
+                    $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                    $log_detail     = 'Added a new class student. ID: '.$user_Id;
+
+                    insertToActivityLogs($log_detail, $sess_user_Id);
+
                     $res_req = 1;
                 }
                 else{
@@ -590,6 +581,11 @@
 
             if($update1 == 1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete student in a class. ID: '.$student_class_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -609,6 +605,11 @@
             $update1 = update($class_schedules, $data1, $where1);
 
             if($update1 == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete class schedule. ID: '.$class_sched_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

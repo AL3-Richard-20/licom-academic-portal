@@ -44,8 +44,6 @@
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
 
-        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
-
 
         <!-- Custom CSS -->
         <link href="../dist/css/style.min.css" rel="stylesheet">
@@ -110,7 +108,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Semesters</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Year Levels</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -120,7 +118,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Semesters</a>
+                                            <a href="#">Year Levels</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -154,7 +152,6 @@
 
                                             <thead class="table-bordered font-weight-bold text-uppercase">
                                                 <tr>
-                                                    <th>Year Level</th>
                                                     <th>Name</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
@@ -166,24 +163,17 @@
                                                 <?php
 
                                                     $query="SELECT 
-                                                                semesters.Semester_Id, 
-                                                                semesters.Semester_name,
-                                                                semesters.Is_default, 
-                                                                semesters.Date_added, 
-                                                                semesters.Time_added,
-                                                                semesters.Year_Level_Id,
-                                                                year_levels.Year_name 
+                                                                Year_Level_Id, 
+                                                                Year_name, 
+                                                                Date_added, 
+                                                                Time_added
                                                             FROM 
-                                                                semesters 
-                                                            LEFT JOIN 
                                                                 year_levels 
-                                                            ON 
-                                                                semesters.Year_Level_Id = year_levels.Year_Level_Id
                                                             WHERE 
-                                                                semesters.Status = 1 
+                                                                Status = 1 
                                                             ORDER BY 
-                                                                semesters.Date_added DESC, 
-                                                                semesters.Time_added DESC ";
+                                                                Date_added DESC, 
+                                                                Time_added DESC ";
 
                                                     $fetch = mysqli_query($con, $query);
 
@@ -195,47 +185,28 @@
 
                                                             while($row = mysqli_fetch_assoc($fetch)){
 
-                                                                $semester_Id    = $row['Semester_Id'];
-                                                                $semester_name  = $row['Semester_name'];
                                                                 $year_level_Id  = $row['Year_Level_Id'];
-                                                                $year_name      = $row['Year_name'] ?? "---";
-                                                                $is_default     = $row['Is_default'];
+                                                                $year_name      = $row['Year_name'];
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
                                                                 echo "<tr>";
-                                                                echo "<td>".$year_name."</td>";
-                                                                echo "<td class='font-weight-bold'>".$semester_name."</td>";
+                                                                echo "<td class='font-weight-bold'>".$year_name."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>";
 
-                                                                if($is_default == 0){
-
-                                                                    echo "<button 
-                                                                            type='button' 
-                                                                            class='btn btn-outline-success btn-sm font-weight-bold text-uppercase' 
-                                                                            onclick='setAsActiveSemester(`".$semester_Id."`)'>
-                                                                            Set as Active
-                                                                        </button>";
-                                                                }
-                                                                else{
-                                                                    echo "<span class='badge badge-success font-weight-bold text-uppercase'>
-                                                                            Active
-                                                                        </span>";
-                                                                }
-
                                                                 echo "<button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSemester(`".$semester_Id."`, `".$semester_name."`, `".$year_level_Id."`)'>
+                                                                            onclick='editYearLevel(`".$year_level_Id."`, `".$year_name."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>";
 
                                                                 echo "<button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-danger' 
-                                                                            onclick='deleteSemester(`".$semester_Id."`)'>
+                                                                            onclick='deleteYearLevel(`".$year_level_Id."`)'>
                                                                             <span class='fa fa-trash'></span>
                                                                         </button>";
 
@@ -262,7 +233,7 @@
 
                             <div class="card" style="position:sticky; top:0;">
 
-                                <form method="POST" id="newSemesterForm">
+                                <form method="POST" id="newYearLevelForm">
 
                                     <div class="card-header bg-white">
                                         <h4 class="font-weight-bold text-uppercase">Add New</h4>
@@ -271,44 +242,13 @@
                                     <div class="card-body">
 
                                         <div class="form-group">
-                                            <p><b>Year Level:</b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="year_level_Id" 
-                                                id="year_level_Id">
-                                                <option value=""></option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Year_Level_Id, 
-                                                                Year_name 
-                                                            FROM 
-                                                                year_levels 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    while($row = mysqli_fetch_assoc($fetch)){
-
-                                                        $year_level_Id  = $row['Year_Level_Id'];
-                                                        $year_name      = $row['Year_name'];
-
-                                                        echo "<option value='".$year_level_Id."'>".$year_name."</option>";
-                                                    }
-
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><b>Semester Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Year Level Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="semester_name" 
-                                                id="semester_name"
-                                                placeholder="Input semester name here" 
+                                                name="year_level_name" 
+                                                id="year_level_name"
+                                                placeholder="Input year level name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -326,10 +266,10 @@
 
                                 </form>
 
-                                <form method="POST" id="editSemesterForm" style="display:none;">
+                                <form method="POST" id="editYearLevelForm" style="display:none;">
 
                                     <div class="card-header bg-white">
-                                        <h4 class="font-weight-bold text-uppercase">Edit Semester</h4>
+                                        <h4 class="font-weight-bold text-uppercase">Edit Year Level</h4>
                                     </div>
 
                                     <div class="card-body">
@@ -337,49 +277,17 @@
                                         <input 
                                             type="hidden" 
                                             class="form-control form-control-sm"
-                                            name="e_semester_Id" 
-                                            id="e_semester_Id">
+                                            name="e_year_level_Id" 
+                                            id="e_year_level_Id">
 
                                         <div class="form-group">
-                                            <p><b>Year Level:</b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="e_year_level_Id" 
-                                                id="e_year_level_Id" 
-                                                style="width:100%;">
-                                                <option value=""></option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Year_Level_Id, 
-                                                                Year_name 
-                                                            FROM 
-                                                                year_levels 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    while($row = mysqli_fetch_assoc($fetch)){
-
-                                                        $year_level_Id  = $row['Year_Level_Id'];
-                                                        $year_name      = $row['Year_name'];
-
-                                                        echo "<option value='".$year_level_Id."'>".$year_name."</option>";
-                                                    }
-
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><b>Semster Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Year Level Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
-                                                name="e_semester_name" 
-                                                id="e_semester_name"
-                                                placeholder="Input semester name here" 
+                                                name="e_year_level_name" 
+                                                id="e_year_level_name"
+                                                placeholder="Input year level name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -397,8 +305,8 @@
                                             type="button" 
                                             class="btn btn-outline-light text-dark btn-sm font-weight-bold text-uppercase"
                                             onclick="
-                                                $('#editSemesterForm').hide()
-                                                $('#newSemesterForm').show()
+                                                $('#editYearLevelForm').hide()
+                                                $('#newYearLevelForm').show()
                                             ">
                                             Discard
                                         </button>
@@ -411,124 +319,6 @@
                         </div>
 
                     </div>
-
-                    <!-- ================ Subjects Modal ============== -->
-                        <div class="modal fade" 
-                            id="subjectsMod" 
-                            style="padding-right: 17px;">
-
-                            <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
-
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h4 class="modal-title font-weight-bold text-uppercase">Subjects under <span class="text-info" id="course_sub_header">(---)</span></h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-body">
-
-                                        <input type="hidden" name="course_Id_val" id="course_Id_val">
-                                    
-                                        <div class="row">
-
-                                            <div class="col-lg-8">
-
-                                                <div class="table-responsive">
-
-                                                    <table class="table table-hover display nowrap" style="width:100%;">
-
-                                                        <thead class="table-bordered font-weight-bold text-uppercase">
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Code</th>
-                                                                <th>Date Added</th>
-                                                                <th>Time Added</th>
-                                                                <th class="text-center">Action</th>
-                                                            </tr>
-                                                        </thead>
-
-                                                        <tbody class="table-sm text-muted" id="subjects_tbl"></tbody>
-
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-lg-4">
-
-                                                <div class="card">
-
-                                                    <form method="POST" id="newSubjectForm">
-
-                                                        <div class="card-header bg-white">
-                                                            <h4 class="font-weight-bold text-uppercase">Add New</h4>
-                                                        </div>
-
-                                                        <div class="card-body"> 
-
-                                                            <div class="form-group">
-                                                                <p><b>Subject Name: <span class="text-danger">(*)</span></b></p>
-                                                                <input 
-                                                                    type="text" 
-                                                                    class="form-control form-control-sm"
-                                                                    name="subject_name" 
-                                                                    id="subject_name"
-                                                                    placeholder="Input subject name here" 
-                                                                    autocomplete="off"
-                                                                    required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <p><b>Subject Code: <span class="text-danger">(*)</span></b></p>
-                                                                <input 
-                                                                    type="text" 
-                                                                    class="form-control form-control-sm"
-                                                                    name="subject_code" 
-                                                                    id="subject_code"
-                                                                    placeholder="Input subject code here" 
-                                                                    autocomplete="off"
-                                                                    required>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="card-footer bg-white text-right">
-                                                            <button 
-                                                                type="submit" 
-                                                                class="btn btn-success btn-sm font-weight-bold text-uppercase">
-                                                                <span class="fa fa-check"></span>
-                                                                Submit
-                                                            </button>
-                                                        </div>
-
-                                                    </form>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button 
-                                            type="button" 
-                                            class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
-                                            data-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    <!-- ================ Subjects Modal END ========== -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -606,8 +396,6 @@
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
 
-        <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
-
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -624,28 +412,16 @@
 
             $(document).ready(function () {
 
-                // ========== Select2 ==============
-                    $('#year_level_Id').select2({
-                        placeholder:"Select year level here",
-                        allowClear:true
-                    })
-
-                    $('#e_year_level_Id').select2({
-                        placeholder:"Select year level here",
-                        allowClear:true
-                    })
-                // ========== Select2 END ==========
-
-                semestersTbl()
+                yearLevelsTbl()
             
-                $('#newSemesterForm').on('submit', function(aa){
+                $('#newYearLevelForm').on('submit', function(aa){
 
                     aa.preventDefault()
 
-                    var data = $('#newSemesterForm').serializeArray()
+                    var data = $(this).serializeArray()
 
                     data.push(
-                        { name:'action', value:'new_semester'}
+                        { name:'action', value:'new_year_level'}
                     )
 
                     $.ajax({
@@ -657,7 +433,7 @@
                             
                             if(response == 1){
 
-                                toastr.success('You added a new semester', 'SAVED SUCCESSFULLY')
+                                toastr.success('You added a new year level', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -677,14 +453,14 @@
                     })
                 })
 
-                $('#editSemesterForm').on('submit', function(ab){
+                $('#editYearLevelForm').on('submit', function(ab){
 
                     ab.preventDefault()
 
-                    var data = $('#editSemesterForm').serializeArray()
+                    var data = $(this).serializeArray()
 
                     data.push(
-                        { name:'action', value:'edit_semester' }
+                        { name:'action', value:'edit_year_level' }
                     )
 
                     $.ajax({
@@ -696,7 +472,7 @@
                             
                             if(response == 1){
 
-                                toastr.success('You updated a semester', 'SAVED SUCCESSFULLY')
+                                toastr.success('You updated a year level', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -707,10 +483,6 @@
                             else if(response == 2 || response == 3){
 
                                 toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
-                            }
-                            else if(response == 4){
-                                
-                                toastr.info('Record already exist', 'CANNOT BE ADDED')
                             }
                         }
                     });
@@ -718,7 +490,7 @@
             })
 
 
-            function semestersTbl(){
+            function yearLevelsTbl(){
 
                 $('#semesters_tbl').DataTable({
 
@@ -736,23 +508,20 @@
             }
 
 
-            function editSemester(semester_Id, semester_name, year_level_Id){
+            function editYearLevel(year_level_Id, year_name){
 
-                $('#newSemesterForm').hide()
-                $('#editSemesterForm').show()
+                $('#newYearLevelForm').hide()
+                $('#editYearLevelForm').show()
 
-                $('#e_year_level_Id').val(year_level_Id).trigger('change')
-
-                $('#e_semester_Id').val(semester_Id)
-                $('#e_semester_name').val(semester_name)
-                
+                $('#e_year_level_Id').val(year_level_Id)
+                $('#e_year_level_name').val(year_name)
             }
 
 
-            function deleteSemester(semester_Id){
+            function deleteYearLevel(year_level_Id){
 
                 swal({   
-                    title: "DELETE SEMESTER?",   
+                    title: "DELETE YEAR LEVEL?",   
                     text: "This cannot be reverted",   
                     type: "question",   
                     showCancelButton: true,   
@@ -769,15 +538,15 @@
                             type: "POST",
                             url: "models/SemesterModel.php",
                             data: {
-                                semesterid:semester_Id,
-                                action:"delete_semester"
+                                yearlevelid:year_level_Id,
+                                action:"delete_year_level"
                             },
                             dataType: "JSON",
                             success: function (response) {
                                 
                                 if(response == 1){
 
-                                    toastr.success('You deleted a semester. Refreshing the page.', 'REMOVED SUCCESSFULLY')
+                                    toastr.success('You deleted a year level. Refreshing the page.', 'REMOVED SUCCESSFULLY')
 
                                     setTimeout(() => {
 
@@ -787,59 +556,6 @@
                                 }
                                 else if(response == 2 || response == 3){
 
-                                    toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
-                                }
-                            }
-                        })
-                    }
-                })
-            }
-
-
-            function setAsActiveSemester(semester_Id){
-
-                Swal.fire({ 
-                    title: 'SET AS ACTIVE', 
-                    text: 'This cannot be reverted', 
-                    type: 'question', 
-                    showCancelButton: true, 
-                    confirmButtonColor: '#3085d6', 
-                    cancelButtonColor: '#d33', 
-                    confirmButtonText: 'YES', 
-                    cancelButtonText: 'NO' 
-                }).then((isConfirm) => { 
-                
-                    if (isConfirm.value == true) {
-                    
-                        $.ajax({
-                            type: "POST",
-                            url: "models/SemesterModel.php",
-                            data: {
-                                semid:semester_Id,
-                                action:'set_as_active'
-                            },
-                            dataType: "JSON",
-                            success: function (response) {
-
-                                if(response == 1){
-                                
-                                    Swal.fire({ 
-                                            title: 'UPDATE SUCCESSFULLY', 
-                                            text: '', 
-                                            type: 'success', 
-                                            showCancelButton: false, 
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'OKAY', 
-                                    }).then((isConfirm) => { 
-                                        
-                                        if (isConfirm.value == true) {
-                                        
-                                            location.reload()
-                                        }
-                                    })
-                                }
-                                else if(response == 2 || response == 3){
-                                
                                     toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
                                 }
                             }

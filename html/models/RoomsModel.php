@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'new_room'){
@@ -28,6 +30,11 @@
                 $insert2 = insert($rooms, $data2);
 
                 if($insert2['Result'] == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Added a new room. Name: '.$room_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }
@@ -56,6 +63,11 @@
 
             if($update1 == 1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Edit room record. Name: '.$room_name;
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -75,6 +87,11 @@
             $update1 = update($rooms, $data1, $where1);
 
             if($update1 == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete room record. ID: '.$room_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

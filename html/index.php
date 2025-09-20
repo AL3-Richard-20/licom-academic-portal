@@ -180,7 +180,7 @@
                                 if($user_level_Id == 1 || $user_level_Id == 2){ ?>
 
                                     <div class="col-lg-3 col-md-6">
-                                        <div class="card bg-info">
+                                        <div class="card bg-info" style="cursor:pointer;" onclick="location.href='students.php';">
                                             <div class="card-body">
                                                 <div class="d-flex no-block align-items-center">
                                                     <div class="text-white">
@@ -202,7 +202,7 @@
                                 if($user_level_Id == 1 || $user_level_Id == 2){ ?>
 
                                     <div class="col-lg-3 col-md-6">
-                                        <div class="card bg-success">
+                                        <div class="card bg-success" style="cursor:pointer;" onclick="location.href='instructors.php';">
                                             <div class="card-body">
                                                 <div class="d-flex no-block align-items-center">
                                                     <div class="text-white">
@@ -224,7 +224,7 @@
                                 if($user_level_Id == 1 || $user_level_Id == 2){ ?>
 
                                     <div class="col-lg-3 col-md-6">
-                                        <div class="card bg-primary">
+                                        <div class="card bg-primary" style="cursor:pointer;" onclick="location.href='courses.php';">
                                             <div class="card-body">
                                                 <div class="d-flex no-block align-items-center">
                                                     <div class="text-white">
@@ -246,7 +246,7 @@
                                 if($user_level_Id == 1 || $user_level_Id == 2){ ?>
 
                                     <div class="col-lg-3 col-md-6">
-                                        <div class="card bg-primary">
+                                        <div class="card bg-primary" style="cursor:pointer;" onclick="location.href='subjects.php';">
                                             <div class="card-body">
                                                 <div class="d-flex no-block align-items-center">
                                                     <div class="text-white">

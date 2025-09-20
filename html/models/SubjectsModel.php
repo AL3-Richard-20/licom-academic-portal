@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'fetch_subjects'){
@@ -86,6 +88,11 @@
 
                 if($insert2['Result'] == 1){
 
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Added a new subject. Name: '.$subject_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
+
                     $res_req = 1;
                 }
                 else{
@@ -120,6 +127,11 @@
 
             if($update1 == 1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Edit a subject. Name: '.$subject_name;
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -139,6 +151,11 @@
             $update1 = update($subjects, $data1, $where1);
 
             if($update1 == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete subject record. ID: '.$subject_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

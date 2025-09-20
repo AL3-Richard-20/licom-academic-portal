@@ -329,6 +329,15 @@
 
                         <li class="sidebar-item">
                             <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="year_levels.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-chart-line"></i>
+                                <span class="hide-menu">Year Levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
                                 href="courses.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-list"></i>
@@ -394,6 +403,15 @@
                                 </li>
                             </ul>
 
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="activity_logs.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-clock"></i>
+                                <span class="hide-menu">Activity Logs</span>
+                            </a>
                         </li>
 
                         <!-- <li class="sidebar-item">

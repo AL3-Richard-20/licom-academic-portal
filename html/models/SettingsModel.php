@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Users.php";
+    include "../helpers/Logs.php";
 
     if(isset($_POST['action'])){
 
@@ -34,6 +35,11 @@
                     ];
                     $where0   = [ "Sett_Id" => $sett_Id ];
                     $update0  = update($settings, $data0, $where0);
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Changed app icon.';
+
+                    insertToActivityLogs($log_detail, $user_Id);
     
                     $res_req = 1;
                 }
@@ -62,6 +68,11 @@
             $updaten = update($settings, $datan, $wheren);
 
             if($updaten == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Changed app name to: '.$app_name;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

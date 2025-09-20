@@ -593,7 +593,7 @@
                     "bInfo":false,
                     "aaSorting": [],
                     "columnDefs": [ {
-                        "targets": 6,
+                        "targets": 5,
                         "orderable": false
                     } ],
                     layout: {
