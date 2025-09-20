@@ -3,6 +3,7 @@
     $protected='';
 
     $accounts           = 'accounts';
+    $activity_logs      = 'activity_logs';
     $class_schedules    = 'class_schedules';
     $courses            = 'courses';
     $evaluation_grade   = 'evaluation_grade';
@@ -21,5 +22,6 @@
     $student_grades     = 'student_grades';
     $subjects           = 'subjects';
     $users              = 'users';
+    $year_levels        = 'year_levels';
 
 ?>

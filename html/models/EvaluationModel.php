@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         // ==================== Header Functions ==================
@@ -29,6 +31,11 @@
                     $insert2 = insert($evaluation_headers, $data2);
 
                     if($insert2['Result'] == 1){
+
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Added a new evaluation header. Name: '.$header_name;
+
+                        insertToActivityLogs($log_detail, $user_Id);
 
                         $res_req = 1;
                     }
@@ -70,6 +77,11 @@
 
                     if($update2 == 1){
 
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Edit evaluation header. Name: '.$header_name;
+
+                        insertToActivityLogs($log_detail, $user_Id);
+
                         $res_req = 1;
                     }
                     else{
@@ -94,6 +106,11 @@
                 $update1 = update($evaluation_headers, $data1, $where1);
 
                 if($update1 == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Delete evaluation header. ID: '.$header_Id;
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }
@@ -186,6 +203,11 @@
 
                     if($insert2['Result'] == 1){
 
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Added a new metric. Name: '.$metric_name;
+
+                        insertToActivityLogs($log_detail, $user_Id);
+
                         $res_req = 1;
                     }
                     else{
@@ -226,6 +248,11 @@
                     $update2 = update($evaluation_metrics, $data2, $where2);
 
                     if($update2 == 1){
+
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Edit metric record. Name: '.$metric_name;
+
+                        insertToActivityLogs($log_detail, $user_Id);
                         
                         $res_req = 1;
                     }
@@ -251,6 +278,11 @@
                 $update1 = update($evaluation_metrics, $data1, $where1);
 
                 if($update1 == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Delete metric record. ID: '.$metric_Id;
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }
@@ -287,6 +319,11 @@
                     $insert2 = insert($metric_values, $data2);
 
                     if($insert2['Result'] == 1){
+
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Added a new scale. Name: '.$dr_val;
+
+                        insertToActivityLogs($log_detail, $user_Id);
 
                         $res_req = 1;
                     }
@@ -329,6 +366,11 @@
                     $update2 = update($metric_values, $data2, $where2);
 
                     if($update2 == 1){
+
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Edit scale record. Name: '.$dr_name;
+
+                        insertToActivityLogs($log_detail, $user_Id);
                         
                         $res_req = 1;
                     }
@@ -355,6 +397,11 @@
 
                 if($update1 == 1){
 
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Delete metric record. ID: '.$metric_val_Id;
+
+                    insertToActivityLogs($log_detail, $user_Id);
+
                     $res_req = 1;
                 }
                 else{
@@ -376,6 +423,11 @@
                 $update1 = update($settings, $data1, $where1);
 
                 if($update1 == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Change evaluation instruction content';
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }

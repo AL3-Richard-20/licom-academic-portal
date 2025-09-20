@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'new_registrar'){
@@ -100,6 +102,11 @@
                         $insert3 = insert($accounts, $data3);
 
                         if($insert3['Result'] == 1){
+
+                            $user_Id    = $_SESSION["licom_usr_Id"];
+                            $log_detail = 'Added a new registrar record: Name: '.$fname.' '.$lname;
+
+                            insertToActivityLogs($log_detail, $user_Id);
 
                             $res_req = 1;
                         }

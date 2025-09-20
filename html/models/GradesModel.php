@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
 
@@ -147,6 +149,11 @@
                 $res_req = ($update2 == 1) ? 1 : 2;
             }
 
+            $user_Id    = $_SESSION["licom_usr_Id"];
+            $log_detail = 'Add/Update student grade. Student: '.$student_Id;
+
+            insertToActivityLogs($log_detail, $user_Id);
+
             echo json_encode($res_req);
         }
 
@@ -175,6 +182,11 @@
                 if($insert2['Result'] == 1){
 
                     $res_req = 1;
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Added a new grade remark. Name: '.$remark_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
                 }
                 else{
 
@@ -214,6 +226,11 @@
 
                 if($update2 == 1){
 
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Edit grade remark. Name: '.$grade_remark_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
+
                     $res_req = 1;
                 }
                 else{
@@ -238,6 +255,11 @@
             $update2 = update($grade_remarks, $data1, $where1);
 
             if($update2 == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete grade remark record. ID: '.$remark_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

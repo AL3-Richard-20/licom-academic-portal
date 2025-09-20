@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Users.php";
+    include "../helpers/Logs.php";
 
     if(isset($_POST['action'])){
 
@@ -154,6 +155,11 @@
 
                 if($update1 == 1){
 
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Edit personal information.';
+
+                    insertToActivityLogs($log_detail, $user_Id);
+
                     $res_req = 1;
                 }
                 else{
@@ -199,6 +205,11 @@
 
             if($update1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Edit contact information. ';
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -227,6 +238,11 @@
 
             if($update1 == 1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Edit account information.';
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -250,6 +266,11 @@
             $update1 = update($users, $data1, $where1);
 
             if($update1 == 1){
+
+                $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                $log_detail     = 'Set account as inactive. ID: '.$user_Id;
+
+                insertToActivityLogs($log_detail, $sess_user_Id);
 
                 $res_req = 1;
             }

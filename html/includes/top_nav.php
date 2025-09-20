@@ -233,7 +233,8 @@
 
                                     <div class="m-l-10">
                                         <h4 class="m-b-0"><?= $_SESSION["licom_usr_fname"]." ".$_SESSION["licom_usr_lname"] ?></h4>
-                                        <p class=" m-b-0"><?= $_SESSION["licom_usr_email"] ?></p>
+                                        <!-- <p class=" m-b-0"><?= $_SESSION["licom_usr_email"] ?></p> -->
+                                        <p class=" m-b-0"><?= $_SESSION["licom_usr_levelname"] ?></p>
                                     </div>
 
                                 </div>

@@ -54,6 +54,16 @@
                 $_SESSION["licom_usr_email"] = $email_addr;
                 $_SESSION["licom_usr_level"] = $level_Id;
 
+                // ========== Fetch Level Info ===========
+                    $query3 = "SELECT Level_name FROM levels WHERE Level_Id = '".$_SESSION["licom_usr_level"]."' LIMIT 1";
+                    $fetch3 = mysqli_query($con, $query3);
+                    $row3   = mysqli_fetch_assoc($fetch3);
+
+                    $level_name = $row3['Level_name'];
+                // ========== Fetch Level Info END =======
+
+                $_SESSION["licom_usr_levelname"] = $level_name;
+
                 $res_req = 1;
             }
 

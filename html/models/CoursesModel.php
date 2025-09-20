@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'new_course'){
@@ -29,6 +31,11 @@
                 $insert2 = insert($courses, $data2);
 
                 if($insert2['Result'] == 1){
+
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Added a new course. Name: '.$course_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
 
                     $res_req = 1;
                 }
@@ -62,6 +69,11 @@
 
             if($update1 == 1){
 
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Edit course record. Name: '.$course_name;
+
+                insertToActivityLogs($log_detail, $user_Id);
+
                 $res_req = 1;
             }
             else{
@@ -81,6 +93,11 @@
             $update1 = update($courses, $data1, $where1);
 
             if($update1 == 1){
+
+                $user_Id    = $_SESSION["licom_usr_Id"];
+                $log_detail = 'Delete course record. ID: '.$course_Id;
+
+                insertToActivityLogs($log_detail, $user_Id);
 
                 $res_req = 1;
             }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 17, 2025 at 02:58 PM
+-- Generation Time: Sep 20, 2025 at 03:55 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -61,6 +61,46 @@ INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Passwo
 (14, 3, 17, 'C202517', 'admin123', '2025-06-07', '02:42:29', 1),
 (15, 1, 18, 'admin', 'admin123', '2025-07-23', '20:30:33', 1),
 (16, 2, 19, 'registrar19e', 'admin1234', '2025-07-30', '09:20:36', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_logs`
+--
+
+DROP TABLE IF EXISTS `activity_logs`;
+CREATE TABLE IF NOT EXISTS `activity_logs` (
+  `Activity_Log_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Log_detail` varchar(255) NOT NULL,
+  `User_Id` int(11) NOT NULL,
+  `Date_added` date NOT NULL,
+  `Time_added` time NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`Activity_Log_Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `activity_logs`
+--
+
+INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 'Changed app name to: Edited - LICOM Academic Portal', 18, '2025-09-20', '07:06:41', 1),
+(2, 'Added a new year level record: 1st Year', 18, '2025-09-20', '10:34:18', 1),
+(5, 'Delete year level record ID: 1', 18, '2025-09-20', '10:49:01', 1),
+(4, 'Edit year level record: edited - 1st Year', 18, '2025-09-20', '10:39:57', 1),
+(6, 'Added a new year level record: 2nd Year', 18, '2025-09-20', '10:59:54', 1),
+(7, 'Added a new year level record: 3rd Year', 18, '2025-09-20', '11:00:02', 1),
+(8, 'Added a new year level record: 4th Year', 18, '2025-09-20', '11:00:16', 1),
+(9, 'Edit year level record: 1st Year', 18, '2025-09-20', '11:00:23', 1),
+(10, 'Added a new semester record: 1st Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:16:33', 1),
+(11, 'Edit semester record: 1 Year 2nd Semester A.Y. 2025-2026', 18, '2025-09-20', '11:35:45', 1),
+(12, 'Edit semester record: 1st Semester A.Y. 2025-2026', 18, '2025-09-20', '11:35:54', 1),
+(13, 'Edit semester record: 2nd Semester A.Y. 2025-2026', 18, '2025-09-20', '11:36:02', 1),
+(14, 'Edit semester record: 1st Semester A.Y. 2026-2027', 18, '2025-09-20', '11:36:10', 1),
+(15, 'Edit semester record: 2nd Semester A.Y. 2026 -2027', 18, '2025-09-20', '11:36:20', 1),
+(16, 'Edit semester record: 3 Year 1st Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:36:30', 1),
+(17, 'Edit semester record: 1st Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:36:40', 1),
+(18, 'Edit semester record: 2nd Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:37:54', 1);
 
 -- --------------------------------------------------------
 
@@ -442,24 +482,26 @@ INSERT INTO `rooms` (`Room_Id`, `Room_name`, `Room_details`, `Date_added`, `Time
 DROP TABLE IF EXISTS `semesters`;
 CREATE TABLE IF NOT EXISTS `semesters` (
   `Semester_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Year_Level_Id` int(11) NOT NULL,
   `Semester_name` varchar(255) NOT NULL,
   `Is_default` int(11) DEFAULT '0',
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `semesters`
 --
 
-INSERT INTO `semesters` (`Semester_Id`, `Semester_name`, `Is_default`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, '1 Year 1st Semester A.Y. 2025-2026', 1, '2025-05-19', '06:49:52', 1),
-(2, '1 Year 2nd Semester A.Y. 2025-2026', 0, '2025-05-19', '07:11:56', 1),
-(3, '2 Year 1st Semester A.Y. 2026-2027', 0, '2025-05-22', '09:12:21', 1),
-(4, '2 Year 2nd Semester A.Y. 2026 -2027', 0, '2025-06-07', '02:50:36', 1),
-(5, '3 Year 1st Semester A.Y. 2025 - 2026', 0, '2025-07-30', '08:54:59', 1);
+INSERT INTO `semesters` (`Semester_Id`, `Year_Level_Id`, `Semester_name`, `Is_default`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 1, '1st Semester A.Y. 2025-2026', 1, '2025-05-19', '06:49:52', 1),
+(2, 1, '2nd Semester A.Y. 2025-2026', 0, '2025-05-19', '07:11:56', 1),
+(3, 2, '1st Semester A.Y. 2026-2027', 0, '2025-05-22', '09:12:21', 1),
+(4, 2, '2nd Semester A.Y. 2026 -2027', 0, '2025-06-07', '02:50:36', 1),
+(5, 3, '1st Semester A.Y. 2025 - 2026', 0, '2025-07-30', '08:54:59', 1),
+(6, 3, '2nd Semester A.Y. 2025 - 2026', 0, '2025-09-20', '11:16:33', 1);
 
 -- --------------------------------------------------------
 
@@ -485,7 +527,7 @@ INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Stat
 (1, 'Evaluation_Instructions', '<p>Edited - - - - Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14 13:00:00', 1),
 (2, 'Evaluation_popup', 'Enable', '2025-06-16 16:00:00', 1),
 (3, 'Evaluation_popup_content', '<h3><strong>EDITED!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-16 16:00:00', 1),
-(4, 'Company Name', 'LICOM Academic Portal', '2025-09-17 14:53:02', 1),
+(4, 'Company Name', 'Edited - LICOM Academic Portal', '2025-09-20 11:06:41', 1),
 (5, 'Icon', '1758121095.png', '2025-09-17 14:58:15', 1),
 (6, 'Login Background', '1757945755.png', '2025-09-15 14:15:55', 1);
 
@@ -571,6 +613,25 @@ INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_year_level`
+--
+
+DROP TABLE IF EXISTS `student_year_level`;
+CREATE TABLE IF NOT EXISTS `student_year_level` (
+  `SYL_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Semester_Id` int(11) NOT NULL,
+  `Course_Id` int(11) NOT NULL,
+  `Student_Id` int(11) NOT NULL,
+  `Date_added` date NOT NULL,
+  `Time_added` time NOT NULL,
+  `Last_updated` timestamp NULL DEFAULT NULL,
+  `Status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`SYL_Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subjects`
 --
 
@@ -651,6 +712,32 @@ INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`
 (17, 'Test', '', 'Student 8', NULL, '2025-06-09', 'Single', 'Male', 'Filipno', 'test.student8@gmail.com', '09090909099', 'Sample address', 'Guardian Firstname Guardian Lastname', 'Mother', '09090909099', 'guardian.email@gmail.com', 'Sample', 'Sample address 2', '2025-06-07', '02:42:29', '2025-06-07', 1),
 (18, 'Admin ', NULL, 'User', NULL, NULL, 'Single', 'Male', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-07-23', '08:30:00', '0000-00-00', 1),
 (19, 'Edited - Sample', '', 'Registrar 2', '', '2025-07-30', 'Single', 'Male', 'Filipino', 'registrar2@gmail.com', '0909090909', 'Lorem IPsum DOlor Sit AMet', 'Edited - Sample Guardian', 'Mother', '09090909090', 'sample.guardian@gmail.com', 'Sample', 'Lorem IPsum DOlor Sit AMetSa', '2025-07-30', '09:20:36', '2025-08-12', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `year_levels`
+--
+
+DROP TABLE IF EXISTS `year_levels`;
+CREATE TABLE IF NOT EXISTS `year_levels` (
+  `Year_Level_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Year_name` varchar(255) NOT NULL,
+  `Date_added` date NOT NULL,
+  `Time_added` time NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`Year_Level_Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `year_levels`
+--
+
+INSERT INTO `year_levels` (`Year_Level_Id`, `Year_name`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, '1st Year', '2025-09-20', '10:34:18', 1),
+(2, '2nd Year', '2025-09-20', '10:59:54', 1),
+(3, '3rd Year', '2025-09-20', '11:00:02', 1),
+(4, '4th Year', '2025-09-20', '11:00:16', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
