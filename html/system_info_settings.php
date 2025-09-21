@@ -623,7 +623,9 @@
 
                         $uploadCrop2.croppie('result', {
                             type: 'canvas',
-                            size: 'viewport'
+                            size: 'original',
+                            format: "png", 
+                            quality: 1
                         }).then(function (resp) {
 
                             $.ajax({

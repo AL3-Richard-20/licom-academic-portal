@@ -194,7 +194,10 @@
                                                 ON 
                                                     activity_logs.User_Id = users.User_Id 
                                                 WHERE 
-                                                    activity_logs.Status = 1 ";
+                                                    activity_logs.Status = 1 
+                                                ORDER BY 
+                                                    activity_logs.Date_added DESC, 
+                                                    activity_logs.Time_added DESC ";
 
                                         $fetch = mysqli_query($con, $query);
 
