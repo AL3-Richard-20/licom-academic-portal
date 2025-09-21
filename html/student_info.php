@@ -685,7 +685,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link font-weight-bold text-dark active" data-toggle="tab" href="#csmenu1">
                                         <span class="fa fa-calendar"></span>
-                                        &nbspClass Schedules
+                                        &nbspClass Schedule
                                     </a>
                                 </li>
                                 <li class="nav-item">

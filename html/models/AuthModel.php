@@ -3,6 +3,8 @@
     include "../includes/db.php";
     include "../models/Tables.php";
 
+    include "../helpers/Logs.php";
+
     if(isset($_POST['action'])){
 
         if($_POST['action'] == 'login'){
@@ -63,6 +65,11 @@
                 // ========== Fetch Level Info END =======
 
                 $_SESSION["licom_usr_levelname"] = $level_name;
+
+                $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                $log_detail     = 'Log In Account';
+
+                insertToActivityLogs($log_detail, $sess_user_Id);
 
                 $res_req = 1;
             }
