@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Logs.php";
+    include "../helpers/Semester.php";
 
     if(isset($_POST['action'])){
 
@@ -252,5 +253,80 @@
                 echo json_encode($res_req);
             }
         // =============== Year Levels END ============
+
+        // =============== Student Year Level ================
+            else if($_POST['action'] == 'fetch_year_and_course'){
+
+                $student_Id = $_POST['studentid'];
+
+                $fetch_year_course = fetchStudCourseYearLevel($student_Id);
+
+                echo json_encode($fetch_year_course);
+            }
+
+            else if($_POST['action'] == 'edit_stud_year_level'){
+
+                $stud_Id     = $_POST['studid'];
+                $semester_Id = $_POST['e_year_level'];
+                $course_Id   = $_POST['e_course'];
+
+                $columns0 = [ "SYL_Id" ];
+                $where0   = [ "Student_Id" => $stud_Id ];
+                $exists0  = exists($student_year_level, $columns0, $where0);
+
+                if($exists0 == 0){
+
+                    $data1   = [
+                        "Semester_Id" => $semester_Id,
+                        "Course_Id" => $course_Id,
+                        "Student_Id" => $stud_Id,
+                        "Date_added" => $server_date,
+                        "Time_added" => $server_time
+                    ];
+                    $insert1 = insert($student_year_level, $data1);
+
+                    if($insert1['Result'] == 1){
+    
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Added student year level and course: Student: '.$insert1['LastId'];
+        
+                        insertToActivityLogs($log_detail, $user_Id);
+    
+                        $res_req = 1;
+                    }
+                    else{
+    
+                        $res_req = 4;
+                    }
+                }
+                else{
+
+                    $data1    = [
+                        "Semester_Id" => $semester_Id,
+                        "Course_Id" => $course_Id,
+                        "Last_updated" => $server_now
+                    ];
+                    $where1   = [ "Student_Id" => $stud_Id ];
+                    $update1  = update($student_year_level, $data1, $where1);
+    
+                    if($update1 == 1){
+    
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Changed student year level and course: Student: '.$stud_Id;
+        
+                        insertToActivityLogs($log_detail, $user_Id);
+    
+                        $res_req = 1;
+                    }
+                    else{
+    
+                        $res_req = 2;
+                    }
+                }
+
+
+                echo json_encode($res_req);
+            }
+        // =============== Student Year Level END ============
     }
 ?>

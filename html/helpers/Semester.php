@@ -30,4 +30,63 @@
         );
     }
 
+
+    function fetchStudCourseYearLevel($student_Id){
+
+        global $con;
+
+        $query ="SELECT 
+                    student_year_level.SYL_Id,
+                    student_year_level.Semester_Id,
+                    student_year_level.Course_Id,
+                    semesters.Semester_name, 
+                    year_levels.Year_name,
+                    courses.Course_name, 
+                    courses.Course_code  
+                FROM 
+                    student_year_level 
+                LEFT JOIN 
+                    semesters 
+                ON 
+                    student_year_level.Semester_Id = semesters.Semester_Id 
+                LEFT JOIN 
+                    year_levels 
+                ON 
+                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                LEFT JOIN 
+                    courses 
+                ON 
+                    student_year_level.Course_Id = courses.Course_Id 
+                WHERE 
+                    student_year_level.Student_Id = '".$student_Id."' 
+                    AND student_year_level.Status = 1 
+                LIMIT 1 ";
+
+        $fetch = mysqli_query($con, $query);
+
+        if($fetch){
+
+            $row = mysqli_fetch_assoc($fetch);
+
+            $syl_Id         = $row['SYL_Id'];
+            $semester_Id    = $row['Semester_Id'];
+            $semester       = $row['Semester_name'];
+            $course_Id      = $row['Course_Id'];
+            $year_name      = $row['Year_name'];
+            $course_name    = $row['Course_name'];
+            $course_code    = $row['Course_code'];
+
+            return 
+            array(
+                'SYLID' => $syl_Id,
+                'SemesterID' => $semester_Id,
+                'Semester' => $semester,
+                'CourseID' => $course_Id,
+                'YearName' => $year_name,
+                'CourseName' => $course_name,
+                'CourseCode' => $course_code
+            );
+        }
+    }
+
 ?>

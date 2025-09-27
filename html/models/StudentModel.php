@@ -25,30 +25,34 @@
                 "relationship",
                 "g_phone_no",
                 "occupation",
-                "g_address"
+                "g_address",
+                "e_year_level",
+                "e_course"
             ];
 
             $issets = issetVerify($req_data);
 
             if($issets){
 
-                $fname       = $issets[0];
-                $mname       = $issets[1];
-                $lname       = $issets[2];
-                $email       = $issets[3];
-                $bdate       = $issets[4];
-                $civil_stat  = $issets[5];
-                $sex         = $issets[6];
-                $nationality = $issets[7];
-                $phone_no    = $issets[8];
-                $address     = $issets[9];
-                $g_fname     = $issets[10];
-                $g_lname     = $issets[11];
-                $g_email     = $issets[12];
-                $relationship= $issets[13];
-                $g_phoneno   = $issets[14];
-                $occupation  = $issets[15];
-                $g_address   = $issets[16];
+                $fname          = $issets[0];
+                $mname          = $issets[1];
+                $lname          = $issets[2];
+                $email          = $issets[3];
+                $bdate          = $issets[4];
+                $civil_stat     = $issets[5];
+                $sex            = $issets[6];
+                $nationality    = $issets[7];
+                $phone_no       = $issets[8];
+                $address        = $issets[9];
+                $g_fname        = $issets[10];
+                $g_lname        = $issets[11];
+                $g_email        = $issets[12];
+                $relationship   = $issets[13];
+                $g_phoneno      = $issets[14];
+                $occupation     = $issets[15];
+                $g_address      = $issets[16];
+                $semester_Id    = $issets[17];
+                $course_Id      = $issets[18];
 
                 $columns1 = [ "User_Id" ];
                 $where1   = [ 
@@ -101,6 +105,15 @@
                         $insert3 = insert($accounts, $data3);
 
                         if($insert3['Result'] == 1){
+
+                            $data1   = [
+                                "Semester_Id" => $semester_Id,
+                                "Course_Id" => $course_Id,
+                                "Student_Id" => $last_Id,
+                                "Date_added" => $server_date,
+                                "Time_added" => $server_time
+                            ];
+                            $insert1 = insert($student_year_level, $data1);
 
                             $user_Id    = $_SESSION["licom_usr_Id"];
                             $log_detail = 'Added a new student record: Name: '.$fname.' '.$lname;

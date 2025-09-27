@@ -162,7 +162,8 @@
                                 <div class="col-lg-4">
                                     <div class="text-center">
                                         <h1 style="font-size:100px;"><span class="fa fa-user"></span></h1>
-                                        <h4 class="font-weight-bold mb-4" id="user_fullname_txt">Full name</h4>
+                                        <h4 class="font-weight-bold mb-2" id="user_fullname_txt">Full name</h4>
+                                        <p class="mb-4" id="stud_year_course">---</p>
                                         <button 
                                             type="button" 
                                             class="btn btn-primary btn-sm font-weight-bold text-uppercase" 
@@ -216,6 +217,15 @@
                                                 href="#menu3">
                                                 <span class="fa fa-cogs"></span>
                                                 &nbspAccount
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a 
+                                                class="nav-link font-weight-bold text-dark" 
+                                                data-toggle="tab" 
+                                                href="#menu4">
+                                                <span class="fa fa-chart-line"></span>
+                                                &nbspCourse & Year Level
                                             </a>
                                         </li>
                                     </ul>
@@ -666,6 +676,33 @@
                                             </table>
                                         </div>
 
+                                        <div class="tab-pane container fade" id="menu4"><br>
+
+                                            <div class="text-right">
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-outline-light" 
+                                                    title="Edit Account Information" 
+                                                    data-toggle="tooltip" 
+                                                    onclick="editYearLevelCourse()">
+                                                    <span class="fa fa-pencil-alt text-primary"></span>
+                                                </button>
+                                            </div>
+
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Year Level:</td>
+                                                        <td id="year_level_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Course:</td>
+                                                        <td id="course_txt">---</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -1048,6 +1085,124 @@
                         </div>
                     <!-- ================ Edit Account Info END ============= -->
 
+                    <!-- ================ Edit Year Level =================== -->
+                        <div class="modal fade" id="editYearLevelMod">
+
+                            <div class="modal-dialog" role="document">
+
+                                <form method="POST" id="editYearLevelForm">
+
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-bold text-uppercase">Edit Year Level & Course</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="form-group">
+                                                <p><b>Year Level:</b></p>
+                                                <select 
+                                                    class="form-control form-control-sm" 
+                                                    name="e_year_level" 
+                                                    id="e_year_level" 
+                                                    style="width:100%;"
+                                                    required>
+                                                    <option value=""></option>
+                                                    <?php
+
+                                                        $query ="SELECT 
+                                                                    semesters.Semester_Id, 
+                                                                    semesters.Semester_name, 
+                                                                    year_levels.Year_name 
+                                                                FROM 
+                                                                    semesters 
+                                                                LEFT JOIN 
+                                                                    year_levels 
+                                                                ON 
+                                                                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                                                                WHERE 
+                                                                    semesters.Status = 1 ";
+
+                                                        $fetch = mysqli_query($con, $query);
+
+                                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                                            $semester_Id    = $row['Semester_Id'];
+                                                            $semester_name  = $row['Semester_name'];
+                                                            $year_name      = $row['Year_name'];
+
+                                                            echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
+                                                        }
+
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <p><b>Course:</b></p>
+                                                <select 
+                                                    class="form-control form-control-sm" 
+                                                    name="e_course" 
+                                                    id="e_course"
+                                                    style="width:100%;" 
+                                                    required>
+                                                    <option value=""></option>
+                                                    <?php
+
+                                                        $query ="SELECT 
+                                                                    Course_Id,
+                                                                    Course_name, 
+                                                                    Course_code 
+                                                                FROM 
+                                                                    courses 
+                                                                WHERE 
+                                                                    Status = 1 ";
+
+                                                        $fetch = mysqli_query($con, $query);
+
+                                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                                            $course_Id    = $row['Course_Id'];
+                                                            $course_name  = $row['Course_name'];
+                                                            $course_code  = $row['Course_code'];
+
+                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
+                                                        }
+
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button 
+                                                type="submit" 
+                                                class="btn btn-success font-weight-bold text-uppercase">
+                                                <span class="fa fa-check"></span>
+                                                Save
+                                            </button>
+                                            <button 
+                                                type="button" 
+                                                class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                                data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    <!-- ================ Edit Year Level END =============== -->
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Container fluid  -->
@@ -1141,6 +1296,8 @@
 
                 fetchStudentSubjects('')
 
+                yearLevelAndCourse()
+
                 // ============ Select2 ===============
                     $('#semester_dd').select2({
                         "placeholder":"Select semester here",
@@ -1154,6 +1311,15 @@
 
                     $('#room_dd_val').select2({
                         "placeholder":"Select room here",
+                        "allowClear":true
+                    })
+
+                    $('#e_year_level').select2({
+                        "placeholder":"Select year level here",
+                        "allowClear":true
+                    })
+                    $('#e_course').select2({
+                        "placeholder":"Select course here",
                         "allowClear":true
                     })
                 // ============ Select2 END ===========
@@ -1351,6 +1517,40 @@
                     }
                 })
 
+                $('#editYearLevelForm').on('submit', function(ae){
+
+                    ae.preventDefault()
+
+                    var data = $(this).serializeArray()
+
+                    data.push(
+                        { name:'action', value:'edit_stud_year_level' },
+                        { name:'studid', value:student_Id }
+                    )
+
+                    $.ajax({
+                        type: "POST",
+                        url: "models/SemesterModel.php",
+                        data: data,
+                        dataType: "JSON",
+                        success: function (response) {
+                        
+                            if(response == 1){
+
+                                $('#editYearLevelMod').modal('hide')
+                            
+                                yearLevelAndCourse()
+
+                                toastr.success('You have changed course and year level.', 'SAVED SUCCESSFULLY')
+                            }
+                            else if(response == 2 || response == 3){
+                            
+                                toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                            }
+                        }
+                    })
+                })
+
                 $('#status_change_btn').on('click', function(){
 
                     var status_val = $(this).attr('accstat')
@@ -1526,6 +1726,32 @@
                         $('#password_txt').html(response.Password)
 
                         $('#e_username').val(response.Username)
+                    }
+                })
+            }
+
+            function yearLevelAndCourse(){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/SemesterModel.php",
+                    data: {
+                        action:"fetch_year_and_course",
+                        studentid:student_Id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        var year_name  = response.YearName
+                        var course_txt = response.CourseCode+' - '+response.CourseName
+                        
+                        $('#year_level_txt').html(year_name)
+                        $('#course_txt').html(course_txt)
+
+                        $('#stud_year_course').html(year_name+'<br>'+course_txt)
+
+                        $('#e_year_level').val(response.SemesterID).trigger('change')
+                        $('#e_course').val(response.CourseID).trigger('change')
                     }
                 })
             }
@@ -1725,6 +1951,11 @@
             function editAccountInfo(){
 
                 $('#editAccInfoMod').modal('show')
+            }
+
+            function editYearLevelCourse(){
+
+                $('#editYearLevelMod').modal('show')
             }
 
         </script>

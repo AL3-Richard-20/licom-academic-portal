@@ -338,6 +338,49 @@
 
                     </div>
 
+                    <?php
+
+                        if($_SESSION["licom_usr_level"] == 3){ ?>
+
+                            <br><div class="row">
+
+                                <div class="col-lg-6">
+
+                                    <div class="card">
+
+                                        <div class="card-header bg-white">
+                                            <h4>Year Level & Course</h4>
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <table class="table">
+                
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Year Level:</td>
+                                                        <td><?= $_SESSION["licom_year_name"]." | ".$_SESSION["licom_sem_name"] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Course:</td>
+                                                        <td><?= $_SESSION["licom_course_code"]." | ".$_SESSION["licom_course_name"] ?></td>
+                                                    </tr>
+                                                </tbody>
+                
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <?php
+                        }
+                    ?>
+
                     <div class="row">
 
                         <?php

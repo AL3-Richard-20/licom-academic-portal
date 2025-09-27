@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Users.php";
+    include "../helpers/Semester.php";
     include "../helpers/Logs.php";
 
     if(isset($_POST['action'])){
@@ -91,6 +92,13 @@
 
                     $account_stat = $row['Status'];
 
+                
+                    $stud_year_course_info = fetchStudCourseYearLevel($db_user_Id);
+
+                    $year_name   = $stud_year_course_info['YearName'];
+                    $course_code = $stud_year_course_info['CourseCode'];
+
+
                     $result_arr = array(
                         'UserId' => $db_user_Id,
                         'FName' => $fname,       
@@ -114,7 +122,9 @@
                         'DateAdded' => dateFormat($date_added),   
                         'TimeAdded' => timeFormat($time_added),   
                         'LastUpdate' => dateFormat($last_update),  
-                        'Status' => $account_stat
+                        'Status' => $account_stat,
+                        'YearName' => $year_name,
+                        'CourseCode' => $course_code
                     );
 
                     array_push($results_arr, $result_arr);

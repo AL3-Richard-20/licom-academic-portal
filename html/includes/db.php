@@ -32,7 +32,7 @@
         $server_date    = date('Y-m-d', strtotime("now"));
         $server_time    = date('h:i:s', strtotime("now"));
 
-        $server_now     = date('Y-m-d H:i:s', strtotime("now"));
+        $server_now     = date('Y-m-d h:i:s', strtotime("now"));
     // ================== TIMEZONE END ================
 
 

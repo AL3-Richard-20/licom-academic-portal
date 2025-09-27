@@ -36,6 +36,7 @@
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
 
         <!-- Custom CSS -->
@@ -371,6 +372,86 @@
 
                                 </div>
 
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="font-weight-bold">Year Level & Course</h5><br>
+            
+                                        <div class="form-group">
+                                            <p><b>Year Level: <span class="text-danger">(*)</span></b></p>
+                                            <select 
+                                                class="form-control form-control-sm" 
+                                                name="e_year_level" 
+                                                id="e_year_level" 
+                                                style="width:100%;"
+                                                required>
+                                                <option value=""></option>
+                                                <?php
+
+                                                    $query ="SELECT 
+                                                                semesters.Semester_Id, 
+                                                                semesters.Semester_name, 
+                                                                year_levels.Year_name 
+                                                            FROM 
+                                                                semesters 
+                                                            LEFT JOIN 
+                                                                year_levels 
+                                                            ON 
+                                                                semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                                                            WHERE 
+                                                                semesters.Status = 1 ";
+
+                                                    $fetch = mysqli_query($con, $query);
+
+                                                    while($row = mysqli_fetch_assoc($fetch)){
+
+                                                        $semester_Id    = $row['Semester_Id'];
+                                                        $semester_name  = $row['Semester_name'];
+                                                        $year_name      = $row['Year_name'];
+
+                                                        echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
+                                                    }
+
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                                <p><b>Course: <span class="text-danger">(*)</span></b></p>
+                                                <select 
+                                                    class="form-control form-control-sm" 
+                                                    name="e_course" 
+                                                    id="e_course"
+                                                    style="width:100%;" 
+                                                    required>
+                                                    <option value=""></option>
+                                                    <?php
+
+                                                        $query ="SELECT 
+                                                                    Course_Id,
+                                                                    Course_name, 
+                                                                    Course_code 
+                                                                FROM 
+                                                                    courses 
+                                                                WHERE 
+                                                                    Status = 1 ";
+
+                                                        $fetch = mysqli_query($con, $query);
+
+                                                        while($row = mysqli_fetch_assoc($fetch)){
+
+                                                            $course_Id    = $row['Course_Id'];
+                                                            $course_name  = $row['Course_name'];
+                                                            $course_code  = $row['Course_code'];
+
+                                                            echo "<option value='".$course_Id."'>".$course_code." | ".$course_name."</option>";
+                                                        }
+
+                                                    ?>
+                                                </select>
+                                            </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
@@ -454,6 +535,7 @@
 
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
+        <script src="../assets/libs/select2/dist/js/select2.min.js"></script>
 
 
         <!--Wave Effects -->
@@ -470,6 +552,17 @@
         <script>
 
             $(document).ready(function () {
+
+                // ============== Select2 =================
+                    $('#e_year_level').select2({
+                        "placeholder":"Select year level here",
+                        "allowClear":true
+                    })
+                    $('#e_course').select2({
+                        "placeholder":"Select course here",
+                        "allowClear":true
+                    })
+                // ============== Select2 END =============
                 
                 $('#newStudentForm').on('submit', function(aa){
 
