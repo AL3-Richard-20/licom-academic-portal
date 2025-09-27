@@ -507,13 +507,20 @@
                     $mname = $student_info[0]['MName'];
                     $lname = $student_info[0]['LName'];
 
+                    $stud_year_course_info = fetchStudCourseYearLevel($student_Id);
+
+                    $year_name   = $stud_year_course_info['YearName'];
+                    $course_code = $stud_year_course_info['CourseCode'];
+
                     $data[] = array(
                         'StudentClassId' => $student_class_Id,
                         'StudentId' => $student_Id,
                         'FName' => $fname,
                         'MName' => $mname,
                         'LName' => $lname,
-                        'FullName' => $fname." ".$mname." ".$lname
+                        'FullName' => $fname." ".$mname." ".$lname,
+                        'YearName' => $year_name,
+                        'CourseCode' => $course_code
                     );
                 }
             }

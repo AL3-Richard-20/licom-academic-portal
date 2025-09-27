@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Logs.php";
+    include "../helpers/Semester.php";
 
     if(isset($_POST['action'])){
 
@@ -66,10 +67,32 @@
 
                 $_SESSION["licom_usr_levelname"] = $level_name;
 
-                $sess_user_Id   = $_SESSION["licom_usr_Id"];
-                $log_detail     = 'Log In Account';
+                if($_SESSION["licom_usr_level"] == 3){
 
-                insertToActivityLogs($log_detail, $sess_user_Id);
+                    // ========= Fetch Student Year and Level ============
+                        $fetch_year_course = fetchStudCourseYearLevel($user_Id);
+
+                        $year_name     = $fetch_year_course['YearName'];
+                        $semester_name = $fetch_year_course['Semester'];
+
+                        $course_code   = $fetch_year_course['CourseCode'];
+                        $course_name   = $fetch_year_course['CourseName'];
+
+
+                        $_SESSION["licom_year_name"]   = $year_name;
+                        $_SESSION["licom_sem_name"]    = $semester_name;
+
+                        $_SESSION["licom_course_code"] = $course_code;
+                        $_SESSION["licom_course_name"] = $course_name;
+                    // ========= Fetch Student Year and Level END ========
+                }
+
+                // ============= Insert to Activity Logs =============
+                    $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                    $log_detail     = 'Log In Account';
+                    
+                    insertToActivityLogs($log_detail, $sess_user_Id);
+                // ============= Insert to Activity Logs END =========
 
                 $res_req = 1;
             }

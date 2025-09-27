@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 20, 2025 at 03:55 PM
+-- Generation Time: Sep 27, 2025 at 03:02 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Account_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Password`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 3, 5, 'C20255', 'student123', '2025-05-17', '09:58:35', 1),
+(1, 3, 5, 'C20255e', 'student123', '2025-05-17', '09:58:35', 1),
 (2, 2, 4, 'registrar1', 'admin123', '2025-05-22', '20:56:25', 1),
 (3, 4, 6, 'B20256', 'admin123', '2025-05-25', '02:29:30', 1),
 (4, 3, 7, 'C20257', 'student123', '2025-06-07', '09:44:15', 1),
@@ -60,7 +60,8 @@ INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Passwo
 (13, 4, 16, 'B202516', 'admin123', '2025-06-07', '09:49:20', 1),
 (14, 3, 17, 'C202517', 'admin123', '2025-06-07', '02:42:29', 1),
 (15, 1, 18, 'admin', 'admin123', '2025-07-23', '20:30:33', 1),
-(16, 2, 19, 'registrar19e', 'admin1234', '2025-07-30', '09:20:36', 1);
+(16, 2, 19, 'registrar19e', 'admin1234', '2025-07-30', '09:20:36', 1),
+(17, 3, 20, 'C202520', 'student123', '2025-09-27', '10:43:31', 1);
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Activity_Log_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -100,7 +101,43 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 (15, 'Edit semester record: 2nd Semester A.Y. 2026 -2027', 18, '2025-09-20', '11:36:20', 1),
 (16, 'Edit semester record: 3 Year 1st Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:36:30', 1),
 (17, 'Edit semester record: 1st Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:36:40', 1),
-(18, 'Edit semester record: 2nd Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:37:54', 1);
+(18, 'Edit semester record: 2nd Semester A.Y. 2025 - 2026', 18, '2025-09-20', '11:37:54', 1),
+(19, 'Changed app name to: LICOM Academic Portal - edited', 18, '2025-09-21', '02:12:09', 1),
+(20, 'Changed app name to: Licom Academic Portal - edited', 18, '2025-09-21', '02:12:20', 1),
+(21, 'Changed app icon.', 18, '2025-09-21', '02:12:46', 1),
+(22, 'Changed app icon.', 18, '2025-09-21', '02:13:10', 1),
+(23, 'Edit account information.', 5, '2025-09-21', '02:14:22', 1),
+(24, 'Changed app icon.', 18, '2025-09-21', '02:28:29', 1),
+(25, 'Changed app icon.', 18, '2025-09-21', '02:28:41', 1),
+(26, 'Log In Account:Al Conrado', 5, '2025-09-21', '03:51:46', 1),
+(27, 'Log In Account:Admin  User', 18, '2025-09-21', '03:52:25', 1),
+(28, 'Log In Account', 18, '2025-09-21', '06:52:16', 1),
+(29, 'Log In Account', 18, '2025-09-21', '06:54:41', 1),
+(30, 'Changed app icon.', 18, '2025-09-21', '06:57:18', 1),
+(31, 'Log In Account', 18, '2025-09-21', '07:03:05', 1),
+(32, 'Log In Account', 18, '2025-09-21', '07:16:16', 1),
+(33, 'Log In Account', 18, '2025-09-26', '01:44:12', 1),
+(34, 'Log In Account', 4, '2025-09-26', '06:17:05', 1),
+(35, 'Log In Account', 4, '2025-09-27', '10:31:20', 1),
+(36, 'Log In Account', 18, '2025-09-27', '09:29:28', 1),
+(37, 'Log In Account', 5, '2025-09-27', '09:33:09', 1),
+(38, 'Log In Account', 18, '2025-09-27', '09:44:26', 1),
+(39, 'Log In Account', 5, '2025-09-27', '09:44:50', 1),
+(40, 'Log In Account', 5, '2025-09-27', '09:49:46', 1),
+(41, 'Log In Account', 5, '2025-09-27', '09:50:23', 1),
+(42, 'Log In Account', 5, '2025-09-27', '10:05:25', 1),
+(43, 'Log In Account', 4, '2025-09-27', '10:06:46', 1),
+(44, 'Log In Account', 18, '2025-09-27', '10:06:55', 1),
+(45, 'Log In Account', 18, '2025-09-27', '10:07:15', 1),
+(46, 'Log In Account', 4, '2025-09-27', '10:07:36', 1),
+(47, 'Changed student year level and course: Student: 17', 4, '2025-09-27', '10:07:50', 1),
+(48, 'Changed student year level and course: Student: 17', 4, '2025-09-27', '10:11:40', 1),
+(49, 'Added student year level and course: Student: 3', 4, '2025-09-27', '10:12:40', 1),
+(50, 'Log In Account', 18, '2025-09-27', '10:12:48', 1),
+(51, 'Log In Account', 18, '2025-09-27', '10:13:24', 1),
+(52, 'Log In Account', 4, '2025-09-27', '10:14:42', 1),
+(53, 'Added a new student record: Name: Test Student 9', 4, '2025-09-27', '10:43:31', 1),
+(54, 'Log In Account', 18, '2025-09-27', '11:01:45', 1);
 
 -- --------------------------------------------------------
 
@@ -527,9 +564,9 @@ INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Stat
 (1, 'Evaluation_Instructions', '<p>Edited - - - - Please follow the instructions below to complete the survey:</p>\n\n<p><br />\n<strong>Confidentiality</strong>: Your responses are confidential and will only be used for the purpose of improving faculty performance.<br />\n<strong>Evaluation Criteria</strong>: Each question will ask you to evaluate various aspects of the faculty member&#39;s performance using a linear scale.<br />\n<strong>Linear Scale Rating:</strong> The linear scale ranges from 1 to 5, where:</p>\n\n<p><br />\n<strong>5</strong>&nbsp; indicates<strong> &quot;Outstanding&quot;</strong><br />\n<strong>4</strong>&nbsp; indicates <strong>&quot;Very Satisfactory&quot;</strong><br />\n<strong>3</strong>&nbsp; indicates <strong>&quot;Satisfactory&quot;</strong><br />\n<strong>2</strong>&nbsp; indicates <strong>&quot;Fair&quot;</strong><br />\n<strong>1</strong>&nbsp; indicates <strong>&quot;Poor&quot;</strong></p>\n\n<p><br />\n<strong>Objective Feedback</strong>: Please provide honest and objective feedback based on your experiences.<br />\n<strong>Submit</strong>: Once you have completed all questions, click the &quot;Submit&quot; button to finalize your responses.</p>\n', '2025-06-14 13:00:00', 1),
 (2, 'Evaluation_popup', 'Enable', '2025-06-16 16:00:00', 1),
 (3, 'Evaluation_popup_content', '<h3><strong>EDITED!</strong></h3>\n\n<p><strong>Evaluation shall be done personally by the students.</strong></p>\n\n<p>No student shall be allowed, under any circumstance, to authorize a fellow student to do the evaluation on their behalf.</p>\n\n<p>Authorizing a fellow student or allowing oneself to be authorized shall constitute an administrative offense and shall be subject to appropriate disciplinary action.</p>\n', '2025-06-16 16:00:00', 1),
-(4, 'Company Name', 'Edited - LICOM Academic Portal', '2025-09-20 11:06:41', 1),
-(5, 'Icon', '1758121095.png', '2025-09-17 14:58:15', 1),
-(6, 'Login Background', '1757945755.png', '2025-09-15 14:15:55', 1);
+(4, 'Company Name', 'Licom Academic Portal - edited', '2025-09-21 06:12:20', 1),
+(5, 'Icon', '1758436109.png', '2025-09-21 06:28:29', 1),
+(6, 'Login Background', '1758452238.png', '2025-09-21 10:57:18', 1);
 
 -- --------------------------------------------------------
 
@@ -627,7 +664,16 @@ CREATE TABLE IF NOT EXISTS `student_year_level` (
   `Last_updated` timestamp NULL DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`SYL_Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `student_year_level`
+--
+
+INSERT INTO `student_year_level` (`SYL_Id`, `Semester_Id`, `Course_Id`, `Student_Id`, `Date_added`, `Time_added`, `Last_updated`, `Status`) VALUES
+(1, 1, 1, 5, '2025-09-26', '18:58:01', '2025-09-27 11:25:19', 1),
+(3, 1, 2, 17, '2025-09-27', '10:12:40', NULL, 1),
+(4, 2, 3, 20, '2025-09-27', '10:43:31', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -689,7 +735,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Last_update` date NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`User_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -711,7 +757,8 @@ INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`
 (16, 'Test', '', 'Instructor 3', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'test.instructor3@gmail.com', '0909090909099', 'lorem Ipsum', 'Sample Guardian', 'Sample', '090999090909', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 3', '2025-06-07', '09:49:20', '2025-06-07', 1),
 (17, 'Test', '', 'Student 8', NULL, '2025-06-09', 'Single', 'Male', 'Filipno', 'test.student8@gmail.com', '09090909099', 'Sample address', 'Guardian Firstname Guardian Lastname', 'Mother', '09090909099', 'guardian.email@gmail.com', 'Sample', 'Sample address 2', '2025-06-07', '02:42:29', '2025-06-07', 1),
 (18, 'Admin ', NULL, 'User', NULL, NULL, 'Single', 'Male', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-07-23', '08:30:00', '0000-00-00', 1),
-(19, 'Edited - Sample', '', 'Registrar 2', '', '2025-07-30', 'Single', 'Male', 'Filipino', 'registrar2@gmail.com', '0909090909', 'Lorem IPsum DOlor Sit AMet', 'Edited - Sample Guardian', 'Mother', '09090909090', 'sample.guardian@gmail.com', 'Sample', 'Lorem IPsum DOlor Sit AMetSa', '2025-07-30', '09:20:36', '2025-08-12', 1);
+(19, 'Edited - Sample', '', 'Registrar 2', '', '2025-07-30', 'Single', 'Male', 'Filipino', 'registrar2@gmail.com', '0909090909', 'Lorem IPsum DOlor Sit AMet', 'Edited - Sample Guardian', 'Mother', '09090909090', 'sample.guardian@gmail.com', 'Sample', 'Lorem IPsum DOlor Sit AMetSa', '2025-07-30', '09:20:36', '2025-08-12', 1),
+(20, 'Test', '', 'Student 9', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'test.student9@gmail.com', '090909090909', 'Sample address for student 9', 'Sample Guardian 9', 'Mother', '0909090909', 'sample.guardian@gmail.com', 'Sample', 'Sample address for student 9', '2025-09-27', '10:43:31', '2025-09-27', 1);
 
 -- --------------------------------------------------------
 

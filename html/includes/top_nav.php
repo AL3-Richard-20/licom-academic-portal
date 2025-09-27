@@ -233,8 +233,16 @@
 
                                     <div class="m-l-10">
                                         <h4 class="m-b-0"><?= $_SESSION["licom_usr_fname"]." ".$_SESSION["licom_usr_lname"] ?></h4>
-                                        <!-- <p class=" m-b-0"><?= $_SESSION["licom_usr_email"] ?></p> -->
                                         <p class=" m-b-0"><?= $_SESSION["licom_usr_levelname"] ?></p>
+                                        <?php
+
+                                            if($_SESSION["licom_usr_level"] == 3){ ?>
+
+                                                    <p class=" m-b-0"><?= $_SESSION["licom_year_name"]." | ".$_SESSION["licom_course_code"] ?></p>
+
+                                                <?php
+                                            }
+                                        ?>
                                     </div>
 
                                 </div>

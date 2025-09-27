@@ -20,6 +20,7 @@
     $settings           = 'settings';
     $student_classes    = 'student_classes';
     $student_grades     = 'student_grades';
+    $student_year_level = 'student_year_level';
     $subjects           = 'subjects';
     $users              = 'users';
     $year_levels        = 'year_levels';

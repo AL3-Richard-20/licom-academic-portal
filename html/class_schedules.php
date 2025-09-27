@@ -1020,11 +1020,14 @@
                                         var lname = value.LName
     
                                         var fullname = fname+" "+mname+" "+lname
+
+                                        var year_name   = value.YearName
+                                        var course_code = value.CourseCode
     
                                         output+='<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">'
-                                        output+='<div>'
+                                        output+='<div class="d-flex align-items-center">'
                                         output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
-                                        output+='&nbsp <span>'+ fullname +'</span>'
+                                        output+='<div class="ml-3"><span>'+ fullname +'</span><br><span>'+ year_name +' | '+ course_code +'</span></div>'
                                         output+='</div>'
 
                                         output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase add-stud-btn" userid="'+ value.UserId +'" classschedid="'+ class_sched_val +'">'
@@ -1365,8 +1368,8 @@
 
                             var output=''
 
-                            output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
-                            output+='&nbsp <span>'+ data +'</span>'
+                            output+='<div class="d-flex align-items-center"><img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                            output+='<div class="ml-3"><span>'+ data +'</span><br><span>'+ row.YearName +' | '+ row.CourseCode +'</span></div></div>'
 
                             return output
                         }
