@@ -11,6 +11,8 @@
         if($_POST['action'] == 'fetch_student_grades'){
 
             $query ="SELECT 
+                        Midterm_grade,
+                        Tentative_final,
                         Grade_val, 
                         Remarks, 
                         Evaluated_by, 
@@ -52,9 +54,10 @@
 
                 while($row = mysqli_fetch_assoc($fetch)){
 
-                    $grade_val      = $row['Grade_val'];
-
-                    $remarks        = $row['Remarks'];
+                    $midterm_grade   = $row['Midterm_grade'];
+                    $tentative_grade = $row['Tentative_final'];
+                    $grade_val       = $row['Grade_val'];
+                    $remarks         = $row['Remarks'];
 
                     // ============= Fetch Grade Remarks =================
                         $query2 ="SELECT 
@@ -80,6 +83,8 @@
                     $time_added     = $row['Time_added'];
 
                     $result_arr = array(
+                        'MidtermGrade' => $midterm_grade,
+                        'TentativeGrade' => $tentative_grade,
                         'GradeVal' => $grade_val,
                         'Remarks' => $grade_remark,
                         'RemarksId' => $remarks,
@@ -101,6 +106,8 @@
             $student_Id     = $_POST['ssg_student_Id'];
             $semester_Id    = $_POST['ssg_semester_Id'];
             $subject_Id     = $_POST['ssg_subject_Id'];
+            $midterm_grade  = $_POST['ssg_midterm_grade_val'];
+            $tentative_grade= $_POST['ssg_tent_grade_val'];
             $grade_val      = $_POST['ssg_grade_val'];
             $remarks_dd     = $_POST['remarks_dd'];
 
@@ -119,6 +126,8 @@
                     "Semester_Id" => $semester_Id,
                     "Student_Id" => $student_Id,
                     "Subject_Id" => $subject_Id,
+                    "Midterm_grade" => $midterm_grade,
+                    "Tentative_final" => $tentative_grade,
                     "Grade_val" => $grade_val,
                     "Remarks" => $remarks_dd,
                     "Evaluated_by" => $_SESSION["licom_usr_Id"],
@@ -132,6 +141,8 @@
             else{
 
                 $data2   = [
+                    "Midterm_grade" => $midterm_grade,
+                    "Tentative_final" => $tentative_grade,
                     "Grade_val" => $grade_val,
                     "Remarks" => $remarks_dd,
                     "Evaluated_by" => $_SESSION["licom_usr_Id"],

@@ -144,13 +144,18 @@
                                 <?php
 
                                     $query="SELECT 
-                                                Semester_Id, 
-                                                Semester_name,
-                                                Is_default 
+                                                semesters.Semester_Id, 
+                                                semesters.Semester_name,
+                                                semesters.Is_default,
+                                                year_levels.Year_name  
                                             FROM 
                                                 semesters 
+                                            LEFT JOIN 
+                                                year_levels 
+                                            ON 
+                                                semesters.Year_Level_Id = year_levels.Year_Level_Id 
                                             WHERE 
-                                                Status = 1 ";
+                                                semesters.Status = 1 ";
 
                                     $fetch = mysqli_query($con, $query);
 
@@ -160,13 +165,14 @@
 
                                         while($row = mysqli_fetch_assoc($fetch)){
 
+                                            $year_name      = $row['Year_name'];
                                             $semester_Id    = $row['Semester_Id'];
                                             $semester_name  = $row['Semester_name'];
                                             $is_default     = $row['Is_default'];
 
                                             $is_selected = ($is_default == 1) ? 'selected' : '';
                                             
-                                            echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
+                                            echo "<option value='".$semester_Id."' ".$is_selected.">".$year_name." | ".$semester_name."</option>";
                                         }
                                     }
                                 ?>
