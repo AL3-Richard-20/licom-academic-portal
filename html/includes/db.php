@@ -47,9 +47,9 @@
         }
         else{
 
-            $db_user = "db_user";
-            $db_pass = "db_password";
-            $db_name = "db_name";
+            $db_user = "u528404684_etcgi";
+            $db_pass = "GibsonES20";
+            $db_name = "u528404684_etcgi";
         }
 
         $db['db_host'] = $db_host;

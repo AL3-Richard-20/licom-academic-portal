@@ -75,7 +75,7 @@
                         <li class="sidebar-item">
         
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                            <i class="fa fa-users"></i>
+                                <i class="fa fa-users"></i>
                                 <span class="hide-menu">Students </span>
                             </a>
         
@@ -90,6 +90,12 @@
                                     <a href="add_new_student.php" class="sidebar-link">
                                         <i class="icon-Record"></i>
                                         <span class="hide-menu">Add New</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="bulk_grades.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Encode Grades</span>
                                     </a>
                                 </li>
                             </ul>

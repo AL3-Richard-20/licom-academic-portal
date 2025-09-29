@@ -144,12 +144,18 @@
                             <?php
 
                                 $query="SELECT 
-                                            Semester_Id, 
-                                            Semester_name 
+                                            semesters.Semester_Id, 
+                                            semesters.Semester_name,
+                                            semesters.Is_default,
+                                            year_levels.Year_name  
                                         FROM 
                                             semesters 
+                                        LEFT JOIN 
+                                            year_levels 
+                                        ON 
+                                            semesters.Year_Level_Id = year_levels.Year_Level_Id 
                                         WHERE 
-                                            Status = 1 ";
+                                            semesters.Status = 1 ";
 
                                 $fetch = mysqli_query($con, $query);
 
@@ -159,10 +165,11 @@
 
                                     while($row = mysqli_fetch_assoc($fetch)){
 
+                                        $year_name      = $row['Year_name'];
                                         $semester_Id    = $row['Semester_Id'];
                                         $semester_name  = $row['Semester_name'];
                                         
-                                        echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                        echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
                                     }
                                 }
                             ?>

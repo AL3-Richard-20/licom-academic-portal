@@ -151,13 +151,18 @@
                                     <?php
 
                                         $query="SELECT 
-                                                    Semester_Id, 
-                                                    Semester_name,
-                                                    Is_default 
+                                                    semesters.Semester_Id, 
+                                                    semesters.Semester_name,
+                                                    semesters.Is_default,
+                                                    year_levels.Year_name  
                                                 FROM 
                                                     semesters 
+                                                LEFT JOIN 
+                                                    year_levels 
+                                                ON 
+                                                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
                                                 WHERE 
-                                                    Status = 1 ";
+                                                    semesters.Status = 1 ";
 
                                         $fetch = mysqli_query($con, $query);
 
@@ -167,13 +172,14 @@
 
                                             while($row = mysqli_fetch_assoc($fetch)){
 
+                                                $year_name      = $row['Year_name'];
                                                 $semester_Id    = $row['Semester_Id'];
                                                 $semester_name  = $row['Semester_name'];
                                                 $is_default     = $row['Is_default'];
 
                                                 $is_selected = ($is_default == 1) ? 'selected' : '';
                                                 
-                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
+                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$year_name." | ".$semester_name."</option>";
                                             }
                                         }
                                     ?>
@@ -190,7 +196,9 @@
                             <tr>
                                 <th>Subject Code</th>
                                 <th>Subject Name</th>
-                                <th>Grade</th>
+                                <th>Midterm Grade</th>
+                                <th>Tentative Final Grade</th>
+                                <th>Final Grade</th>
                                 <th>Remarks</th>
                                 <th>Instructor</th>
                             </tr>
@@ -338,6 +346,8 @@
 
                                 var stud_grade_info = fetchStudentGrades(semester_Id, subject_Id, student_Id)
 
+                                output+='<td><h5 id="stud_subj_midterm_txt'+ subject_Id +'">---</h5></td>'
+                                output+='<td><h5 id="stud_subj_tent_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td><h5 id="stud_subj_grade_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td><h5 id="stud_subj_remark_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td style="display:none;" id="stud_subj_remark_Id_txt'+ subject_Id +'">---</td>'
@@ -374,6 +384,8 @@
 
                         $.each(response, function(key, value){
 
+                            $('#stud_subj_midterm_txt'+subject_Id).html(value.MidtermGrade)
+                            $('#stud_subj_tent_txt'+subject_Id).html(value.TentativeGrade)
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
                             $('#stud_subj_remark_txt'+subject_Id).html('<span class="font-weight-bold '+ value.ColorInd +'">'+value.Remarks+'</span>')
                             $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
