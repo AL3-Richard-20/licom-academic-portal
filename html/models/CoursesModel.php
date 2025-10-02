@@ -108,6 +108,42 @@
 
             echo json_encode($res_req);
         }
+
+        else if($_POST['action'] == 'fetch_subject_courses'){
+
+            $course_Id = $_POST['courseid'];
+
+            $query ="SELECT 
+                        Subject_Id,
+                        Subject_name,
+                        Subject_code 
+                    FROM 
+                        subjects 
+                    WHERE 
+                        Status = 1 
+                        AND Course_Id = '".$course_Id."' ";
+
+            $fetch = mysqli_query($con, $query);
+
+            $results_arr = array();
+
+            while($row = mysqli_fetch_assoc($fetch)){
+
+                $subject_Id   = $row['Subject_Id'];
+                $subject_name = $row['Subject_name'];
+                $subject_code = $row['Subject_code'];
+
+                $result_arr = array(
+                    'SubjectID' => $subject_Id,
+                    'SubjectName' => $subject_name,
+                    'SubjectCode' => $subject_code
+                );
+
+                array_push($results_arr, $result_arr);
+            }
+
+            echo json_encode($results_arr);
+        }
     }
 
 ?>
