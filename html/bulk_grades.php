@@ -478,10 +478,12 @@
 
         <script>
 
-            var main_semester_Id=''
-            var main_subject_Id=''
-            var main_course_Id=''
-
+            // ========== Data Properties ==============
+                var main_semester_Id=''
+                var main_subject_Id=''
+                var main_course_Id=''
+            // ========== Data Properties END ==========
+            
             $(document).ready(function () {
 
                 // ============= Select2 ===============
