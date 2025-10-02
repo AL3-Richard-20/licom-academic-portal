@@ -351,7 +351,9 @@
                                                             <thead class="font-weight-bold text-uppercase table-bordered">
                                                                 <tr>
                                                                     <th>Subject</th>
-                                                                    <th>Grade</th>
+                                                                    <th>Midterm</th>
+                                                                    <th>Tentative Final</th>
+                                                                    <th>Final Grade</th>
                                                                     <th>Remarks</th>
                                                                     <th class="text-center">Actions</th>
                                                                 </tr>
@@ -393,7 +395,29 @@
                                                                     <input type="hidden" name="ssg_subject_Id" id="ssg_subject_Id">
 
                                                                     <div class="form-group">
-                                                                        <p><b>Grade: <span class="text-danger">(*)</span></b></p>
+                                                                        <p><b>Midterm Grade: <span class="text-danger">(*)</span></b></p>
+                                                                        <input 
+                                                                            type="number" 
+                                                                            class="form-control form-control-sm" 
+                                                                            name="ssg_midterm_grade_val"
+                                                                            id="ssg_midterm_grade_val" 
+                                                                            placeholder="Input midterm grade here" 
+                                                                            step="any" 
+                                                                            required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <p><b>Tentative Grade: <span class="text-danger">(*)</span></b></p>
+                                                                        <input 
+                                                                            type="number" 
+                                                                            class="form-control form-control-sm" 
+                                                                            name="ssg_tent_grade_val"
+                                                                            id="ssg_tent_grade_val" 
+                                                                            placeholder="Input tentative grade here" 
+                                                                            step="any" 
+                                                                            required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <p><b>Final Grade: <span class="text-danger">(*)</span></b></p>
                                                                         <input 
                                                                             type="number" 
                                                                             class="form-control form-control-sm" 
@@ -686,6 +710,8 @@
 
                                 var stud_grade_info = fetchStudentGrades(semester_Id, subject_Id, student_Id)
 
+                                output+='<td id="stud_subj_midterm_txt'+ subject_Id +'">---</td>'
+                                output+='<td id="stud_subj_tent_txt'+ subject_Id +'">---</td>'
                                 output+='<td id="stud_subj_grade_txt'+ subject_Id +'">---</td>'
                                 output+='<td id="stud_subj_remark_txt'+ subject_Id +'">---</td>'
                                 output+='<td style="display:none;" id="stud_subj_remark_Id_txt'+ subject_Id +'">---</td>'
@@ -753,6 +779,8 @@
 
                         $.each(response, function(key, value){
 
+                            $('#stud_subj_midterm_txt'+subject_Id).html(value.MidtermGrade)
+                            $('#stud_subj_tent_txt'+subject_Id).html(value.TentativeGrade)
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
                             $('#stud_subj_remark_txt'+subject_Id).html('<span class="font-weight-bold '+ value.ColorInd +'">'+value.Remarks+'</span>')
                             $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
@@ -764,17 +792,23 @@
 
             function editStudentGrade(semester_Id, subject_Id, subject_name, student_Id){
 
+                var semester_Id = $('#semester_dd_val').val()
+
                 $('#add_new_grade_form').show()
 
                 $('#ssg_student_Id').val(student_Id)
                 $('#ssg_semester_Id').val(semester_Id)
                 $('#ssg_subject_Id').val(subject_Id)
 
+                var midterm_grade  = $('#stud_subj_midterm_txt'+subject_Id).text()
+                var tent_grade     = $('#stud_subj_tent_txt'+subject_Id).text()
                 var subject_grade  = $('#stud_subj_grade_txt'+subject_Id).text()
                 var subject_remark = $('#stud_subj_remark_Id_txt'+subject_Id).text()
 
                 $('#ssg_subject_txt').html(subject_name)
 
+                $('#ssg_midterm_grade_val').val(midterm_grade)
+                $('#ssg_tent_grade_val').val(tent_grade)
                 $('#ssg_grade_val').val(subject_grade)
                 $('#remarks_dd').val(subject_remark)
             }

@@ -831,19 +831,24 @@
 
                                     <hr>
 
-                                    <table class="table table-hover display nowrap" style="width:100%;" id="class_schedules_tbl">
-                                        <thead class="table-bordered font-weight-bold text-uppercase">
-                                            <tr>
-                                                <th>Subject</th>
-                                                <th>Day</th>
-                                                <th>Time</th>
-                                                <th>Room</th>
-                                                <th>Instructor</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover display nowrap" style="width:100%;" id="class_schedules_tbl">
+                                            <thead class="table-bordered font-weight-bold text-uppercase">
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Day</th>
+                                                    <th>Time</th>
+                                                    <th>Room</th>
+                                                    <th>Instructor</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+
                                 </div>
 
                                 <div class="tab-pane fade" id="sgmenu2"><br><br>
@@ -906,21 +911,26 @@
 
                                             <hr>
 
-                                            <table 
-                                                class="table table-hover display nowrap" 
-                                                style="width:100%;">
-                                                <thead class="font-weight-bold text-uppercase table-bordered">
-                                                    <tr>
-                                                        <th>Subject</th>
-                                                        <th>Midterm</th>
-                                                        <th>Tentative Final</th>
-                                                        <th>Final Grade</th>
-                                                        <th>Remarks</th>
-                                                        <th class="text-center">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table-sm" id="student_subjects"></tbody>
-                                            </table>
+                                            <div class="table-responsive">
+
+                                                <table 
+                                                    class="table table-hover display nowrap" 
+                                                    style="width:100%;">
+                                                    <thead class="font-weight-bold text-uppercase table-bordered">
+                                                        <tr>
+                                                            <th>Subject</th>
+                                                            <th>Midterm</th>
+                                                            <th>Tentative Final</th>
+                                                            <th>Final Grade</th>
+                                                            <th>Remarks</th>
+                                                            <th class="text-center">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-sm" id="student_subjects"></tbody>
+                                                </table>
+
+                                            </div>
+
                                         </div>
 
                                         <div class="col-lg-4">
