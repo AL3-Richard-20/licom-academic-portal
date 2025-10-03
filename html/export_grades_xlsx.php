@@ -20,6 +20,45 @@
         $subject_Id  = $_GET['subjectid'];
         $course_Id   = $_GET['courseid'];
 
+        // ============ Fetch Semester Info (Query1) =============
+            $query0="SELECT 
+                        semesters.Semester_name, 
+                        year_levels.Year_name 
+                    FROM 
+                        semesters 
+                    LEFT JOIN 
+                        year_levels 
+                    ON 
+                        semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                    WHERE 
+                        semesters.Semester_Id = '".$semester_Id."' 
+                    LIMIT 1 ";
+
+            $fetch0 = mysqli_query($con, $query0);
+
+            $row0 = mysqli_fetch_assoc($fetch0);
+
+            $semester_name  = $row0['Semester_name'];
+            $year_name      = $row0['Year_name'];
+        // ============ Fetch Semester Info (Query1) END =========
+
+        // ============ Fetch Subject Info (Query1) ==============
+            $query1 ="SELECT    
+                        Subject_code 
+                    FROM 
+                        subjects 
+                    WHERE 
+                        Subject_Id = '".$subject_Id."' 
+                        AND Status = 1 
+                    LIMIT 1 ";
+
+            $fetch1 = mysqli_query($con, $query1);
+
+            $row1 = mysqli_fetch_assoc($fetch1);
+
+            $subject_code = $row1['Subject_code'];
+        // ============ Fetch Subject Info (Query1) END ==========
+
         $query ="SELECT  
                     student_classes.Student_Id,
                     users.FName,
@@ -71,8 +110,9 @@
             }
         }
     
-        $writer     = new Xlsx($spreadsheet);
-        $fileName   = 'sample.xlsx';
+        $writer         = new Xlsx($spreadsheet);
+        $tmp_filename   = $year_name." ".$subject_code;
+        $fileName       = str_replace(' ', '_', $tmp_filename.'.xlsx');
         $writer->save($fileName);
     
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
