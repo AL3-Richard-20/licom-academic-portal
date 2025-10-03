@@ -187,28 +187,32 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>  
 
                     <br>
 
-                    <table class="table table-bordered display nowrap" style="width:100%;">
-                        <thead class="font-weight-bold text-uppercase">
-                            <tr>
-                                <th>Subject Code</th>
-                                <th>Subject Name</th>
-                                <th>Midterm Grade</th>
-                                <th>Tentative Final Grade</th>
-                                <th>Final Grade</th>
-                                <th>Remarks</th>
-                                <th>Instructor</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student_subjects">
-                            <tr>
-                                <td colspan="6" class="text-center">No data available in the table.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered display nowrap" style="width:100%;">
+                            <thead class="font-weight-bold text-uppercase">
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Subject Name</th>
+                                    <th>Midterm Grade</th>
+                                    <th>Tentative Final Grade</th>
+                                    <th>Final Grade</th>
+                                    <th>Remarks</th>
+                                    <th>Instructor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student_subjects">
+                                <tr>
+                                    <td colspan="6" class="text-center">No data available in the table.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
 
                 </div>
                 <!-- ============================================================== -->
