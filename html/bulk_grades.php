@@ -561,8 +561,8 @@
                         var subject_Id  = $('#subject_dd').val()
 
                         main_semester_Id = semester_Id
-                        main_subject_Id  = course_Id
-                        main_course_Id   = subject_Id
+                        main_subject_Id  = subject_Id
+                        main_course_Id   = course_Id
 
                         if(semester_Id == ''){
 

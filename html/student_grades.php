@@ -138,7 +138,7 @@
 
                     <input type="hidden" name="student_Id_val" id="student_Id_val" value="<?= $_SESSION["licom_usr_Id"] ?>">
 
-                    <div class="row">
+                    <div class="row">   
 
                         <div class="col-lg-4">
                             <div class="form-group">
