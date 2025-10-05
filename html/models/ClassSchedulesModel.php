@@ -762,13 +762,16 @@
 
         else if($_POST['action'] == 'bulk_student_on_class_sched'){
 
+            $sess_user_Id   = $_SESSION["licom_usr_Id"];
+
             $class_sched_Id = $_POST['classschedid'];
             $xlsx_items     = $_POST['xlsxitems'];
+            
+            $error_ids_arr = array();
 
             foreach($xlsx_items as $key => $value){
 
                 $is_valid   = 1;
-                $error_type = 0;
 
                 $student_Id = $value['Student_ID'];
 
@@ -777,9 +780,11 @@
                 $where0   = [ "User_Id" => $student_Id ];
                 $exists0  = exists($users, $columns0, $where0);
 
-                if($exists0 != 0){
+                if($exists0 == 0){
 
                     $is_valid = 0;
+
+                    array_push($error_ids_arr, $student_Id);
                 }
 
 
@@ -790,25 +795,47 @@
                     "Student_Id" => $student_Id,
                     "Status" => 1 
                 ];
-                $exists1  = exists($class_schedules, $columns1, $where1);
+                $exists1  = exists($student_classes, $columns1, $where1);
 
                 if($exists1 != 0){
 
                     $is_valid = 0;
                 }
 
+
                 if($is_valid == 1){
 
-
+                    $data1   = [
+                        "Class_Schedule_Id" => $class_sched_Id,
+                        "Student_Id" => $student_Id,
+                        "Added_by" => $sess_user_Id,
+                        "Date_added" => $server_date,
+                        "Time_added" => $server_time,
+                        "Last_update" => $server_now
+                    ];
+                    $insert1 = insert($student_classes, $data1);
                 }
-
-                echo json_encode(
-                    array(
-                        'Res' => $res_req,
-                        'ErrType' => $error_type
-                    )
-                );
             }
+
+            $log_detail     = 'Added a new student to a class schedule.';
+
+            insertToActivityLogs($log_detail, $sess_user_Id);
+
+            if(count($error_ids_arr) === 0){
+
+                $res_req = 1;
+            }
+            else{
+
+                $res_req = 2;
+            }
+
+            echo json_encode(
+                array(
+                    'Res' => $res_req,
+                    'ErrIDs' => $error_ids_arr
+                )
+            );
         }
     }
 

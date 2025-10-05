@@ -1,6 +1,10 @@
 <?php
 
     include "includes/db.php";
+    include "helpers/Semester.php";
+    include "helpers/Subject.php";
+    include "helpers/Users.php"; 
+    include "helpers/Room.php"; 
 
     if(isset($_GET['classschedid'])){
 
@@ -121,7 +125,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Class Schedules</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Class Schedule | Student Importation</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -131,7 +135,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Class Schedules</a>
+                                            <a href="#">Class Schedule Importation</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -155,11 +159,142 @@
 
                     <div class="row">
 
-                        <div class="col-lg-4"></div>
+                        <div class="col-lg-6">
 
-                        <div class="col-lg-4"></div>
+                            <?php
 
-                        <div class="col-lg-4 text-right">
+                                $query ="SELECT 
+                                            Semester_Id,
+                                            Subject_Id,
+                                            Room_Id,
+                                            Instructor_Id,
+                                            Day,
+                                            Time_start,
+                                            Time_end 
+                                        FROM 
+                                            class_schedules 
+                                        WHERE 
+                                            Class_Schedule_Id = '".$class_sched_Id."' 
+                                        LIMIT 1 ";
+
+                                $fetch = mysqli_query($con, $query);
+
+                                if($fetch){
+
+                                    $row = mysqli_fetch_assoc($fetch);
+
+                                    $semester_Id    = $row['Semester_Id'];
+                                    $subject_Id     = $row['Subject_Id'];
+                                    $room_Id        = $row['Room_Id'];
+                                    $instructor_Id  = $row['Instructor_Id'];
+                                    $day_Id         = $row['Day'];
+                                    $time_start     = $row['Time_start'];
+                                    $time_end       = $row['Time_end'];
+
+                                    // ======= Semester Info ============
+                                        $semester_info  = semesterInfo($semester_Id);
+
+                                        $semester_name  = $semester_info['SemesterName'];
+                                        $year_name      = $semester_info['YearName'];
+                                    // ======= Semester Info END ========
+
+                                    // ======= Subject Info =========== 
+                                        $subject_info = subjectInfo($subject_Id);
+
+                                        $subject_name = $subject_info['SubjectName'];
+                                        $subject_code = $subject_info['SubjectCode'];
+                                        $course_name  = $subject_info['CourseName'];
+                                        $course_code  = $subject_info['CourseCode'];
+                                    // ======= Subject Info END =======
+
+                                    // ======= Instructor Info =============
+                                        $instructor_info = fetchUserInfo($instructor_Id, '', '', 1);
+
+                                        // print_r($instructor_info);
+
+                                        $ins_fname = $instructor_info[0]['FName'];
+                                        $ins_lname = $instructor_info[0]['LName'];
+
+                                        $instructor = $ins_fname." ".$ins_lname;
+                                    // ======= Instructor Info END =========
+
+                                    // ======= Room Info =============  
+                                        $room_info = roomInfo($room_Id);
+
+                                        $room_name      = $room_info['RoomName'];
+                                        $room_details   = $room_info['RoomDetails'];
+                                    // ======= Room Info END =========
+
+                                    // ======= Day ============
+                                    if($day_Id == 1){
+
+                                        $day = 'Monday';
+                                    }
+                                    else if($day_Id == 2){
+                        
+                                        $day = 'Tuesday';
+                                    }
+                                    else if($day_Id == 3){
+                        
+                                        $day = 'Wednesday';
+                                    }
+                                    else if($day_Id == 4){
+                        
+                                        $day = 'Thursday';
+                                    }
+                                    else if($day_Id == 5){
+                        
+                                        $day = 'Friday';
+                                    }
+                                    else if($day_Id == 6){
+                        
+                                        $day = 'Saturday';
+                                    }
+                                    else if($day_Id == 7){
+                        
+                                        $day = 'Sunday';
+                                    }
+                                    // ======= Day END ========
+                                }
+                            ?>  
+
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold">Semester:</td>
+                                        <td><?= $year_name." | ".$semester_name ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Subject:</td>
+                                        <td><?= $subject_code." | ".$subject_name ?></td>   
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Room:</td>
+                                        <td><?= $room_name." | ".$room_details  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Instructor:</td>
+                                        <td><?= $instructor ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Day:</td>
+                                        <td><?= $day ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Time Start:</td>
+                                        <td><?= timeFormat($time_start) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Time End:</td>
+                                        <td><?= timeFormat($time_end) ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- <div class="col-lg-4"></div> -->
+
+                        <div class="col-lg-6 text-right">
                             <button
                                 type="button" 
                                 class="btn btn-outline-dark font-weight-bold text-uppercase" 
@@ -188,7 +323,7 @@
 
                     <div class="table-responsive">
 
-                        <table class="table table-hover" id="class_students_tbl">
+                        <table class="table table-hover display nowrap" id="class_students_tbl" style="width:100%;">
                             <thead class="table-bordered font-weight-bold text-uppercase" style="white-space:nowrap;">
                                 <tr>
                                     <th>Student ID</th>
@@ -216,7 +351,10 @@
                                                 student_classes.Student_Id = users.User_Id 
                                             WHERE 
                                                 student_classes.Class_Schedule_Id = '".$class_sched_Id."' 
-                                                AND student_classes.Status = 1 ";
+                                                AND student_classes.Status = 1 
+                                            ORDER BY 
+                                                student_classes.Date_added DESC, 
+                                                student_classes.Time_added DESC ";
 
                                     $fetch = mysqli_query($con, $query);
 
@@ -239,7 +377,10 @@
                                         echo "<td>".$date_added."</td>";
                                         echo "<td>".$time_added."</td>";
                                         echo "<td class='text-center'>
-                                                <button type='button' class='btn btn-outline-light text-danger'>
+                                                <button 
+                                                    type='button' 
+                                                    class='btn btn-outline-light text-danger' 
+                                                    onclick='deleteClassStudent(`".$student_class_Id."`)'>
                                                     <span class='fa fa-trash'></span>
                                                 </button>
                                             </td>";
@@ -391,6 +532,10 @@
             
             $(document).ready(function () {
 
+                $('#class_students_tbl').DataTable({
+                    "bInfo":false,
+                })
+
                 // =============== Import XLSX ===================
                     $('#upload_xls_btn').on('change', function(e){
 
@@ -430,8 +575,33 @@
                                     },
                                     dataType: "JSON",
                                     success: function (response) {
-                                        
-                                        console.log(response)
+
+                                        if(response.Res == 1){
+
+                                            toastr.success('You added new students to a class schedule.', 'SAVED SUCCESSFULLY')
+
+                                            setTimeout(function(){
+
+                                                location.reload()
+                                            }, 1000)
+                                        }
+                                        else{
+
+                                            Swal.fire({ 
+                                               title: 'INVALID STUDENT RECORDS', 
+                                               html: 'These records cannot be added: <br> '+ response.ErrIDs, 
+                                               type: 'error', 
+                                               showCancelButton: false, 
+                                               confirmButtonColor: '#3085d6', 
+                                               confirmButtonText: 'OKAY', 
+                                            }).then((isConfirm) => {
+
+                                                if (isConfirm.value == true) {  
+                                            
+                                                    location.reload()
+                                                }    
+                                            })
+                                        }
                                     }
                                 })
                             }
@@ -494,6 +664,53 @@
                 window.open('export_grades_xlsx.php?semesterid='+ semester_Id +'&subjectid='+ subject_Id +'&courseid='+course_Id)
 
                 toastr.success('Please check you downloads', 'Downloaded Successfully')
+            }
+
+
+            function deleteClassStudent(stud_class_Id){
+
+                swal({   
+                    title: "DELETE STUDENT?",   
+                    text: "This is cannot be reverted",   
+                    type: "question",   
+                    showCancelButton: true,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "YES",   
+                    cancelButtonText: "NO",   
+                    closeOnConfirm: false,   
+                    closeOnCancel: false 
+                }).then((isConfirm) => {
+
+                    if (isConfirm.value == true) { 
+                
+                       $.ajax({
+                           type: "POST",
+                           url: "models/ClassSchedulesModel.php",
+                           data: {
+                               studclassid:stud_class_Id,
+                               action:"delete_class_student"
+                           },
+                           dataType: "JSON",
+                           success: function (response) {
+                           
+                               if(response == 1){
+       
+                                   toastr.success('You removed a student from a class', 'REMOVED SUCCESSFULLY')
+       
+                                   setTimeout(() => {
+                                       
+                                       location.reload()
+       
+                                   }, 1000);
+                               }
+                               else if(response == 2 || response == 3){
+       
+                                   toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
+                               }
+                           }
+                       })
+                   }
+                })
             }
 
         </script>
