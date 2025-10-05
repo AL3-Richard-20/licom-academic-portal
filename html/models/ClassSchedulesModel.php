@@ -759,6 +759,57 @@
 
             echo json_encode(array('data' => $data));
         }
+
+        else if($_POST['action'] == 'bulk_student_on_class_sched'){
+
+            $class_sched_Id = $_POST['classschedid'];
+            $xlsx_items     = $_POST['xlsxitems'];
+
+            foreach($xlsx_items as $key => $value){
+
+                $is_valid   = 1;
+                $error_type = 0;
+
+                $student_Id = $value['Student_ID'];
+
+                // Check if student ID exist
+                $columns0 = [ "User_Id" ];
+                $where0   = [ "User_Id" => $student_Id ];
+                $exists0  = exists($users, $columns0, $where0);
+
+                if($exists0 != 0){
+
+                    $is_valid = 0;
+                }
+
+
+                // Check if student already exist in selected class schedule
+                $columns1 = [ "Student_Class_Id" ];
+                $where1   = [ 
+                    "Class_Schedule_Id" => $class_sched_Id,
+                    "Student_Id" => $student_Id,
+                    "Status" => 1 
+                ];
+                $exists1  = exists($class_schedules, $columns1, $where1);
+
+                if($exists1 != 0){
+
+                    $is_valid = 0;
+                }
+
+                if($is_valid == 1){
+
+
+                }
+
+                echo json_encode(
+                    array(
+                        'Res' => $res_req,
+                        'ErrType' => $error_type
+                    )
+                );
+            }
+        }
     }
 
 ?>

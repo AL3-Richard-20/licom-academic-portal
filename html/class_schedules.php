@@ -761,6 +761,13 @@
                                 </div>
 
                                 <div class="modal-footer">
+                                    <button
+                                        type="button" 
+                                        class="btn btn-outline-dark font-weight-bold text-uppercase" 
+                                        onclick="importToClassSched()">
+                                        <span class="fa fa-upload"></span>
+                                        &nbspImport .xlsx
+                                    </button>
                                     <button 
                                         type="button" 
                                         class="btn btn-danger font-weight-bold text-uppercase delete-class-sched-btn">
@@ -1401,6 +1408,13 @@
                 
                 countClassStudents()
             }, 1000)
+        }
+
+        function importToClassSched(){
+
+            var class_sched_val = $('#class_sched_val').val()
+
+            window.open('bulk_class_schedules.php?classschedid='+class_sched_val)
         }
 
     </script>
