@@ -89,4 +89,44 @@
         }
     }
 
+
+    function semesterInfo($semester_Id){
+
+        global $con;
+
+        $query ="SELECT 
+                    semesters.Semester_name,
+                    semesters.Is_default,
+                    semesters.Date_added,
+                    semesters.Time_added,
+                    year_levels.Year_name 
+                FROM 
+                    semesters 
+                LEFT JOIN 
+                    year_levels 
+                ON 
+                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                WHERE 
+                    semesters.Semester_Id = '".$semester_Id."' 
+                LIMIT 1 ";
+
+        $fetch = mysqli_query($con, $query);
+
+        $row = mysqli_fetch_assoc($fetch);
+
+        $semester_name  = $row['Semester_name'];
+        $is_default     = $row['Is_default'];
+        $date_added     = $row['Date_added'];
+        $time_added     = $row['Time_added'];
+        $year_name      = $row['Year_name'];
+        
+        return array(
+            'SemesterName' => $semester_name,
+            'IsDefault' => $is_default,
+            'DateAdded' => $date_added,
+            'TimeAdded' => $time_added,
+            'YearName' => $year_name
+        );
+    }
+
 ?>
