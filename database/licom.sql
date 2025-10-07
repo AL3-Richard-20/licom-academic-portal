@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 02, 2025 at 09:26 AM
+-- Generation Time: Oct 06, 2025 at 12:11 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Activity_Log_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -164,7 +164,31 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 (78, 'Import Student Grades', 4, '2025-10-02', '04:20:39', 1),
 (79, 'Import Student Grades', 4, '2025-10-02', '04:20:51', 1),
 (80, 'Import Student Grades', 4, '2025-10-02', '04:21:22', 1),
-(81, 'Add/Update student grade. Student: 5', 4, '2025-10-02', '04:44:54', 1);
+(81, 'Add/Update student grade. Student: 5', 4, '2025-10-02', '04:44:54', 1),
+(82, 'Log In Account', 4, '2025-10-02', '05:43:51', 1),
+(83, 'Log In Account', 4, '2025-10-03', '08:50:09', 1),
+(84, 'Log In Account', 5, '2025-10-03', '10:09:39', 1),
+(85, 'Log In Account', 6, '2025-10-03', '10:10:25', 1),
+(86, 'Log In Account', 4, '2025-10-03', '10:11:06', 1),
+(87, 'Log In Account', 4, '2025-10-03', '02:39:43', 1),
+(88, 'Log In Account', 4, '2025-10-05', '09:54:39', 1),
+(89, 'Log In Account', 4, '2025-10-05', '10:58:52', 1),
+(90, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:24:09', 1),
+(91, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:25:02', 1),
+(92, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:26:31', 1),
+(93, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:28:26', 1),
+(94, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:29:01', 1),
+(95, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:30:19', 1),
+(96, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:31:23', 1),
+(97, 'Added a new student to a class schedule.', 4, '2025-10-05', '11:34:33', 1),
+(98, 'Delete student in a class. ID: 27', 4, '2025-10-05', '11:47:00', 1),
+(99, 'Delete student in a class. ID: 27', 4, '2025-10-05', '11:47:20', 1),
+(100, 'Added a new student to a class schedule.', 4, '2025-10-05', '02:17:11', 1),
+(101, 'Delete student in a class. ID: 33', 4, '2025-10-05', '02:17:21', 1),
+(102, 'Delete student in a class. ID: 28', 4, '2025-10-05', '02:17:23', 1),
+(103, 'Delete student in a class. ID: 29', 4, '2025-10-05', '02:17:27', 1),
+(104, 'Added a new student to a class schedule.', 4, '2025-10-05', '02:17:31', 1),
+(105, 'Log In Account', 4, '2025-10-05', '02:32:07', 1);
 
 -- --------------------------------------------------------
 
@@ -609,10 +633,10 @@ CREATE TABLE IF NOT EXISTS `student_classes` (
   `Added_by` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Last_update` date NOT NULL,
+  `Last_update` date DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Student_Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_classes`
@@ -639,11 +663,15 @@ INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student
 (18, 6, 11, 4, '2025-06-07', '02:46:41', '2025-06-07', 1),
 (19, 7, 11, 4, '2025-06-07', '02:52:56', '2025-06-07', 0),
 (20, 2, 9, 4, '2025-06-09', '09:07:37', '2025-06-09', 1),
-(21, 2, 10, 4, '2025-06-09', '09:12:45', '2025-06-09', 0),
-(22, 2, 11, 4, '2025-06-09', '09:12:59', '2025-06-09', 0),
-(23, 2, 10, 4, '2025-06-09', '09:22:12', '2025-06-09', 0),
 (24, 4, 5, 4, '2025-06-09', '09:26:55', '2025-06-09', 0),
-(25, 8, 5, 4, '2025-06-26', '08:56:29', '2025-06-26', 1);
+(25, 8, 5, 4, '2025-06-26', '08:56:29', '2025-06-26', 1),
+(27, 2, 10, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(28, 2, 11, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(29, 2, 12, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(33, 2, 10, 4, '2025-10-05', '02:17:11', '2025-10-05', 0),
+(34, 2, 10, 4, '2025-10-05', '02:17:31', '2025-10-05', 1),
+(35, 2, 11, 4, '2025-10-05', '02:17:31', '2025-10-05', 1),
+(36, 2, 12, 4, '2025-10-05', '02:17:31', '2025-10-05', 1);
 
 -- --------------------------------------------------------
 
