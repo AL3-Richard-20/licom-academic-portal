@@ -105,8 +105,8 @@
                                 <span 
                                     class="fa fa-arrow-left" 
                                     onclick="history.back();"></span>
-                                Add New Student
-                            </h4>
+                                Add New Registrar
+                            </h4>   
                             <div class="d-flex align-items-center"></div>
                         </div>
                         <div class="col-7 align-self-center">
@@ -114,9 +114,9 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Students</a>
+                                            <a href="#">Registrar</a>
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">Add New Student</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Add New Registrar</li>
                                     </ol>
                                 </nav>
                             </div>
