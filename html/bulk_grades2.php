@@ -686,7 +686,7 @@
                         else{
 
                             output+='<tr>'
-                            output+='<td class="text-center" colspan="6">No data avaiable in the table.</td>'
+                            output+='<td class="text-center" colspan="6">No data available in the table.</td>'
                             output+='</tr>'
                         }
 
