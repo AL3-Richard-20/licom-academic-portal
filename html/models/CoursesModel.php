@@ -33,7 +33,7 @@
                 if($insert2['Result'] == 1){
 
                     $user_Id    = $_SESSION["licom_usr_Id"];
-                    $log_detail = 'Added a new course. Name: '.$course_name;
+                    $log_detail = 'Added a new program. Name: '.$course_name;
 
                     insertToActivityLogs($log_detail, $user_Id);
 
@@ -70,7 +70,7 @@
             if($update1 == 1){
 
                 $user_Id    = $_SESSION["licom_usr_Id"];
-                $log_detail = 'Edit course record. Name: '.$course_name;
+                $log_detail = 'Edit program record. Name: '.$course_name;
 
                 insertToActivityLogs($log_detail, $user_Id);
 
@@ -95,7 +95,7 @@
             if($update1 == 1){
 
                 $user_Id    = $_SESSION["licom_usr_Id"];
-                $log_detail = 'Delete course record. ID: '.$course_Id;
+                $log_detail = 'Delete program record. ID: '.$course_Id;
 
                 insertToActivityLogs($log_detail, $user_Id);
 

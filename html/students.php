@@ -428,7 +428,7 @@
                                                                             required>
                                                                     </div>
 
-                                                                    <div class="form-group">
+                                                                    <!-- <div class="form-group">
                                                                         <p><b>Remarks: <span class="text-danger">(*)</span></b></p>
                                                                         <select 
                                                                             class="form-control form-control-sm" 
@@ -464,7 +464,7 @@
                                                                                 }
                                                                             ?>
                                                                         </select>
-                                                                    </div>
+                                                                    </div> -->
 
                                                                     <hr>
 

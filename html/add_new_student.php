@@ -374,7 +374,7 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="font-weight-bold">Year Level & Course</h5><br>
+                                        <h5 class="font-weight-bold">Year Level & Program</h5><br>
             
                                         <div class="form-group">
                                             <p><b>Year Level: <span class="text-danger">(*)</span></b></p>
@@ -416,7 +416,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                                <p><b>Course: <span class="text-danger">(*)</span></b></p>
+                                                <p><b>Program: <span class="text-danger">(*)</span></b></p>
                                                 <select 
                                                     class="form-control form-control-sm" 
                                                     name="e_course" 
@@ -559,7 +559,7 @@
                         "allowClear":true
                     })
                     $('#e_course').select2({
-                        "placeholder":"Select course here",
+                        "placeholder":"Select program here",
                         "allowClear":true
                     })
                 // ============== Select2 END =============

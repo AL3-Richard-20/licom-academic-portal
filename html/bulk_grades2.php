@@ -139,38 +139,62 @@
 
                     <div class="row">
 
-                        <div class="col-lg-4">
-                            <h6><b>NOTE:</b></h6>
-                            
-                            <?php
+                        <div class="col-lg-3">
+                            <p><b>Semester: <span class="text-danger">(*)</span></b></p>
+                            <select 
+                                class="form-control form-control-sm"
+                                name="semester_dd_val"
+                                id="semester_dd_val">
+                                <option value=""></option>
+                                <?php
 
-                                $query ="SELECT 
-                                            Grade_remark 
-                                        FROM 
-                                            grade_remarks 
-                                        WHERE 
-                                            Status = 1 ";
+                                    $query="SELECT 
+                                                semesters.Semester_Id, 
+                                                semesters.Semester_name,
+                                                semesters.Is_default,
+                                                year_levels.Year_name  
+                                            FROM 
+                                                semesters 
+                                            LEFT JOIN 
+                                                year_levels 
+                                            ON 
+                                                semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                                            WHERE 
+                                                semesters.Status = 1 ";
 
-                                $fetch = mysqli_query($con, $query);
+                                    $fetch = mysqli_query($con, $query);
 
-                                $results_arr = array();
+                                    $count = mysqli_num_rows($fetch);
 
-                                while($row = mysqli_fetch_assoc($fetch)){
+                                    if($fetch && $count > 0){
 
-                                    $grade_remark = $row['Grade_remark'];
+                                        while($row = mysqli_fetch_assoc($fetch)){
 
-                                    array_push($results_arr, $grade_remark);
-                                }
-                            ?>
+                                            $year_name      = $row['Year_name'];
+                                            $semester_Id    = $row['Semester_Id'];
+                                            $semester_name  = $row['Semester_name'];
+                                            
+                                            echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
 
-                            <p>Only <b><?= implode(', ', $results_arr) ?></b> are accepted as Remarks.</p>
-
+                        <div class="col-lg-3">
+                            <p><b>Subject: <span class="text-danger">(*)</span></b></p>
+                            <select 
+                                class="form-control form-control-sm"
+                                name="subject_dd_val"
+                                id="subject_dd_val">
+                                <option value=""></option>
+                            </select>
                         </div>
 
                         <div class="col-lg-4"></div>
 
                         <div class="col-lg-4 text-right">
-                            <button
+                            <!-- <button
                                 type="button" 
                                 class="btn btn-outline-dark font-weight-bold text-uppercase" 
                                 onclick="filterAction(`Import`)">
@@ -183,7 +207,7 @@
                                 onclick="filterAction(`Download`)">
                                 <span class="fa fa-download"></span>
                                 &nbspDownload .xlsx
-                            </button>
+                            </button> -->
                         </div>
 
                     </div>
@@ -202,7 +226,7 @@
                                         <th>Midterm</th>
                                         <th>Tentative Final</th>
                                         <th>Final</th>
-                                        <!-- <th>Remarks</th> -->
+                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-sm" id="import_tbl">
@@ -244,7 +268,7 @@
 
 
                     <!-- =============== Filter Modal =============== -->
-                        <div class="modal fade" id="filterMod">
+                        <!-- <div class="modal fade" id="filterMod">
 
                             <div class="modal-dialog" role="document">
 
@@ -390,7 +414,7 @@
 
                             </div>
 
-                        </div>
+                        </div> -->
                     <!-- =============== Filter Modal END =========== -->
 
                 </div>
@@ -474,254 +498,50 @@
         <!--Custom JavaScript -->
         <script src="../dist/js/custom.min.js"></script>
 
-        <script src="../assets/extra-libs/xlsx/xlsx.full.min.js"></script>
+        <!-- <script src="../assets/extra-libs/xlsx/xlsx.full.min.js"></script> -->
 
         <script>
-
-            // ========== Data Properties ==============
-                var main_semester_Id=''
-                var main_subject_Id=''
-                var main_course_Id=''
-            // ========== Data Properties END ==========
             
             $(document).ready(function () {
 
                 // ============= Select2 ===============
-                    $('#semester_dd').select2({
+                    $('#semester_dd_val').select2({
                         placeholder:"Select semester here"
                     })
-                    
-                    $('#course_dd').select2({
-                        placeholder:"Select course here"
-                    })
 
-                    $('#subject_dd').select2({
+                    $('#subject_dd_val').select2({
                         placeholder:"Select subject here"
                     })
                 // ============= Select2 END ===========
 
-                $('#course_dd').on('change', function(){
+                $('#semester_dd_val').on('change', function(){
 
-                    var course_Id = $(this).val()
+                    var semester_Id = $('#semester_dd_val').val()
 
-                    fetchCourseSubjects('subject_dd', course_Id)
+                    subjectDD(semester_Id)
                 })
 
-                $('#semester_dd, #subject_dd').on('change', function(){
+                $('#subject_dd_val').on('change', function(){
 
-                    var action_val  = $('#action_val').val()
-                    var semester_Id = $('#semester_dd').val()
-                    var subject_Id  = $('#subject_dd').val()
+                    var semester_Id = $('#semester_dd_val').val()
+                    var subject_Id  = $('#subject_dd_val').val()
 
-                    var is_valid = 1
-
-                    if(semester_Id == ''){
-
-                        is_valid = 0
-                    }
-                    if(subject_Id == ''){
-
-                        is_valid = 0
-                    }
-
-                    if(is_valid == 1){
-
-                        if(action_val == 'Import'){
-
-                            if(subject_Id != ''){
-    
-                                $('#file_upload_div').show()
-                            }
-                            else{
-    
-                                $('#file_upload_div').hide()
-                            }
-                        }
-                        else if(action_val == 'Download'){
-
-                            if(subject_Id != ''){
-
-                                $('#file_download_div').show()
-                            }
-                            else{
-
-                                $('#file_download_div').hide()
-                            }
-                        }
-                    }
+                    fetchStudentsWithGrades(semester_Id, subject_Id)
                 })
-
-                // =============== Import XLSX ===================
-                    $('#upload_xls_btn').on('change', function(e){
-
-                        var is_valid = 1
-
-                        var semester_Id = $('#semester_dd').val()
-                        var course_Id   = $('#course_dd').val()
-                        var subject_Id  = $('#subject_dd').val()
-
-                        main_semester_Id = semester_Id
-                        main_subject_Id  = subject_Id
-                        main_course_Id   = course_Id
-
-                        if(semester_Id == ''){
-
-                            is_valid = 0
-
-                            // $('#semester_dd').addClass('is-invalid')
-                            toastr.error('Please select semester', 'CANNOT BE EMPTY')
-                        }
-                        if(course_Id == ''){
-                            
-                            is_valid = 0
-                            
-                            // $('#course_dd').addClass('is-invalid')
-                            toastr.error('Please select course', 'CANNOT BE EMPTY')
-                        }
-                        if(subject_Id == ''){
-                            
-                            is_valid = 0
-
-                            // $('#subject_dd').addClass('is-invalid')
-                            toastr.error('Please select subject', 'CANNOT BE EMPTY')
-                        }
-                        
-                        if(is_valid == 1){
-
-                            $('#semester_dd').removeClass('is-invalid')
-                            $('#course_dd').removeClass('is-invalid')
-                            $('#subject_dd').removeClass('is-invalid')
-
-                            $('#filterMod').modal('hide')
-    
-                            $('#import_tbl').html('')
-    
-                            const file   = e.target.files[0]
-    
-                            var filename = file.name
-    
-                            const parts = filename.split(".")
-    
-                            const file_ext = parts[1]
-    
-                            if(file_ext == 'xlsx'){
-    
-                                const reader = new FileReader();
-                        
-                                reader.onload = function (e) {
-                        
-                                    const data      = new Uint8Array(e.target.result);
-                                    const workbook  = XLSX.read(data, { type: 'array' });
-                        
-                                    const sheetName = workbook.SheetNames[0]; // First sheet
-                                    const worksheet = workbook.Sheets[sheetName];
-                                    const json      = XLSX.utils.sheet_to_json(worksheet);
-                        
-                                    var xlsx_items = JSON.stringify(json, null);
-                                    var xlsx_items = JSON.parse(xlsx_items);
-    
-                                    var output=''
-                                    var total_items = 0;
-    
-                                    $.each(xlsx_items, function(key, value){
-    
-                                        var student_Id      = value.Student_ID
-                                        var student_name    = value.Name
-                                        var midterm         = value.Midterm
-                                        var tentative_final = value.Tentative_Final
-                                        var final_grade     = value.Final_Grade
-                                        var grade_remark    = value.Remark
-                                    
-                                        // var student_Id      = Object.keys(value)[0]
-                                        // var student_name    = Object.keys(value)[1]
-                                        // var midterm         = Object.keys(value)[2]
-                                        // var tentative_final = Object.keys(value)[3]
-                                        // var final_grade     = Object.keys(value)[4]
-                                        // var grade_remark    = Object.keys(value)[5]
-    
-                                        output+='<tr>'
-    
-                                        // ========== Student ID =============
-                                            output+='<td id="student_row_'+ student_Id +'">'
-                                            output+=student_Id 
-                                            output+='<input type="hidden" name="student_id_'+ student_Id +'" id="studentid'+ student_Id +'" value="'+ student_Id +'">'
-                                            output+='</td>'
-                                        // ========== Student ID END =========
-    
-                                        // ========== Student Name ===========
-                                            output+='<td class="font-weight-bold">'+ student_name +'</td>'
-                                        // ========== Student Name END =======
-    
-                                        // ========== Midterm =============
-                                            output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="midterm_'+ student_Id +'" id="midterm_"'+ student_Id +'" placeholder="Input midterm grade here" value="'+ midterm +'" required>'
-                                            output+='</td>'
-                                        // ========== Midterm END =========
-    
-                                        // ========== Tentative Final ============
-                                            output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="tentative_'+ student_Id +'" id="tentative_'+ student_Id +'" placeholder="Input tentative final grade here" value="'+ tentative_final +'" required>'
-                                            output+='</td>'
-                                        // ========== Tentative Final END ========
-    
-                                        // ========== Final Grade ============
-                                            output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="final_grade_'+ student_Id +'" id="final_grade_'+ student_Id +'" placeholder="Input final grade here" value="'+ final_grade +'" required>'
-                                            output+='</td>'
-                                        // ========== Final Grade END ========
-    
-                                        // ========== Remarks ============
-                                            // output+='<td>'
-                                            // output+='<input type="text" class="form-control form-control-sm" name="remark_'+ student_Id +'" id="remark_'+ student_Id +'" placeholder="Input remarks here" value="'+ grade_remark +'" required>'
-                                            // output+='</td>'
-                                        // ========== Remarks END ========
-    
-                                        output+='</tr>'
-    
-                                        total_items++
-                                    })
-    
-                                    $('#import_tbl').html(output)
-    
-                                    if(total_items > 0){
-    
-                                        $('#submit_form_btn').prop('disabled', false)
-                                    }
-                                }
-    
-                                reader.readAsArrayBuffer(file);
-                            }
-                            else{
-
-                                Swal.fire({ 
-                                   title: 'UNSUPPORTED FILE', 
-                                   text: 'Please import files with .xlsx extension only.', 
-                                   type: 'error', 
-                                   showCancelButton: false, 
-                                   confirmButtonColor: '#3085d6', 
-                                   confirmButtonText: 'OKAY', 
-                                })
-                            }
-                        }
-                        else{
-
-                            console.log('ERROR')
-                        }
-
-                    })
-                // =============== Import XLSX END ===============
 
                 $('#bulkImportForm').on('submit', function(aa){
 
                     aa.preventDefault()
 
+                    var semester_Id = $('#semester_dd_val').val()
+                    var subject_Id  = $('#subject_dd_val').val()
+
                     var data = $(this).serializeArray()
 
                     data.push(
-                        { name:'action', value:'bulk_import_grades' },
-                        { name:'semesterid', value:main_semester_Id },
-                        { name:'subjectid', value:main_subject_Id },
-                        { name:'courseid', value:main_course_Id }
+                        { name:'action', value:'bulk_import_grades2' },
+                        { name:'semesterid', value:semester_Id },
+                        { name:'subjectid', value:subject_Id }
                     )
 
                     $.ajax({
@@ -730,133 +550,159 @@
                         data: data,
                         dataType: "JSON",
                         success: function (response) {
+                        
+                            fetchStudentsWithGrades(semester_Id, subject_Id)
 
-                            var no_errors_id    = response.NoErrsArr
-                            var with_errors_id  = response.WithErrsArr
+                            setTimeout(function(){
 
-                            $('.result-msg').remove()
+                                var no_errors_id    = response.NoErrsArr
+                                var with_errors_id  = response.WithErrsArr
+    
+                                $('.result-msg').remove()
+    
+                                $.each(no_errors_id, function(key, value){
+    
+                                    var output=''
+    
+                                    output+='<div class="result-msg"><span class="fa fa-info-circle text-success"></span> '
+                                    output+='<small class="font-weight-bold text-success">Saved Successfully.</small></div>'
+    
+                                    $(output).appendTo('#student_row_'+ value)
+                                })
+    
+                                $.each(with_errors_id, function(key, value){
+                                    
+                                    var output=''
+                                    var err_msg=''
+    
+                                    if(value.Res == 5){
+    
+                                        err_msg='Grade value cannot be set as zero.'
+                                    }
+    
+                                    output+='<div class="result-msg"><span class="fa fa-info-circle text-danger"></span> '
+                                    output+='<small class="font-weight-bold text-danger">'+ err_msg +'</small></div>'
+    
+                                    $(output).appendTo('#student_row_'+ value.StudId)
+                                })
 
-                            $.each(no_errors_id, function(key, value){
-
-                                var output=''
-
-                                output+='<div class="result-msg"><span class="fa fa-info-circle text-success"></span> '
-                                output+='<small class="font-weight-bold text-success">Saved Successfully.</small></div>'
-
-                                $(output).appendTo('#student_row_'+ value)
-                            })
-
-                            $.each(with_errors_id, function(key, value){
-                                
-                                var output=''
-                                var err_msg=''
-
-                                if(value.Res == 4){
-
-                                    err_msg='Invalid remark value.'
-                                }
-                                else if(value.Res == 5){
-
-                                    err_msg='Invalid student record.'
-                                }
-                                else if(value.Res == 6){
-
-                                    err_msg='Grade value cannot be set as zero.'
-                                }
-                                else if(value.Res == 7){
-
-                                    err_msg='Cannot interpret grade result.'
-                                }
-
-                                output+='<div class="result-msg"><span class="fa fa-info-circle text-danger"></span> '
-                                output+='<small class="font-weight-bold text-danger">'+ err_msg +'</small></div>'
-
-                                $(output).appendTo('#student_row_'+ value.StudId)
-                            })
+                            }, 2000)
                         }
                     })
                 })
             })
 
-
-            function filterAction(action_val){
-
-                $('#filterMod').modal('show')
-
-                $('#semester_dd').val('').trigger('change')
-                $('#course_dd').val('').trigger('change')
-
-                var icon_class=''
-                var action_tense=''
-
-                if(action_val == 'Import'){
-
-                    icon_class='fa fa-upload'
-                    action_tense='to'
-
-                    $('#upload_xls_btn').val('')
-                    $('#file_download_div').hide()
-                }
-                else{
-                    icon_class='fa fa-download'
-                    action_tense='from'
-                }
-
-                $('#action_txt').html('<span class="'+ icon_class +'"></span>&nbsp&nbsp'+action_val+' records '+ action_tense +': ')
-
-                $('#action_val').val(action_val)
-            }
-
-
-            function fetchCourseSubjects(id, course_Id){
+            function subjectDD(semester_Id){
 
                 var output=''
 
                 $.ajax({
                     type: "POST",
-                    url: "models/CoursesModel.php",
+                    url: "models/SubjectsModel.php",
                     data: {
-                        courseid:course_Id,
-                        action:"fetch_subject_courses"
+                        semid:semester_Id,
+                        action:'fetch_instructor_subjects'
                     },
                     dataType: "JSON",
                     success: function (response) {
-
-                        output+='<option value=""></option>'
                         
                         if(response.length > 0){
 
+                            output+='<option value=""></option>'
+                            
                             $.each(response, function(key, value){
 
-                                var subject_Id   = value.SubjectID
-                                var subject_name = value.SubjectName
-                                var subject_code = value.SubjectCode
+                                var class_sched_Id  = value.ClassSchedId
+                                var subject_name    = value.SubjectName
+                                var subject_code    = value.SubjectCode
+                                var course_code     = value.CourseCode
 
-                                output+='<option value="'+ subject_Id +'">'+ subject_code +' | '+ subject_name +'</option>'
+                                output+='<option value="'+ class_sched_Id +'">'+ course_code +' | '+ subject_code +' | '+ subject_name +'</option>'
                             })
                         }
-                        else{
 
-                            $('#file_upload_div').hide()
-                        }
-
-                        $('#'+id).html(output)
+                        $('#subject_dd_val').html(output)
                     }
                 })
             }
 
 
-            function downloadGradeTemplate(){
+            function fetchStudentsWithGrades(semester_Id, subject_Id){
 
-                var semester_Id = $('#semester_dd').val()
-                var course_Id   = $('#course_dd').val()
-                var subject_Id  = $('#subject_dd').val()
+                var total_students = 0
 
-                // alert('export_grades_xlsx.php?semesterid='+ semester_Id +'&subjectid='+ subject_Id +'&courseid='+course_Id)
+                var output=''
 
-                window.open('export_grades_xlsx.php?semesterid='+ semester_Id +'&subjectid='+ subject_Id +'&courseid='+course_Id)
+                $.ajax({
+                    type: "POST",
+                    url: "models/StudentModel.php",
+                    data: {
+                        semid:semester_Id,
+                        subjectid:subject_Id,
+                        action:"fetch_students_with_grades"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response.length > 0){
 
-                toastr.success('Please check you downloads', 'Downloaded Successfully')
+                            $.each(response, function(key, value){
+
+                                var stud_Id      = value.StudID 
+                                var stud_name    = value.StudName
+                                var midterm      = value.Midterm ?? 0
+                                var tentative    = value.Tentative ?? 0
+                                var final_grade  = value.FinalGrade ?? 0
+                                var grade_remark = value.GradeRemark ?? '---'
+
+                                output+='<tr>'
+
+                                output+='<td id="student_row_'+ stud_Id +'">'
+                                output+='#'+ stud_Id
+                                output+='<input type="hidden" name="student_id_'+ stud_Id +'" id="student_id_'+ stud_Id +'" value="'+ stud_Id +'">'
+                                output+='</td>'
+                                
+                                output+='<td class="font-weight-bold">'+ stud_name +'</td>'
+                                
+                                output+='<td>'
+                                output+='<input type="number" class="form-control form-control-sm" step="any" name="midterm_'+ stud_Id +'" id="midterm_'+ stud_Id +'" value="'+ midterm +'">'
+                                output+='</td>'
+                                
+                                output+='<td>'
+                                output+='<input type="number" class="form-control form-control-sm" step="any" name="tentative_'+ stud_Id +'" id="tentative_'+ stud_Id +'" value="'+ tentative +'">'
+                                output+='</td>'
+                                
+                                output+='<td>'
+                                output+='<input type="number" class="form-control form-control-sm" step="any" name="final_grade_'+ stud_Id +'" id="final_grade_'+ stud_Id +'" value="'+ final_grade +'">'
+                                output+='</td>'
+                                
+                                output+='<td>'+ grade_remark +'</td>'
+                                
+                                output+='</tr>'
+
+                                total_students++
+                            })
+                        }
+                        else{
+
+                            output+='<tr>'
+                            output+='<td class="text-center" colspan="6">No data avaiable in the table.</td>'
+                            output+='</tr>'
+                        }
+
+                        $('#import_tbl').html(output)
+    
+                        if(total_students > 0){
+    
+                            $('#submit_form_btn').prop('disabled', false)
+                        }
+                        else{
+
+                            $('#submit_form_btn').prop('disabled', true)
+                        }
+                    }
+
+                })
             }
 
         </script>

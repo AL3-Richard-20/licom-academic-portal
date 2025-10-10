@@ -177,7 +177,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <p><b>Room: <span class="text-danger">(*)</span></b></p>
+                            <p><b>Room: </b></p>
                             <select 
                                 class="form-control form-control-sm"
                                 name="room_dd_val"
@@ -222,7 +222,7 @@
                     <hr><br>
 
                     <div class="text-center">
-                        <span>Schedules from </span><br>
+                        <span id="room_txt1" style="display:none;">Schedules from </span><br>
                         <span class="font-weight-bold" id="room_txt2">---</span>
                     </div>
 
@@ -363,7 +363,7 @@
                                                             <td colspan="2"><h5 class="mt-4 mb-4">Subject Details:</h5></td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="font-weight-bold">Course: </td>
+                                                            <td class="font-weight-bold">Program: </td>
                                                             <td id="course_txt">---</td>
                                                         </tr>
                                                         <tr>
@@ -557,11 +557,15 @@
                         var data = $('#room_dd_val').select2('data')
                         var room_txt = data[0].text
 
-                        if(semester_Id != '' && room_Id != ''){
+                        if(semester_Id != ''){
                             
-                            $('#room_txt2').html(room_txt)
-
                             fetchSelectedSchedule()
+                        }
+
+                        if(room_Id != ''){
+
+                            $('#room_txt1').show()
+                            $('#room_txt2').html(room_txt)
                         }
                     })
                 // ============== Record Filter END ============
@@ -691,8 +695,11 @@
 
                                 var output=''
 
-                                output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
-                                output+='&nbsp <span>'+ data +'</span>'
+                                // output+='<img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                                // output+='&nbsp <span>'+ data +'</span>'
+
+                                output+='<div class="d-flex align-items-center"><img src="../assets/images/users/user-icon-512x512-x23sj495.png" height="30" alt="">'
+                                output+='<div class="ml-3"><span>'+ data +'</span><br><span>'+ row.YearName +' | '+ row.CourseCode +'</span></div></div>'
 
                                 return output
                             }

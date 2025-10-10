@@ -225,7 +225,7 @@
                                                 data-toggle="tab" 
                                                 href="#menu4">
                                                 <span class="fa fa-chart-line"></span>
-                                                &nbspCourse & Year Level
+                                                &nbspProgram & Year Level
                                             </a>
                                         </li>
                                     </ul>
@@ -696,7 +696,7 @@
                                                         <td id="year_level_txt">---</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-weight-bold">Course:</td>
+                                                        <td class="font-weight-bold">Program:</td>
                                                         <td id="course_txt">---</td>
                                                     </tr>
                                                 </tbody>
@@ -998,7 +998,7 @@
                                                                 required>
                                                         </div>
 
-                                                        <div class="form-group">
+                                                        <!-- <div class="form-group">
                                                             <p><b>Remarks: <span class="text-danger">(*)</span></b></p>
                                                             <select 
                                                                 class="form-control form-control-sm" 
@@ -1034,7 +1034,7 @@
                                                                     }
                                                                 ?>
                                                             </select>
-                                                        </div>
+                                                        </div> -->
 
                                                         <hr>
 
@@ -1190,7 +1190,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <p><b>Course:</b></p>
+                                                <p><b>Program:</b></p>
                                                 <select 
                                                     class="form-control form-control-sm" 
                                                     name="e_course" 

@@ -154,7 +154,7 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Code</th>
-                                                    <th>Course</th>
+                                                    <th>Program</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
                                                     <th class="text-center">Action</th>
@@ -254,13 +254,13 @@
                                     <div class="card-body"> 
 
                                         <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program: <span class="text-danger">(*)</span></b></p>
                                             <select 
                                                 class="form-control form-control-sm" 
                                                 name="course_Id" 
                                                 id="course_Id" 
                                                 required>
-                                                <option value="">Select course here</option>
+                                                <option value="">Select program here</option>
                                                 <?php
 
                                                     $query="SELECT 
@@ -340,13 +340,13 @@
                                             id="e_subject_Id">
 
                                          <div class="form-group">
-                                            <p><b>Course: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program: <span class="text-danger">(*)</span></b></p>
                                             <select 
                                                 class="form-control form-control-sm" 
                                                 name="e_course_Id" 
                                                 id="e_course_Id" 
                                                 required>
-                                                <option value="">Select course here</option>
+                                                <option value="">Select program here</option>
                                                 <?php
 
                                                     $query="SELECT 

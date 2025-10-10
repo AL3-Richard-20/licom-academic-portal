@@ -18,6 +18,7 @@
                         Semester_Id, 
                         User_Id,
                         Evaluated_by,
+                        Remarks,
                         Grade_val 
                     FROM 
                         evaluation_grade 
@@ -32,6 +33,7 @@
             $semester_Id    = $row['Semester_Id'];
             $instructor_Id  = $row['User_Id'];
             $evaluated_by   = $row['Evaluated_by'];
+            $remarks        = $row['Remarks'];
             $grade_val      = number_format($row['Grade_val'], 2);
         // ============ Evaluation Grade END ===========
 
@@ -305,7 +307,18 @@
 
                     <div class="row">
 
-                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                            <?php
+                                
+                                if($_SESSION["licom_usr_level"] == 3){ ?>
+
+                                    <h4 class="font-weight-bold">Remarks: </h4>
+                                    <span><?= $remarks ?></span>
+
+                                    <?php
+                                }
+                            ?>
+                        </div>
 
                         <div class="col-lg-6 text-right">
 

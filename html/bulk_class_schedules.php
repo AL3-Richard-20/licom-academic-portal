@@ -226,34 +226,34 @@
                                     // ======= Room Info END =========
 
                                     // ======= Day ============
-                                    if($day_Id == 1){
+                                        if($day_Id == 1){
 
-                                        $day = 'Monday';
-                                    }
-                                    else if($day_Id == 2){
-                        
-                                        $day = 'Tuesday';
-                                    }
-                                    else if($day_Id == 3){
-                        
-                                        $day = 'Wednesday';
-                                    }
-                                    else if($day_Id == 4){
-                        
-                                        $day = 'Thursday';
-                                    }
-                                    else if($day_Id == 5){
-                        
-                                        $day = 'Friday';
-                                    }
-                                    else if($day_Id == 6){
-                        
-                                        $day = 'Saturday';
-                                    }
-                                    else if($day_Id == 7){
-                        
-                                        $day = 'Sunday';
-                                    }
+                                            $day = 'Monday';
+                                        }
+                                        else if($day_Id == 2){
+                            
+                                            $day = 'Tuesday';
+                                        }
+                                        else if($day_Id == 3){
+                            
+                                            $day = 'Wednesday';
+                                        }
+                                        else if($day_Id == 4){
+                            
+                                            $day = 'Thursday';
+                                        }
+                                        else if($day_Id == 5){
+                            
+                                            $day = 'Friday';
+                                        }
+                                        else if($day_Id == 6){
+                            
+                                            $day = 'Saturday';
+                                        }
+                                        else if($day_Id == 7){
+                            
+                                            $day = 'Sunday';
+                                        }
                                     // ======= Day END ========
                                 }
                             ?>  
@@ -295,7 +295,7 @@
                         <!-- <div class="col-lg-4"></div> -->
 
                         <div class="col-lg-6 text-right">
-                            <button
+                            <button 
                                 type="button" 
                                 class="btn btn-outline-dark font-weight-bold text-uppercase" 
                                 onclick="filterAction(`Import`)">

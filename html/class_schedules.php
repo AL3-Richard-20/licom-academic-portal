@@ -212,7 +212,7 @@
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <p><b>Course:</b></p>
+                        <p><b>Program:</b></p>
                         <select 
                             class="form-control form-control-sm"
                             name="course_dd_val"
@@ -699,7 +699,7 @@
                                                         <td colspan="2"><h5 class="mt-4 mb-4">Subject Details:</h5></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-weight-bold">Course: </td>
+                                                        <td class="font-weight-bold">Program: </td>
                                                         <td id="course_txt">---</td>
                                                     </tr>
                                                     <tr>
@@ -894,7 +894,7 @@
                 })
 
                 $('#course_Id').select2({
-                    "placeholder":"Select course here",
+                    "placeholder":"Select program here",
                     "allowClear":true
                 })
 
@@ -918,7 +918,7 @@
                 })
 
                 $('#course_dd_val').select2({
-                    "placeholder":"Select course here",
+                    "placeholder":"Select program here",
                     "allowClear":true
                 })
             // ================= Select2 END =============

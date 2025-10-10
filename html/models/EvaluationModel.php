@@ -510,8 +510,9 @@
         // =================== Evaluation Form ==================
             else if($_POST['action'] == 'submit_evaluation'){
 
-                $instructor_Id = $_POST['instructorid'];
-                $semester_Id   = $_POST['semesterid'];
+                $instructor_Id  = $_POST['instructorid'];
+                $semester_Id    = $_POST['semesterid'];
+                $comments       = $_POST['commentsval'];
 
                 $results_arr = array();
 
@@ -521,7 +522,8 @@
 
                     if( $metric_Id != 'action' && 
                         $metric_Id != 'instructorid' && 
-                        $metric_Id != 'semesterid'){
+                        $metric_Id != 'semesterid' && 
+                        $metric_Id != 'commentsval'){
 
                         $data1 = [
                             "Semester_Id" => $semester_Id,
@@ -573,16 +575,18 @@
                         $average = ($total_amnt / $total_rec);
                     // ========= Compute Average END ======
 
-                    // ========= Insert Evaluation Header Record =========
-                    $data2   = [
-                        "Semester_Id" => $semester_Id,
-                        "User_Id" => $instructor_Id,
-                        "Evaluated_by" => $_SESSION["licom_usr_Id"],
-                        "Grade_val" => $average,
-                        "Date_added" => $server_date,
-                        "Time_added" => $server_time
-                    ];
-                    $insert2 = insert($evaluation_grade, $data2);
+                    // ========= Insert Evaluation Header Record =============
+                        $data2   = [
+                            "Semester_Id" => $semester_Id,
+                            "User_Id" => $instructor_Id,
+                            "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                            "Remarks" => $comments,
+                            "Grade_val" => $average,
+                            "Date_added" => $server_date,
+                            "Time_added" => $server_time
+                        ];
+                        $insert2 = insert($evaluation_grade, $data2);
+                    // ========= Insert Evaluation Header Record END =========
 
                     if($insert2['Result'] == 1){
 
