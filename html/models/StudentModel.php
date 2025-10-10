@@ -168,9 +168,7 @@
                     ON 
                         student_classes.Student_Id = users.User_Id  
                     WHERE 
-                        class_schedules.Semester_Id = '".$semester_Id."' 
-                        AND class_schedules.Subject_Id = '".$subject_Id."' 
-                        AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' 
+                        class_schedules.Class_Schedule_Id = '".$subject_Id."' 
                         AND student_classes.Status = 1
                         AND class_schedules.Status = 1 
                     GROUP BY 
