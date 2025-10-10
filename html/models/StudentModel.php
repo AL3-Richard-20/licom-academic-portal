@@ -144,6 +144,96 @@
 
             echo json_encode($res_req);
         }
+
+        else if($_POST['action'] == 'fetch_students_with_grades'){
+
+            $semester_Id = $_POST['semid'];
+            $subject_Id  = $_POST['subjectid'];
+
+            $query ="SELECT 
+                        student_classes.Student_Class_Id,
+                        student_classes.Student_Id,
+                        class_schedules.Semester_Id,
+                        class_schedules.Subject_Id,
+                        users.FName,
+                        users.LName 
+                    FROM 
+                        student_classes 
+                    LEFT JOIN 
+                        class_schedules 
+                    ON 
+                        student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                    LEFT JOIN 
+                        users 
+                    ON 
+                        student_classes.Student_Id = users.User_Id  
+                    WHERE 
+                        class_schedules.Semester_Id = '".$semester_Id."' 
+                        AND class_schedules.Subject_Id = '".$subject_Id."' 
+                        AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' 
+                        AND student_classes.Status = 1
+                        AND class_schedules.Status = 1 
+                    GROUP BY 
+                        student_classes.Student_Id ";
+
+            $fetch = mysqli_query($con, $query);
+
+            $results_arr = array();     
+
+            while($row = mysqli_fetch_assoc($fetch)){
+                
+                $stud_class_Id  = $row['Student_Class_Id'];
+                $student_Id     = $row['Student_Id'];
+                $semester_Id    = $row['Semester_Id'];
+                $subject_Id     = $row['Subject_Id'];
+                $fname          = $row['FName'];
+                $lname          = $row['LName'];
+
+                $stud_fullname  = $fname." ".$lname;
+
+                // =========== Fetch Student Grades =============
+                    $query1 = "SELECT 
+                                    student_grades.Midterm_grade, 
+                                    student_grades.Tentative_final, 
+                                    student_grades.Grade_val, 
+                                    grade_remarks.Grade_remark 
+                                FROM 
+                                    student_grades 
+                                LEFT JOIN 
+                                    grade_remarks 
+                                ON 
+                                    student_grades.Remarks = grade_remarks.Grade_Remark_Id 
+                                WHERE 
+                                    student_grades.Semester_Id = '".$semester_Id."'     
+                                    AND student_grades.Student_Id = '".$student_Id."' 
+                                    AND student_grades.Subject_Id = '".$subject_Id."' 
+                                    AND student_grades.Status = 1 
+                                LIMIT 1 ";
+
+                    $fetch1 = mysqli_query($con, $query1);
+
+                    $row1 = mysqli_fetch_assoc($fetch1);
+
+                    $midterm_grade  = $row1['Midterm_grade']; 
+                    $tentative      = $row1['Tentative_final'];
+                    $final_grade    = $row1['Grade_val'];
+                    $grade_remark   = $row1['Grade_remark'];
+                // =========== Fetch Student Grades END =========
+
+                $result_arr = array(
+                    'StudID' => $student_Id,
+                    'StudName' => $stud_fullname,
+                    'Midterm' => $midterm_grade,
+                    'Tentative' => $tentative,
+                    'FinalGrade' => $final_grade,
+                    'GradeRemark' => $grade_remark
+                );
+
+                array_push($results_arr, $result_arr);
+            }
+
+            echo json_encode($results_arr);
+        }
     }
 
 ?>

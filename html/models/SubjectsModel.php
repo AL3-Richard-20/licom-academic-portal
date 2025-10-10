@@ -59,6 +59,68 @@
                 echo json_encode($results_arr);
             }
         }
+        
+        else if($_POST['action'] == 'fetch_instructor_subjects'){
+
+            $query="SELECT 
+                        class_schedules.Class_Schedule_Id,
+                        subjects.Subject_name, 
+                        subjects.Subject_code, 
+                        courses.Course_code 
+                    FROM 
+                        class_schedules 
+                    LEFT JOIN 
+                        subjects 
+                    ON 
+                        class_schedules.Subject_Id = subjects.Subject_Id 
+                    LEFT JOIN 
+                        courses 
+                    ON 
+                        subjects.Course_Id = courses.Course_Id 
+                    WHERE 
+                        class_schedules.Status = 1 
+                        AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' ";
+
+            if($_POST['semid'] != ''){
+
+                $semester_Id = $_POST['semid'];
+                
+                $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+            }
+
+            $query .="GROUP BY 
+                        class_schedules.Subject_Id, subjects.Course_Id ";
+
+            $query .="ORDER BY 
+                        class_schedules.Date_added DESC, 
+                        class_schedules.Time_added DESC ";
+
+            $fetch = mysqli_query($con, $query);
+
+            if($fetch){
+
+                $results_arr = array();
+
+                while($row = mysqli_fetch_assoc($fetch)){
+
+                    $class_sched_Id = $row['Class_Schedule_Id'];
+                    $subject_name   = $row['Subject_name'];
+                    $subject_code   = $row['Subject_code'];
+                    $course_code    = $row['Course_code'];
+
+                    $result_arr = array(
+                        'ClassSchedId' => $class_sched_Id,
+                        'SubjectName' => $subject_name,
+                        'SubjectCode' => $subject_code,
+                        'CourseCode' => $course_code,
+                    );
+
+                    array_push($results_arr, $result_arr);
+                }
+
+                echo json_encode($results_arr);
+            }
+        }
 
         else if($_POST['action'] == 'new_subject'){
 

@@ -229,7 +229,7 @@
                                                 <div class="d-flex no-block align-items-center">
                                                     <div class="text-white">
                                                         <h2><?= totalCourses() ?></h2>
-                                                        <h6>Total Courses</h6>
+                                                        <h6>Total Programs</h6>
                                                     </div>
                                                     <div class="ml-auto">
                                                         <span class="text-white display-6"><i class="fa fa-list"></i></span>
@@ -327,7 +327,17 @@
                                     onclick="location.href='faculty_grades.php';">
 
                                     <h1 style="font-size:110px;"><span class="fa fa-file-alt"></span></h1>
-                                    <h2>Evaluation Grades</h2>
+                                    <h2>Encode Grades</h2>
+
+                                </div>
+
+                                <div 
+                                    class="col-lg-4 text-center border" 
+                                    style="cursor:pointer;" 
+                                    onclick="location.href='bulk_grades2.php';">
+
+                                    <h1 style="font-size:110px;"><span class="fa fa-users"></span></h1>
+                                    <h2>Encode Grades</h2>
 
                                 </div>
 
@@ -349,7 +359,7 @@
                                     <div class="card">
 
                                         <div class="card-header bg-white">
-                                            <h4>Year Level & Course</h4>
+                                            <h4>Year Level & Program</h4>
                                         </div>
 
                                         <div class="card-body">
@@ -362,7 +372,7 @@
                                                         <td><?= $_SESSION["licom_year_name"]." | ".$_SESSION["licom_sem_name"] ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-weight-bold">Course:</td>
+                                                        <td class="font-weight-bold">Program:</td>
                                                         <td><?= $_SESSION["licom_course_code"]." | ".$_SESSION["licom_course_name"] ?></td>
                                                     </tr>
                                                 </tbody>

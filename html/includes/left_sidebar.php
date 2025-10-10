@@ -109,7 +109,7 @@
                                 <span class="hide-menu">Instructors </span>
                             </a>
         
-                            <ul aria-expanded="false" class="collapse  first-level">
+                            <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
                                     <a href="instructors.php" class="sidebar-link">
                                         <i class="icon-Record"></i>
@@ -140,7 +140,7 @@
                                 href="courses.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-list"></i>
-                                <span class="hide-menu">Courses</span>
+                                <span class="hide-menu">Program</span>
                             </a>
                         </li>
         
@@ -261,6 +261,30 @@
                     if($_SESSION["licom_usr_level"] == 4){ ?>
 
                         <li class="sidebar-item">
+                            
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fa fa-users"></i>
+                                <span class="hide-menu">Students </span>
+                            </a>
+
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <!-- <li class="sidebar-item">
+                                    <a href="students.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">View All</span>
+                                    </a>
+                                </li> -->
+                                <li class="sidebar-item">
+                                    <a href="bulk_grades2.php" class="sidebar-link">
+                                        <i class="icon-Record"></i>
+                                        <span class="hide-menu">Encode Grades</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        <li class="sidebar-item">
                             <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
                                 href="faculty_class_schedules.php" 
                                 aria-expanded="false">
@@ -284,7 +308,7 @@
             <!-- =============== Instructor END ============= -->
 
             <!-- =============== Administrator ============== -->
-                <?php
+                <?php   
 
                     if($_SESSION["licom_usr_level"] == 1){ ?>
 
@@ -347,7 +371,7 @@
                                 href="courses.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-list"></i>
-                                <span class="hide-menu">Courses</span>
+                                <span class="hide-menu">Programs</span>
                             </a>
                         </li>
         

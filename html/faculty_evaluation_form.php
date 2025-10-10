@@ -579,6 +579,44 @@
                         </div>
                     <!-- =================== Attention Modal END ================= -->
 
+                    <!-- =================== Comments/Opinions Modal ============= -->
+                        <div class="modal fade" id="commentsMod" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog" role="document">
+
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-bold text-uppercase">Comments</h5>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <textarea 
+                                                class="form-control form-control-sm" 
+                                                name="comments_val" 
+                                                id="comments_val"
+                                                rows="10"
+                                                placeholder="Do you have any comments regarding the performance of the instructor?"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-success font-weight-bold text-uppercase" 
+                                            onclick="submitEval()">
+                                            Save
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- =================== Comments/Opinions Modal END ========= -->
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Container fluid  -->
@@ -678,10 +716,13 @@
 
                         var data = $(this).serializeArray()
 
+                        var comments_val = $('#comments_val').val()
+
                         data.push(
                             { name:'action', value:'submit_evaluation' },
                             { name:'instructorid', value:instructor_Id },
-                            { name:'semesterid', value:semester_Id }
+                            { name:'semesterid', value:semester_Id },
+                            { name:'commentsval', value:comments_val },
                         )
 
                         $.ajax({
@@ -778,7 +819,9 @@
 
                     if(step == 'last'){
 
-                        $('#evalForm').submit()
+                        $('#commentsMod').modal('show')
+
+                        // $('#evalForm').submit()
                     }
                     else{
 
@@ -797,6 +840,20 @@
                             }
                         })
                     }
+                }
+            }
+
+            function submitEval(){
+
+                var comments_val = $('#comments_val').val()
+
+                if(comments_val != ''){
+
+                    $('#evalForm').submit()
+                }
+                else{
+
+                    toastr.error('Comment field must have a value', 'CANNOT BE EMPTY')
                 }
             }
 

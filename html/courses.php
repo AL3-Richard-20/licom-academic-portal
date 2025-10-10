@@ -109,7 +109,7 @@
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-5 align-self-center">
-                            <h4 class="page-title font-weight-bold text-uppercase">Courses</h4>
+                            <h4 class="page-title font-weight-bold text-uppercase">Programs</h4>
                             <div class="d-flex align-items-center">
 
                             </div>
@@ -119,7 +119,7 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Courses</a>
+                                            <a href="#">Programs</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Records</li>
                                     </ol>
@@ -250,24 +250,24 @@
                                     <div class="card-body">
 
                                         <div class="form-group">
-                                            <p><b>Course Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
                                                 name="course_name" 
                                                 id="course_name"
-                                                placeholder="Input course name here" 
+                                                placeholder="Input program name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <p><b>Course Code: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program Code: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
                                                 name="course_code" 
                                                 id="course_code"
-                                                placeholder="Input course code here" 
+                                                placeholder="Input program code here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -288,7 +288,7 @@
                                 <form method="POST" id="editCourseForm" style="display:none;">
 
                                     <div class="card-header bg-white">
-                                        <h4 class="font-weight-bold text-uppercase">Edit Course</h4>
+                                        <h4 class="font-weight-bold text-uppercase">Edit Program</h4>
                                     </div>
 
                                     <div class="card-body">
@@ -300,24 +300,24 @@
                                             id="e_course_Id">
 
                                         <div class="form-group">
-                                            <p><b>Course Name: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
                                                 name="e_course_name" 
                                                 id="e_course_name"
-                                                placeholder="Input course name here" 
+                                                placeholder="Input program name here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <p><b>Course Code: <span class="text-danger">(*)</span></b></p>
+                                            <p><b>Program Code: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
                                                 class="form-control form-control-sm"
                                                 name="e_course_code" 
                                                 id="e_course_code"
-                                                placeholder="Input course code here" 
+                                                placeholder="Input program code here" 
                                                 autocomplete="off"
                                                 required>
                                         </div>
@@ -581,7 +581,7 @@
                             
                             if(response == 1){
 
-                                toastr.success('You added a new course', 'SAVED SUCCESSFULLY')
+                                toastr.success('You added a new program', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -620,7 +620,7 @@
                             
                             if(response == 1){
 
-                                toastr.success('You updated a course', 'SAVED SUCCESSFULLY')
+                                toastr.success('You updated a program', 'SAVED SUCCESSFULLY')
 
                                 setTimeout(() => {
 
@@ -710,7 +710,7 @@
             function deleteCourse(course_Id){
 
                 swal({   
-                    title: "DELETE COURSE?",   
+                    title: "DELETE PROGRAM?",   
                     text: "This cannot be reverted",   
                     type: "question",   
                     showCancelButton: true,   
@@ -735,7 +735,7 @@
                                 
                                 if(response == 1){
 
-                                    toastr.success('You deleted a course. Refreshing the page.', 'REMOVED SUCCESSFULLY')
+                                    toastr.success('You deleted a program. Refreshing the page.', 'REMOVED SUCCESSFULLY')
 
                                     setTimeout(() => {
 

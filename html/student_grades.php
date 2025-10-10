@@ -198,8 +198,8 @@
                                 <tr>
                                     <th>Subject Code</th>
                                     <th>Subject Name</th>
-                                    <th>Midterm Grade</th>
-                                    <th>Tentative Final Grade</th>
+                                    <!-- <th>Midterm Grade</th>
+                                    <th>Tentative Final Grade</th> -->
                                     <th>Final Grade</th>
                                     <th>Remarks</th>
                                     <th>Instructor</th>
@@ -350,8 +350,8 @@
 
                                 var stud_grade_info = fetchStudentGrades(semester_Id, subject_Id, student_Id)
 
-                                output+='<td><h5 id="stud_subj_midterm_txt'+ subject_Id +'">---</h5></td>'
-                                output+='<td><h5 id="stud_subj_tent_txt'+ subject_Id +'">---</h5></td>'
+                                // output+='<td><h5 id="stud_subj_midterm_txt'+ subject_Id +'">---</h5></td>'
+                                // output+='<td><h5 id="stud_subj_tent_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td><h5 id="stud_subj_grade_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td><h5 id="stud_subj_remark_txt'+ subject_Id +'">---</h5></td>'
                                 output+='<td style="display:none;" id="stud_subj_remark_Id_txt'+ subject_Id +'">---</td>'
