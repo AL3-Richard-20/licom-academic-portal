@@ -613,11 +613,12 @@
                             $.each(response, function(key, value){
 
                                 var class_sched_Id  = value.ClassSchedId
+                                var subject_Id      = value.SubjectID
                                 var subject_name    = value.SubjectName
                                 var subject_code    = value.SubjectCode
                                 var course_code     = value.CourseCode
 
-                                output+='<option value="'+ class_sched_Id +'">'+ course_code +' | '+ subject_code +' | '+ subject_name +'</option>'
+                                output+='<option value="'+ subject_Id +'">'+ course_code +' | '+ subject_code +' | '+ subject_name +'</option>'
                             })
                         }
 
