@@ -183,7 +183,7 @@
                 $stud_class_Id  = $row['Student_Class_Id'];
                 $student_Id     = $row['Student_Id'];
                 $semester_Id    = $row['Semester_Id'];
-                $subject_Id     = $row['Subject_Id'];
+                $db_subject_Id  = $row['Subject_Id'];
                 $fname          = $row['FName'];
                 $lname          = $row['LName'];
 
@@ -204,7 +204,7 @@
                                 WHERE 
                                     student_grades.Semester_Id = '".$semester_Id."'     
                                     AND student_grades.Student_Id = '".$student_Id."' 
-                                    AND student_grades.Subject_Id = '".$subject_Id."' 
+                                    AND student_grades.Subject_Id = '".$db_subject_Id."' 
                                     AND student_grades.Status = 1 
                                 LIMIT 1 ";
 
