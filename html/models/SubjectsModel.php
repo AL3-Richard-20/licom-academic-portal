@@ -64,6 +64,7 @@
 
             $query="SELECT 
                         class_schedules.Class_Schedule_Id,
+                        subjects.Subject_Id, 
                         subjects.Subject_name, 
                         subjects.Subject_code, 
                         courses.Course_code 
@@ -104,12 +105,14 @@
                 while($row = mysqli_fetch_assoc($fetch)){
 
                     $class_sched_Id = $row['Class_Schedule_Id'];
+                    $subject_Id     = $row['Subject_Id'];
                     $subject_name   = $row['Subject_name'];
                     $subject_code   = $row['Subject_code'];
                     $course_code    = $row['Course_code'];
 
                     $result_arr = array(
                         'ClassSchedId' => $class_sched_Id,
+                        'SubjectID' => $subject_Id,
                         'SubjectName' => $subject_name,
                         'SubjectCode' => $subject_code,
                         'CourseCode' => $course_code,

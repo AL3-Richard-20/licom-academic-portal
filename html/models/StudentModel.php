@@ -168,7 +168,9 @@
                     ON 
                         student_classes.Student_Id = users.User_Id  
                     WHERE 
-                        class_schedules.Class_Schedule_Id = '".$subject_Id."' 
+                        class_schedules.Semester_Id = '".$semester_Id."' 
+                        AND class_schedules.Subject_Id = '".$subject_Id."' 
+                        AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' 
                         AND student_classes.Status = 1
                         AND class_schedules.Status = 1 
                     GROUP BY 
@@ -183,7 +185,7 @@
                 $stud_class_Id  = $row['Student_Class_Id'];
                 $student_Id     = $row['Student_Id'];
                 $semester_Id    = $row['Semester_Id'];
-                $db_subject_Id  = $row['Subject_Id'];
+                $subject_Id     = $row['Subject_Id'];
                 $fname          = $row['FName'];
                 $lname          = $row['LName'];
 
@@ -204,7 +206,7 @@
                                 WHERE 
                                     student_grades.Semester_Id = '".$semester_Id."'     
                                     AND student_grades.Student_Id = '".$student_Id."' 
-                                    AND student_grades.Subject_Id = '".$db_subject_Id."' 
+                                    AND student_grades.Subject_Id = '".$subject_Id."' 
                                     AND student_grades.Status = 1 
                                 LIMIT 1 ";
 
@@ -216,7 +218,7 @@
                     $tentative      = $row1['Tentative_final'];
                     $final_grade    = $row1['Grade_val'];
                     $grade_remark   = $row1['Grade_remark'];
-                // =========== Fetch Student Gradess END =========
+                // =========== Fetch Student Grades END =========
 
                 $result_arr = array(
                     'StudID' => $student_Id,
