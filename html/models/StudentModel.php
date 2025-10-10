@@ -216,7 +216,7 @@
                     $tentative      = $row1['Tentative_final'];
                     $final_grade    = $row1['Grade_val'];
                     $grade_remark   = $row1['Grade_remark'];
-                // =========== Fetch Student Grades END =========
+                // =========== Fetch Student Gradess END =========
 
                 $result_arr = array(
                     'StudID' => $student_Id,
