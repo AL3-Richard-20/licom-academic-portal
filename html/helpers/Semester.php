@@ -64,7 +64,9 @@
 
         $fetch = mysqli_query($con, $query);
 
-        if($fetch){
+        $count = mysqli_num_rows($fetch);
+
+        if($count > 0){
 
             $row = mysqli_fetch_assoc($fetch);
 
@@ -76,8 +78,7 @@
             $course_name    = $row['Course_name'];
             $course_code    = $row['Course_code'];
 
-            return 
-            array(
+            $res_arr = array(
                 'SYLID' => $syl_Id,
                 'SemesterID' => $semester_Id,
                 'Semester' => $semester,
@@ -87,6 +88,12 @@
                 'CourseCode' => $course_code
             );
         }
+        else{
+
+            $res_arr = array();
+        }
+
+        return $res_arr;
     }
 
 

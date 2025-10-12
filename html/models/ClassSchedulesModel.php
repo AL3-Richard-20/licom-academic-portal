@@ -508,7 +508,7 @@
                     $lname = $student_info[0]['LName'];
 
                     $stud_year_course_info = fetchStudCourseYearLevel($student_Id);
-
+                    
                     $year_name   = $stud_year_course_info['YearName'];
                     $course_code = $stud_year_course_info['CourseCode'];
 

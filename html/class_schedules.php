@@ -1362,7 +1362,7 @@
             var cs_table = $('#class_student_lists').DataTable({
 
                 "responsive":true,
-                "bInfo":false,
+                "bInfo":false,  
                 "searching":false,
                 "bDestroy": true,
                 "aaSorting": [],

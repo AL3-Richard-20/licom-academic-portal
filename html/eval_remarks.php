@@ -154,6 +154,8 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th class="text-center">Color Indicator</th>
+                                                    <th class="text-center">From</th>
+                                                    <th class="text-center">To</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
                                                     <th class="text-center">Action</th>
@@ -167,6 +169,8 @@
                                                                 Grade_Remark_Id, 
                                                                 Grade_remark, 
                                                                 Grade_indicator, 
+                                                                Range_from, 
+                                                                Range_to,
                                                                 Date_added, 
                                                                 Time_added
                                                             FROM 
@@ -174,8 +178,7 @@
                                                             WHERE 
                                                                 Status = 1 
                                                             ORDER BY 
-                                                                Date_added DESC, 
-                                                                Time_added DESC ";
+                                                                Range_from ASC ";
 
                                                     $fetch = mysqli_query($con, $query);
 
@@ -188,8 +191,10 @@
                                                             while($row = mysqli_fetch_assoc($fetch)){
 
                                                                 $grade_remark_Id    = $row['Grade_Remark_Id'];  
-                                                                $grade_remark       = $row['Grade_remark']; 
+                                                                $grade_remark       = $row['Grade_remark'];     
                                                                 $grade_indicator    = $row['Grade_indicator'];
+                                                                $range_from         = $row['Range_from'];
+                                                                $range_to           = $row['Range_to'];
                                                                 $date_added         = dateFormat($row['Date_added']);
                                                                 $time_added         = timeFormat($row['Time_added']);
 
@@ -200,13 +205,15 @@
                                                                             class='fa fa-circle ".$grade_indicator." mr-3'>
                                                                         </span>
                                                                     </td>";
+                                                                echo "<td>".$range_from."</td>";
+                                                                echo "<td>".$range_to."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editGradeRemark(`".$grade_remark_Id."`, `".$grade_remark."`, `".$grade_indicator."`)'>
+                                                                            onclick='editGradeRemark(`".$grade_remark_Id."`, `".$grade_remark."`, `".$grade_indicator."`, `".$range_from."`, `". $range_to."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>
                                                                         <button 
@@ -254,6 +261,27 @@
                                                 id="remark_name"
                                                 placeholder="Input remark name here" 
                                                 autocomplete="off"
+                                                required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <p><b>From:</b></p>
+                                            <input
+                                                type="number" 
+                                                class="form-control form-control-sm" 
+                                                name="range_from" 
+                                                id="range_from" 
+                                                placeholder="Input grade here"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <p><b>To:</b></p>
+                                            <input
+                                                type="number" 
+                                                class="form-control form-control-sm" 
+                                                name="range_to" 
+                                                id="range_to" 
+                                                placeholder="Input grade here"
                                                 required>
                                         </div>
 
@@ -327,6 +355,27 @@
                                                 id="e_grade_remark_name"
                                                 placeholder="Input remark name here" 
                                                 autocomplete="off"
+                                                required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <p><b>From:</b></p>
+                                            <input
+                                                type="number" 
+                                                class="form-control form-control-sm" 
+                                                name="e_range_from" 
+                                                id="e_range_from" 
+                                                placeholder="Input grade here"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <p><b>To:</b></p>
+                                            <input
+                                                type="number" 
+                                                class="form-control form-control-sm" 
+                                                name="e_range_to" 
+                                                id="e_range_to" 
+                                                placeholder="Input grade here"
                                                 required>
                                         </div>
 
@@ -511,7 +560,11 @@
                             }
                             else if(response == 4){
                                 
-                                toastr.info('Record already exist', 'CANNOT BE ADDED')
+                                toastr.info('Remark name already taken', 'CANNOT BE ADDED')
+                            }
+                            else if(response == 5){
+                                
+                                toastr.info('Remark value already taken', 'CANNOT BE ADDED')
                             }
                         }
                     })
@@ -548,6 +601,14 @@
 
                                 toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
                             }
+                            else if(response == 4){
+                                
+                                toastr.info('Remark name already taken', 'CANNOT BE ADDED')
+                            }
+                            else if(response == 5){
+                                
+                                toastr.info('Remark value already taken', 'CANNOT BE ADDED')
+                            }
                         }
                     });
                 })
@@ -567,7 +628,7 @@
             }
 
 
-            function editGradeRemark(remark_Id, remark_name, color_ind){
+            function editGradeRemark(remark_Id, remark_name, color_ind, range_from, range_to){
 
                 $('#newGradeRemarkForm').hide()
                 $('#editGradeRemarkForm').show()
@@ -575,6 +636,8 @@
                 $('#e_grade_remark_Id').val(remark_Id)
                 $('#e_grade_remark_name').val(remark_name)
                 $('#e_color_ind_val').val(color_ind)
+                $('#e_range_from').val(range_from)
+                $('#e_range_to').val(range_to)
             }
 
 
