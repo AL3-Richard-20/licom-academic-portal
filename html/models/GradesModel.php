@@ -177,19 +177,60 @@
 
             $remark_name    = $_POST['remark_name'];
             $color_ind_val  = $_POST['color_ind_val'] ?? NULL;
+            $range_from     = $_POST['range_from'];
+            $range_to       = $_POST['range_to'];
 
-            $columns1 = [ "Grade_Remark_Id" ];
-            $where1   = [
-                "Grade_remark" => $remark_name,
-                "Status" => 1
-            ];
-            $exists1  = exists($grade_remarks, $columns1, $where1);
+            $is_valid = 1;
 
-            if($exists1 == 0){
+            // ============= Check if Remark name already taken ===========
+                $columns1 = [ "Grade_Remark_Id" ];
+                $where1   = [
+                    "Grade_remark" => $remark_name,
+                    "Status" => 1
+                ];
+                $exists1  = exists($grade_remarks, $columns1, $where1);
+
+                if($exists1 != 0){
+
+                    $is_valid = 0;
+
+                    $res_req = 4;
+                }
+            // ============= Check if Remark name already taken END =======
+
+            // ============= Check if Ranges have already taken ==========
+                $query2 ="SELECT 
+                            COUNT(*) as Total 
+                        FROM 
+                            grade_remarks 
+                        WHERE 
+                            ( (Range_from = '".$range_from."' 
+                            OR Range_to = '".$range_from."') 
+                            OR (Range_from = '".$range_to."' 
+                            OR Range_to = '".$range_to."') ) 
+                            AND Status = 1 ";
+
+                $fetch2 = mysqli_query($con, $query2);
+
+                $row2 = mysqli_fetch_assoc($fetch2);
+
+                $exists2 = $row2['Total'];
+
+                if($exists2 != 0){
+
+                    $is_valid = 0;
+
+                    $res_req = 5;
+                }
+            // ============= Check if Ranges have already taken END ======
+
+            if($is_valid == 1){
 
                 $data2      = [
                     "Grade_remark" => $remark_name,
                     "Grade_indicator" => $color_ind_val,
+                    "Range_from" => $range_from,
+                    "Range_to" => $range_to,
                     "Date_added" => $server_date,
                     "Time_added" => $server_time
                 ];
@@ -209,10 +250,6 @@
                     $res_req = 2;
                 }
             }
-            else{
-
-                $res_req = 4;
-            }
 
             echo json_encode($res_req);
         }
@@ -222,16 +259,59 @@
             $grade_remark_Id      = $_POST['e_grade_remark_Id'];
             $grade_remark_name    = $_POST['e_grade_remark_name'];
             $color_ind_val        = $_POST['e_color_ind_val'];
+            $range_from           = $_POST['e_range_from'];
+            $range_to             = $_POST['e_range_to'];
 
-            $columns1 = [ "Grade_Remark_Id" ];
-            $where1   = [
-                "Grade_remark" => $grade_remark_name,
-                "Status" => 1,
-                "NOT Grade_Remark_Id" => $grade_remark_Id
-            ];
-            $exists1  = exists($grade_remarks, $columns1, $where1);
+            $is_valid = 1;
 
-            if($exists1 == 0){
+
+            // ============= Check if Remark name already taken ===============
+                $columns1 = [ "Grade_Remark_Id" ];
+                $where1   = [
+                    "Grade_remark" => $grade_remark_name,
+                    "Status" => 1,
+                    "NOT Grade_Remark_Id" => $grade_remark_Id
+                ];
+                $exists1  = exists($grade_remarks, $columns1, $where1);
+
+                if($exists1 != 0){
+
+                    $is_valid = 0;
+
+                    $res_req = 4;
+                }
+            // ============= Check if Remark name already taken END ===========
+
+
+            // ============= Check if Ranges have already taken ==========
+                $query2 ="SELECT 
+                            COUNT(*) as Total 
+                        FROM 
+                            grade_remarks 
+                        WHERE 
+                            ( (Range_from = '".$range_from."' 
+                            OR Range_to = '".$range_from."') 
+                            OR (Range_from = '".$range_to."' 
+                            OR Range_to = '".$range_to."') ) 
+                            AND NOT Grade_Remark_Id = '".$grade_remark_Id."'
+                            AND Status = 1 ";
+
+                $fetch2 = mysqli_query($con, $query2);
+
+                $row2 = mysqli_fetch_assoc($fetch2);
+
+                $exists2 = $row2['Total'];
+
+                if($exists2 != 0){
+
+                    $is_valid = 0;
+
+                    $res_req = 5;
+                }
+            // ============= Check if Ranges have already taken END ======
+
+
+            if($is_valid == 1){
 
                 $data2   = [
                     "Grade_remark" => $grade_remark_name,
