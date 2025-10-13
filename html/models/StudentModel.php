@@ -51,7 +51,7 @@
                 $g_phoneno      = $issets[14];
                 $occupation     = $issets[15];
                 $g_address      = $issets[16];
-                $semester_Id    = $issets[17];
+                $year_level_Id  = $issets[17];
                 $course_Id      = $issets[18];
 
                 $columns1 = [ "User_Id" ];
@@ -107,7 +107,7 @@
                         if($insert3['Result'] == 1){
 
                             $data1   = [
-                                "Semester_Id" => $semester_Id,
+                                "Year_Level_Id" => $year_level_Id,
                                 "Course_Id" => $course_Id,
                                 "Student_Id" => $last_Id,
                                 "Date_added" => $server_date,
@@ -151,11 +151,11 @@
             $subject_Id  = $_POST['subjectid'];
 
             $query ="SELECT 
-                        student_classes.Student_Class_Id,
-                        student_classes.Student_Id,
-                        class_schedules.Semester_Id,
-                        class_schedules.Subject_Id,
-                        users.FName,
+                        student_classes.Student_Class_Id, 
+                        student_classes.Student_Id, 
+                        class_schedules.Semester_Id, 
+                        class_schedules.Subject_Id, 
+                        users.FName, 
                         users.LName 
                     FROM 
                         student_classes 

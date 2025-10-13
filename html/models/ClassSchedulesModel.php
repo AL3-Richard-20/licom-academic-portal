@@ -543,28 +543,65 @@
 
             if($exists1 == 0){
 
-                $data2   = [
-                    "Class_Schedule_Id" => $class_sched_Id,
-                    "Student_Id" => $user_Id, 
-                    "Added_by" => $_SESSION["licom_usr_Id"],
-                    "Date_added" => $server_date,
-                    "Time_added" => $server_time,
-                    "Last_update" => $server_date
-                ];
-                $insert2 = insert($student_classes, $data2);
+                $is_valid = 1;
 
-                if($insert2['Result'] == 1){
+                // =========== Fetch Student Year Level =============
+                    $query0 ="SELECT 
+                                Year_Level_Id 
+                            FROM 
+                                student_year_level 
+                            WHERE 
+                                Student_Id = '".$user_Id."' 
+                                AND Status = 1 
+                            LIMIT 1 ";
 
-                    $sess_user_Id   = $_SESSION["licom_usr_Id"];
-                    $log_detail     = 'Added a new class student. ID: '.$user_Id;
+                    $fetch0 = mysqli_query($con, $query0);
 
-                    insertToActivityLogs($log_detail, $sess_user_Id);
+                    $count0 = mysqli_num_rows($fetch0);
 
-                    $res_req = 1;
-                }
-                else{
+                    if($fetch0){
 
-                    $res_req = 2;
+                        if($count0 > 0){
+
+                            $row0 = mysqli_fetch_assoc($fetch0);
+
+                            $year_level_Id = $row0['Year_Level_Id'];
+                        }
+                        else{
+
+                            $is_valid = 0;
+
+                            $res_req = 5; //No selected year for student
+                        }
+                    }
+                // =========== Fetch Student Year Level END =========
+
+                if($is_valid == 1){
+
+                    $data2   = [
+                        "Class_Schedule_Id" => $class_sched_Id,
+                        "Student_Id" => $user_Id, 
+                        "Year_Level_Id" => $year_level_Id,
+                        "Added_by" => $_SESSION["licom_usr_Id"],
+                        "Date_added" => $server_date,
+                        "Time_added" => $server_time,
+                        "Last_update" => $server_date
+                    ];
+                    $insert2 = insert($student_classes, $data2);
+    
+                    if($insert2['Result'] == 1){
+    
+                        $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                        $log_detail     = 'Added a new class student. ID: '.$user_Id;
+    
+                        insertToActivityLogs($log_detail, $sess_user_Id);
+    
+                        $res_req = 1;
+                    }
+                    else{
+    
+                        $res_req = 2;
+                    }
                 }
             }
             else{

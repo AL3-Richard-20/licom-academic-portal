@@ -10,10 +10,10 @@
 
         $class_sched_Id = $_GET['classschedid'];
 
-         if($class_sched_Id == ''){
+        if($class_sched_Id == ''){
 
             echo "<script>location.href='index.php'</script>";
-         }       
+        }       
     }
     else{
 
@@ -262,7 +262,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="font-weight-bold">Semester:</td>
-                                        <td><?= $year_name." | ".$semester_name ?></td>
+                                        <td><?= $semester_name ?></td>
                                     </tr>
                                     <tr>
                                         <td class="font-weight-bold">Subject:</td>

@@ -10,12 +10,10 @@
 
         if($_POST['action'] == 'new_semester'){
 
-            $year_level_Id = $_POST['year_level_Id'];
             $semester_name = $_POST['semester_name'];
 
             $columns1   = [ "Semester_Id" ];
             $where1     = [
-                "Year_Level_Id" => $year_level_Id, 
                 "Semester_name" => $semester_name, 
                 "Status" => 1 
             ];
@@ -24,7 +22,6 @@
             if($exists1 == 0){
 
                 $data2   = [
-                    "Year_Level_Id" => $year_level_Id,
                     "Semester_name" => $semester_name,
                     "Date_added" => $server_date,
                     "Time_added" => $server_time
@@ -55,13 +52,11 @@
 
         else if($_POST['action'] == 'edit_semester'){
 
-            $year_level_Id  = $_POST['e_year_level_Id'];
             $semester_Id    = $_POST['e_semester_Id'];
             $semester_name  = $_POST['e_semester_name'];
 
             $columns1   = [ "Semester_Id" ];
             $where1     = [
-                "Year_Level_Id" => $year_level_Id, 
                 "Semester_name" => $semester_name, 
                 "Status" => 1 
             ];
@@ -69,10 +64,7 @@
 
             if($exists1 == 0){
     
-                $data1   = [ 
-                    "Year_Level_Id" => $year_level_Id,
-                    "Semester_name" => $semester_name 
-                ];
+                $data1   = [ "Semester_name" => $semester_name ];
                 $where1  = [ "Semester_Id" => $semester_Id ];
                 $update1 = update($semesters, $data1, $where1);
 
@@ -266,9 +258,9 @@
 
             else if($_POST['action'] == 'edit_stud_year_level'){
 
-                $stud_Id     = $_POST['studid'];
-                $semester_Id = $_POST['e_year_level'];
-                $course_Id   = $_POST['e_course'];
+                $stud_Id        = $_POST['studid'];
+                $year_level_Id  = $_POST['e_year_level'];
+                $course_Id      = $_POST['e_course'];
 
                 $columns0 = [ "SYL_Id" ];
                 $where0   = [ "Student_Id" => $stud_Id ];
@@ -277,7 +269,7 @@
                 if($exists0 == 0){
 
                     $data1   = [
-                        "Semester_Id" => $semester_Id,
+                        "Year_Level_Id" => $year_level_Id,
                         "Course_Id" => $course_Id,
                         "Student_Id" => $stud_Id,
                         "Date_added" => $server_date,
@@ -302,7 +294,7 @@
                 else{
 
                     $data1    = [
-                        "Semester_Id" => $semester_Id,
+                        "Year_Level_Id" => $year_level_Id,
                         "Course_Id" => $course_Id,
                         "Last_updated" => $server_now
                     ];

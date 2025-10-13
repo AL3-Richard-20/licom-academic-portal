@@ -388,29 +388,22 @@
                                                 <?php
 
                                                     $query ="SELECT 
-                                                                semesters.Semester_Id, 
-                                                                semesters.Semester_name, 
-                                                                year_levels.Year_name 
+                                                                Year_Level_Id,
+                                                                Year_name 
                                                             FROM 
-                                                                semesters 
-                                                            LEFT JOIN 
                                                                 year_levels 
-                                                            ON 
-                                                                semesters.Year_Level_Id = year_levels.Year_Level_Id 
                                                             WHERE 
-                                                                semesters.Status = 1 ";
+                                                                Status = 1 ";
 
                                                     $fetch = mysqli_query($con, $query);
 
                                                     while($row = mysqli_fetch_assoc($fetch)){
 
-                                                        $semester_Id    = $row['Semester_Id'];
-                                                        $semester_name  = $row['Semester_name'];
+                                                        $year_level_Id  = $row['Year_Level_Id'];
                                                         $year_name      = $row['Year_name'];
 
-                                                        echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
+                                                        echo "<option value='".$year_level_Id."'>".$year_name."</option>";
                                                     }
-
                                                 ?>
                                             </select>
                                         </div>
@@ -568,7 +561,7 @@
 
                     aa.preventDefault()
 
-                    var data = $('#newStudentForm').serializeArray()
+                    var data = $(this).serializeArray()
 
                     data.push(
                         { name:'action', value:'new_student'}

@@ -316,6 +316,8 @@
                 $data2   = [
                     "Grade_remark" => $grade_remark_name,
                     "Grade_indicator" => $color_ind_val,
+                    "Range_from" => $range_from,
+                    "Range_to" => $range_to
                 ];
                 $where2  = [ "Grade_Remark_Id" => $grade_remark_Id ];
                 $update2 = update($grade_remarks, $data2, $where2);

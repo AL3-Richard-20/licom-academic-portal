@@ -154,7 +154,7 @@
 
                                             <thead class="table-bordered font-weight-bold text-uppercase">
                                                 <tr>
-                                                    <th>Year Level</th>
+                                                    <!-- <th>Year Level</th> -->
                                                     <th>Name</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
@@ -166,24 +166,18 @@
                                                 <?php
 
                                                     $query="SELECT 
-                                                                semesters.Semester_Id, 
-                                                                semesters.Semester_name,
-                                                                semesters.Is_default, 
-                                                                semesters.Date_added, 
-                                                                semesters.Time_added,
-                                                                semesters.Year_Level_Id,
-                                                                year_levels.Year_name 
+                                                                Semester_Id, 
+                                                                Semester_name,
+                                                                Is_default, 
+                                                                Date_added, 
+                                                                Time_added 
                                                             FROM 
                                                                 semesters 
-                                                            LEFT JOIN 
-                                                                year_levels 
-                                                            ON 
-                                                                semesters.Year_Level_Id = year_levels.Year_Level_Id
                                                             WHERE 
-                                                                semesters.Status = 1 
+                                                                Status = 1 
                                                             ORDER BY 
-                                                                semesters.Date_added DESC, 
-                                                                semesters.Time_added DESC ";
+                                                                Date_added DESC, 
+                                                                Time_added DESC ";
 
                                                     $fetch = mysqli_query($con, $query);
 
@@ -197,14 +191,14 @@
 
                                                                 $semester_Id    = $row['Semester_Id'];
                                                                 $semester_name  = $row['Semester_name'];
-                                                                $year_level_Id  = $row['Year_Level_Id'];
-                                                                $year_name      = $row['Year_name'] ?? "---";
+                                                                // $year_level_Id  = $row['Year_Level_Id'];
+                                                                // $year_name      = $row['Year_name'] ?? "---";
                                                                 $is_default     = $row['Is_default'];
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
                                                                 echo "<tr>";
-                                                                echo "<td>".$year_name."</td>";
+                                                                // echo "<td>".$year_name."</td>";
                                                                 echo "<td class='font-weight-bold'>".$semester_name."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
@@ -228,7 +222,7 @@
                                                                 echo "<button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSemester(`".$semester_Id."`, `".$semester_name."`, `".$year_level_Id."`)'>
+                                                                            onclick='editSemester(`".$semester_Id."`, `".$semester_name."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>";
 
@@ -271,37 +265,6 @@
                                     <div class="card-body">
 
                                         <div class="form-group">
-                                            <p><b>Year Level:</b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="year_level_Id" 
-                                                id="year_level_Id">
-                                                <option value=""></option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Year_Level_Id, 
-                                                                Year_name 
-                                                            FROM 
-                                                                year_levels 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    while($row = mysqli_fetch_assoc($fetch)){
-
-                                                        $year_level_Id  = $row['Year_Level_Id'];
-                                                        $year_name      = $row['Year_name'];
-
-                                                        echo "<option value='".$year_level_Id."'>".$year_name."</option>";
-                                                    }
-
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
                                             <p><b>Semester Name: <span class="text-danger">(*)</span></b></p>
                                             <input 
                                                 type="text" 
@@ -339,38 +302,6 @@
                                             class="form-control form-control-sm"
                                             name="e_semester_Id" 
                                             id="e_semester_Id">
-
-                                        <div class="form-group">
-                                            <p><b>Year Level:</b></p>
-                                            <select 
-                                                class="form-control form-control-sm" 
-                                                name="e_year_level_Id" 
-                                                id="e_year_level_Id" 
-                                                style="width:100%;">
-                                                <option value=""></option>
-                                                <?php
-
-                                                    $query="SELECT 
-                                                                Year_Level_Id, 
-                                                                Year_name 
-                                                            FROM 
-                                                                year_levels 
-                                                            WHERE 
-                                                                Status = 1 ";
-
-                                                    $fetch = mysqli_query($con, $query);
-
-                                                    while($row = mysqli_fetch_assoc($fetch)){
-
-                                                        $year_level_Id  = $row['Year_Level_Id'];
-                                                        $year_name      = $row['Year_name'];
-
-                                                        echo "<option value='".$year_level_Id."'>".$year_name."</option>";
-                                                    }
-
-                                                ?>
-                                            </select>
-                                        </div>
 
                                         <div class="form-group">
                                             <p><b>Semster Name: <span class="text-danger">(*)</span></b></p>
@@ -736,12 +667,12 @@
             }
 
 
-            function editSemester(semester_Id, semester_name, year_level_Id){
+            function editSemester(semester_Id, semester_name){
 
                 $('#newSemesterForm').hide()
                 $('#editSemesterForm').show()
 
-                $('#e_year_level_Id').val(year_level_Id).trigger('change')
+                // $('#e_year_level_Id').val(year_level_Id).trigger('change')
 
                 $('#e_semester_Id').val(semester_Id)
                 $('#e_semester_name').val(semester_name)

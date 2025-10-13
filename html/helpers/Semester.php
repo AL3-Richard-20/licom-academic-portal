@@ -39,20 +39,15 @@
                     student_year_level.SYL_Id,
                     student_year_level.Semester_Id,
                     student_year_level.Course_Id,
-                    semesters.Semester_name, 
                     year_levels.Year_name,
                     courses.Course_name, 
                     courses.Course_code  
                 FROM 
                     student_year_level 
                 LEFT JOIN 
-                    semesters 
-                ON 
-                    student_year_level.Semester_Id = semesters.Semester_Id 
-                LEFT JOIN 
                     year_levels 
                 ON 
-                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                    student_year_level.Year_Level_Id = year_levels.Year_Level_Id 
                 LEFT JOIN 
                     courses 
                 ON 

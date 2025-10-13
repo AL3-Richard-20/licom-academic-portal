@@ -137,25 +137,33 @@
                         <div class="col-lg-4">
                             <p><b>Semester: <span class="text-danger">(*)</span></b></p>
                             <select 
-                                class="form-control form-control-sm"
-                                name="semester_dd_val"
+                                class="form-control form-control-sm" 
+                                name="semester_dd_val" 
                                 id="semester_dd_val">
                                 <option value=""></option>
                                 <?php
 
                                     $query="SELECT 
-                                                semesters.Semester_Id, 
-                                                semesters.Semester_name,
-                                                semesters.Is_default,
-                                                year_levels.Year_name  
+                                                semesters.Semester_name, 
+                                                semesters.Is_default, 
+                                                student_classes.Class_Schedule_Id,  
+                                                class_schedules.Semester_Id     
                                             FROM 
-                                                semesters 
+                                                student_classes 
                                             LEFT JOIN 
-                                                year_levels 
+                                                class_schedules 
                                             ON 
-                                                semesters.Year_Level_Id = year_levels.Year_Level_Id 
+                                                student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                                            LEFT JOIN 
+                                                semesters   
+                                            ON 
+                                                class_schedules.Semester_Id = semesters.Semester_Id
                                             WHERE 
-                                                semesters.Status = 1 ";
+                                                class_schedules.Status = 1 
+                                                AND student_classes.Student_Id = '".$_SESSION["licom_usr_Id"]."' 
+                                                AND student_classes.Status = 1 
+                                            GROUP BY 
+                                                class_schedules.Semester_Id ";
 
                                     $fetch = mysqli_query($con, $query);
 
@@ -165,14 +173,13 @@
 
                                         while($row = mysqli_fetch_assoc($fetch)){
 
-                                            $year_name      = $row['Year_name'];
                                             $semester_Id    = $row['Semester_Id'];
                                             $semester_name  = $row['Semester_name'];
                                             $is_default     = $row['Is_default'];
 
                                             $is_selected = ($is_default == 1) ? 'selected' : '';
                                             
-                                            echo "<option value='".$semester_Id."' ".$is_selected.">".$year_name." | ".$semester_name."</option>";
+                                            echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
                                         }
                                     }
                                 ?>
