@@ -274,18 +274,13 @@
                                                     <?php
 
                                                         $query="SELECT 
-                                                                    semesters.Semester_Id, 
-                                                                    semesters.Semester_name,
-                                                                    semesters.Is_default,
-                                                                    year_levels.Year_name  
+                                                                    Semester_Id, 
+                                                                    Semester_name,
+                                                                    Is_default
                                                                 FROM 
                                                                     semesters 
-                                                                LEFT JOIN 
-                                                                    year_levels 
-                                                                ON 
-                                                                    semesters.Year_Level_Id = year_levels.Year_Level_Id 
                                                                 WHERE 
-                                                                    semesters.Status = 1 ";
+                                                                    Status = 1 ";
 
                                                         $fetch = mysqli_query($con, $query);
 
@@ -295,11 +290,10 @@
 
                                                             while($row = mysqli_fetch_assoc($fetch)){
 
-                                                                $year_name      = $row['Year_name'];
                                                                 $semester_Id    = $row['Semester_Id'];
                                                                 $semester_name  = $row['Semester_name'];
 
-                                                                echo "<option value='".$semester_Id."'>".$year_name." | ".$semester_name."</option>";
+                                                                echo "<option value='".$semester_Id."'>".$semester_name."</option>";
                                                             }
                                                         }
                                                     ?>
@@ -630,7 +624,7 @@
                                         var midterm         = value.Midterm
                                         var tentative_final = value.Tentative_Final
                                         var final_grade     = value.Final_Grade
-                                        var grade_remark    = value.Remark
+                                        // var grade_remark    = value.Remark
                                     
                                         // var student_Id      = Object.keys(value)[0]
                                         // var student_name    = Object.keys(value)[1]

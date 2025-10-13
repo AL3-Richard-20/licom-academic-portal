@@ -12,7 +12,7 @@
 
     $data   = array();    
 
-    $data[] = ['Student_ID', 'Name', 'Midterm', 'Tentative_Final', 'Final_Grade', 'Remark'];
+    $data[] = ['Student_ID', 'Name', 'Midterm', 'Tentative_Final', 'Final_Grade'];
 
     if(isset($_GET['semesterid'], $_GET['subjectid'], $_GET['courseid'])){
 
@@ -98,7 +98,7 @@
     
                 $student_fullname = $student_fname." ".$student_lname;
     
-                $data[] = [$student_Id, $student_fullname, 0, 0, 0, 0];
+                $data[] = [$student_Id, $student_fullname, 0, 0, 0];
             }
         }
     
