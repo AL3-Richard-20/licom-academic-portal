@@ -652,10 +652,10 @@
                                                         <td class="font-weight-bold">Username:</td>
                                                         <td id="username_txt">---</td>
                                                     </tr>
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td class="font-weight-bold">Password:</td>
                                                         <td id="password_txt">---</td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -727,8 +727,8 @@
 
                             </div>
 
-                            </div>
-                            <!-- ================ Edit Account Info END ============= -->
+                        </div>
+                    <!-- ================ Edit Account Info END ============= -->
 
                 </div>
                 <!-- ============================================================== -->
@@ -1067,7 +1067,7 @@
                     success: function (response) {
                         
                         $('#username_txt').html(response.Username)
-                        $('#password_txt').html(response.Password)
+                        // $('#password_txt').html(response.Password)
 
                         $('#e_username').val(response.Username)
                     }
