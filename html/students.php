@@ -143,16 +143,48 @@
 
                         <div class="card-header bg-white">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <!-- <p><b>Filter by:</b></p> -->
-                                    <button 
-                                        type="button" 
-                                        class="btn btn-secondary btn-sm font-weight-bold text-uppercase">
-                                        <span class="fa fa-calendar"></span>
-                                        &nbspFilter
-                                    </button>
+                                <div class="col-lg-3">
+                                    <p><b>Semester:</b></p>
+                                    <select 
+                                        class="form-control form-control-sm"
+                                        name="semester_dd_val"
+                                        id="semester_dd_val">
+                                        <option value=""></option>
+                                        <option value="all" selected>All students</option>
+                                        <?php
+
+                                            $query="SELECT 
+                                                        Semester_Id, 
+                                                        Semester_name,
+                                                        Is_default
+                                                    FROM 
+                                                        semesters 
+                                                    WHERE 
+                                                        Status = 1 ";
+
+                                            $fetch = mysqli_query($con, $query);
+
+                                            $count = mysqli_num_rows($fetch);
+
+                                            if($fetch && $count > 0){
+
+                                                while($row = mysqli_fetch_assoc($fetch)){
+
+                                                    $semester_Id    = $row['Semester_Id'];
+                                                    $semester_name  = $row['Semester_name'];
+                                                    $is_default     = $row['Is_default'];
+
+                                                    $is_set = ($is_default == 1) ? "(Current) " : "";
+                                                    
+                                                    echo "<option value='".$semester_Id."'>".$is_set.$semester_name."</option>";
+                                                }
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
-                                <div class="col-lg-6 text-right">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-3 text-right">
                                     <!-- <p style="color:transparent;">Action</p> -->
                                     <button 
                                         type="button" 
@@ -187,90 +219,90 @@
 
                                         <?php
 
-                                            $query="SELECT 
-                                                        users.User_Id,
-                                                        users.FName, 
-                                                        users.MName, 
-                                                        users.LName, 
-                                                        users.Phone_no,
-                                                        users.Date_added, 
-                                                        users.Time_added,
-                                                        users.Status  
-                                                    FROM 
-                                                        users 
-                                                    LEFT JOIN 
-                                                        accounts 
-                                                    ON 
-                                                        users.User_Id = accounts.User_Id
-                                                    WHERE 
-                                                        users.Status = 1 
-                                                        AND accounts.Level_Id = 3 
-                                                    ORDER BY 
-                                                        users.User_Id DESC,
-                                                        users.Date_added DESC, 
-                                                        users.Time_added DESC ";
+                                            // $query="SELECT 
+                                            //             users.User_Id,
+                                            //             users.FName, 
+                                            //             users.MName, 
+                                            //             users.LName, 
+                                            //             users.Phone_no,
+                                            //             users.Date_added, 
+                                            //             users.Time_added,
+                                            //             users.Status  
+                                            //         FROM 
+                                            //             users 
+                                            //         LEFT JOIN 
+                                            //             accounts 
+                                            //         ON 
+                                            //             users.User_Id = accounts.User_Id
+                                            //         WHERE 
+                                            //             users.Status = 1 
+                                            //             AND accounts.Level_Id = 3 
+                                            //         ORDER BY 
+                                            //             users.User_Id DESC,
+                                            //             users.Date_added DESC, 
+                                            //             users.Time_added DESC ";
 
-                                            $fetch = mysqli_query($con, $query);
+                                            // $fetch = mysqli_query($con, $query);
 
-                                            $count = mysqli_num_rows($fetch);
+                                            // $count = mysqli_num_rows($fetch);
 
-                                            if($count > 0){
+                                            // if($count > 0){
 
-                                                while($row = mysqli_fetch_assoc($fetch)){
+                                            //     while($row = mysqli_fetch_assoc($fetch)){
 
-                                                    $user_Id    = $row['User_Id'];
-                                                    $fname      = $row['FName'];
-                                                    $mname      = $row['MName'];
-                                                    $lname      = $row['LName'];
-                                                    $phone_no   = $row['Phone_no'];
-                                                    $date_added = $row['Date_added'];
-                                                    $time_added = $row['Time_added'];
-                                                    $status     = $row['Status'];
+                                            //         $user_Id    = $row['User_Id'];
+                                            //         $fname      = $row['FName'];
+                                            //         $mname      = $row['MName'];
+                                            //         $lname      = $row['LName'];
+                                            //         $phone_no   = $row['Phone_no'];
+                                            //         $date_added = $row['Date_added'];
+                                            //         $time_added = $row['Time_added'];
+                                            //         $status     = $row['Status'];
 
-                                                    $student_fullname = $fname." ".$lname;
+                                            //         $student_fullname = $fname." ".$lname;
 
-                                                    echo "<tr>";
-                                                    echo "<td class='text-left'>".$user_Id."</td>";
-                                                    echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
-                                                    echo "<td class='text-left'>".$phone_no."</td>";
-                                                    echo "<td>".dateFormat($date_added)."</td>";
-                                                    echo "<td>".timeFormat($time_added)."</td>";
+                                            //         echo "<tr>";
+                                            //         echo "<td class='text-left'>".$user_Id."</td>";
+                                            //         echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
+                                            //         echo "<td class='text-left'>".$phone_no."</td>";
+                                            //         echo "<td>".dateFormat($date_added)."</td>";
+                                            //         echo "<td>".timeFormat($time_added)."</td>";
 
-                                                    if($status == 1){
+                                            //         if($status == 1){
 
-                                                        $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
-                                                    }
-                                                    else if($status == 2){
+                                            //             $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
+                                            //         }
+                                            //         else if($status == 2){
 
-                                                        $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
-                                                    }
+                                            //             $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
+                                            //         }
 
-                                                    echo "<td>".$status_txt."</td>";
-                                                    echo "<td class='text-center'>
-                                                            <button 
-                                                                type='button' 
-                                                                class='btn btn-outline-light btn-sm text-primary' 
-                                                                onclick='location.href=`student_info.php?studid=".$user_Id."`;' 
-                                                                title='Edit record'>
-                                                                <span class='fa fa-pencil-alt'></span>
-                                                            </button>
-                                                            <button 
-                                                                type='button' 
-                                                                class='btn btn-outline-light btn-sm text-dark' 
-                                                                title='Input grades' 
-                                                                onclick='inputGradesModal(`".$user_Id."`, `".$student_fullname."`)'>
-                                                                <span class='fa fa-file-alt'></span>
-                                                            </button>
-                                                        </td>";
-                                                    echo "</tr>";
-                                                }
-                                            }
-                                            else{
+                                            //         echo "<td>".$status_txt."</td>";
+                                            //         echo "<td class='text-center'>
+                                            //                 <button 
+                                            //                     type='button' 
+                                            //                     class='btn btn-outline-light btn-sm text-primary' 
+                                            //                     onclick='location.href=`student_info.php?studid=".$user_Id."`;' 
+                                            //                     title='Edit record'>
+                                            //                     <span class='fa fa-pencil-alt'></span>
+                                            //                 </button>
+                                            //                 <button 
+                                            //                     type='button' 
+                                            //                     class='btn btn-outline-light btn-sm text-dark' 
+                                            //                     title='Input grades' 
+                                            //                     onclick='inputGradesModal(`".$user_Id."`, `".$student_fullname."`)'>
+                                            //                     <span class='fa fa-file-alt'></span>
+                                            //                 </button>
+                                            //             </td>";
+                                            //         echo "</tr>";
+                                            //     }
+                                            // }
+                                            // else{
 
-                                                echo "<tr>";
-                                                echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
-                                                echo "</tr>";
-                                            }
+                                            //     echo "<tr>";
+                                            //     echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
+                                            //     echo "</tr>";
+                                            // }
                                         ?>
 
                                     </tbody>
@@ -611,32 +643,37 @@
                     })
                 // ============ Select2 END ============
                 
+                studentsTbl('')
 
-                $('#students_tbl').DataTable({
+                // $('#students_tbl').DataTable({
                     
-                    "bInfo":false,
-                    "aaSorting": [],
-                    "columnDefs": [ {
-                        "targets": 5,
-                        "orderable": false
-                    } ],
-                    layout: {
-                        topStart: {
-                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-                        }
-                    }
-                })
+                //     "bInfo":false,
+                //     "aaSorting": [],
+                //     "columnDefs": [ {
+                //         "targets": 5,
+                //         "orderable": false
+                //     } ],
+                //     layout: {
+                //         topStart: {
+                //             buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                //         }
+                //     }
+                // })
 
                 $('#semester_dd_val').on('change', function(){
 
                     var semester_Id = $(this).val()
 
-                    if(semester_Id != ''){
+                    $('#students_tbl').DataTable().destroy()
 
-                        fetchStudentSubjects(semester_Id)
+                    studentsTbl(semester_Id)
+
+                    // if(semester_Id != ''){
+
+                    //     fetchStudentSubjects(semester_Id)
     
-                        $('#add_new_grade_form').hide()
-                    }
+                    //     $('#add_new_grade_form').hide()
+                    // }
                 })
 
                 $('#newSubjectGradeForm').on('submit', function(aa){
@@ -811,6 +848,128 @@
                 $('#ssg_tent_grade_val').val(tent_grade)
                 $('#ssg_grade_val').val(subject_grade)
                 $('#remarks_dd').val(subject_remark)
+            }
+
+
+            function studentsTbl(semester_val){
+
+                var stud_table = $('#students_tbl').DataTable({
+
+                    "responsive":true,
+                    "bInfo":false,
+                    "aaSorting": [],
+                    "columnDefs": [ {
+                        "targets": 5,
+                        "orderable": false
+                    } ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    },
+                    "ajax": {
+                        'type':'POST',
+                        'url':'models/StudentModel.php',
+                        'data':{
+                            semesterval:semester_val,
+                            action:"fetch_students"
+                        },
+                    },
+                    "columns": [
+                        { "data": "UserId", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<p class="text-left">'+ data +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "UserId", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<p class="font-weight-bold">'+ row.FName +' '+ row.MName + ' ' + row.LName +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "PhoneNo", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<p class="text-left">'+ data +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "DateAdded", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<p>'+ data +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "TimeAdded", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<p>'+ data +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "Status", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                if(data == 1){
+
+                                    var status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
+                                }
+                                else if(data == 2){
+
+                                    var status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
+                                }
+
+                                output+='<p>'+ status_txt +'</p>'
+
+                                return output
+                            }
+                        },
+                        { "data": "UserId", 
+
+                            render : function ( data, type, row, meta ) {
+
+                                var output=''
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" onclick="location.href=`student_info.php?studid='+ data +'`;" title="Edit record">'
+                                output+='<span class="fa fa-pencil-alt"></span>'
+                                output+='</button>'
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-dark" title="Input grades" onclick="inputGradesModal(`'+ data +'`, `'+ row.FName +' '+ row.MName + ' ' + row.LName +'`)">'
+                                output+='<span class="fa fa-file-alt"></span>'
+                                output+='</button>'
+
+                                return output
+                            }
+                        },
+                    ],
+                })
             }
 
         </script>
