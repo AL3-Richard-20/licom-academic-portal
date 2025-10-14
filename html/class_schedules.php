@@ -701,6 +701,14 @@
                                                         <td id="subject_txt">---</td>
                                                     </tr>
                                                     <tr>
+                                                        <td class="font-weight-bold">Units: </td>
+                                                        <td id="subject_units_txt">---</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="font-weight-bold">Classification: </td>
+                                                        <td id="subject_class_txt">---</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td class="font-weight-bold">Instructor: </td>
                                                         <td id="instructor_txt">---</td>
                                                     </tr>
@@ -726,7 +734,7 @@
                                             <hr>
 
                                             <div class="form-group">
-                                                <p><b>Search:</b></p>
+                                                <p id="search_student_txt"><b>Search:</b></p>
                                                 <input 
                                                     type="text" 
                                                     class="form-control form-control-sm"
@@ -757,7 +765,7 @@
                                 <div class="modal-footer">
                                     <button
                                         type="button" 
-                                        class="btn btn-outline-dark font-weight-bold text-uppercase" 
+                                        class="btn btn-outline-dark font-weight-bold text-uppercase import-class-sched_btn" 
                                         onclick="importToClassSched()">
                                         <span class="fa fa-upload"></span>
                                         &nbspImport .xlsx
@@ -872,6 +880,8 @@
 
     <script>
 
+        var is_semester_default = 1
+
         $(document).ready(function () {
 
             // scheduleInfoModal(`1`, `1 Year 1st Semester A.Y. 2025-2026`, `1FA `, `1`, `08:00 AM`, `09:30 AM`, `Bachelor of Science in Information Technology`, `BSIT`,  `Data Structures and Algorithms`, `BSIT-DSA`, ``)
@@ -984,6 +994,29 @@
                         $('#room_txt2').html(room_txt)
 
                         fetchSelectedSchedule()
+
+                        // var semester_Id = $('#semester_dd_val').val()
+
+                        // check if semester is set as active
+                        $.ajax({
+                            type: "POST",
+                            url: "models/SemesterModel.php",
+                            data: {
+                                action:'fetch_current_semester'
+                            },
+                            dataType: "JSON",
+                            success: function (response) {
+
+                                if(response.SemId != semester_Id){
+
+                                    is_semester_default = 0
+                                }
+                                else{
+
+                                    is_semester_default = 1
+                                }
+                            }
+                        })
                     }
                 })
             // ============== Record Filter END ============
@@ -1038,9 +1071,13 @@
                                         output+='<div class="ml-3"><span>'+ fullname +'</span><br><span>'+ year_name +' | '+ course_code +'</span></div>'
                                         output+='</div>'
 
-                                        output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase add-stud-btn" userid="'+ value.UserId +'" classschedid="'+ class_sched_val +'">'
-                                        output+='Add'
-                                        output+='</button>'
+                                        if(is_semester_default == 1){
+
+                                            output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase add-stud-btn" userid="'+ value.UserId +'" classschedid="'+ class_sched_val +'">'
+                                            output+='Add'
+                                            output+='</button>'
+
+                                        }
 
                                         output+='</li>'
                                     })
@@ -1251,7 +1288,7 @@
 
                         var room_name_val = value.RoomName+" | "+value.RoomDetails
 
-                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ room_name_val +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
+                        var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ room_name_val +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`, `'+ value.SubjectUnits +'`, `'+ value.SubjectClass +'`)'
 
                         output+='<div class="bg-info p-2 mt-1 mb-1 text-white" style="min-height:80px;cursor:pointer;" onclick="'+ scheduleInfoModal +'">'
                         output+='<span class="font-weight-bold"><h5>'+ value.SubjectName +'</h5></span>'
@@ -1297,7 +1334,20 @@
             });
         }
 
-        function scheduleInfoModal(class_schedule_Id, semester, room, day, time_start, time_end, course, course_code, subject, subject_code, instructor){
+        function scheduleInfoModal(
+            class_schedule_Id, 
+            semester, 
+            room, 
+            day, 
+            time_start, 
+            time_end, 
+            course, 
+            course_code, 
+            subject, 
+            subject_code, 
+            instructor,
+            subject_units,
+            subject_class){
 
             $('#scheduleInfoMod').modal('show')
 
@@ -1343,9 +1393,26 @@
             $('#time_end_txt').html(time_end)
             $('#course_txt').html(course+' | '+course_code)
             $('#subject_txt').html(subject+' | '+subject_code)
+            $('#subject_units_txt').html((subject_units != 'null') ? subject_units : '---')
+            $('#subject_class_txt').html((subject_class != 'null') ? subject_class : '---')
             $('#instructor_txt').html(instructor)
 
             fetchClassStudents(class_schedule_Id)
+
+            if(is_semester_default == 1){
+
+                $('.import-class-sched_btn').show()
+                $('.delete-class-sched-btn').show()
+                $('#search_student_txt').show()
+                $('#search_student_val').show()
+            }
+            else{
+
+                $('.import-class-sched_btn').hide()
+                $('.delete-class-sched-btn').hide()
+                $('#search_student_txt').hide()
+                $('#search_student_val').hide()
+            }
         }
 
         function countClassStudents(){
@@ -1392,9 +1459,12 @@
 
                             var output=''
 
-                            output+='<button type="button" class="btn btn-outline-light btn-sm text-danger delete-class-stud_btn" studclassid="'+ data +'">'
-                            output+='<span class="fa fa-trash"></span>'
-                            output+='</button>'
+                            if(is_semester_default == 1){
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-danger delete-class-stud_btn" studclassid="'+ data +'">'
+                                output+='<span class="fa fa-trash"></span>'
+                                output+='</button>'
+                            }
 
                             return output
                         }

@@ -43,7 +43,8 @@
 
         <link href="../assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="../assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
-
+    
+        <link href="../assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="../dist/css/style.min.css" rel="stylesheet">
@@ -155,6 +156,8 @@
                                                     <th>Name</th>
                                                     <th>Code</th>
                                                     <th>Program</th>
+                                                    <th>Units</th>
+                                                    <th>Classification</th>
                                                     <th>Date Added</th>
                                                     <th>Time Added</th>
                                                     <th class="text-center">Action</th>
@@ -171,6 +174,8 @@
                                                                 courses.Course_code,
                                                                 subjects.Subject_name,
                                                                 subjects.Subject_code,
+                                                                subjects.Units,
+                                                                subjects.Classification,
                                                                 subjects.Date_added,
                                                                 subjects.Time_added
                                                             FROM 
@@ -201,6 +206,9 @@
                                                                 $course_code    = $row['Course_code'];
                                                                 $subject_name   = $row['Subject_name'];
                                                                 $subject_code   = $row['Subject_code'];
+                                                                $subject_units  = $row['Units'] ?? '---';
+                                                                $subject_class  = $row['Classification'] ?? '---';
+
                                                                 $date_added     = dateFormat($row['Date_added']);
                                                                 $time_added     = timeFormat($row['Time_added']);
 
@@ -208,13 +216,21 @@
                                                                 echo "<td class='font-weight-bold'>".$subject_name."</td>";
                                                                 echo "<td>".$subject_code."</td>";
                                                                 echo "<td><span title='".$course_name."' data-toggle='tooltip'>".$course_code."</span></td>";
+                                                                echo "<td>".$subject_units."</td>";
+                                                                echo "<td>".$subject_class."</td>";
                                                                 echo "<td>".$date_added."</td>";
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>
                                                                         <button 
                                                                             type='button' 
                                                                             class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSubject(`".$subject_Id."`, `".$course_Id."`, `".$subject_name."`, `".$subject_code."`)'>
+                                                                            onclick='editSubject(
+                                                                                `".$subject_Id."`, 
+                                                                                `".$course_Id."`, 
+                                                                                `".$subject_name."`, 
+                                                                                `".$subject_code."`, 
+                                                                                `".$subject_units."`, 
+                                                                                `".$subject_class."`)'>
                                                                             <span class='fa fa-pencil-alt'></span>
                                                                         </button>
                                                                         <button 
@@ -311,6 +327,29 @@
                                                 autocomplete="off"
                                                 required>
                                         </div>
+                                        <div class="form-group">
+                                            <p><b>Units: <span class="text-danger">(*)</span></b></p>
+                                            <input 
+                                                type="number" 
+                                                class="form-control form-control-sm"
+                                                name="subject_units" 
+                                                id="subject_units"
+                                                placeholder="Input subject unit here" 
+                                                autocomplete="off"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <p><b>Classification: <span class="text-danger">(*)</span></b></p>
+                                            <select 
+                                                class="form-control form-control-sm" 
+                                                name="subject_class" 
+                                                id="subject_class" 
+                                                style="width:100%;">
+                                                <option value="" selected disabled></option>
+                                                <option value="Laboratory">Laboratory</option>
+                                                <option value="Lecture">Lecture</option>
+                                            </select>
+                                        </div>
 
                                     </div>
 
@@ -396,6 +435,29 @@
                                                 placeholder="Input subject code here" 
                                                 autocomplete="off"
                                                 required>
+                                        </div>
+                                        <div class="form-group">
+                                            <p><b>Units: <span class="text-danger">(*)</span></b></p>
+                                            <input 
+                                                type="number" 
+                                                class="form-control form-control-sm"
+                                                name="e_subject_units" 
+                                                id="e_subject_units"
+                                                placeholder="Input subject unit here" 
+                                                autocomplete="off"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <p><b>Classification: <span class="text-danger">(*)</span></b></p>
+                                            <select 
+                                                class="form-control form-control-sm" 
+                                                name="e_subject_class" 
+                                                id="e_subject_class" 
+                                                style="width:100%;">
+                                                <option value="" selected disabled></option>
+                                                <option value="Laboratory">Laboratory</option>
+                                                <option value="Lecture">Lecture</option>
+                                            </select>
                                         </div>
 
                                     </div>
@@ -502,6 +564,8 @@
         <script src="../assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="../assets/libs/toastr/build/toastr.min.js"></script>
 
+        <script src="../assets/libs/select2/dist/js/select2.full.min.js"></script>
+
 
         <!--Wave Effects -->
         <script src="../dist/js/waves.js"></script>
@@ -517,6 +581,17 @@
         <script>
 
             $(document).ready(function () {
+
+                // =========== Select2 =============
+                    $('#subject_class').select2({
+                        "placeholder":"Select classification here",
+                        "allowClear":true
+                    })
+                    $('#e_subject_class').select2({
+                        "placeholder":"Select classification here",
+                        "allowClear":true
+                    })
+                // =========== Select2 END =========
 
                 subjectsTbl()
             
@@ -614,7 +689,13 @@
             }
 
 
-            function editSubject(subject_Id, course_Id, subject_name, subject_code){
+            function editSubject(
+                subject_Id, 
+                course_Id, 
+                subject_name, 
+                subject_code, 
+                subject_units, 
+                subject_class){
 
                 $('#newSubjectForm').hide()
                 $('#editSubjectForm').show()
@@ -623,6 +704,8 @@
                 $('#e_course_Id').val(course_Id)
                 $('#e_subject_name').val(subject_name)
                 $('#e_subject_code').val(subject_code)
+                $('#e_subject_units').val(subject_units)
+                $('#e_subject_class').val(subject_class).trigger('change')
             }
 
 
