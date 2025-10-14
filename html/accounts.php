@@ -168,105 +168,109 @@
 
                         <div class="card-body">
 
-                            <table class="table table-hover" id="accounts_tbl">
-                                <thead class="table-bordered font-weight-bold text-uppercase">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Level</th>
-                                        <th>Date Added</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-sm text-muted">
-                                    <?php
+                            <div class="table-responsive">
 
-                                        $query="SELECT 
-                                                    users.User_Id, 
-                                                    users.FName, 
-                                                    users.LName, 
-                                                    users.Email, 
-                                                    users.Date_added, 
-                                                    users.Time_added, 
-                                                    accounts.Level_Id, 
-                                                    levels.Level_Id, 
-                                                    levels.Level_name 
-                                                FROM 
-                                                    users 
-                                                LEFT JOIN 
-                                                    accounts 
-                                                ON 
-                                                    users.User_Id = accounts.User_Id 
-                                                LEFT JOIN 
-                                                    levels 
-                                                ON 
-                                                    accounts.Level_Id = levels.Level_Id 
-                                                WHERE 
-                                                   users.Status = 1 
-                                                   AND NOT users.User_Id = '".$_SESSION["licom_usr_Id"]."' ";
+                                <table class="table table-hover display nowrap" id="accounts_tbl" style="width:100%;">
+                                    <thead class="table-bordered font-weight-bold text-uppercase">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Level</th>
+                                            <th>Date Added</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-sm text-muted">
+                                        <?php
 
-                                        $fetch = mysqli_query($con, $query);
+                                            $query="SELECT 
+                                                        users.User_Id, 
+                                                        users.FName, 
+                                                        users.LName, 
+                                                        users.Email, 
+                                                        users.Date_added, 
+                                                        users.Time_added, 
+                                                        accounts.Level_Id, 
+                                                        levels.Level_Id, 
+                                                        levels.Level_name 
+                                                    FROM 
+                                                        users 
+                                                    LEFT JOIN 
+                                                        accounts 
+                                                    ON 
+                                                        users.User_Id = accounts.User_Id 
+                                                    LEFT JOIN 
+                                                        levels 
+                                                    ON 
+                                                        accounts.Level_Id = levels.Level_Id 
+                                                    WHERE 
+                                                    users.Status = 1 
+                                                    AND NOT users.User_Id = '".$_SESSION["licom_usr_Id"]."' ";
 
-                                        if($fetch){
+                                            $fetch = mysqli_query($con, $query);
 
-                                            while($row = mysqli_fetch_assoc($fetch)){
+                                            if($fetch){
 
-                                                $user_Id    = $row['User_Id'];
-                                                $user_fname = $row['FName'];
-                                                $user_lname = $row['LName'];
-                                                $user_email = $row['Email'];
+                                                while($row = mysqli_fetch_assoc($fetch)){
 
-                                                $date_added = dateFormat($row['Date_added']);
-                                                $time_added = timeFormat($row['Time_added']);
+                                                    $user_Id    = $row['User_Id'];
+                                                    $user_fname = $row['FName'];
+                                                    $user_lname = $row['LName'];
+                                                    $user_email = $row['Email'];
 
-                                                $level_Id   = $row['Level_Id'];
-                                                $level_name = $row['Level_name'];
+                                                    $date_added = dateFormat($row['Date_added']);
+                                                    $time_added = timeFormat($row['Time_added']);
 
-                                                $user_fullname = $user_fname." ".$user_lname;
+                                                    $level_Id   = $row['Level_Id'];
+                                                    $level_name = $row['Level_name'];
 
-                                                $date_mod = $date_added." | ".$time_added;
+                                                    $user_fullname = $user_fname." ".$user_lname;
 
-                                                echo "<tr>";
-                                                echo "<td class='font-weight-bold'>".$user_fullname."</td>";
-                                                echo "<td>".$user_email."</td>";
-                                                echo "<td class='font-weight-bold'>".$level_name."</td>";
-                                                echo "<td>".$date_mod."</td>";
+                                                    $date_mod = $date_added." | ".$time_added;
 
-                                                $redir_link = NULL;
+                                                    echo "<tr>";
+                                                    echo "<td class='font-weight-bold'>".$user_fullname."</td>";
+                                                    echo "<td>".$user_email."</td>";
+                                                    echo "<td class='font-weight-bold'>".$level_name."</td>";
+                                                    echo "<td>".$date_mod."</td>";
 
-                                                if($level_Id == 4){
+                                                    $redir_link = NULL;
 
-                                                    $redir_link = 'instructor_info.php?instructorid='.$user_Id;
-                                                } 
-                                                else if($level_Id == 3){
+                                                    if($level_Id == 4){
 
-                                                    $redir_link = 'student_info.php?studid='.$user_Id;
-                                                } 
-                                                else if($level_Id == 2){
+                                                        $redir_link = 'instructor_info.php?instructorid='.$user_Id;
+                                                    } 
+                                                    else if($level_Id == 3){
 
-                                                    $redir_link = 'registrar_info.php?registrarid='.$user_Id;
-                                                } 
+                                                        $redir_link = 'student_info.php?studid='.$user_Id;
+                                                    } 
+                                                    else if($level_Id == 2){
 
-                                                echo "<td class='text-center'>
-                                                        <button 
-                                                            type='button' 
-                                                            class='btn btn-outline-light text-primary btn-sm' 
-                                                            onclick='location.href=`".$redir_link."`;'>
-                                                            <span class='fa fa-pencil-alt'></span>
-                                                        </button>
-                                                        <button 
-                                                            type='button' 
-                                                            class='btn btn-outline-light text-danger btn-sm' 
-                                                            onclick='deleteUser(`".$user_Id."`)'>
-                                                            <span class='fa fa-trash'></span>
-                                                        </button>
-                                                    </td>";
-                                                echo "</tr>";
+                                                        $redir_link = 'registrar_info.php?registrarid='.$user_Id;
+                                                    } 
+
+                                                    echo "<td class='text-center'>
+                                                            <button 
+                                                                type='button' 
+                                                                class='btn btn-outline-light text-primary btn-sm' 
+                                                                onclick='location.href=`".$redir_link."`;'>
+                                                                <span class='fa fa-pencil-alt'></span>
+                                                            </button>
+                                                            <button 
+                                                                type='button' 
+                                                                class='btn btn-outline-light text-danger btn-sm' 
+                                                                onclick='deleteUser(`".$user_Id."`)'>
+                                                                <span class='fa fa-trash'></span>
+                                                            </button>
+                                                        </td>";
+                                                    echo "</tr>";
+                                                }
                                             }
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
 
                         </div>
 
