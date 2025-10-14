@@ -369,7 +369,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="font-weight-bold">Year Level:</td>
-                                                        <td><?= $_SESSION["licom_year_name"]." | ".$_SESSION["licom_sem_name"] ?></td>
+                                                        <td><?= $_SESSION["licom_year_name"] ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="font-weight-bold">Program:</td>

@@ -180,7 +180,7 @@
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-sm text-muted">
+                                    <tbody class="table-sm">
                                         <?php
 
                                             $query="SELECT 

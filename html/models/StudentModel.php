@@ -234,6 +234,100 @@
 
             echo json_encode($results_arr);
         }
+
+        else if($_POST['action'] == 'fetch_students'){
+
+            $semester_val = $_POST['semesterval'];
+
+            if($semester_val == 'all' || $semester_val == ''){
+
+                $query="SELECT 
+                            users.User_Id,
+                            users.FName, 
+                            users.MName, 
+                            users.LName, 
+                            users.Phone_no,
+                            users.Date_added, 
+                            users.Time_added,
+                            users.Status  
+                        FROM 
+                            users 
+                        LEFT JOIN 
+                            accounts 
+                        ON 
+                            users.User_Id = accounts.User_Id
+                        WHERE 
+                            users.Status = 1 
+                            AND accounts.Level_Id = 3 
+                        ORDER BY 
+                            users.User_Id DESC,
+                            users.Date_added DESC, 
+                            users.Time_added DESC ";
+            }
+            else{
+
+                $query="SELECT 
+                            student_classes.Student_Class_Id,
+                            class_schedules.Class_Schedule_Id, 
+                            users.User_Id,
+                            users.FName, 
+                            users.MName, 
+                            users.LName, 
+                            users.Phone_no,
+                            users.Date_added, 
+                            users.Time_added,
+                            users.Status 
+                        FROM 
+                            student_classes 
+                        LEFT JOIN 
+                            class_schedules
+                        ON 
+                            student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                        LEFT JOIN 
+                            users 
+                        ON 
+                            student_classes.Student_Id = users.User_Id 
+                        WHERE 
+                            class_schedules.Semester_Id = '".$semester_val."' 
+                            AND class_schedules.Status = 1 
+                            AND student_classes.Status = 1 
+                        GROUP BY 
+                            student_classes.Student_Id ";
+            }
+
+            $fetch = mysqli_query($con, $query);
+
+            $count = mysqli_num_rows($fetch);
+
+            $data = array();
+
+            while($row = mysqli_fetch_assoc($fetch)){
+
+                $user_Id    = $row['User_Id'];
+                $fname      = $row['FName'];
+                $mname      = $row['MName'];
+                $lname      = $row['LName'];
+                $phone_no   = $row['Phone_no'];
+                $date_added = $row['Date_added'];
+                $time_added = $row['Time_added'];
+                $status     = $row['Status'];
+
+                $student_fullname = $fname." ".$lname;
+
+                $data[] = array(
+                    'UserId' => $user_Id,
+                    'FName' => $fname,
+                    'MName' => $mname,
+                    'LName' => $lname,
+                    'PhoneNo' => $phone_no,
+                    'DateAdded' => dateFormat($date_added),
+                    'TimeAdded' => timeFormat($time_added),
+                    'Status' => $status
+                );
+            }
+
+            echo json_encode(array('data' => $data));
+        }
     }
 
 ?>
