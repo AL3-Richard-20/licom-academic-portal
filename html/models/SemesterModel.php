@@ -151,6 +151,23 @@
             echo json_encode($res_req);
         }
 
+        else if($_POST['action'] == 'fetch_current_semester'){
+
+            $current_sem_info = currentSemester();
+
+            $semester_Id    = $current_sem_info['SemId'];
+            $semester_name  = $current_sem_info['SemName'];
+            $is_default     = $current_sem_info['IsDefault'];
+
+            echo json_encode(
+                array(
+                    'SemId' => $semester_Id,
+                    'SemName' => $semester_name,
+                    'IsDefault' => $is_default
+                )
+            );
+        }
+
         // =============== Year Levels ================ 
             elseif($_POST['action'] == 'new_year_level'){
 

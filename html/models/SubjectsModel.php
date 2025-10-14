@@ -127,9 +127,11 @@
 
         else if($_POST['action'] == 'new_subject'){
 
-            $course_Id    = $_POST['course_Id'];
-            $subject_name = $_POST['subject_name'];
-            $subject_code = $_POST['subject_code'];
+            $course_Id      = $_POST['course_Id'];
+            $subject_name   = $_POST['subject_name'];
+            $subject_code   = $_POST['subject_code'];
+            $subject_units  = $_POST['subject_units'];
+            $subject_class  = $_POST['subject_class'];
 
             $columns1   = [ "Subject_Id" ];
             $where1     = [ 
@@ -146,6 +148,8 @@
                     "Course_Id" => $course_Id,
                     "Subject_name" => $subject_name, 
                     "Subject_code" => $subject_code,
+                    "Units" => $subject_units,
+                    "Classification" => $subject_class,
                     "Date_added" => $server_date,
                     "Time_added" => $server_time
                 ];
@@ -179,11 +183,15 @@
             $course_Id      = $_POST['e_course_Id'];
             $subject_name   = $_POST['e_subject_name'];
             $subject_code   = $_POST['e_subject_code'];
+            $subject_units  = $_POST['e_subject_units'];
+            $subject_class  = $_POST['e_subject_class'];
 
             $data1   = [
                 "Course_Id" => $course_Id,
                 "Subject_name" => $subject_name,
                 "Subject_code" => $subject_code,
+                "Units" => $subject_units,
+                "Classification" => $subject_class,
                 "Date_added" => $server_date,
                 "Time_added" => $server_time
             ];
