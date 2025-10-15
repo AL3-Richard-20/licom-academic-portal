@@ -601,7 +601,7 @@
                     url: "models/SubjectsModel.php",
                     data: {
                         semid:semester_Id,
-                        action:'fetch_instructor_subjects'x
+                        action:'fetch_instructor_subjects',
                     },
                     dataType: "JSON",
                     success: function (response) {
