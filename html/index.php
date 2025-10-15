@@ -327,7 +327,7 @@
                                     onclick="location.href='faculty_grades.php';">
 
                                     <h1 style="font-size:110px;"><span class="fa fa-file-alt"></span></h1>
-                                    <h2>Encode Grades</h2>
+                                    <h2>Evaluation Grades</h2>
 
                                 </div>
 
