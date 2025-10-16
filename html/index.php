@@ -13,12 +13,16 @@
             global $con;
 
             $query="SELECT 
-                        COUNT(*) as Total 
+                        COUNT(users.User_Id) as Total 
                     FROM 
+                        users 
+                    LEFT JOIN 
                         accounts 
+                    ON 
+                        users.User_Id = accounts.User_Id  
                     WHERE 
-                        Status = 1 
-                        AND Level_Id = '".$level_Id."' ";
+                        users.Status = 1 
+                        AND accounts.Level_Id = '".$level_Id."' ";
 
             $fetch  = mysqli_query($con, $query);
             $row    = mysqli_fetch_assoc($fetch);

@@ -408,37 +408,6 @@
                     $remarks_dd = gradeRemark($grade_val);
                 // ========== Remarks Interpretation END ========
 
-                // echo $i_student_Id." | ".$remark_txt;
-
-                // ======= Check Remark ID ============
-                    // $query0 ="SELECT 
-                    //             Grade_Remark_Id 
-                    //         FROM 
-                    //             grade_remarks 
-                    //         WHERE 
-                    //             (Grade_remark = '".$remark_txt."' 
-                    //             OR Grade_remark = UPPER('".$remark_txt."') ) 
-                    //             AND Status = 1 
-                    //         LIMIT 1 ";
-
-                    // $fetch0 = mysqli_query($con, $query0);
-
-                    // $count0 = mysqli_num_rows($fetch0);
-
-                    // if($count0 > 0){
-
-                    //     $row0 = mysqli_fetch_assoc($fetch0);
-
-                    //     $remarks_dd = $row0['Grade_Remark_Id'];
-                    // }
-                    // else{
-
-                    //     $is_valid = 0;
-
-                    //     $res_req = 4; // Invalid Remark
-                    // }
-                // ======= Check Remark ID END ========
-
                 // ======= Check student record if matches on database =============
                     $query="SELECT  
                                 COUNT(*) as Total 
