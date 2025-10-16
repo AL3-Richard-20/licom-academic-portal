@@ -674,7 +674,7 @@
                                 output+='</td>'
                                 
                                 output+='<td>'
-                                output+='<input type="number" class="form-control form-control-sm" step="any" name="final_grade_'+ stud_Id +'" id="final_grade_'+ stud_Id +'" value="'+ final_grade +'">'
+                                output+='<input type="number" class="form-control form-control-sm" step="any" name="final_grade_'+ stud_Id +'" id="final_grade_'+ stud_Id +'" value="'+ final_grade +'" readonly>'
                                 output+='</td>'
                                 
                                 output+='<td>'+ grade_remark +'</td>'
@@ -702,7 +702,6 @@
                             $('#submit_form_btn').prop('disabled', true)
                         }
                     }
-
                 })
             }
 

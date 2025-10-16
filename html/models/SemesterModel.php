@@ -130,6 +130,17 @@
                 $update2  = update($semesters, $data2, $where2);
 
                 if($update2 == 1){
+                    
+                    // ON GOING
+                    // =========== Set all students as "Inactive" ============
+                        // $data3    = [ "Status" => 0 ];
+                        // $where3   = [ "Status" => 1 ];
+                        // $update3 = update($users, $data3, $where3);
+                    // =========== Set all students as "Inactive" END ========
+                    
+                    // ON GOING
+                    // =========== Set those students under current semester as "Active" ============
+                    // =========== Set those students under current semester as "Active" END ========
 
                     $user_Id    = $_SESSION["licom_usr_Id"];
                     $log_detail = 'Set semester as active. ID: '.$sem_Id;

@@ -140,7 +140,7 @@
                     <div class="row">
 
                         <div class="col-lg-4">
-                            <h6><b>NOTE:</b></h6>
+                            <!-- <h6><b>NOTE:</b></h6> -->
                             
                             <?php
 
@@ -163,7 +163,7 @@
                                 }
                             ?>
 
-                            <p>Only <b><?= implode(', ', $results_arr) ?></b> are accepted as Remarks.</p>
+                            <!-- <p>Only <b><?= implode(', ', $results_arr) ?></b> are accepted as Remarks.</p> -->
 
                         </div>
 
@@ -648,19 +648,19 @@
     
                                         // ========== Midterm =============
                                             output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="midterm_'+ student_Id +'" id="midterm_"'+ student_Id +'" placeholder="Input midterm grade here" value="'+ midterm +'" required>'
+                                            output+='<input type="text" class="form-control form-control-sm" name="midterm_'+ student_Id +'" id="midterm_"'+ student_Id +'" placeholder="Input midterm grade here" value="'+ midterm +'">'
                                             output+='</td>'
                                         // ========== Midterm END =========
     
                                         // ========== Tentative Final ============
                                             output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="tentative_'+ student_Id +'" id="tentative_'+ student_Id +'" placeholder="Input tentative final grade here" value="'+ tentative_final +'" required>'
+                                            output+='<input type="text" class="form-control form-control-sm" name="tentative_'+ student_Id +'" id="tentative_'+ student_Id +'" placeholder="Input tentative final grade here" value="'+ tentative_final +'">'
                                             output+='</td>'
                                         // ========== Tentative Final END ========
     
                                         // ========== Final Grade ============
                                             output+='<td>'
-                                            output+='<input type="text" class="form-control form-control-sm" name="final_grade_'+ student_Id +'" id="final_grade_'+ student_Id +'" placeholder="Input final grade here" value="'+ final_grade +'" required>'
+                                            output+='<input type="text" class="form-control form-control-sm" name="final_grade_'+ student_Id +'" id="final_grade_'+ student_Id +'" placeholder="Input final grade here" value="'+ final_grade +'" readonly>'
                                             output+='</td>'
                                         // ========== Final Grade END ========
     

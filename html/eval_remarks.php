@@ -172,11 +172,12 @@
                                                                 Range_from, 
                                                                 Range_to,
                                                                 Date_added, 
-                                                                Time_added
+                                                                Time_added 
                                                             FROM 
                                                                 grade_remarks 
                                                             WHERE 
                                                                 Status = 1 
+                                                                AND NOT Grade_Remark_Id = 9 
                                                             ORDER BY 
                                                                 Range_from ASC ";
 

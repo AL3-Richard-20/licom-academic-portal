@@ -986,8 +986,7 @@
                                                                 name="ssg_midterm_grade_val"
                                                                 id="ssg_midterm_grade_val" 
                                                                 placeholder="Input midterm grade here" 
-                                                                step="any" 
-                                                                required>
+                                                                step="any">
                                                         </div>
                                                         <div class="form-group">
                                                             <p><b>Tentative Grade: <span class="text-danger">(*)</span></b></p>
@@ -997,19 +996,18 @@
                                                                 name="ssg_tent_grade_val"
                                                                 id="ssg_tent_grade_val" 
                                                                 placeholder="Input tentative grade here" 
-                                                                step="any" 
-                                                                required>
+                                                                step="any">
                                                         </div>
                                                         <div class="form-group">
                                                             <p><b>Final Grade: <span class="text-danger">(*)</span></b></p>
                                                             <input 
                                                                 type="number" 
                                                                 class="form-control form-control-sm" 
-                                                                name="ssg_grade_val"
+                                                                name="ssg_grade_val" 
                                                                 id="ssg_grade_val" 
                                                                 placeholder="Input final grade here" 
                                                                 step="any" 
-                                                                required>
+                                                                readonly>
                                                         </div>
 
                                                         <!-- <div class="form-group">
