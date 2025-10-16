@@ -107,14 +107,35 @@
             $student_Id     = $_POST['ssg_student_Id'];
             $semester_Id    = $_POST['ssg_semester_Id'];
             $subject_Id     = $_POST['ssg_subject_Id'];
-            $midterm_grade  = $_POST['ssg_midterm_grade_val'];
-            $tentative_grade= $_POST['ssg_tent_grade_val'];
-            $grade_val      = $_POST['ssg_grade_val'];
+            $midterm_grade  = ($_POST['ssg_midterm_grade_val'] != '') ? $_POST['ssg_midterm_grade_val'] : 0;
+            $tentative_grade= ($_POST['ssg_tent_grade_val'] != '') ? $_POST['ssg_tent_grade_val'] : 0;
+            // $grade_val      = $_POST['ssg_grade_val'];
             // $remarks_dd     = $_POST['remarks_dd'];
+
+            // ========== Automatic Computation of Final Grade =============
+                $grade_val = ($midterm_grade + $tentative_grade) / 2;
+            // ========== Automatic Computation of Final Grade END =========
+
+            if($midterm_grade == 0 || $tentative_grade == 0){
+
+                $grade_val = 0;
+            }
 
             // ========== Remarks Interpretation ============
                 $remarks_dd = gradeRemark($grade_val);
             // ========== Remarks Interpretation END ========
+
+            // ========== Set as "Incomplete" ===============
+                if($remarks_dd == NULL || $remarks_dd == ''){
+
+                    $remarks_dd = 9;
+                }
+                if( ($midterm_grade == '' || $midterm_grade == NULL) || 
+                    ($tentative_grade == '' || $tentative_grade == NULL) ){
+
+                    $remarks_dd = 9;
+                }
+            // ========== Set as "Incomplete" END ===========
 
             $columns1 = [ "Grade_Id" ];
             $where1   = [
@@ -399,14 +420,35 @@
                 $res_req    = 1;
                 $is_valid   = 1;
 
-                $midterm_grade      = $_POST['midterm_'.$i_student_Id];
-                $tentative_grade    = $_POST['tentative_'.$i_student_Id];
-                $grade_val          = $_POST['final_grade_'.$i_student_Id];
+                $midterm_grade      = ($_POST['midterm_'.$i_student_Id] != '') ? $_POST['midterm_'.$i_student_Id] : 0;
+                $tentative_grade    = ($_POST['tentative_'.$i_student_Id] != '') ? $_POST['tentative_'.$i_student_Id] : 0;
+                // $grade_val          = $_POST['final_grade_'.$i_student_Id];
                 $remark_txt         = $_POST['remark_'.$i_student_Id];
+
+                // ========== Automatic Computation of Final Grade =============
+                    $grade_val = ($midterm_grade + $tentative_grade) / 2;
+                // ========== Automatic Computation of Final Grade END =========
+
+                if($midterm_grade == 0 || $tentative_grade == 0){
+
+                    $grade_val = 0;
+                }
 
                 // ========== Remarks Interpretation ============
                     $remarks_dd = gradeRemark($grade_val);
                 // ========== Remarks Interpretation END ========
+
+                // ========== Set as "Incomplete" ===============
+                    if($remarks_dd == NULL || $remarks_dd == ''){
+
+                        $remarks_dd = 9;
+                    }
+                    if( ($midterm_grade == '' || $midterm_grade == NULL) || 
+                        ($tentative_grade == '' || $tentative_grade == NULL) ){
+
+                        $remarks_dd = 9;
+                    }
+                // ========== Set as "Incomplete" END ===========
 
                 // ======= Check student record if matches on database =============
                     $query="SELECT  
@@ -446,22 +488,22 @@
                 // ======= Check student record if matches on database END =========
 
                 // ======= Check if all grade columns has value ==============
-                    if($midterm_grade == 0 || $tentative_grade == 0 || $grade_val == 0){
+                    // if($midterm_grade == 0 || $tentative_grade == 0 || $grade_val == 0){
 
-                        $is_valid = 0;
+                    //     $is_valid = 0;
 
-                        $res_req = 6; // Invalid Student Record
-                    }
+                    //     $res_req = 6; // Invalid Student Record
+                    // }
                 // ======= Check if all grade columns has value END ==========
 
-                // ======= Check if remarks value is valid ============
-                    if($remarks_dd == NULL){
+                // ======= Check if remarks value is valid (Disabled) ============
+                    // if($remarks_dd == NULL){
 
-                        $is_valid = 0;
+                    //     $is_valid = 0;
 
-                        $res_req = 7;
-                    }
-                // ======= Check if remarks value is valid END ========
+                    //     $res_req = 7;
+                    // }
+                // ======= Check if remarks value is valid (Disabled) END ========
 
                 if($is_valid == 1){
     
@@ -571,88 +613,110 @@
                 $res_req    = 1;
                 $is_valid   = 1;
 
-                $midterm_grade      = $_POST['midterm_'.$i_student_Id];
-                $tentative_grade    = $_POST['tentative_'.$i_student_Id];
-                $grade_val          = $_POST['final_grade_'.$i_student_Id];
+                $midterm_grade      = ($_POST['midterm_'.$i_student_Id] != '') ? $_POST['midterm_'.$i_student_Id] : 0;
+                $tentative_grade    = ($_POST['tentative_'.$i_student_Id] != '') ? $_POST['tentative_'.$i_student_Id] : 0;
+                // $grade_val          = $_POST['final_grade_'.$i_student_Id];
 
-                if($midterm_grade != 0 && $tentative_grade != 0 && $grade_val != 0){
+                // ========== Automatic Computation of Final Grade =============
+                    $grade_val = ($midterm_grade + $tentative_grade) / 2;
+                // ========== Automatic Computation of Final Grade END =========
 
-                    // ========== Remarks Interpretation ============
-                        $remarks_dd = gradeRemark($grade_val);
-                    // ========== Remarks Interpretation END ========
-    
-                    $columns1 = [ "Grade_Id" ];
-                    $where1   = [
+                if($midterm_grade == 0 || $tentative_grade == 0){
+
+                    $grade_val = 0;
+                }
+
+                // if($midterm_grade != 0 && $tentative_grade != 0 && $grade_val != 0){
+
+                // ========== Remarks Interpretation ============
+                    $remarks_dd = gradeRemark($grade_val);
+                // ========== Remarks Interpretation END ========
+
+                // ========== Set as "Incomplete" ===============
+                    if($remarks_dd == NULL || $remarks_dd == ''){
+
+                        $remarks_dd = 9;
+                    }
+                    if( ($midterm_grade == '' || $midterm_grade == NULL) || 
+                        ($tentative_grade == '' || $tentative_grade == NULL) ){
+
+                        $remarks_dd = 9;
+                    }
+                // ========== Set as "Incomplete" END ===========
+
+                $columns1 = [ "Grade_Id" ];
+                $where1   = [
+                    "Semester_Id" => $semester_Id,
+                    "Student_Id" => $i_student_Id,
+                    "Subject_Id" => $subject_Id,
+                    "Status" => 1
+                ];
+                $exists1  = exists($student_grades, $columns1, $where1);
+
+                if($exists1 == 0){  
+
+                    $data2 = [
+                        "Semester_Id" => $semester_Id,
+                        "Student_Id" => $i_student_Id,
+                        "Subject_Id" => $subject_Id,
+                        "Midterm_grade" => $midterm_grade,
+                        "Tentative_final" => $tentative_grade,
+                        "Grade_val" => $grade_val,
+                        "Remarks" => $remarks_dd,
+                        "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                        "Date_added" => $server_date,
+                        "Time_added" => $server_time
+                    ];
+                    $insert2 = insert($student_grades, $data2);
+
+                    $res_req = ($insert2['Result'] == 1) ? 1 : 2;
+                }
+                else{
+
+                    $data2   = [
+                        "Midterm_grade" => $midterm_grade,
+                        "Tentative_final" => $tentative_grade,
+                        "Grade_val" => $grade_val,
+                        "Remarks" => $remarks_dd,
+                        "Evaluated_by" => $_SESSION["licom_usr_Id"],
+                        "Last_updated_date" => $server_now
+                    ];
+                    $where2  = [
                         "Semester_Id" => $semester_Id,
                         "Student_Id" => $i_student_Id,
                         "Subject_Id" => $subject_Id,
                         "Status" => 1
                     ];
-                    $exists1  = exists($student_grades, $columns1, $where1);
+                    $update2 = update($student_grades, $data2, $where2);
+
+                    $res_req = ($update2 == 1) ? 1 : 2;
+                }
+
+
+                if($res_req == 1){
     
-                    if($exists1 == 0){  
-    
-                        $data2 = [
-                            "Semester_Id" => $semester_Id,
-                            "Student_Id" => $i_student_Id,
-                            "Subject_Id" => $subject_Id,
-                            "Midterm_grade" => $midterm_grade,
-                            "Tentative_final" => $tentative_grade,
-                            "Grade_val" => $grade_val,
-                            "Remarks" => $remarks_dd,
-                            "Evaluated_by" => $_SESSION["licom_usr_Id"],
-                            "Date_added" => $server_date,
-                            "Time_added" => $server_time
-                        ];
-                        $insert2 = insert($student_grades, $data2);
-    
-                        $res_req = ($insert2['Result'] == 1) ? 1 : 2;
-                    }
-                    else{
-    
-                        $data2   = [
-                            "Midterm_grade" => $midterm_grade,
-                            "Tentative_final" => $tentative_grade,
-                            "Grade_val" => $grade_val,
-                            "Remarks" => $remarks_dd,
-                            "Evaluated_by" => $_SESSION["licom_usr_Id"],
-                            "Last_updated_date" => $server_now
-                        ];
-                        $where2  = [
-                            "Semester_Id" => $semester_Id,
-                            "Student_Id" => $i_student_Id,
-                            "Subject_Id" => $subject_Id,
-                            "Status" => 1
-                        ];
-                        $update2 = update($student_grades, $data2, $where2);
-    
-                        $res_req = ($update2 == 1) ? 1 : 2;
-                    }
-    
-    
-                    if($res_req == 1){
-        
-                        array_push($no_errs_arr, $i_student_Id);
-                    }
-                    else{
-        
-                        $with_err_arr = array(
-                            'Res' => $res_req,
-                            'StudId' => $i_student_Id
-                        );
-        
-                        array_push($with_errs_arr, $with_err_arr);
-                    }
+                    array_push($no_errs_arr, $i_student_Id);
                 }
                 else{
-
+    
                     $with_err_arr = array(
-                        'Res' => 5,
+                        'Res' => $res_req,
                         'StudId' => $i_student_Id
                     );
     
                     array_push($with_errs_arr, $with_err_arr);
                 }
+                
+                // }
+                // else{
+
+                //     $with_err_arr = array(
+                //         'Res' => 5,
+                //         'StudId' => $i_student_Id
+                //     );
+    
+                //     array_push($with_errs_arr, $with_err_arr);
+                // }
             }
 
             $user_Id    = $_SESSION["licom_usr_Id"];

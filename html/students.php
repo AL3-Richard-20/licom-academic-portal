@@ -314,7 +314,7 @@
                             <!-- =============== Grades Modal ================= -->
                                 <div class="modal fade" id="gradesModal" style="padding-right: 17px;" data-backdrop="static" data-keyboard="false">
 
-                                    <div class="modal-dialog modal-lg" role="document" style="max-width:1140px;">
+                                    <div class="modal-dialog modal-lg" role="document" style="max-width:1240px;">
 
                                         <div class="modal-content" style="min-height:90vh;">
 
@@ -330,7 +330,7 @@
 
                                                         <input type="hidden" name="stud_Id_val" id="stud_Id_val">
 
-                                                        <div class="row">
+                                                        <!-- <div class="row">
                                                             <div class="col-lg-6">
                                                                 <p><b>Semester:</b></p>
                                                                 <select 
@@ -373,7 +373,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-lg-6"></div>
-                                                        </div>
+                                                        </div> -->
 
                                                         <br>
 
@@ -457,7 +457,7 @@
                                                                             id="ssg_grade_val" 
                                                                             placeholder="Input grade here" 
                                                                             step="any" 
-                                                                            required>
+                                                                            readonly>
                                                                     </div>
 
                                                                     <!-- <div class="form-group">
@@ -961,9 +961,9 @@
                                 output+='<span class="fa fa-pencil-alt"></span>'
                                 output+='</button>'
 
-                                output+='<button type="button" class="btn btn-outline-light btn-sm text-dark" title="Input grades" onclick="inputGradesModal(`'+ data +'`, `'+ row.FName +' '+ row.MName + ' ' + row.LName +'`)">'
-                                output+='<span class="fa fa-file-alt"></span>'
-                                output+='</button>'
+                                // output+='<button type="button" class="btn btn-outline-light btn-sm text-dark" title="Input grades" onclick="inputGradesModal(`'+ data +'`, `'+ row.FName +' '+ row.MName + ' ' + row.LName +'`)">'
+                                // output+='<span class="fa fa-file-alt"></span>'
+                                // output+='</button>'
 
                                 return output
                             }
