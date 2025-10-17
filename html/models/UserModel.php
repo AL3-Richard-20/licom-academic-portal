@@ -21,7 +21,9 @@
                     ON 
                         users.User_Id = accounts.User_Id
                     WHERE 
-                        NOT ISNULL(users.User_Id) ";
+                        NOT ISNULL(users.User_Id) 
+                        AND users.Status = 1 
+                        AND accounts.Status = 1 ";
 
 
             if(isset($_POST['userid']) && $_POST['userid'] != ''){
@@ -277,12 +279,19 @@
 
             if($update1 == 1){
 
-                $sess_user_Id   = $_SESSION["licom_usr_Id"];
-                $log_detail     = 'Set account as inactive. ID: '.$user_Id;
+                $data2    = [ "Status" => 0 ];
+                $where2   = [ "User_Id" => $user_Id ];
+                $update2 = update($accounts, $data2, $where2);
 
-                insertToActivityLogs($log_detail, $sess_user_Id);
+                if($update2 == 1){
 
-                $res_req = 1;
+                    $sess_user_Id   = $_SESSION["licom_usr_Id"];
+                    $log_detail     = 'Set account as inactive. ID: '.$user_Id;
+    
+                    insertToActivityLogs($log_detail, $sess_user_Id);
+    
+                    $res_req = 1;
+                }
             }
             else{
 
