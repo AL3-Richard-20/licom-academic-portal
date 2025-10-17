@@ -279,7 +279,7 @@
 
             if($update1 == 1){
 
-                $data2    = [ "Status" => 0 ];
+                $data2    = [ "Status" => $status ];
                 $where2   = [ "User_Id" => $user_Id ];
                 $update2 = update($accounts, $data2, $where2);
 
