@@ -271,7 +271,7 @@
             $status  = $_POST['statusval'];
 
             $data1   = [ 
-                "Status" => $status,
+                "Status" => $status, 
                 "Last_update" => $server_date 
             ];
             $where1  = [ "User_Id" => $user_Id ];

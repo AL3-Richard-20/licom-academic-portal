@@ -140,6 +140,28 @@
                     
                     // ON GOING
                     // =========== Set those students under current semester as "Active" ============
+                        // $query4="SELECT 
+                        //             student_classes.Student_Id, 
+                        //             class_schedules.Class_Schedule_Id 
+                        //         FROM 
+                        //             student_classes 
+                        //         LEFT JOIN 
+                        //             class_schedules 
+                        //         ON 
+                        //             student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                        //         WHERE 
+                        //             student_classes.Status = 1 
+                        //             AND class_schedules.Semester_Id = '".$sem_Id."' 
+                        //             AND class_schedules.Status = 1 
+                        //         GROUP BY 
+                        //             student_classes.Student_Id ";
+
+                        // $fetch4 = mysqli_query($con, $query4);
+
+                        // while($row4 = mysqli_fetch_assoc($fetch4)){
+
+                        //     $student_Id = $row4['Student_Id'];
+                        // }
                     // =========== Set those students under current semester as "Active" END ========
 
                     $user_Id    = $_SESSION["licom_usr_Id"];

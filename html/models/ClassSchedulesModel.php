@@ -317,13 +317,14 @@
                 $semester_Id = $sem_info['SemId'];
             // ========== Current Semester END ========
 
-
-            $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
-
             
             if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
+
+                $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
+            }
+            else{
 
                 $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
             }
