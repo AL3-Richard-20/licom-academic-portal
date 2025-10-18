@@ -518,6 +518,18 @@
 
                 $('#semester_dd_val').on('change', function(){
 
+
+                    var output=''
+
+                    output+='<tr>'
+                    output+='<td class="text-center" colspan="6">No data avaiable in the table.</td>'
+                    output+='</tr>'
+
+                    $('#import_tbl').html(output)
+
+                    $('#submit_form_btn').prop('disabled', true)
+
+
                     var semester_Id = $('#semester_dd_val').val()
 
                     var default_val = $('option:selected', this).attr('isdefault')
