@@ -121,7 +121,7 @@
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
 
-
+            
 
             <!-- ============================================================== -->
             <!-- Container fluid  -->
@@ -1076,7 +1076,6 @@
                                             output+='<button type="button" class="btn btn-success btn-sm font-weight-bold text-uppercase add-stud-btn" userid="'+ value.UserId +'" classschedid="'+ class_sched_val +'">'
                                             output+='Add'
                                             output+='</button>'
-
                                         }
 
                                         output+='</li>'
@@ -1099,7 +1098,6 @@
                     }
                 })
             // ============== Search Student END ==========
-
 
             // ============== Add New Student to Class ===============
                 $('#search_results_div').on('click', '.add-stud-btn', function() {
