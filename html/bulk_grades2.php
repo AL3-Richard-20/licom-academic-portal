@@ -155,7 +155,8 @@
                                             FROM 
                                                 semesters 
                                             WHERE 
-                                                Status = 1";
+                                                Status = 1 
+                                                AND Is_default IN(1, 2) ";
 
                                     $fetch = mysqli_query($con, $query);
 

@@ -144,6 +144,7 @@
                 "Course_Id" => $course_Id,
                 "Subject_name" => $subject_name, 
                 "Subject_code" => $subject_code,
+                "Units" => $subject_units,
                 "Status" => 1 
             ];
             $exists1    = exists($subjects, $columns1, $where1);
@@ -192,30 +193,48 @@
             $subject_units  = $_POST['e_subject_units'];
             $subject_class  = $_POST['e_subject_class'];
 
-            $data1   = [
+            $columns1   = [ "Subject_Id" ];
+            $where1     = [ 
                 "Course_Id" => $course_Id,
-                "Subject_name" => $subject_name,
+                "Subject_name" => $subject_name, 
                 "Subject_code" => $subject_code,
                 "Units" => $subject_units,
-                "Classification" => $subject_class,
-                "Date_added" => $server_date,
-                "Time_added" => $server_time
+                "Status" => 1, 
+                "NOT Subject_Id" => $subject_Id
             ];
-            $where1  = [ "Subject_Id" => $subject_Id ];
-            $update1 = update($subjects, $data1, $where1);
+            $exists1 = exists($subjects, $columns1, $where1);
 
-            if($update1 == 1){
+            if($exists1 == 0){
 
-                $user_Id    = $_SESSION["licom_usr_Id"];
-                $log_detail = 'Edit a subject. Name: '.$subject_name;
+                $data1   = [
+                    "Course_Id" => $course_Id,
+                    "Subject_name" => $subject_name,
+                    "Subject_code" => $subject_code,
+                    "Units" => $subject_units,
+                    "Classification" => $subject_class,
+                    "Date_added" => $server_date,
+                    "Time_added" => $server_time
+                ];
+                $where1  = [ "Subject_Id" => $subject_Id ];
+                $update1 = update($subjects, $data1, $where1);
 
-                insertToActivityLogs($log_detail, $user_Id);
+                if($update1 == 1){
 
-                $res_req = 1;
+                    $user_Id    = $_SESSION["licom_usr_Id"];
+                    $log_detail = 'Edit a subject. Name: '.$subject_name;
+
+                    insertToActivityLogs($log_detail, $user_Id);
+
+                    $res_req = 1;
+                }
+                else{
+
+                    $res_req = 2;
+                }
             }
             else{
 
-                $res_req = 2;
+                $res_req = 4;
             }
 
             echo json_encode($res_req);

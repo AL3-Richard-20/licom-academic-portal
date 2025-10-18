@@ -396,6 +396,14 @@
                                                             <td id="subject_txt">---</td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="font-weight-bold">Units: </td>
+                                                            <td id="subject_units_txt">---</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="font-weight-bold">Classification: </td>
+                                                            <td id="subject_class_txt">---</td>
+                                                        </tr>
+                                                        <tr>
                                                             <td class="font-weight-bold">Instructor: </td>
                                                             <td id="instructor_txt">---</td>
                                                         </tr>
@@ -595,7 +603,7 @@
 
                             var room_name_val = value.RoomName+" | "+value.RoomDetails
 
-                            var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ room_name_val +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`)'
+                            var scheduleInfoModal = 'scheduleInfoModal(`'+ value.ClassSchedId +'`, `'+ value.SemesterName +'`, `'+ room_name_val +'`, `'+ day_Id +'`, `'+ value.TimeStart +'`, `'+ value.TimeEnd +'`, `'+ value.CourseName +'`, `'+ value.CourseCode +'`,  `'+ value.SubjectName2 +'`, `'+ value.SubjectCode +'`, `'+ value.InstructorName +'`, `'+ value.SubjectUnits +'`, `'+ value.SubjectClass +'`)'
 
                             output+='<div class="bg-info p-2 mt-1 mb-1 text-white" style="min-height:80px;cursor:pointer;" onclick="'+ scheduleInfoModal +'">'
                             output+='<span class="font-weight-bold"><h5>'+ value.SubjectName +'</h5></span>'
@@ -619,7 +627,20 @@
                 })
             }
 
-            function scheduleInfoModal(class_schedule_Id, semester, room, day, time_start, time_end, course, course_code, subject, subject_code, instructor){
+            function scheduleInfoModal(
+                class_schedule_Id, 
+                semester, 
+                room, 
+                day, 
+                time_start, 
+                time_end, 
+                course, 
+                course_code, 
+                subject, 
+                subject_code, 
+                instructor,
+                subject_units,
+                subject_class){
 
                 $('#scheduleInfoMod').modal('show')
 
@@ -665,6 +686,8 @@
                 $('#time_end_txt').html(time_end)
                 $('#course_txt').html(course+' | '+course_code)
                 $('#subject_txt').html(subject+' | '+subject_code)
+                $('#subject_units_txt').html((subject_units != 'null') ? subject_units : '---')
+                $('#subject_class_txt').html((subject_class != 'null') ? subject_class : '---')
                 $('#instructor_txt').html(instructor)
 
                 // fetchClassStudents(class_schedule_Id)

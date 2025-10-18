@@ -310,7 +310,7 @@
                         <div class="col-lg-6">
                             <?php
                                 
-                                if($_SESSION["licom_usr_level"] == 3){ ?>
+                                if($_SESSION["licom_usr_level"] == 3 || $_SESSION["licom_usr_level"] == 1){ ?>
 
                                     <h4 class="font-weight-bold">Remarks: </h4>
                                     <span><?= $remarks ?></span>
@@ -324,7 +324,7 @@
 
                             <?php
 
-                                if($_SESSION["licom_usr_level"] == 4){ ?>
+                                if($_SESSION["licom_usr_level"] == 4 || $_SESSION["licom_usr_level"] == 1){ ?>
 
                                     <h4 class="font-weight-bold">Final Grade: </h4>
                                     <h2><span class="text-info"><?= $grade_val ?></span></h2>
