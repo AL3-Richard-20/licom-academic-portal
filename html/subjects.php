@@ -665,6 +665,10 @@
 
                                 toastr.error('Please contact your developer', 'SOMETHING WENT WRONG')
                             }
+                            else if(response == 4){
+                                
+                                toastr.info('Record already exist', 'CANNOT BE ADDED')
+                            }
                         }
                     });
                 })

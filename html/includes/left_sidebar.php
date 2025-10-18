@@ -350,6 +350,15 @@
 
                         <li class="sidebar-item">
                             <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                href="evaluation_grades.php" 
+                                aria-expanded="false">
+                                <i class="fa fa-file-alt"></i>
+                                <span class="hide-menu">Evaluation Grades</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a  class="sidebar-link waves-effect waves-dark sidebar-link" 
                                 href="semesters.php" 
                                 aria-expanded="false">
                                 <i class="fa fa-chart-line"></i>

@@ -136,8 +136,6 @@
                 <!-- ============================================================== -->
                 <div class="container-fluid">
 
-                    <input type="hidden" name="instructor_Id_val" id="instructor_Id_val" value="<?= $_SESSION["licom_usr_Id"] ?>">
-
                     <div class="row">
 
                         <div class="col-lg-4">
@@ -182,69 +180,61 @@
                             </div>
                         </div>
 
-                        <?php
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <p><b>Instructor:</b></p>
+                                <select 
+                                    class="form-control form-control-sm" 
+                                    name="instructor_dd" 
+                                    id="instructor_dd" 
+                                    style="width:100%;">
+                                    <option value=""></option>
+                                    <?php 
 
-                            if($_SESSION["licom_usr_level"] == 1){ ?>
+                                        $query="SELECT 
+                                                    users.User_Id, 
+                                                    users.FName, 
+                                                    users.MName, 
+                                                    users.LName, 
+                                                    users.Phone_no,
+                                                    users.Date_added, 
+                                                    users.Time_added,
+                                                    users.Status  
+                                                FROM 
+                                                    users 
+                                                LEFT JOIN 
+                                                    accounts 
+                                                ON 
+                                                    users.User_Id = accounts.User_Id
+                                                WHERE 
+                                                    users.Status = 1 
+                                                    AND accounts.Level_Id = 4 
+                                                ORDER BY 
+                                                    users.Date_added DESC, 
+                                                    users.Time_added DESC ";
 
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <p><b>Instructor:</b></p>
-                                        <select 
-                                            class="form-control form-control-sm" 
-                                            name="instructor_dd" 
-                                            id="instructor_dd" 
-                                            style="width:100%;">
-                                            <option value=""></option>
-                                            <?php 
+                                        $fetch = mysqli_query($con, $query);
 
-                                                $query="SELECT 
-                                                            users.User_Id, 
-                                                            users.FName, 
-                                                            users.MName, 
-                                                            users.LName, 
-                                                            users.Phone_no,
-                                                            users.Date_added, 
-                                                            users.Time_added,
-                                                            users.Status  
-                                                        FROM 
-                                                            users 
-                                                        LEFT JOIN 
-                                                            accounts 
-                                                        ON 
-                                                            users.User_Id = accounts.User_Id
-                                                        WHERE 
-                                                            users.Status = 1 
-                                                            AND accounts.Level_Id = 4 
-                                                        ORDER BY 
-                                                            users.Date_added DESC, 
-                                                            users.Time_added DESC ";
+                                        $count = mysqli_num_rows($fetch);
 
-                                                $fetch = mysqli_query($con, $query);
+                                        if($fetch && $count > 0){
 
-                                                $count = mysqli_num_rows($fetch);
+                                            while($row = mysqli_fetch_assoc($fetch)){
 
-                                                if($fetch && $count > 0){
+                                                $user_Id    = $row['User_Id'];
+                                                $fname      = $row['FName'];
+                                                $mname      = $row['MName'];
+                                                $lname      = $row['LName'];
 
-                                                    while($row = mysqli_fetch_assoc($fetch)){
+                                                $fullname = $fname." ".$mname." ".$lname;
 
-                                                        $user_Id    = $row['User_Id'];
-                                                        $fname      = $row['FName'];
-                                                        $mname      = $row['MName'];
-                                                        $lname      = $row['LName'];
-
-                                                        $fullname = $fname." ".$mname." ".$lname;
-
-                                                        echo "<option value='".$user_Id."'>".$fullname."</option>";
-                                                    }
-                                                }   
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <?php
-                            }
-                        ?>
+                                                echo "<option value='".$user_Id."'>".$fullname."</option>";
+                                            }
+                                        }   
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -363,8 +353,6 @@
 
         <script>
 
-            var instructor_Id = $('#instructor_Id_val').val()
-
             $(document).ready(function () {
 
                 facultyGrades('')
@@ -378,29 +366,22 @@
                     "allowClear":true
                 })
 
-                $('#semester_dd').on('change', function(){
+                $('#semester_dd, #instructor_dd').on('change', function(){
 
-                    var semester_Id = $(this).val()
+                    $('#final_grade_txt').html('0')
+                    $('#final_grade_desc').html('')
+
+                    var semester_Id     = $('#semester_dd').val()
+                    var instructor_Id   = $('#instructor_dd').val()
 
                     if(semester_Id != ''){
 
-                        facultyGrades(semester_Id)
+                        facultyGrades(semester_Id, instructor_Id)
                     }
                 })
-
-                // $('#instructor_dd').on('change', function(){
-
-                //     var semester_Id     = $('#semester_dd').val()
-                //     var instructor_Id   = $(this).val()
-
-                //     if(semester_Id != ''){
-
-                //         facultyGrades(semester_Id, instructor_Id)
-                //     }
-                // })
             })
 
-            function facultyGrades(semester_Id){
+            function facultyGrades(semester_Id, instructor_Id){
 
                 var output='';
 

@@ -324,6 +324,8 @@
                         subjects.Subject_Id, 
                         subjects.Subject_name, 
                         subjects.Subject_code, 
+                        subjects.Units, 
+                        subjects.Classification,
                         courses.Course_name,
                         courses.Course_code,
                         rooms.Room_name, 
@@ -479,6 +481,8 @@
                     $subject_Id     = $row['Subject_Id'];
                     $subject_name   = $row['Subject_name'];
                     $subject_code   = $row['Subject_code'];
+                    $subject_units  = $row['Units'];
+                    $subject_class  = $row['Classification'];
                     $course_name    = $row['Course_name'];
                     $course_code    = $row['Course_code'];
                     $room_name      = $row['Room_name'];
@@ -527,6 +531,8 @@
                         'SubjectName' => stringEllip($subject_name, 15),
                         'SubjectName2' => $subject_name,
                         'SubjectCode' => $subject_code,
+                        'SubjectUnits' => $subject_units,
+                        'SubjectClass' => $subject_class,
                         'CourseName' => $course_name,
                         'CourseCode' => $course_code,
                         'RoomName' => $room_name,
