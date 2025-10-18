@@ -149,13 +149,13 @@
                                 <?php
 
                                     $query="SELECT 
-                                                semesters.Semester_Id, 
-                                                semesters.Semester_name,
-                                                semesters.Is_default
+                                                Semester_Id, 
+                                                Semester_name,
+                                                Is_default
                                             FROM 
                                                 semesters 
                                             WHERE 
-                                                semesters.Status = 1 ";
+                                                Status = 1";
 
                                     $fetch = mysqli_query($con, $query);
 
@@ -167,8 +167,16 @@
 
                                             $semester_Id    = $row['Semester_Id'];
                                             $semester_name  = $row['Semester_name'];
+                                            $is_default     = $row['Is_default'];
+
+                                            $is_current = '';
+
+                                            if($is_default == 1){
+
+                                                $is_current = '| (Current)';
+                                            }
                                             
-                                            echo "<option value='".$semester_Id."'>".$semester_name."</option>";
+                                            echo "<option value='".$semester_Id."' isdefault='".$is_default."'>".$semester_name." ".$is_current."</option>";
                                         }
                                     }
                                 ?>
@@ -511,6 +519,17 @@
                 $('#semester_dd_val').on('change', function(){
 
                     var semester_Id = $('#semester_dd_val').val()
+
+                    var default_val = $('option:selected', this).attr('isdefault')
+
+                    if(default_val == 0){
+
+                        $('#submit_form_btn').hide()
+                    }
+                    else{
+
+                        $('#submit_form_btn').show()
+                    }
 
                     subjectDD(semester_Id)
                 })
