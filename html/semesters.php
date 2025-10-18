@@ -224,9 +224,12 @@
                                                                     $allow_action = 0;
                                                                 }
                                                                 else{
+                                                                    
                                                                     echo "<span class='badge badge-success font-weight-bold text-uppercase'>
                                                                             Active
                                                                         </span>";
+
+                                                                    $allow_action = 0;
                                                                 }
 
                                                                 if($allow_action == 1){
