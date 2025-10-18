@@ -6,6 +6,7 @@
 
     include "../helpers/Users.php";
     include "../helpers/Semester.php";
+    include "../helpers/Subject.php";
     include "../helpers/Logs.php";
 
     if(isset($_POST['action'])){
@@ -21,6 +22,16 @@
             $course_Id      = $_POST['course_Id'];
             $subject_Id     = $_POST['subject_Id'];
             $instructor_Id  = $_POST['instructor_Id'];
+
+            // =========== Subject Info =============
+                $subject_info  = subjectInfo($subject_Id);
+
+                $subject_units = $subject_info['Units'];
+            // =========== Subject Info END =========
+
+            // =========== Calculate Unit to Hours ==============
+                $total_hours = calculateHours($time_start_val, $time_end_val);
+            // =========== Calculate Unit to Hours END ==========
 
             $is_valid = 1;
 
@@ -47,9 +58,45 @@
 
                     $is_valid = 0;
 
-                    $res_req = 5;
+                    $res_req = 5; // Room already occupied
                 }
             // ========== Check Class Date and Time END =========
+
+            // ========== Check if instructor has other schedule ============
+                $query3 ="SELECT 
+                            COUNT(*) as Total 
+                        FROM 
+                            class_schedules 
+                        WHERE 
+                            ('".$time_start_val."' BETWEEN Time_start AND Time_end 
+                            OR '".$time_end_val."' BETWEEN Time_start AND Time_end ) 
+                            AND Semester_Id = '".$semester_Id."' 
+                            AND Instructor_Id = '".$instructor_Id."' 
+                            AND Day = '".$day_Id."' 
+                            AND Status = 1 ";
+
+                $fetch3 = mysqli_query($con, $query3);
+
+                $row3 = mysqli_fetch_assoc($fetch3);
+
+                $exists3 = $row3['Total'];
+
+                if($exists3 > 0){
+
+                    $is_valid = 0;
+
+                    $res_req = 6; // Instructor schedule is already occupied
+                }
+            // ========== Check if instructor has other schedule END ========
+
+            // =========== Calculate Unit to Hours ==============
+                if($total_hours > $subject_units){
+
+                    $is_valid = 0;
+
+                    $res_req = 7;
+                }
+            // =========== Calculate Unit to Hours END ==========
 
             if($is_valid == 1){
 
@@ -393,8 +440,17 @@
                 }
             }
 
-            $query .="GROUP BY 
-                        Class_Schedule_Id ";
+            if(isset($_POST['pergrade']) && $_POST['pergrade'] != ''){
+
+                $query .="GROUP BY 
+                            class_schedules.Subject_Id ";
+            }
+            else{
+
+                $query .="GROUP BY 
+                            class_schedules.Class_Schedule_Id ";
+            }
+
 
             $fetch = mysqli_query($con, $query);
 

@@ -7,6 +7,8 @@
         $query="SELECT 
                     subjects.Subject_name, 
                     subjects.Subject_code, 
+                    subjects.Units, 
+                    subjects.Classification, 
                     courses.Course_name, 
                     courses.Course_code 
                 FROM 
@@ -25,12 +27,16 @@
 
         $subject_name   = $row['Subject_name'];
         $subject_code   = $row['Subject_code'];
+        $subject_unit   = $row['Units'];
+        $classification = $row['Classification'];
         $course_name    = $row['Course_name'];
         $course_code    = $row['Course_code'];
 
         return array(
             'SubjectName' => $subject_name,
             'SubjectCode' => $subject_code,
+            'Units' => $subject_unit,
+            'SubjectClass' => $classification,
             'CourseName' => $course_name,
             'CourseCode' => $course_code
         );
