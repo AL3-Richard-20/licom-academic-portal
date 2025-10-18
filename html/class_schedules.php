@@ -453,50 +453,6 @@
 
                                         <hr>
 
-                                        <h5>Schedule Details:</h5><br>
-
-                                        <div class="row">
-
-                                            <div class="col-lg-4">
-                                                <p><b>Day: <span class="text-danger">(*)</span></b></p>
-                                                <select 
-                                                    class="form-control form-control-sm" 
-                                                    name="day_Id" 
-                                                    id="day_Id" 
-                                                    required>
-                                                    <option value="">Select day here</option>
-                                                    <option value="1">Monday</option>
-                                                    <option value="2">Tuesday</option>
-                                                    <option value="3">Wednesday</option>
-                                                    <option value="4">Thursday</option>
-                                                    <option value="5">Friday</option>
-                                                    <option value="6">Saturday</option>
-                                                    <option value="7">Sunday</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <p><b>Time Start: <span class="text-danger">(*)</span></b></p>
-                                                <input 
-                                                    type="time" 
-                                                    class="form-control form-control-sm" 
-                                                    name="time_start_val"
-                                                    id="time_start_val"
-                                                    required>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <p><b>Time End: <span class="text-danger">(*)</span></b></p>
-                                                <input 
-                                                    type="time" 
-                                                    class="form-control form-control-sm" 
-                                                    name="time_end_val"
-                                                    id="time_end_val"
-                                                    required>
-                                            </div>
-
-                                        </div>
-
-                                        <hr>
-
                                         <h5>Subject Details:</h5><br>
 
                                         <div class="row">
@@ -567,7 +523,7 @@
                                                         <?php
 
                                                             $query="SELECT 
-                                                                        users.User_Id,
+                                                                        users.User_Id, 
                                                                         users.FName, 
                                                                         users.MName, 
                                                                         users.LName, 
@@ -605,10 +561,54 @@
                                                                     
                                                                     echo "<option value='".$user_Id."'>".$fullname."</option>";
                                                                 }
-                                                            }
+                                                            }   
                                                         ?>
                                                     </select>
                                                 </div>
+                                            </div>
+
+                                        </div>
+
+                                        <hr>    
+
+                                        <h5>Schedule Details:</h5><br>
+
+                                        <div class="row">
+
+                                            <div class="col-lg-4">
+                                                <p><b>Day: <span class="text-danger">(*)</span></b></p>
+                                                <select 
+                                                    class="form-control form-control-sm" 
+                                                    name="day_Id" 
+                                                    id="day_Id" 
+                                                    required>
+                                                    <option value="">Select day here</option>
+                                                    <option value="1">Monday</option>
+                                                    <option value="2">Tuesday</option>
+                                                    <option value="3">Wednesday</option>
+                                                    <option value="4">Thursday</option>
+                                                    <option value="5">Friday</option>
+                                                    <option value="6">Saturday</option>
+                                                    <option value="7">Sunday</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <p><b>Time Start: <span class="text-danger">(*)</span></b></p>
+                                                <input 
+                                                    type="time" 
+                                                    class="form-control form-control-sm" 
+                                                    name="time_start_val"
+                                                    id="time_start_val"
+                                                    required>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <p><b>Time End: <span class="text-danger">(*)</span></b></p>
+                                                <input 
+                                                    type="time" 
+                                                    class="form-control form-control-sm" 
+                                                    name="time_end_val"
+                                                    id="time_end_val"
+                                                    required>
                                             </div>
 
                                         </div>
@@ -931,6 +931,9 @@
 
                 aa.preventDefault()
 
+                $('#time_start_val').removeClass('is-invalid')
+                $('#time_end_val').removeClass('is-invalid')
+
                 var data = $('#newClassForm').serializeArray()
 
                 data.push(
@@ -974,6 +977,17 @@
                         else if(response == 4 || response == 5){
 
                             toastr.error('Class schedule already occupied.', 'Already Exists')
+                        }
+                        else if(response == 6){
+
+                            toastr.error('Instructor schedule is already occupied.', 'Already Exists')
+                        }
+                        else if(response == 7){
+
+                            toastr.error('Hours must be aligned to subject units.', 'Cannot be Added')
+
+                            $('#time_start_val').addClass('is-invalid')
+                            $('#time_end_val').addClass('is-invalid')
                         }
                     }
                 });
@@ -1319,7 +1333,7 @@
 
                         $.each(response, function(key, value){
 
-                            output+='<option value="'+ value.SubjectId +'">'+ value.SubjectName +' | '+ value.SubjectCode +'</option>'
+                            output+='<option value="'+ value.SubjectId +'">'+ value.SubjectName +' | '+ value.SubjectCode +' | Units: '+ value.Units +'</option>'
                         })
                     }
                     else{

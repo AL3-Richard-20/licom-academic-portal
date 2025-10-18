@@ -13,6 +13,8 @@
                         Subject_Id, 
                         Subject_name, 
                         Subject_code, 
+                        Units, 
+                        Classification, 
                         Date_added, 
                         Time_added
                     FROM 
@@ -42,6 +44,8 @@
                     $subject_Id     = $row['Subject_Id'];
                     $subject_name   = $row['Subject_name'];
                     $subject_code   = $row['Subject_code'];
+                    $subject_unit   = $row['Units'];
+                    $classification = $row['Classification'];
                     $date_added     = dateFormat($row['Date_added']);
                     $time_added     = timeFormat($row['Time_added']);
 
@@ -49,6 +53,8 @@
                         'SubjectId' => $subject_Id,
                         'SubjectName' => $subject_name,
                         'SubjectCode' => $subject_code,
+                        'Units' => $subject_unit ?? '',
+                        'SubjectClass' => $classification,
                         'DateAdded' => $date_added,
                         'TimeAdded' => $time_added
                     );

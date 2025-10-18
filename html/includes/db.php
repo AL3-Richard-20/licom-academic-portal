@@ -651,6 +651,26 @@
 
             return $result;
         }
+
+
+        function calculateHours($start_time, $end_time){
+
+            $time1 = strtotime($start_time);
+            $time2 = strtotime($end_time);
+
+            // Handle cases where endTime might be on the next day (e.g., 22:00 to 06:00)
+            if ($time2 < $time1) {
+                $time2 += 24 * 60 * 60; // Add 24 hours (in seconds) to the end time
+            }
+
+            // Calculate the difference in seconds
+            $timeDifferenceSeconds = $time2 - $time1;
+
+            // Convert seconds to hours
+            $timeDifferenceHours = $timeDifferenceSeconds / 3600;
+
+            return round($timeDifferenceHours, 2);
+        }
     // ==================== Others END =======================
 
 ?>

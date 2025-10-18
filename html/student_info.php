@@ -1919,6 +1919,7 @@
                     data: {
                         studid:student_Id,
                         semesterid:semester_Id,
+                        pergrade:1,
                         action:"fetch_user_class_schedules"
                     },
                     dataType: "JSON",
