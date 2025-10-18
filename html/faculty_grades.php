@@ -172,9 +172,16 @@
                                                 $semester_name  = $row['Semester_name'];
                                                 $is_default     = $row['Is_default'];
 
+                                                $is_current = '';
+
+                                                if($is_default == 1){
+    
+                                                    $is_current = '| (Current)';
+                                                }
+
                                                 $is_selected = ($is_default == 1) ? 'selected' : '';
                                                 
-                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name."</option>";
+                                                echo "<option value='".$semester_Id."' ".$is_selected.">".$semester_name." ".$is_current."</option>";
                                             }
                                         }
                                     ?>
@@ -182,69 +189,18 @@
                             </div>
                         </div>
 
-                        <?php
-
-                            if($_SESSION["licom_usr_level"] == 1){ ?>
-
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <p><b>Instructor:</b></p>
-                                        <select 
-                                            class="form-control form-control-sm" 
-                                            name="instructor_dd" 
-                                            id="instructor_dd" 
-                                            style="width:100%;">
-                                            <option value=""></option>
-                                            <?php 
-
-                                                $query="SELECT 
-                                                            users.User_Id, 
-                                                            users.FName, 
-                                                            users.MName, 
-                                                            users.LName, 
-                                                            users.Phone_no,
-                                                            users.Date_added, 
-                                                            users.Time_added,
-                                                            users.Status  
-                                                        FROM 
-                                                            users 
-                                                        LEFT JOIN 
-                                                            accounts 
-                                                        ON 
-                                                            users.User_Id = accounts.User_Id
-                                                        WHERE 
-                                                            users.Status = 1 
-                                                            AND accounts.Level_Id = 4 
-                                                        ORDER BY 
-                                                            users.Date_added DESC, 
-                                                            users.Time_added DESC ";
-
-                                                $fetch = mysqli_query($con, $query);
-
-                                                $count = mysqli_num_rows($fetch);
-
-                                                if($fetch && $count > 0){
-
-                                                    while($row = mysqli_fetch_assoc($fetch)){
-
-                                                        $user_Id    = $row['User_Id'];
-                                                        $fname      = $row['FName'];
-                                                        $mname      = $row['MName'];
-                                                        $lname      = $row['LName'];
-
-                                                        $fullname = $fname." ".$mname." ".$lname;
-
-                                                        echo "<option value='".$user_Id."'>".$fullname."</option>";
-                                                    }
-                                                }   
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <?php
-                            }
-                        ?>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <p><b>Subject:</b></p>
+                                <select 
+                                    class="form-control form-control-sm"
+                                    name="subject_dd_val"
+                                    id="subject_dd_val" 
+                                    disabled>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -367,7 +323,7 @@
 
             $(document).ready(function () {
 
-                facultyGrades('')
+                facultyGrades('', '')
 
                 $('#semester_dd').select2({
                     "placeholder":"Select semester here",
@@ -377,30 +333,48 @@
                     "placeholder":"Select instructor here",
                     "allowClear":true
                 })
+                $('#subject_dd_val').select2({
+                    "placeholder":"Select subject here",
+                    "allowClear":true
+                })
+
+                setTimeout(function(){
+
+                    var semester_Id = $('#semester_dd').val()
+
+                    subjectDD(semester_Id)
+
+                    $('#subject_dd_val').prop('disabled', false)
+
+                }, 1000)
+
 
                 $('#semester_dd').on('change', function(){
 
                     var semester_Id = $(this).val()
+                    var subject_Id  = $('#subject_dd_val').val()
 
                     if(semester_Id != ''){
 
-                        facultyGrades(semester_Id)
+                        facultyGrades(semester_Id, subject_Id)
+
+                        subjectDD(semester_Id)
                     }
                 })
 
-                // $('#instructor_dd').on('change', function(){
+                $('#subject_dd_val').on('change', function(){
 
-                //     var semester_Id     = $('#semester_dd').val()
-                //     var instructor_Id   = $(this).val()
+                    var semester_Id = $('#semester_dd').val()
+                    var subject_Id  = $(this).val()
 
-                //     if(semester_Id != ''){
+                    if(semester_Id != ''){
 
-                //         facultyGrades(semester_Id, instructor_Id)
-                //     }
-                // })
+                        facultyGrades(semester_Id, subject_Id)
+                    }
+                })
             })
 
-            function facultyGrades(semester_Id){
+            function facultyGrades(semester_Id, subject_Id){
 
                 var output='';
 
@@ -410,6 +384,7 @@
                     data: {
                         instructorid:instructor_Id,
                         semesterid:semester_Id,
+                        subjectid:subject_Id,
                         action:"instructor_grades"
                     },
                     dataType: "JSON",
@@ -445,6 +420,42 @@
                         }
 
                         $('#faculty_eval_grades').html(output)
+                    }
+                })
+            }
+
+
+            function subjectDD(semester_Id){
+
+                var output=''
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/SubjectsModel.php",
+                    data: {
+                        semid:semester_Id,
+                        action:'fetch_instructor_subjects',
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response.length > 0){
+
+                            output+='<option value=""></option>'
+                            
+                            $.each(response, function(key, value){
+
+                                var class_sched_Id  = value.ClassSchedId
+                                var subject_Id      = value.SubjectID
+                                var subject_name    = value.SubjectName
+                                var subject_code    = value.SubjectCode
+                                var course_code     = value.CourseCode
+
+                                output+='<option value="'+ subject_Id +'">'+ course_code +' | '+ subject_code +' | '+ subject_name +'</option>'
+                            })
+                        }
+
+                        $('#subject_dd_val').html(output)
                     }
                 })
             }
