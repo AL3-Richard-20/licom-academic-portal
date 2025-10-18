@@ -1928,7 +1928,7 @@
                         if(response.data.length > 0){
 
                             $.each(response.data, function(key, value){
-
+                                
                                 var subject_Id   = value.SubjectId
                                 var subject_name = value.SubjectName2
 
