@@ -141,6 +141,7 @@
 
             $query ="SELECT 
                         Eval_Id, 
+                        Evaluated_by,
                         Remarks, 
                         Grade_val, 
                         Date_added, 
@@ -184,13 +185,21 @@
 
                 $grade_sum = 0;
 
+                $subject_Id = NULL;
+
+                if($_POST['subjectid'] != ''){
+
+                    $subject_Id = $_POST['subjectid'];
+                }
+
                 while($row = mysqli_fetch_assoc($fetch)){
 
-                    $eval_Id    = $row['Eval_Id'];
-                    $remarks    = $row['Remarks'];
-                    $grade_val  = $row['Grade_val'];
-                    $date_added = $row['Date_added'];
-                    $time_added = $row['Time_added'];
+                    $eval_Id        = $row['Eval_Id'];
+                    $evaluated_by   = $row['Evaluated_by'];
+                    $remarks        = $row['Remarks'];
+                    $grade_val      = $row['Grade_val'];
+                    $date_added     = $row['Date_added'];
+                    $time_added     = $row['Time_added'];
 
                     $grade_val_formatted = number_format($grade_val, 2);
                     $metric_val          = substr($grade_val_formatted, 0, 1);
@@ -202,20 +211,59 @@
                         $metric_q_desc      = $metric_info['MetricQDesc'];
                     // ========== Fetch Metric Info END =======
 
-                    $result_arr = array(
-                        'EvalId' => $eval_Id,
-                        'Remarks' => $remarks,
-                        'GradeVal' => $grade_val_formatted,
-                        'MetricVal' => $metric_val,
-                        'MetricDesc' => $metric_val_desc,
-                        'MetricQDesc' => $metric_q_desc,
-                        'DateAdded' => dateFormat($date_added),
-                        'TimeAdded' => timeFormat($time_added)
-                    );
+                    // ========== Filter by Subject ==============
+                        if($subject_Id != NULL){
 
-                    array_push($results_arr, $result_arr);
+                            $query1 ="SELECT 
+                                        COUNT(*) as Total 
+                                    FROM 
+                                        class_schedules 
+                                    LEFT JOIN 
+                                        student_classes 
+                                    ON 
+                                        class_schedules.Class_Schedule_Id = student_classes.Class_Schedule_Id 
+                                    WHERE 
+                                        class_schedules.Semester_Id = '".$semester_Id."' 
+                                        AND class_schedules.Instructor_Id = '".$instructor_Id."' 
+                                        AND class_schedules.Status = 1 
+                                        AND student_classes.Status = 1 
+                                        AND student_classes.Student_Id = '".$evaluated_by."' ";
+                                
+                            if($_POST['subjectid'] != ''){
 
-                    $grade_sum+=$grade_val;
+                                $subject_Id = $_POST['subjectid'];
+
+                                $query1 .="AND class_schedules.Subject_Id = '".$subject_Id."' ";
+                            }
+
+                            $query1.="GROUP BY 
+                                        student_classes.Student_Id ";
+
+                            $fetch1 = mysqli_query($con, $query1);
+
+                            $row1 = mysqli_fetch_assoc($fetch1);
+
+                            $is_under_subject = $row1['Total'];
+                        }
+                    // ========== Filter by Subject END ==========
+
+                    if($is_under_subject > 0){
+
+                        $result_arr = array(
+                            'EvalId' => $eval_Id,
+                            'Remarks' => $remarks,
+                            'GradeVal' => $grade_val_formatted,
+                            'MetricVal' => $metric_val,
+                            'MetricDesc' => $metric_val_desc,
+                            'MetricQDesc' => $metric_q_desc,
+                            'DateAdded' => dateFormat($date_added),
+                            'TimeAdded' => timeFormat($time_added)
+                        );
+    
+                        array_push($results_arr, $result_arr);
+    
+                        $grade_sum+=$grade_val;
+                    }
                 }
 
                 $total_grade = ($grade_sum / $count);
