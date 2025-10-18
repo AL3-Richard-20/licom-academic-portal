@@ -119,66 +119,73 @@
 
             $sem_Id = $_POST['semid'];
 
-            $data1    = [ "Is_default" => 0 ];
-            $where1   = [ "Status" => 1 ];
-            $update1  = update($semesters, $data1, $where1);
+            $data0    = [ "Is_default" => 2 ];
+            $where0   = [ "Is_default" => 1 ];
+            $update0  = update($semesters, $data0, $where0);
 
-            if($update1 == 1){
+            if($update0 == 1){
 
-                $data2    = [ "Is_default" => 1 ];
-                $where2   = [ "Semester_Id" => $sem_Id ];
-                $update2  = update($semesters, $data2, $where2);
-
-                if($update2 == 1){
-                    
-                    // ON GOING
-                    // =========== Set all students as "Inactive" ============
-                        // $data3    = [ "Status" => 0 ];
-                        // $where3   = [ "Status" => 1 ];
-                        // $update3 = update($users, $data3, $where3);
-                    // =========== Set all students as "Inactive" END ========
-                    
-                    // ON GOING
-                    // =========== Set those students under current semester as "Active" ============
-                        // $query4="SELECT 
-                        //             student_classes.Student_Id, 
-                        //             class_schedules.Class_Schedule_Id 
-                        //         FROM 
-                        //             student_classes 
-                        //         LEFT JOIN 
-                        //             class_schedules 
-                        //         ON 
-                        //             student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
-                        //         WHERE 
-                        //             student_classes.Status = 1 
-                        //             AND class_schedules.Semester_Id = '".$sem_Id."' 
-                        //             AND class_schedules.Status = 1 
-                        //         GROUP BY 
-                        //             student_classes.Student_Id ";
-
-                        // $fetch4 = mysqli_query($con, $query4);
-
-                        // while($row4 = mysqli_fetch_assoc($fetch4)){
-
-                        //     $student_Id = $row4['Student_Id'];
-                        // }
-                    // =========== Set those students under current semester as "Active" END ========
-
-                    $user_Id    = $_SESSION["licom_usr_Id"];
-                    $log_detail = 'Set semester as active. ID: '.$sem_Id;
-
-                    insertToActivityLogs($log_detail, $user_Id);
-
-                    $res_req = 1;
-                }
-                else{
-
-                    $res_req = 2;
-                }
-            }
-            else{
-
-                $res_req = 2;
+                // $data1    = [ "Is_default" => 0 ];
+                // $where1   = [ "Status" => 1 ];
+                // $update1  = update($semesters, $data1, $where1);
+    
+                // if($update1 == 1){
+    
+                    $data2    = [ "Is_default" => 1 ];
+                    $where2   = [ "Semester_Id" => $sem_Id ];
+                    $update2  = update($semesters, $data2, $where2);
+    
+                    if($update2 == 1){
+                        
+                        // ON GOING
+                        // =========== Set all students as "Inactive" ============
+                            // $data3    = [ "Status" => 0 ];
+                            // $where3   = [ "Status" => 1 ];
+                            // $update3 = update($users, $data3, $where3);
+                        // =========== Set all students as "Inactive" END ========
+                        
+                        // ON GOING
+                        // =========== Set those students under current semester as "Active" ============
+                            // $query4="SELECT 
+                            //             student_classes.Student_Id, 
+                            //             class_schedules.Class_Schedule_Id 
+                            //         FROM 
+                            //             student_classes 
+                            //         LEFT JOIN 
+                            //             class_schedules 
+                            //         ON 
+                            //             student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                            //         WHERE 
+                            //             student_classes.Status = 1 
+                            //             AND class_schedules.Semester_Id = '".$sem_Id."' 
+                            //             AND class_schedules.Status = 1 
+                            //         GROUP BY 
+                            //             student_classes.Student_Id ";
+    
+                            // $fetch4 = mysqli_query($con, $query4);
+    
+                            // while($row4 = mysqli_fetch_assoc($fetch4)){
+    
+                            //     $student_Id = $row4['Student_Id'];
+                            // }
+                        // =========== Set those students under current semester as "Active" END ========
+    
+                        $user_Id    = $_SESSION["licom_usr_Id"];
+                        $log_detail = 'Set semester as active. ID: '.$sem_Id;
+    
+                        insertToActivityLogs($log_detail, $user_Id);
+    
+                        $res_req = 1;
+                    }
+                    else{
+    
+                        $res_req = 2;
+                    }
+                // }
+                // else{
+    
+                //     $res_req = 2;
+                // }
             }
 
             echo json_encode($res_req);

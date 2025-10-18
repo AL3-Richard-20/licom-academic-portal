@@ -204,6 +204,8 @@
                                                                 echo "<td>".$time_added."</td>";
                                                                 echo "<td>";
 
+                                                                $allow_action = 1;
+
                                                                 if($is_default == 0){
 
                                                                     echo "<button 
@@ -213,25 +215,37 @@
                                                                             Set as Active
                                                                         </button>";
                                                                 }
+                                                                else if($is_default == 2){
+
+                                                                    echo "<span class='badge badge-success font-weight-bold text-uppercase'>
+                                                                            Completed
+                                                                        </span>";
+
+                                                                    $allow_action = 0;
+                                                                }
                                                                 else{
                                                                     echo "<span class='badge badge-success font-weight-bold text-uppercase'>
                                                                             Active
                                                                         </span>";
                                                                 }
 
-                                                                echo "<button 
-                                                                            type='button' 
-                                                                            class='btn btn-outline-light btn-sm text-primary' 
-                                                                            onclick='editSemester(`".$semester_Id."`, `".$semester_name."`)'>
-                                                                            <span class='fa fa-pencil-alt'></span>
-                                                                        </button>";
+                                                                if($allow_action == 1){
 
-                                                                echo "<button 
-                                                                            type='button' 
-                                                                            class='btn btn-outline-light btn-sm text-danger' 
-                                                                            onclick='deleteSemester(`".$semester_Id."`)'>
-                                                                            <span class='fa fa-trash'></span>
-                                                                        </button>";
+                                                                    echo "<button 
+                                                                                type='button' 
+                                                                                class='btn btn-outline-light btn-sm text-primary' 
+                                                                                onclick='editSemester(`".$semester_Id."`, `".$semester_name."`)'>
+                                                                                <span class='fa fa-pencil-alt'></span>
+                                                                            </button>";
+    
+                                                                    echo "<button 
+                                                                                type='button' 
+                                                                                class='btn btn-outline-light btn-sm text-danger' 
+                                                                                onclick='deleteSemester(`".$semester_Id."`)'>
+                                                                                <span class='fa fa-trash'></span>
+                                                                            </button>";
+                                                                }
+
 
                                                                 echo "</td>";
 
