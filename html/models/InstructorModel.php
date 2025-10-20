@@ -179,6 +179,8 @@
 
             $results_arr = array();
 
+            $metric_val_desc    = NULL;
+            $metric_q_desc      = NULL;
             $total_grade = 0;
 
             if($count > 0){
@@ -200,16 +202,6 @@
                     $grade_val      = $row['Grade_val'];
                     $date_added     = $row['Date_added'];
                     $time_added     = $row['Time_added'];
-
-                    $grade_val_formatted = number_format($grade_val, 2);
-                    $metric_val          = substr($grade_val_formatted, 0, 1);
-
-                    // ========== Fetch Metric Info ===========
-                        $metric_info = metricValues($metric_val);
-
-                        $metric_val_desc    = $metric_info['MetricDesc'];
-                        $metric_q_desc      = $metric_info['MetricQDesc'];
-                    // ========== Fetch Metric Info END =======
 
                     // ========== Filter by Subject ==============
                         if($subject_Id != NULL){
@@ -249,6 +241,16 @@
 
                     if($is_under_subject > 0){
 
+                        $grade_val_formatted = number_format($grade_val, 2);
+                        $metric_val          = substr($grade_val_formatted, 0, 1);
+    
+                        // ========== Fetch Metric Info ===========
+                            $metric_info = metricValues($metric_val);
+    
+                            $metric_val_desc    = $metric_info['MetricDesc'];
+                            $metric_q_desc      = $metric_info['MetricQDesc'];
+                        // ========== Fetch Metric Info END =======
+                        
                         $result_arr = array(
                             'EvalId' => $eval_Id,
                             'Remarks' => $remarks,
