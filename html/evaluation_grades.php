@@ -381,6 +381,7 @@
                 })
             })
 
+            //Edited
             function facultyGrades(semester_Id, instructor_Id){
 
                 var output='';
@@ -400,23 +401,30 @@
 
                             $.each(response.Records, function(key, value){
 
+                                var date_added  = value.DateAdded
+                                var time_added  = value.TimeAdded
+                                var grade_val   = value.GradeVal
+                                var metric_desc = value.MetricDesc
+                                var eval_Id     = value.EvalId
+                                var total_grade = response.TotalGrade
+                                var metric_desc2= (response.MetricDesc2 != 'null') ? "("+ response.MetricDesc2 +")" : ''
+
                                 output+='<tr>'
-                                output+='<td>'+ value.DateAdded +' | '+ value.TimeAdded +'</td>'
-                                output+='<td><h5 class="font-weight-bold">'+ value.GradeVal +' - '+ value.MetricDesc +'</h5></td>'
+                                output+='<td>'+ date_added +' | '+ time_added +'</td>'
+                                output+='<td><h5 class="font-weight-bold">'+ grade_val +' - '+ metric_desc +'</h5></td>'
                                 output+='<td class="text-center">'
 
-                                var eval_results_page = 'location.href=`eval_results.php?evalid='+value.EvalId+'`'
+                                var eval_results_page = 'location.href=`eval_results.php?evalid='+ eval_Id +'`'
 
                                 output+='<button type="button" class="btn btn-outline-light text-info" onclick="'+ eval_results_page +'">'
                                 output+='<span class="fa fa-info-circle"></span>'
                                 output+='</button>'
                                 output+='</td>'
                                 output+='</tr>'
-
                             })
 
-                            $('#final_grade_txt').html(response.TotalGrade)
-                            $('#final_grade_desc').html("("+ response.MetricDesc2 +")")
+                            $('#final_grade_txt').html(total_grade)
+                            $('#final_grade_desc').html(metric_desc2)
                         }
                         else{
 
