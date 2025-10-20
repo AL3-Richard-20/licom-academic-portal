@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 10, 2025 at 01:20 AM
+-- Generation Time: Oct 19, 2025 at 07:28 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Activity_Log_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=149 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -231,7 +231,178 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 (145, 'Log In Account', 6, '2025-10-08', '05:52:27', 1),
 (146, 'Log In Account', 4, '2025-10-10', '08:47:43', 1),
 (147, 'Log In Account', 5, '2025-10-10', '08:48:52', 1),
-(148, 'Log In Account', 4, '2025-10-10', '08:51:14', 1);
+(148, 'Log In Account', 4, '2025-10-10', '08:51:14', 1),
+(149, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:41:44', 1),
+(150, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:41:50', 1),
+(151, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:44:25', 1),
+(152, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:44:31', 1),
+(153, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:44:39', 1),
+(154, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:44:44', 1),
+(155, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '09:44:49', 1),
+(156, 'Import Student Grades', 4, '2025-10-10', '10:16:34', 1),
+(157, 'Import Student Grades', 4, '2025-10-10', '10:16:52', 1),
+(158, 'Import Student Grades', 4, '2025-10-10', '10:17:06', 1),
+(159, 'Import Student Grades', 4, '2025-10-10', '10:19:11', 1),
+(160, 'Import Student Grades', 4, '2025-10-10', '10:19:17', 1),
+(161, 'Import Student Grades', 4, '2025-10-10', '10:19:45', 1),
+(162, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '10:20:00', 1),
+(163, 'Add/Update student grade. Student: 5', 4, '2025-10-10', '10:20:02', 1),
+(164, 'Log In Account', 6, '2025-10-10', '10:20:50', 1),
+(165, 'Encode Student Grades', 6, '2025-10-10', '10:22:53', 1),
+(166, 'Encode Student Grades', 6, '2025-10-10', '10:24:06', 1),
+(167, 'Encode Student Grades', 6, '2025-10-10', '10:24:55', 1),
+(168, 'Encode Student Grades', 6, '2025-10-10', '10:25:05', 1),
+(169, 'Encode Student Grades', 6, '2025-10-10', '10:26:21', 1),
+(170, 'Log In Account', 5, '2025-10-10', '10:33:26', 1),
+(171, 'Log In Account', 7, '2025-10-10', '10:33:56', 1),
+(172, 'Log In Account', 8, '2025-10-10', '10:34:16', 1),
+(173, 'Log In Account', 9, '2025-10-10', '10:34:38', 1),
+(174, 'Log In Account', 6, '2025-10-10', '11:21:18', 1),
+(175, 'Encode Student Grades', 6, '2025-10-10', '11:22:53', 1),
+(176, 'Log In Account', 6, '2025-10-10', '01:17:19', 1),
+(177, 'Log In Account', 6, '2025-10-10', '01:33:19', 1),
+(178, 'Log In Account', 6, '2025-10-10', '01:41:46', 1),
+(179, 'Encode Student Grades', 6, '2025-10-10', '01:43:59', 1),
+(180, 'Encode Student Grades', 6, '2025-10-10', '01:44:03', 1),
+(181, 'Log In Account', 18, '2025-10-13', '02:05:43', 1),
+(182, 'Edit grade remark. Name: Passed', 18, '2025-10-13', '02:05:57', 1),
+(183, 'Edit grade remark. Name: Passed', 18, '2025-10-13', '02:06:57', 1),
+(184, 'Added a new grade remark. Name: Removal', 18, '2025-10-13', '02:12:21', 1),
+(185, 'Delete grade remark record. ID: 4', 18, '2025-10-13', '02:12:26', 1),
+(186, 'Log In Account', 5, '2025-10-13', '02:22:30', 1),
+(187, 'Log In Account', 4, '2025-10-13', '03:36:10', 1),
+(188, 'Log In Account', 18, '2025-10-13', '09:42:58', 1),
+(189, 'Added a new semester record: Sample semester', 18, '2025-10-13', '09:54:00', 1),
+(190, 'Edit semester record: Sample semester edited', 18, '2025-10-13', '09:54:07', 1),
+(191, 'Edit semester record: 2nd Semester A.Y. 2025 - 2026 edited', 18, '2025-10-13', '09:54:13', 1),
+(192, 'Edit semester record: Sample semester', 18, '2025-10-13', '09:54:18', 1),
+(193, 'Delete semester record ID: 7', 18, '2025-10-13', '09:54:21', 1),
+(194, 'Edit semester record: 2nd Semester A.Y. 2025 - 2026', 18, '2025-10-13', '09:54:27', 1),
+(195, 'Set semester as active. ID: 2', 18, '2025-10-13', '09:54:51', 1),
+(196, 'Set semester as active. ID: 1', 18, '2025-10-13', '09:54:53', 1),
+(197, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:14:51', 1),
+(198, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:16:10', 1),
+(199, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:17:31', 1),
+(200, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:18:50', 1),
+(201, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:20:28', 1),
+(202, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:20:44', 1),
+(203, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:22:42', 1),
+(204, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:24:54', 1),
+(205, 'Changed student year level and course: Student: 5', 18, '2025-10-13', '10:24:58', 1),
+(206, 'Log In Account', 4, '2025-10-13', '10:32:36', 1),
+(207, 'Delete student in a class. ID: 35', 4, '2025-10-13', '10:42:16', 1),
+(208, 'Delete student in a class. ID: 5', 4, '2025-10-13', '10:43:36', 1),
+(209, 'Added a new class student. ID: 5', 4, '2025-10-13', '10:43:39', 1),
+(210, 'Import Student Grades', 4, '2025-10-13', '10:54:51', 1),
+(211, 'Log In Account', 5, '2025-10-14', '09:37:38', 1),
+(212, 'Log In Account', 18, '2025-10-14', '02:53:59', 1),
+(213, 'Edit account information.', 18, '2025-10-14', '02:56:55', 1),
+(214, 'Edit account information.', 18, '2025-10-14', '02:58:11', 1),
+(215, 'Edit account information.', 18, '2025-10-14', '03:09:27', 1),
+(216, 'Edit account information.', 18, '2025-10-14', '03:09:39', 1),
+(217, 'Log In Account', 18, '2025-10-14', '03:10:37', 1),
+(218, 'Log In Account', 6, '2025-10-14', '03:11:27', 1),
+(219, 'Log In Account', 18, '2025-10-14', '03:11:38', 1),
+(220, 'Edit account information.', 18, '2025-10-14', '03:12:23', 1),
+(221, 'Log In Account', 4, '2025-10-14', '04:02:47', 1),
+(222, 'Added a new subject. Name: AL3 - Project Management', 4, '2025-10-14', '04:41:55', 1),
+(223, 'Edit a subject. Name: System Architecture and Design ', 4, '2025-10-14', '05:17:37', 1),
+(224, 'Edit a subject. Name: Cyber Security 101', 4, '2025-10-14', '05:38:04', 1),
+(225, 'Log In Account', 4, '2025-10-14', '08:28:43', 1),
+(226, 'Set semester as active. ID: 2', 4, '2025-10-14', '09:18:32', 1),
+(227, 'Set semester as active. ID: 1', 4, '2025-10-14', '09:20:17', 1),
+(228, 'Set semester as active. ID: 2', 4, '2025-10-14', '09:22:26', 1),
+(229, 'Set semester as active. ID: 1', 4, '2025-10-14', '09:23:34', 1),
+(230, 'Set semester as active. ID: 2', 4, '2025-10-14', '09:23:50', 1),
+(231, 'Set semester as active. ID: 1', 4, '2025-10-14', '09:38:39', 1),
+(232, 'Set semester as active. ID: 2', 4, '2025-10-14', '09:40:02', 1),
+(233, 'Set semester as active. ID: 1', 4, '2025-10-14', '09:45:31', 1),
+(234, 'Log In Account', 18, '2025-10-14', '09:46:26', 1),
+(235, 'Log In Account', 4, '2025-10-14', '09:46:40', 1),
+(236, 'Log In Account', 4, '2025-10-14', '10:14:30', 1),
+(237, 'Delete student in a class. ID: 34', 4, '2025-10-14', '10:23:20', 1),
+(238, 'Log In Account', 18, '2025-10-14', '11:22:27', 1),
+(239, 'Log In Account', 4, '2025-10-16', '10:01:11', 1),
+(240, 'Log In Account', 4, '2025-10-16', '10:14:15', 1),
+(241, 'Log In Account', 18, '2025-10-16', '10:33:27', 1),
+(242, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '10:49:55', 1),
+(243, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:15:26', 1),
+(244, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:16:46', 1),
+(245, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:16:59', 1),
+(246, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:13', 1),
+(247, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:21', 1),
+(248, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:31', 1),
+(249, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:43', 1),
+(250, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:48', 1),
+(251, 'Add/Update student grade. Student: 5', 18, '2025-10-16', '11:17:53', 1),
+(252, 'Log In Account', 4, '2025-10-16', '11:30:15', 1),
+(253, 'Log In Account', 4, '2025-10-16', '04:56:00', 1),
+(254, 'Log In Account', 4, '2025-10-16', '10:21:23', 1),
+(255, 'Import Student Grades', 4, '2025-10-16', '10:41:58', 1),
+(256, 'Import Student Grades', 4, '2025-10-16', '10:42:40', 1),
+(257, 'Import Student Grades', 4, '2025-10-16', '10:56:10', 1),
+(258, 'Import Student Grades', 4, '2025-10-16', '10:59:17', 1),
+(259, 'Import Student Grades', 4, '2025-10-16', '10:59:37', 1),
+(260, 'Import Student Grades', 4, '2025-10-16', '11:00:55', 1),
+(261, 'Import Student Grades', 4, '2025-10-16', '11:01:32', 1),
+(262, 'Log In Account', 6, '2025-10-16', '11:04:00', 1),
+(263, 'Encode Student Grades', 6, '2025-10-16', '11:05:24', 1),
+(264, 'Encode Student Grades', 6, '2025-10-16', '11:05:32', 1),
+(265, 'Encode Student Grades', 6, '2025-10-16', '11:05:35', 1),
+(266, 'Log In Account', 4, '2025-10-16', '11:09:31', 1),
+(267, 'Add/Update student grade. Student: 5', 4, '2025-10-16', '11:18:35', 1),
+(268, 'Log In Account', 6, '2025-10-16', '11:18:52', 1),
+(269, 'Encode Student Grades', 6, '2025-10-16', '11:20:24', 1),
+(270, 'Log In Account', 4, '2025-10-17', '08:44:55', 1),
+(271, 'Set account as inactive. ID: 5', 4, '2025-10-17', '09:01:00', 1),
+(272, 'Log In Account', 18, '2025-10-17', '09:01:15', 1),
+(273, 'Log In Account', 5, '2025-10-17', '09:02:04', 1),
+(274, 'Log In Account', 18, '2025-10-17', '10:36:12', 1),
+(275, 'Log In Account', 4, '2025-10-17', '10:47:09', 1),
+(276, 'Log In Account', 18, '2025-10-17', '01:44:54', 1),
+(277, 'Log In Account', 18, '2025-10-18', '02:31:52', 1),
+(278, 'Log In Account', 18, '2025-10-18', '02:48:37', 1),
+(279, 'Log In Account', 4, '2025-10-18', '02:49:11', 1),
+(280, 'Log In Account', 6, '2025-10-18', '02:51:57', 1),
+(281, 'Log In Account', 18, '2025-10-18', '02:52:18', 1),
+(282, 'Log In Account', 6, '2025-10-18', '02:59:57', 1),
+(283, 'Log In Account', 18, '2025-10-18', '03:00:19', 1),
+(284, 'Log In Account', 6, '2025-10-18', '03:00:42', 1),
+(285, 'Log In Account', 18, '2025-10-18', '03:01:04', 1),
+(286, 'Log In Account', 4, '2025-10-18', '03:19:46', 1),
+(287, 'Added a new class schedule. ID: 9', 4, '2025-10-18', '03:28:43', 1),
+(288, 'Added a new class schedule. ID: 10', 4, '2025-10-18', '03:31:18', 1),
+(289, 'Added a new class schedule. ID: 11', 4, '2025-10-18', '04:21:57', 1),
+(290, 'Added student year level and course: Student: 5', 4, '2025-10-18', '04:23:22', 1),
+(291, 'Added a new class student. ID: 9', 4, '2025-10-18', '04:23:28', 1),
+(292, 'Add/Update student grade. Student: 9', 4, '2025-10-18', '04:28:12', 1),
+(293, 'Added a new class schedule. ID: 12', 4, '2025-10-18', '04:37:11', 1),
+(294, 'Delete class schedule. ID: 12', 4, '2025-10-18', '04:37:35', 1),
+(295, 'Added a new class schedule. ID: 13', 4, '2025-10-18', '04:37:45', 1),
+(296, 'Log In Account', 18, '2025-10-18', '05:05:00', 1),
+(297, 'Set semester as active. ID: 2', 18, '2025-10-18', '05:14:28', 1),
+(298, 'Set semester as active. ID: 2', 18, '2025-10-18', '05:18:32', 1),
+(299, 'Added a new semester record: Sample semester', 18, '2025-10-18', '05:19:51', 1),
+(300, 'Delete semester record ID: 8', 18, '2025-10-18', '05:19:56', 1),
+(301, 'Log In Account', 6, '2025-10-18', '05:29:03', 1),
+(302, 'Log In Account', 4, '2025-10-18', '05:33:32', 1),
+(303, 'Log In Account', 6, '2025-10-18', '05:35:42', 1),
+(304, 'Log In Account', 18, '2025-10-18', '05:44:06', 1),
+(305, 'Log In Account', 6, '2025-10-18', '05:53:32', 1),
+(306, 'Log In Account', 18, '2025-10-18', '05:57:56', 1),
+(307, 'Added a new subject. Name: Cyber Security 101', 18, '2025-10-18', '06:04:35', 1),
+(308, 'Edit a subject. Name: Cyber Security 101', 18, '2025-10-18', '06:05:39', 1),
+(309, 'Log In Account', 6, '2025-10-18', '06:07:06', 1),
+(310, 'Log In Account', 5, '2025-10-18', '06:09:29', 1),
+(311, 'Log In Account', 18, '2025-10-18', '06:16:04', 1),
+(312, 'Log In Account', 6, '2025-10-18', '06:16:24', 1),
+(313, 'Log In Account', 18, '2025-10-18', '06:27:13', 1),
+(314, 'Log In Account', 6, '2025-10-18', '06:38:14', 1),
+(315, 'Log In Account', 18, '2025-10-18', '06:38:25', 1),
+(316, 'Log In Account', 6, '2025-10-18', '06:41:46', 1),
+(317, 'Log In Account', 18, '2025-10-18', '06:42:18', 1),
+(318, 'Log In Account', 6, '2025-10-18', '06:51:27', 1),
+(319, 'Log In Account', 6, '2025-10-19', '03:24:35', 1);
 
 -- --------------------------------------------------------
 
@@ -253,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `class_schedules` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Class_Schedule_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `class_schedules`
@@ -267,7 +438,12 @@ INSERT INTO `class_schedules` (`Class_Schedule_Id`, `Semester_Id`, `Subject_Id`,
 (5, 1, 3, 2, 6, 1, '09:30:00', '11:30:00', '2025-06-07', '01:02:02', 1),
 (6, 1, 1, 3, 16, 3, '09:00:00', '10:00:00', '2025-06-07', '02:46:22', 1),
 (7, 4, 5, 10, 16, 5, '08:00:00', '09:30:00', '2025-06-07', '02:52:21', 1),
-(8, 1, 1, 1, 16, 1, '13:00:00', '14:30:00', '2025-06-26', '08:56:22', 1);
+(8, 1, 1, 1, 16, 1, '13:00:00', '14:30:00', '2025-06-26', '08:56:22', 1),
+(9, 1, 2, 3, 14, 1, '09:20:00', '11:30:00', '2025-10-18', '03:28:43', 1),
+(10, 1, 2, 4, 6, 1, '00:20:00', '13:00:00', '2025-10-18', '03:31:18', 1),
+(11, 1, 2, 4, 16, 5, '09:30:00', '10:00:00', '2025-10-18', '04:21:57', 1),
+(12, 1, 2, 1, 6, 3, '08:30:00', '09:40:00', '2025-10-18', '04:37:11', 0),
+(13, 1, 2, 1, 6, 3, '08:30:00', '10:30:00', '2025-10-18', '04:37:45', 1);
 
 -- --------------------------------------------------------
 
@@ -312,13 +488,13 @@ CREATE TABLE IF NOT EXISTS `evaluation_grade` (
   `Semester_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Evaluated_by` int(11) NOT NULL,
-  `Remarks` varchar(255) DEFAULT NULL,
+  `Remarks` text,
   `Grade_val` decimal(18,5) DEFAULT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Eval_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_grade`
@@ -329,7 +505,8 @@ INSERT INTO `evaluation_grade` (`Eval_Id`, `Semester_Id`, `User_Id`, `Evaluated_
 (5, 1, 6, 5, NULL, '3.12500', '2025-07-18', '05:57:00', 1),
 (6, 1, 6, 7, NULL, '3.62500', '2025-07-19', '07:27:36', 1),
 (7, 1, 6, 8, NULL, '2.00000', '2025-07-19', '07:28:43', 1),
-(8, 1, 16, 7, NULL, '2.12500', '2025-09-09', '10:25:24', 1);
+(8, 1, 16, 7, NULL, '2.12500', '2025-09-09', '10:25:24', 1),
+(11, 1, 6, 9, 'Lorem Ipsum DOlor Sit Amet Con Estas Con Estacteur.', '3.37500', '2025-10-10', '11:12:46', 1);
 
 -- --------------------------------------------------------
 
@@ -349,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `evaluation_grades` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Eval_Grades_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `evaluation_grades`
@@ -395,7 +572,15 @@ INSERT INTO `evaluation_grades` (`Eval_Grades_Id`, `Semester_Id`, `Eval_Metric_I
 (53, 1, 5, 4, 16, 7, '2025-09-09', '10:25:24', 1),
 (54, 1, 6, 4, 16, 7, '2025-09-09', '10:25:24', 1),
 (55, 1, 7, 4, 16, 7, '2025-09-09', '10:25:24', 1),
-(56, 1, 8, 4, 16, 7, '2025-09-09', '10:25:24', 1);
+(56, 1, 8, 4, 16, 7, '2025-09-09', '10:25:24', 1),
+(81, 1, 1, 6, 6, 9, '2025-10-10', '11:12:46', 1),
+(82, 1, 2, 5, 6, 9, '2025-10-10', '11:12:46', 1),
+(83, 1, 3, 5, 6, 9, '2025-10-10', '11:12:46', 1),
+(84, 1, 4, 5, 6, 9, '2025-10-10', '11:12:46', 1),
+(85, 1, 5, 5, 6, 9, '2025-10-10', '11:12:46', 1),
+(86, 1, 6, 5, 6, 9, '2025-10-10', '11:12:46', 1),
+(87, 1, 7, 6, 6, 9, '2025-10-10', '11:12:46', 1),
+(88, 1, 8, 6, 6, 9, '2025-10-10', '11:12:46', 1);
 
 -- --------------------------------------------------------
 
@@ -509,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `grade_remarks` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Grade_Remark_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `grade_remarks`
@@ -518,7 +703,9 @@ CREATE TABLE IF NOT EXISTS `grade_remarks` (
 INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `Grade_indicator`, `Range_from`, `Range_to`, `Time_added`, `Status`) VALUES
 (1, 'Passed', '2025-06-23', 'text-success', '1.00', '3.00', '21:02:30', 1),
 (2, 'Conditional', '2025-06-23', 'text-warning', '4.00', '4.00', '21:02:30', 1),
-(3, 'Failed', '2025-08-17', 'text-danger', '5.00', '5.00', '04:38:22', 1);
+(3, 'Failed', '2025-08-17', 'text-danger', '5.00', '5.00', '04:38:22', 1),
+(4, 'Removal', '2025-10-13', 'text-info', '7.00', '7.00', '02:12:21', 0),
+(9, 'Incomplete', '2025-10-16', 'text-warning', '0.00', '0.00', '10:58:02', 1);
 
 -- --------------------------------------------------------
 
@@ -615,14 +802,14 @@ INSERT INTO `rooms` (`Room_Id`, `Room_name`, `Room_details`, `Date_added`, `Time
 DROP TABLE IF EXISTS `semesters`;
 CREATE TABLE IF NOT EXISTS `semesters` (
   `Semester_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Year_Level_Id` int(11) NOT NULL,
+  `Year_Level_Id` int(11) DEFAULT NULL COMMENT 'Disabled',
   `Semester_name` varchar(255) NOT NULL,
   `Is_default` int(11) DEFAULT '0',
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `semesters`
@@ -634,7 +821,9 @@ INSERT INTO `semesters` (`Semester_Id`, `Year_Level_Id`, `Semester_name`, `Is_de
 (3, 2, '1st Semester A.Y. 2026-2027', 0, '2025-05-22', '09:12:21', 1),
 (4, 2, '2nd Semester A.Y. 2026 -2027', 0, '2025-06-07', '02:50:36', 1),
 (5, 3, '1st Semester A.Y. 2025 - 2026', 0, '2025-07-30', '08:54:59', 1),
-(6, 3, '2nd Semester A.Y. 2025 - 2026', 0, '2025-09-20', '11:16:33', 1);
+(6, 3, '2nd Semester A.Y. 2025 - 2026', 0, '2025-09-20', '11:16:33', 1),
+(7, NULL, 'Sample semester', 0, '2025-10-13', '09:54:00', 0),
+(8, NULL, 'Sample semester', 0, '2025-10-18', '05:19:51', 0);
 
 -- --------------------------------------------------------
 
@@ -675,48 +864,51 @@ CREATE TABLE IF NOT EXISTS `student_classes` (
   `Student_Class_Id` int(11) NOT NULL AUTO_INCREMENT,
   `Class_Schedule_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
+  `Year_Level_Id` int(11) DEFAULT NULL,
   `Added_by` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Last_update` date DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Student_Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_classes`
 --
 
-INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student_Id`, `Added_by`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
-(1, 1, 5, 4, '2025-06-07', '09:37:13', '2025-06-07', 1),
-(2, 4, 7, 4, '2025-06-07', '10:04:46', '2025-10-07', 0),
-(3, 4, 8, 4, '2025-06-07', '10:04:52', '2025-06-07', 1),
-(4, 4, 9, 4, '2025-06-07', '10:04:55', '2025-06-07', 1),
-(5, 2, 5, 4, '2025-06-07', '10:05:07', '2025-06-07', 1),
-(6, 2, 7, 4, '2025-06-07', '10:05:11', '2025-06-07', 1),
-(7, 2, 8, 4, '2025-06-07', '10:05:13', '2025-06-07', 1),
-(8, 4, 5, 4, '2025-06-07', '10:06:21', '2025-06-07', 0),
-(9, 4, 5, 4, '2025-06-07', '10:26:30', '2025-06-07', 0),
-(10, 1, 9, 4, '2025-06-07', '01:22:07', '2025-06-07', 0),
-(11, 5, 7, 4, '2025-06-07', '01:23:55', '2025-06-07', 0),
-(12, 3, 7, 4, '2025-06-07', '01:26:28', '2025-06-07', 0),
-(13, 3, 7, 4, '2025-06-07', '01:27:54', '2025-06-07', 0),
-(14, 1, 9, 4, '2025-06-07', '02:45:07', '2025-06-07', 0),
-(15, 1, 8, 4, '2025-06-07', '02:45:26', '2025-06-07', 1),
-(16, 6, 10, 4, '2025-06-07', '02:46:34', '2025-06-07', 1),
-(17, 6, 7, 4, '2025-06-07', '02:46:38', '2025-06-07', 1),
-(18, 6, 11, 4, '2025-06-07', '02:46:41', '2025-06-07', 1),
-(19, 7, 11, 4, '2025-06-07', '02:52:56', '2025-06-07', 0),
-(20, 2, 9, 4, '2025-06-09', '09:07:37', '2025-06-09', 1),
-(24, 4, 5, 4, '2025-06-09', '09:26:55', '2025-06-09', 0),
-(25, 8, 5, 4, '2025-06-26', '08:56:29', '2025-06-26', 1),
-(27, 2, 10, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
-(28, 2, 11, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
-(29, 2, 12, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
-(33, 2, 10, 4, '2025-10-05', '02:17:11', '2025-10-05', 0),
-(34, 2, 10, 4, '2025-10-05', '02:17:31', '2025-10-05', 1),
-(35, 2, 11, 4, '2025-10-05', '02:17:31', '2025-10-05', 1),
-(36, 2, 12, 4, '2025-10-05', '02:17:31', '2025-10-06', 0);
+INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student_Id`, `Year_Level_Id`, `Added_by`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
+(1, 1, 5, 0, 4, '2025-06-07', '09:37:13', '2025-06-07', 1),
+(2, 4, 7, 0, 4, '2025-06-07', '10:04:46', '2025-10-07', 0),
+(3, 4, 8, 0, 4, '2025-06-07', '10:04:52', '2025-06-07', 1),
+(4, 4, 9, 0, 4, '2025-06-07', '10:04:55', '2025-06-07', 1),
+(5, 2, 5, 0, 4, '2025-06-07', '10:05:07', '2025-10-13', 0),
+(6, 2, 7, 0, 4, '2025-06-07', '10:05:11', '2025-06-07', 1),
+(7, 2, 8, 0, 4, '2025-06-07', '10:05:13', '2025-06-07', 1),
+(8, 4, 5, 0, 4, '2025-06-07', '10:06:21', '2025-06-07', 0),
+(9, 4, 5, 0, 4, '2025-06-07', '10:26:30', '2025-06-07', 0),
+(10, 1, 9, 0, 4, '2025-06-07', '01:22:07', '2025-06-07', 0),
+(11, 5, 7, 0, 4, '2025-06-07', '01:23:55', '2025-06-07', 0),
+(12, 3, 7, 0, 4, '2025-06-07', '01:26:28', '2025-06-07', 0),
+(13, 3, 7, 0, 4, '2025-06-07', '01:27:54', '2025-06-07', 0),
+(14, 1, 9, 0, 4, '2025-06-07', '02:45:07', '2025-06-07', 0),
+(15, 1, 8, 0, 4, '2025-06-07', '02:45:26', '2025-06-07', 1),
+(16, 6, 10, 0, 4, '2025-06-07', '02:46:34', '2025-06-07', 1),
+(17, 6, 7, 0, 4, '2025-06-07', '02:46:38', '2025-06-07', 1),
+(18, 6, 11, 0, 4, '2025-06-07', '02:46:41', '2025-06-07', 1),
+(19, 7, 11, 0, 4, '2025-06-07', '02:52:56', '2025-06-07', 0),
+(20, 2, 9, 0, 4, '2025-06-09', '09:07:37', '2025-06-09', 1),
+(24, 4, 5, 0, 4, '2025-06-09', '09:26:55', '2025-06-09', 0),
+(25, 8, 5, 0, 4, '2025-06-26', '08:56:29', '2025-06-26', 1),
+(27, 2, 10, 0, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(28, 2, 11, 0, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(29, 2, 12, 0, 4, '2025-10-05', '11:30:19', '2025-10-05', 0),
+(33, 2, 10, 0, 4, '2025-10-05', '02:17:11', '2025-10-05', 0),
+(34, 2, 10, 0, 4, '2025-10-05', '02:17:31', '2025-10-14', 0),
+(35, 2, 11, 0, 4, '2025-10-05', '02:17:31', '2025-10-13', 0),
+(36, 2, 12, 0, 4, '2025-10-05', '02:17:31', '2025-10-06', 0),
+(37, 2, 5, 3, 4, '2025-10-13', '10:43:39', '2025-10-13', 1),
+(38, 11, 9, 1, 4, '2025-10-18', '04:23:28', '2025-10-18', 1);
 
 -- --------------------------------------------------------
 
@@ -740,17 +932,18 @@ CREATE TABLE IF NOT EXISTS `student_grades` (
   `Last_updated_date` timestamp NULL DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Grade_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_grades`
 --
 
 INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_Id`, `Midterm_grade`, `Tentative_final`, `Grade_val`, `Remarks`, `Evaluated_by`, `Date_added`, `Time_added`, `Last_updated_date`, `Status`) VALUES
-(1, 1, 5, 2, '3.25', '2.75', '2.75', '1', 4, '2025-09-28', '09:48:30', '0000-00-00 00:00:00', 1),
-(2, 1, 5, 1, '3.00', '2.50', '2.50', '1', 4, '2025-10-02', '04:44:54', '2025-10-01 20:21:22', 1),
-(3, 1, 7, 1, '2.00', '1.75', '1.75', '1', 4, '2025-10-02', '04:16:55', '2025-10-01 20:21:22', 1),
-(4, 1, 8, 3, '2.30', '2.50', '2.00', '1', 6, '2025-10-08', '05:24:55', '2025-10-07 21:45:56', 1);
+(1, 1, 5, 2, '5.00', '0.00', '0.00', '9', 4, '2025-10-16', '11:18:35', '2025-10-09 17:44:03', 1),
+(2, 1, 5, 1, '3.00', '2.50', '2.75', '1', 4, '2025-10-16', '11:17:43', '2025-10-16 03:01:32', 1),
+(3, 1, 7, 1, '2.75', '2.50', '2.63', '1', 4, '2025-10-02', '04:16:55', '2025-10-16 03:01:32', 1),
+(4, 1, 8, 3, '2.30', '3.00', '2.65', '1', 6, '2025-10-08', '05:24:55', '2025-10-16 03:20:24', 1),
+(5, 1, 9, 3, '3.00', '2.25', '2.63', '1', 4, '2025-10-18', '04:28:12', '2025-10-16 03:20:24', 1);
 
 -- --------------------------------------------------------
 
@@ -761,7 +954,8 @@ INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_
 DROP TABLE IF EXISTS `student_year_level`;
 CREATE TABLE IF NOT EXISTS `student_year_level` (
   `SYL_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Semester_Id` int(11) NOT NULL,
+  `Semester_Id` int(11) DEFAULT NULL,
+  `Year_Level_Id` int(11) DEFAULT NULL,
   `Course_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
   `Date_added` date NOT NULL,
@@ -769,16 +963,17 @@ CREATE TABLE IF NOT EXISTS `student_year_level` (
   `Last_updated` timestamp NULL DEFAULT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`SYL_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student_year_level`
 --
 
-INSERT INTO `student_year_level` (`SYL_Id`, `Semester_Id`, `Course_Id`, `Student_Id`, `Date_added`, `Time_added`, `Last_updated`, `Status`) VALUES
-(1, 1, 1, 5, '2025-09-26', '18:58:01', '2025-09-27 11:25:19', 1),
-(3, 1, 2, 17, '2025-09-27', '10:12:40', NULL, 1),
-(4, 2, 3, 20, '2025-09-27', '10:43:31', NULL, 1);
+INSERT INTO `student_year_level` (`SYL_Id`, `Semester_Id`, `Year_Level_Id`, `Course_Id`, `Student_Id`, `Date_added`, `Time_added`, `Last_updated`, `Status`) VALUES
+(1, 1, 3, 1, 5, '2025-09-26', '18:58:01', '2025-10-13 02:24:58', 1),
+(3, 1, NULL, 2, 17, '2025-09-27', '10:12:40', NULL, 1),
+(4, 2, NULL, 3, 20, '2025-09-27', '10:43:31', NULL, 1),
+(5, NULL, 1, 1, 9, '2025-10-18', '04:23:22', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -792,22 +987,26 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `Course_Id` int(11) NOT NULL,
   `Subject_name` varchar(255) NOT NULL,
   `Subject_code` varchar(255) NOT NULL,
+  `Units` varchar(255) DEFAULT NULL,
+  `Classification` varchar(255) DEFAULT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Subject_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `subjects`
 --
 
-INSERT INTO `subjects` (`Subject_Id`, `Course_Id`, `Subject_name`, `Subject_code`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 1, 'Data Structures and Algorithms', 'BSIT-DSA', '2025-05-18', '04:30:26', 1),
-(2, 1, 'Cyber Security 101', 'BSIT-CS', '2025-05-18', '06:30:41', 1),
-(3, 7, 'Feynman 101', 'BSE-FEYN', '2025-05-18', '06:31:17', 1),
-(4, 8, 'Sample Subject 1', 'SS1', '2025-06-07', '02:48:40', 1),
-(5, 6, 'System Architecture and Design ', 'SAAD - CS01', '2025-06-07', '02:50:04', 1);
+INSERT INTO `subjects` (`Subject_Id`, `Course_Id`, `Subject_name`, `Subject_code`, `Units`, `Classification`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 1, 'Data Structures and Algorithms', 'BSIT-DSA', NULL, NULL, '2025-05-18', '04:30:26', 1),
+(2, 1, 'Cyber Security 101', 'BSIT-CS', '2', 'Laboratory', '2025-10-14', '05:38:04', 1),
+(3, 7, 'Feynman 101', 'BSE-FEYN', NULL, NULL, '2025-05-18', '06:31:17', 1),
+(4, 8, 'Sample Subject 1', 'SS1', NULL, NULL, '2025-06-07', '02:48:40', 1),
+(5, 6, 'System Architecture and Design ', 'SAAD - CS01', '3', 'Laboratory', '2025-10-14', '05:17:37', 1),
+(6, 1, 'AL3 - Project Management', 'AL3PM', '3', 'Lecture', '2025-10-14', '04:41:55', 1),
+(7, 1, 'Cyber Security 101', 'BSIT-CS', '3', 'Lecture', '2025-10-18', '06:05:39', 1);
 
 -- --------------------------------------------------------
 
@@ -848,7 +1047,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
 (4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-05-17', 1),
-(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-09-15', 1),
+(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-10-17', 1),
 (6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-05-25', 1),
 (7, 'Test', '', 'Student 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent1@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
 (8, 'Test', '', 'Student 2', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent2@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
