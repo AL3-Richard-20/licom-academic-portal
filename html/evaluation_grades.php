@@ -381,7 +381,6 @@
                 })
             })
 
-            //Edited
             function facultyGrades(semester_Id, instructor_Id){
 
                 var output='';
@@ -406,8 +405,6 @@
                                 var grade_val   = value.GradeVal
                                 var metric_desc = value.MetricDesc
                                 var eval_Id     = value.EvalId
-                                var total_grade = response.TotalGrade
-                                var metric_desc2= (response.MetricDesc2 != 'null') ? "("+ response.MetricDesc2 +")" : ''
 
                                 output+='<tr>'
                                 output+='<td>'+ date_added +' | '+ time_added +'</td>'
@@ -422,6 +419,9 @@
                                 output+='</td>'
                                 output+='</tr>'
                             })
+
+                            var total_grade = response.TotalGrade
+                            var metric_desc2= (response.MetricDesc2 != 'null') ? "("+ response.MetricDesc2 +")" : ''
 
                             $('#final_grade_txt').html(total_grade)
                             $('#final_grade_desc').html(metric_desc2)

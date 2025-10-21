@@ -148,7 +148,7 @@
                         Time_added
                     FROM 
                         evaluation_grade 
-                    WHERE 
+                    WHERE   
                         Status = 1 
                         AND User_Id = '".$instructor_Id."' ";
 
@@ -239,7 +239,37 @@
                         }
                     // ========== Filter by Subject END ==========
 
-                    if($is_under_subject > 0){
+                    if($subject_Id != NULL){
+
+                        if($is_under_subject > 0){
+    
+                            $grade_val_formatted = number_format($grade_val, 2);
+                            $metric_val          = substr($grade_val_formatted, 0, 1);
+        
+                            // ========== Fetch Metric Info ===========
+                                $metric_info = metricValues($metric_val);
+        
+                                $metric_val_desc    = $metric_info['MetricDesc'];
+                                $metric_q_desc      = $metric_info['MetricQDesc'];
+                            // ========== Fetch Metric Info END =======
+                            
+                            $result_arr = array(
+                                'EvalId' => $eval_Id,
+                                'Remarks' => $remarks,
+                                'GradeVal' => $grade_val_formatted,
+                                'MetricVal' => $metric_val,
+                                'MetricDesc' => $metric_val_desc,
+                                'MetricQDesc' => $metric_q_desc,
+                                'DateAdded' => dateFormat($date_added),
+                                'TimeAdded' => timeFormat($time_added)
+                            );
+        
+                            array_push($results_arr, $result_arr);
+        
+                            $grade_sum+=$grade_val;
+                        }
+                    }
+                    else{
 
                         $grade_val_formatted = number_format($grade_val, 2);
                         $metric_val          = substr($grade_val_formatted, 0, 1);
