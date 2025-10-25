@@ -249,7 +249,7 @@
                     dataType: "JSON",
                     success: function (response) {
                         
-                        if(response == 1){
+                        if(response.Res == 1){
 
                             swal({
                                 title:"LOGGED IN SUCCESSFULLY",
@@ -264,12 +264,21 @@
 
                             }, 2000);
                         }
-                        else if(response == 4){
+                        else if(response.Res == 4){
 
                             swal({
                                 title:"INVALID USERNAME OR PASSWORD",
                                 html:"Please try again.<br>",
                                 type:"error",
+                                showConfirmButton: true
+                            })
+                        }
+                        else if(response.Res == 5){
+
+                            swal({
+                                title:"EMAIL MUST BE VERIFIED",
+                                html:"We have sent an activation link to "+ response.Email +" .<br>",
+                                type:"info",
                                 showConfirmButton: true
                             })
                         }
