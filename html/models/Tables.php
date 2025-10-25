@@ -6,6 +6,7 @@
     $activity_logs      = 'activity_logs';
     $class_schedules    = 'class_schedules';
     $courses            = 'courses';
+    $email_verification = 'email_verification';
     $evaluation_grade   = 'evaluation_grade';
     $evaluation_grades  = 'evaluation_grades';
     $evaluation_headers = 'evaluation_headers';
