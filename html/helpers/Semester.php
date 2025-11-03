@@ -67,7 +67,7 @@
 
             $syl_Id         = $row['SYL_Id'];
             $semester_Id    = $row['Semester_Id'];
-            $semester       = $row['Semester_name'];
+            $semester       = $row['Semester_name'] ?? "";
             $course_Id      = $row['Course_Id'];
             $year_name      = $row['Year_name'];
             $course_name    = $row['Course_name'];

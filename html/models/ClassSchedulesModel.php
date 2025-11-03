@@ -579,8 +579,8 @@
 
                     $stud_year_course_info = fetchStudCourseYearLevel($student_Id);
                     
-                    $year_name   = $stud_year_course_info['YearName'];
-                    $course_code = $stud_year_course_info['CourseCode'];
+                    $year_name   = $stud_year_course_info['YearName'] ?? "";
+                    $course_code = $stud_year_course_info['CourseCode'] ?? "";
 
                     $data[] = array(
                         'StudentClassId' => $student_class_Id,

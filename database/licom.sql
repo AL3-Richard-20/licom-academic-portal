@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 19, 2025 at 07:28 AM
+-- Generation Time: Oct 25, 2025 at 11:02 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `User_Id` int(11) NOT NULL,
   `Username` varchar(255) DEFAULT NULL,
   `Password` text NOT NULL,
+  `Email_verified` int(11) NOT NULL DEFAULT '0',
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
@@ -44,24 +45,24 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Password`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 3, 5, 'C20255e', 'student123', '2025-05-17', '09:58:35', 1),
-(2, 2, 4, 'registrar1', 'admin123', '2025-05-22', '20:56:25', 1),
-(3, 4, 6, 'B20256', 'admin123', '2025-05-25', '02:29:30', 1),
-(4, 3, 7, 'C20257', 'student123', '2025-06-07', '09:44:15', 1),
-(5, 3, 8, 'C20258', 'student123', '2025-06-07', '09:44:15', 1),
-(6, 3, 9, 'C20259', 'student123', '2025-06-07', '09:44:15', 1),
-(7, 3, 10, 'C202510', 'student123', '2025-06-07', '09:44:15', 1),
-(8, 3, 11, 'C202511', 'student123', '2025-06-07', '09:44:15', 1),
-(9, 3, 12, 'C202512', 'student123', '2025-06-07', '09:44:15', 1),
-(10, 3, 13, 'C202513', 'student123', '2025-06-07', '09:44:15', 1),
-(11, 4, 14, 'B202514', 'admin123', '2025-06-07', '09:49:20', 1),
-(12, 4, 15, 'B202515', 'admin123', '2025-06-07', '09:49:20', 1),
-(13, 4, 16, 'B202516', 'admin123', '2025-06-07', '09:49:20', 1),
-(14, 3, 17, 'C202517', 'admin123', '2025-06-07', '02:42:29', 1),
-(15, 1, 18, 'admin', 'admin123', '2025-07-23', '20:30:33', 1),
-(16, 2, 19, 'registrar19e', 'admin1234', '2025-07-30', '09:20:36', 1),
-(17, 3, 20, 'C202520', 'student123', '2025-09-27', '10:43:31', 1);
+INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Password`, `Email_verified`, `Date_added`, `Time_added`, `Status`) VALUES
+(1, 3, 5, 'C20255e', 'student123', 1, '2025-05-17', '09:58:35', 1),
+(2, 2, 4, 'registrar1', 'admin123', 0, '2025-05-22', '20:56:25', 1),
+(3, 4, 6, 'B20256', 'admin123', 0, '2025-05-25', '02:29:30', 1),
+(4, 3, 7, 'C20257', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(5, 3, 8, 'C20258', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(6, 3, 9, 'C20259', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(7, 3, 10, 'C202510', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(8, 3, 11, 'C202511', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(9, 3, 12, 'C202512', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(10, 3, 13, 'C202513', 'student123', 0, '2025-06-07', '09:44:15', 1),
+(11, 4, 14, 'B202514', 'admin123', 0, '2025-06-07', '09:49:20', 1),
+(12, 4, 15, 'B202515', 'admin123', 0, '2025-06-07', '09:49:20', 1),
+(13, 4, 16, 'B202516', 'admin123', 0, '2025-06-07', '09:49:20', 1),
+(14, 3, 17, 'C202517', 'admin123', 0, '2025-06-07', '02:42:29', 1),
+(15, 1, 18, 'admin', 'admin123', 1, '2025-07-23', '20:30:33', 1),
+(16, 2, 19, 'registrar19e', 'admin1234', 0, '2025-07-30', '09:20:36', 1),
+(17, 3, 20, 'C202520', 'student123', 0, '2025-09-27', '10:43:31', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `Time_added` time NOT NULL,
   `Status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Activity_Log_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=339 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -402,7 +403,26 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 (316, 'Log In Account', 6, '2025-10-18', '06:41:46', 1),
 (317, 'Log In Account', 18, '2025-10-18', '06:42:18', 1),
 (318, 'Log In Account', 6, '2025-10-18', '06:51:27', 1),
-(319, 'Log In Account', 6, '2025-10-19', '03:24:35', 1);
+(319, 'Log In Account', 6, '2025-10-19', '03:24:35', 1),
+(320, 'Log In Account', 18, '2025-10-19', '03:33:00', 1),
+(321, 'Log In Account', 6, '2025-10-20', '08:46:49', 1),
+(322, 'Log In Account', 18, '2025-10-20', '08:47:33', 1),
+(323, 'Log In Account', 14, '2025-10-20', '08:48:00', 1),
+(324, 'Log In Account', 14, '2025-10-20', '08:57:15', 1),
+(325, 'Log In Account', 6, '2025-10-20', '08:57:33', 1),
+(326, 'Log In Account', 18, '2025-10-21', '09:10:55', 1),
+(327, 'Log In Account', 6, '2025-10-21', '09:17:07', 1),
+(328, 'Log In Account', 18, '2025-10-21', '09:18:39', 1),
+(329, 'Log In Account', 6, '2025-10-21', '09:31:52', 1),
+(330, 'Log In Account', 18, '2025-10-21', '09:33:29', 1),
+(331, 'Log In Account', 18, '2025-10-25', '08:32:44', 1),
+(332, 'Log In Account', 5, '2025-10-25', '02:36:46', 1),
+(333, 'Log In Account', 18, '2025-10-25', '06:43:47', 1),
+(334, 'Edit contact information. ', 18, '2025-10-25', '06:44:08', 1),
+(335, 'Log In Account', 5, '2025-10-25', '06:49:23', 1),
+(336, 'Log In Account', 5, '2025-10-25', '06:49:34', 1),
+(337, 'Log In Account', 5, '2025-10-25', '06:50:24', 1),
+(338, 'Log In Account', 5, '2025-10-25', '06:50:44', 1);
 
 -- --------------------------------------------------------
 
@@ -475,6 +495,31 @@ INSERT INTO `courses` (`Course_Id`, `Course_name`, `Course_code`, `Date_added`, 
 (6, 'Bachelor of Science in Computer Science', 'BSCS', '2025-05-18', '03:14:41', 1),
 (7, 'Bachelor of Science in Education', 'BSE', '2025-05-18', '03:15:14', 1),
 (8, 'Sample Course - edited', 'SC1', '2025-10-07', '10:50:51', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_verification`
+--
+
+DROP TABLE IF EXISTS `email_verification`;
+CREATE TABLE IF NOT EXISTS `email_verification` (
+  `Email_Verif_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `User_Id` int(11) NOT NULL,
+  `Verif_code` text NOT NULL,
+  `Verif_type` varchar(255) NOT NULL,
+  `Date_added` date NOT NULL,
+  `Time_added` time NOT NULL,
+  `Status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Email_Verif_Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `email_verification`
+--
+
+INSERT INTO `email_verification` (`Email_Verif_Id`, `User_Id`, `Verif_code`, `Verif_type`, `Date_added`, `Time_added`, `Status`) VALUES
+(7, 5, 'NV8yMDI1LTEwLTI1IDA2OjUwOjEy', 'Activation', '2025-10-25', '06:50:12', 1);
 
 -- --------------------------------------------------------
 
@@ -1047,7 +1092,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
 (4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-05-17', 1),
-(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'monterorichard09@gmail.com', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-10-17', 1),
+(5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'richarddel.altre@uratex.com.ph', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-10-25', 1),
 (6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-05-25', 1),
 (7, 'Test', '', 'Student 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent1@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
 (8, 'Test', '', 'Student 2', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent2@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-06-07', 1),
