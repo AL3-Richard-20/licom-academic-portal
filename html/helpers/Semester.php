@@ -131,4 +131,34 @@
         );
     }
 
+
+    function yearLevelInfo($year_level_Id){
+
+        global $con;
+
+        $query="SELECT  
+                    Year_name 
+                FROM 
+                    year_levels 
+                WHERE 
+                    Year_Level_Id = '".$year_level_Id."' 
+                    AND Status = 1 
+                LIMIT 1 ";
+
+        $fetch = mysqli_query($con, $query);
+
+        $year_name = '';
+
+        $count = mysqli_num_rows($fetch);
+
+        if($count > 0){
+
+            $row = mysqli_fetch_assoc($fetch);
+    
+            $year_name = $row['Year_name'];
+        }
+
+        return $year_name;
+    }
+
 ?>

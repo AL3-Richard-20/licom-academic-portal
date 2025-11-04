@@ -4,6 +4,7 @@
     include "../models/Tables.php";
 
     include "../helpers/Logs.php";
+    include "../helpers/Semester.php";
 
     if(isset($_POST['action'])){
 
@@ -263,6 +264,70 @@
             }
 
             echo json_encode($res_req);
+        }
+
+        else if($_POST['action'] == 'fetch_year_levels_and_semesters'){
+
+            $subject_Id = $_POST['subjectid'];
+            $group_by   = $_POST['groupby'];
+
+            $query ="SELECT 
+                        student_classes.Year_Level_Id, 
+                        class_schedules.Semester_Id 
+                    FROM 
+                         student_classes
+                    LEFT JOIN 
+                        class_schedules 
+                    ON 
+                        student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id
+                    WHERE 
+                        class_schedules.Subject_Id = '".$subject_Id."' 
+                        AND class_schedules.Status = 1 ";
+
+            if($group_by == 'Year Level'){
+
+                $query .="GROUP BY 
+                            student_classes.Year_Level_Id ";
+            }
+            else{
+
+                $query .="GROUP BY 
+                            class_schedules.Semester_Id ";
+            }
+
+            $fetch = mysqli_query($con, $query);
+
+            if($fetch){
+
+                $results_arr = array();
+
+                while($row = mysqli_fetch_assoc($fetch)){
+
+                    $year_level_Id = $row['Year_Level_Id'];
+
+                    $semester_Id   = $row['Semester_Id'];
+
+
+                    // ========== Year Level Info =============
+                        $year_level_name = yearLevelInfo($year_level_Id);
+                    // ========== Year Level Info END =========
+
+                    // =========== Semsster Info ===============
+                        $semester_info = semesterInfo($semester_Id);
+
+                        $semester_name = $semester_info['SemesterName'];
+                    // =========== Semsster Info END ===========
+
+                    $result_arr = array(
+                        'YearLevel' => $year_level_name,
+                        'Semester' => $semester_name
+                    );
+
+                    array_push($results_arr, $result_arr);
+                }
+
+                echo json_encode($results_arr);
+            }
         }
     }
 

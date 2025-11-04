@@ -155,6 +155,8 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Code</th>
+                                                    <th>Year Levels</th>
+                                                    <th>Semesters</th>
                                                     <th>Program</th>
                                                     <th>Units</th>
                                                     <th>Classification</th>
@@ -215,6 +217,22 @@
                                                                 echo "<tr>";
                                                                 echo "<td class='font-weight-bold'>".$subject_name."</td>";
                                                                 echo "<td>".$subject_code."</td>";
+                                                                echo "<td>
+                                                                        <button 
+                                                                            type='button' 
+                                                                            class='btn btn-outline-light text-dark' 
+                                                                            onclick='fetchYearLevels(`".$subject_Id."`, `Year Level`)'>
+                                                                            <span class='fa fa-list'></span>
+                                                                        </button>
+                                                                    </td>";
+                                                                echo "<td>
+                                                                        <button 
+                                                                            type='button' 
+                                                                            class='btn btn-outline-light text-dark' 
+                                                                            onclick='fetchYearLevels(`".$subject_Id."`, `Semesters`)'>
+                                                                            <span class='fa fa-list'></span>
+                                                                        </button>
+                                                                    </td>";
                                                                 echo "<td><span title='".$course_name."' data-toggle='tooltip'>".$course_code."</span></td>";
                                                                 echo "<td>".$subject_units."</td>";
                                                                 echo "<td>".$subject_class."</td>";
@@ -757,6 +775,24 @@
                         })
                     }
                 })
+            }
+
+            function fetchYearLevels(subject_Id, group_by){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/SubjectsModel.php",
+                    data: {
+                        subjectid:subject_Id,
+                        groupby:group_by,
+                        action:"fetch_year_levels_and_semesters"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        console.log(response)
+                    }
+                });
             }
 
         </script>
