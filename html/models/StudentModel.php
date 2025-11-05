@@ -1,5 +1,7 @@
 <?php
 
+    error_reporting(E_ALL);
+
     include "../includes/db.php";
     include "../models/Tables.php";
     include "../helpers/Logs.php";
@@ -191,6 +193,11 @@
 
                 $stud_fullname  = $fname." ".$lname;
 
+                $midterm_grade  = NULL; 
+                $tentative      = NULL;
+                $final_grade    = NULL;
+                $grade_remark   = NULL;  
+
                 // =========== Fetch Student Grades =============
                     $query1 = "SELECT 
                                     student_grades.Midterm_grade, 
@@ -212,12 +219,17 @@
 
                     $fetch1 = mysqli_query($con, $query1);
 
-                    $row1 = mysqli_fetch_assoc($fetch1);
+                    $count1 = mysqli_num_rows($fetch1);
 
-                    $midterm_grade  = $row1['Midterm_grade']; 
-                    $tentative      = $row1['Tentative_final'];
-                    $final_grade    = $row1['Grade_val'];
-                    $grade_remark   = $row1['Grade_remark'];
+                    if($count1 > 0){
+
+                        $row1 = mysqli_fetch_assoc($fetch1);
+    
+                        $midterm_grade  = $row1['Midterm_grade']; 
+                        $tentative      = $row1['Tentative_final'];
+                        $final_grade    = $row1['Grade_val'];
+                        $grade_remark   = $row1['Grade_remark'];      
+                    }
                 // =========== Fetch Student Grades END =========
 
                 $result_arr = array(
