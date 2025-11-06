@@ -15,9 +15,16 @@
 
         $fetch = mysqli_query($con, $query);
 
-        $row = mysqli_fetch_assoc($fetch);
+        $count = mysqli_num_rows($fetch);
 
-        $grade_remark_Id = $row['Grade_Remark_Id'];
+        $grade_remark_Id = NULL;
+
+        if($count > 0){
+
+            $row = mysqli_fetch_assoc($fetch);
+    
+            $grade_remark_Id = $row['Grade_Remark_Id'];
+        }
 
         return $grade_remark_Id;
     }

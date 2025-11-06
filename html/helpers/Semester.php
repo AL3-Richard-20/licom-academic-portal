@@ -17,11 +17,20 @@
 
         $fetch = mysqli_query($con, $query);
 
-        $row = mysqli_fetch_assoc($fetch);
+        $count = mysqli_num_rows($fetch);
 
-        $semester_Id    = $row['Semester_Id'];
-        $semester_name  = $row['Semester_name'];
-        $is_default     = $row['Is_default'];
+        $semester_Id    = NULL;
+        $semester_name  = NULL;
+        $is_default     = NULL;
+
+        if($count > 0){
+
+            $row = mysqli_fetch_assoc($fetch);
+    
+            $semester_Id    = $row['Semester_Id'];
+            $semester_name  = $row['Semester_name'];
+            $is_default     = $row['Is_default'];
+        }
 
         return array(
             'SemId' => $semester_Id,
@@ -114,13 +123,24 @@
 
         $fetch = mysqli_query($con, $query);
 
-        $row = mysqli_fetch_assoc($fetch);
+        $count = mysqli_num_rows($fetch);
 
-        $semester_name  = $row['Semester_name'];
-        $is_default     = $row['Is_default'];
-        $date_added     = $row['Date_added'];
-        $time_added     = $row['Time_added'];
-        $year_name      = $row['Year_name'];
+        $semester_name  = NULL;
+        $is_default     = NULL;
+        $date_added     = NULL;
+        $time_added     = NULL;
+        $year_name      = NULL;
+
+        if($count > 0){
+
+            $row = mysqli_fetch_assoc($fetch);
+    
+            $semester_name  = $row['Semester_name'];
+            $is_default     = $row['Is_default'];
+            $date_added     = $row['Date_added'];
+            $time_added     = $row['Time_added'];
+            $year_name      = $row['Year_name'];
+        }
         
         return array(
             'SemesterName' => $semester_name,

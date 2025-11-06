@@ -1,5 +1,7 @@
 <?php
 
+    // error_reporting(E_ALL);
+
     include "../includes/db.php";
     include "../models/Tables.php";
 
@@ -189,7 +191,7 @@
 
                 $subject_Id = NULL;
 
-                if($_POST['subjectid'] != ''){
+                if(isset($_POST['subjectid']) && $_POST['subjectid'] != ''){
 
                     $subject_Id = $_POST['subjectid'];
                 }
@@ -249,8 +251,8 @@
                             // ========== Fetch Metric Info ===========
                                 $metric_info = metricValues($metric_val);
         
-                                $metric_val_desc    = $metric_info['MetricDesc'];
-                                $metric_q_desc      = $metric_info['MetricQDesc'];
+                                $metric_val_desc    = $metric_info['MetricDesc'] ?? "";
+                                $metric_q_desc      = $metric_info['MetricQDesc'] ?? "";
                             // ========== Fetch Metric Info END =======
                             
                             $result_arr = array(
@@ -277,8 +279,8 @@
                         // ========== Fetch Metric Info ===========
                             $metric_info = metricValues($metric_val);
     
-                            $metric_val_desc    = $metric_info['MetricDesc'];
-                            $metric_q_desc      = $metric_info['MetricQDesc'];
+                            $metric_val_desc    = $metric_info['MetricDesc'] ?? "";
+                            $metric_q_desc      = $metric_info['MetricQDesc'] ?? "";
                         // ========== Fetch Metric Info END =======
                         
                         $result_arr = array(
