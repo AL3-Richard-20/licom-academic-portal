@@ -21,20 +21,25 @@
 
             $fetch = mysqli_query($con, $query);
 
-            if($fetch){
+            $count = mysqli_num_rows($fetch);
+
+            $username = NULL;
+            $password = NULL;
+
+            if($count > 0){
 
                 $row = mysqli_fetch_assoc($fetch);
 
                 $username = $row['Username'];
                 $password = $row['Password'];
-
-                echo json_encode(
-                    array(
-                        'Username' => $username,
-                        'Password' => $password
-                    )
-                );
             }
+
+            echo json_encode(
+                array(
+                    'Username' => $username,
+                    'Password' => $password
+                )
+            );
         }
     }
 

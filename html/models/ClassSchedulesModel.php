@@ -169,7 +169,7 @@
                         class_schedules.Status = 1 ";
 
             
-            if($_POST['semesterid'] != ''){
+            if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
 
@@ -186,21 +186,21 @@
                 $query .="AND class_schedules.Semester_Id = '".$semester_Id."' ";
             }
 
-            if($_POST['courseid'] != ''){
+            if(isset($_POST['courseid']) && $_POST['courseid'] != ''){
 
                 $course_Id = $_POST['courseid'];
 
                 $query .="AND subjects.Course_Id = '".$course_Id."' ";
             }
 
-            if($_POST['roomid'] != ''){
+            if(isset($_POST['roomid']) && $_POST['roomid'] != ''){
 
                 $room_Id = $_POST['roomid'];
 
                 $query .="AND class_schedules.Room_Id = '".$room_Id."' ";
             }
 
-            if($_POST['dayid'] != ''){
+            if(isset($_POST['dayid']) && $_POST['dayid'] != ''){
 
                 $day_Id = $_POST['dayid'];
 
@@ -782,7 +782,7 @@
                         AND student_classes.Status = 1 
                         AND student_classes.Student_Id = '".$_SESSION["licom_usr_Id"]."' ";
 
-            if($_POST['semesterid'] != ''){
+            if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
 

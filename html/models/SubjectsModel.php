@@ -23,7 +23,7 @@
                     WHERE 
                         Status = 1 ";
 
-            if($_POST['courseid'] != ''){
+            if(isset($_POST['courseid']) && $_POST['courseid'] != ''){
 
                 $course_Id = $_POST['courseid'];
                 
@@ -89,7 +89,7 @@
                         class_schedules.Status = 1 
                         AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' ";
 
-            if($_POST['semid'] != ''){
+            if(isset($_POST['semid']) && $_POST['semid'] != ''){
 
                 $semester_Id = $_POST['semid'];
                 

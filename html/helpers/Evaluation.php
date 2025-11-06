@@ -16,10 +16,18 @@
 
         $fetch = mysqli_query($con, $query);
 
-        $row = mysqli_fetch_assoc($fetch);
+        $count = mysqli_num_rows($fetch);
 
-        $metric_val_desc = $row['Metric_val_desc'];
-        $metric_q_desc   = $row['Metric_Q_desc'];
+        $metric_val_desc = NULL;
+        $metric_q_desc   = NULL;
+
+        if($count > 0){
+
+            $row = mysqli_fetch_assoc($fetch);
+    
+            $metric_val_desc = $row['Metric_val_desc'];
+            $metric_q_desc   = $row['Metric_Q_desc'];
+        }
 
         return array(
             'MetricDesc' => $metric_val_desc,
