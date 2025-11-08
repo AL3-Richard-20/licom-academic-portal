@@ -506,6 +506,92 @@
 
                     </div>
 
+                    <!-- ============ Year Levels ============= -->
+                        <div class="modal fade" id="yearLevelMod">
+
+                            <div class="modal-dialog" role="document">
+
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-bold text-uppercase">Year Levels</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <!-- <thead class="font-weight-bold text-uppercase">
+                                                <tr>
+                                                    <th>Year Level</th>
+                                                </tr>
+                                            </thead> -->
+                                            <tbody id="subj_year_levels">
+                                                <tr>
+                                                    <td>No data available in the table.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                            data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- ============ Year Levels END ========= -->
+
+                    <!-- ============ Semesters ============= -->
+                        <div class="modal fade" id="semestersMod">
+
+                            <div class="modal-dialog" role="document">
+
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-bold text-uppercase">Semesters</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <!-- <thead class="font-weight-bold text-uppercase">
+                                                <tr>
+                                                    <th>Year Level</th>
+                                                </tr>
+                                            </thead> -->
+                                            <tbody id="subj_semesters">
+                                                <tr>
+                                                    <td>No data available in the table.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-outline-light text-dark font-weight-bold text-uppercase" 
+                                            data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- ============ Semesters END ========= -->
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Container fluid  -->
@@ -779,6 +865,21 @@
 
             function fetchYearLevels(subject_Id, group_by){
 
+                if(group_by == 'Year Level'){
+
+                    $('#yearLevelMod').modal('show')
+
+                    var tbl_Id = 'subj_year_levels'
+                }
+                else{
+
+                    $('#semestersMod').modal('show')
+
+                    var tbl_Id = 'subj_semesters'
+                }
+
+                var output=''
+
                 $.ajax({
                     type: "POST",
                     url: "models/SubjectsModel.php",
@@ -790,7 +891,33 @@
                     dataType: "JSON",
                     success: function (response) {
                         
-                        console.log(response)
+                        if(response.length > 0){
+
+                            $.each(response, function(key, value){
+
+                                if(group_by == 'Year Level'){
+    
+                                    var result = value.YearLevel
+                                }
+                                else{
+    
+                                    var result = value.Semester
+                                }
+                                
+                                output+='<tr>'
+                                output+='<td>'+ result +'</td>'
+                                output+='</tr>'
+                            })
+
+                        }
+                        else{
+
+                            output+='<tr>'
+                            output+='<td>No data available in the table.</td>'
+                            output+='</tr>'
+                        }
+
+                        $('#'+tbl_Id).html(output)
                     }
                 });
             }
