@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 05, 2025 at 05:57 AM
--- Server version: 5.7.36
--- PHP Version: 7.4.26
+-- Host: 127.0.0.1
+-- Generation Time: Nov 08, 2025 at 07:03 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,19 +27,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `accounts`
 --
 
-DROP TABLE IF EXISTS `accounts`;
-CREATE TABLE IF NOT EXISTS `accounts` (
-  `Account_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `accounts` (
+  `Account_Id` int(11) NOT NULL,
   `Level_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Username` varchar(255) DEFAULT NULL,
   `Password` text NOT NULL,
-  `Email_verified` int(11) NOT NULL DEFAULT '0',
+  `Email_verified` int(11) NOT NULL DEFAULT 0,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Account_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `accounts`
@@ -73,16 +71,14 @@ INSERT INTO `accounts` (`Account_Id`, `Level_Id`, `User_Id`, `Username`, `Passwo
 -- Table structure for table `activity_logs`
 --
 
-DROP TABLE IF EXISTS `activity_logs`;
-CREATE TABLE IF NOT EXISTS `activity_logs` (
-  `Activity_Log_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `activity_logs` (
+  `Activity_Log_Id` int(11) NOT NULL,
   `Log_detail` varchar(255) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Activity_Log_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=470 DEFAULT CHARSET=latin1;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `activity_logs`
@@ -556,7 +552,18 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 (466, 'Log In Account', 4, '2025-11-05', '12:22:30', 1),
 (467, 'Added a new class student. ID: 23', 4, '2025-11-05', '12:23:05', 1),
 (468, 'Log In Account', 14, '2025-11-05', '12:23:21', 1),
-(469, 'Log In Account', 14, '2025-11-05', '01:21:53', 1);
+(469, 'Log In Account', 14, '2025-11-05', '01:21:53', 1),
+(470, 'Log In Account', 14, '2025-11-08', '01:16:51', 1),
+(471, 'Log In Account', 20, '2025-11-08', '01:17:14', 1),
+(472, 'Log In Account', 14, '2025-11-08', '01:17:46', 1),
+(473, 'Log In Account', 18, '2025-11-08', '01:18:10', 1),
+(474, 'Log In Account', 4, '2025-11-08', '01:57:50', 1),
+(475, 'Log In Account', 4, '2025-11-08', '01:57:52', 1),
+(476, 'Log In Account', 4, '2025-11-08', '01:59:14', 1),
+(477, 'Added a new semester record: 2nd Semester A.Y. 2025-2026', 4, '2025-11-08', '01:59:52', 1),
+(478, 'Added a new class schedule. ID: 16', 4, '2025-11-08', '02:01:09', 1),
+(479, 'Set semester as active. ID: 9', 4, '2025-11-08', '02:02:34', 1),
+(480, 'Added a new class student. ID: 20', 4, '2025-11-08', '02:02:44', 1);
 
 -- --------------------------------------------------------
 
@@ -564,9 +571,8 @@ INSERT INTO `activity_logs` (`Activity_Log_Id`, `Log_detail`, `User_Id`, `Date_a
 -- Table structure for table `class_schedules`
 --
 
-DROP TABLE IF EXISTS `class_schedules`;
-CREATE TABLE IF NOT EXISTS `class_schedules` (
-  `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `class_schedules` (
+  `Class_Schedule_Id` int(11) NOT NULL,
   `Semester_Id` int(11) NOT NULL,
   `Subject_Id` int(11) NOT NULL,
   `Room_Id` int(11) NOT NULL,
@@ -576,9 +582,8 @@ CREATE TABLE IF NOT EXISTS `class_schedules` (
   `Time_end` time NOT NULL,
   `Date_added` date DEFAULT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Class_Schedule_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class_schedules`
@@ -599,7 +604,8 @@ INSERT INTO `class_schedules` (`Class_Schedule_Id`, `Semester_Id`, `Subject_Id`,
 (12, 1, 2, 1, 6, 3, '08:30:00', '09:40:00', '2025-10-18', '04:37:11', 0),
 (13, 1, 2, 1, 6, 3, '08:30:00', '10:30:00', '2025-10-18', '04:37:45', 0),
 (14, 1, 41, 1, 14, 1, '08:00:00', '10:00:00', '2025-11-03', '01:54:50', 1),
-(15, 1, 41, 1, 14, 1, '13:00:00', '14:00:00', '2025-11-03', '02:00:20', 1);
+(15, 1, 41, 1, 14, 1, '13:00:00', '14:00:00', '2025-11-03', '02:00:20', 1),
+(16, 9, 41, 1, 14, 1, '09:00:00', '10:30:00', '2025-11-08', '02:01:09', 1);
 
 -- --------------------------------------------------------
 
@@ -607,16 +613,14 @@ INSERT INTO `class_schedules` (`Class_Schedule_Id`, `Semester_Id`, `Subject_Id`,
 -- Table structure for table `courses`
 --
 
-DROP TABLE IF EXISTS `courses`;
-CREATE TABLE IF NOT EXISTS `courses` (
-  `Course_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `courses` (
+  `Course_Id` int(11) NOT NULL,
   `Course_name` varchar(255) NOT NULL,
   `Course_code` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Course_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `courses`
@@ -643,17 +647,15 @@ INSERT INTO `courses` (`Course_Id`, `Course_name`, `Course_code`, `Date_added`, 
 -- Table structure for table `email_verification`
 --
 
-DROP TABLE IF EXISTS `email_verification`;
-CREATE TABLE IF NOT EXISTS `email_verification` (
-  `Email_Verif_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `email_verification` (
+  `Email_Verif_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Verif_code` text NOT NULL,
   `Verif_type` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Email_Verif_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+  `Status` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `email_verification`
@@ -682,31 +684,30 @@ INSERT INTO `email_verification` (`Email_Verif_Id`, `User_Id`, `Verif_code`, `Ve
 -- Table structure for table `evaluation_grade`
 --
 
-DROP TABLE IF EXISTS `evaluation_grade`;
-CREATE TABLE IF NOT EXISTS `evaluation_grade` (
-  `Eval_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `evaluation_grade` (
+  `Eval_Id` int(11) NOT NULL,
   `Semester_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Evaluated_by` int(11) NOT NULL,
-  `Remarks` text,
+  `Remarks` text DEFAULT NULL,
   `Grade_val` decimal(18,5) DEFAULT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Eval_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `evaluation_grade`
 --
 
 INSERT INTO `evaluation_grade` (`Eval_Id`, `Semester_Id`, `User_Id`, `Evaluated_by`, `Remarks`, `Grade_val`, `Date_added`, `Time_added`, `Status`) VALUES
-(4, 1, 16, 5, NULL, '3.62500', '2025-07-18', '10:24:43', 1),
-(5, 1, 6, 5, NULL, '3.12500', '2025-07-18', '05:57:00', 1),
-(6, 1, 6, 7, NULL, '3.62500', '2025-07-19', '07:27:36', 1),
-(7, 1, 6, 8, NULL, '2.00000', '2025-07-19', '07:28:43', 1),
-(8, 1, 16, 7, NULL, '2.12500', '2025-09-09', '10:25:24', 1),
-(11, 1, 6, 9, 'Lorem Ipsum DOlor Sit Amet Con Estas Con Estacteur.', '3.37500', '2025-10-10', '11:12:46', 1);
+(4, 1, 16, 5, NULL, 3.62500, '2025-07-18', '10:24:43', 1),
+(5, 1, 6, 5, NULL, 3.12500, '2025-07-18', '05:57:00', 1),
+(6, 1, 6, 7, NULL, 3.62500, '2025-07-19', '07:27:36', 1),
+(7, 1, 6, 8, NULL, 2.00000, '2025-07-19', '07:28:43', 1),
+(8, 1, 16, 7, NULL, 2.12500, '2025-09-09', '10:25:24', 1),
+(11, 1, 6, 9, 'Lorem Ipsum DOlor Sit Amet Con Estas Con Estacteur.', 3.37500, '2025-10-10', '11:12:46', 1),
+(12, 1, 14, 20, 'Lorem IPsum DOlor Sit Amet Con Etas', 4.00000, '2025-11-08', '01:17:39', 1);
 
 -- --------------------------------------------------------
 
@@ -714,9 +715,8 @@ INSERT INTO `evaluation_grade` (`Eval_Id`, `Semester_Id`, `User_Id`, `Evaluated_
 -- Table structure for table `evaluation_grades`
 --
 
-DROP TABLE IF EXISTS `evaluation_grades`;
-CREATE TABLE IF NOT EXISTS `evaluation_grades` (
-  `Eval_Grades_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `evaluation_grades` (
+  `Eval_Grades_Id` int(11) NOT NULL,
   `Semester_Id` int(11) DEFAULT NULL,
   `Eval_Metric_Id` int(11) NOT NULL,
   `Metric_Val_Id` int(11) NOT NULL,
@@ -724,9 +724,8 @@ CREATE TABLE IF NOT EXISTS `evaluation_grades` (
   `Evaluated_by` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Eval_Grades_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_grades`
@@ -780,7 +779,15 @@ INSERT INTO `evaluation_grades` (`Eval_Grades_Id`, `Semester_Id`, `Eval_Metric_I
 (85, 1, 5, 5, 6, 9, '2025-10-10', '11:12:46', 1),
 (86, 1, 6, 5, 6, 9, '2025-10-10', '11:12:46', 1),
 (87, 1, 7, 6, 6, 9, '2025-10-10', '11:12:46', 1),
-(88, 1, 8, 6, 6, 9, '2025-10-10', '11:12:46', 1);
+(88, 1, 8, 6, 6, 9, '2025-10-10', '11:12:46', 1),
+(89, 1, 1, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(90, 1, 2, 5, 14, 20, '2025-11-08', '01:17:39', 1),
+(91, 1, 3, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(92, 1, 4, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(93, 1, 5, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(94, 1, 6, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(95, 1, 7, 6, 14, 20, '2025-11-08', '01:17:39', 1),
+(96, 1, 8, 7, 14, 20, '2025-11-08', '01:17:39', 1);
 
 -- --------------------------------------------------------
 
@@ -788,16 +795,14 @@ INSERT INTO `evaluation_grades` (`Eval_Grades_Id`, `Semester_Id`, `Eval_Metric_I
 -- Table structure for table `evaluation_headers`
 --
 
-DROP TABLE IF EXISTS `evaluation_headers`;
-CREATE TABLE IF NOT EXISTS `evaluation_headers` (
-  `Eval_Header_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `evaluation_headers` (
+  `Eval_Header_Id` int(11) NOT NULL,
   `Eval_header_name` varchar(255) NOT NULL,
   `Order_val` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Eval_Header_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_headers`
@@ -817,16 +822,14 @@ INSERT INTO `evaluation_headers` (`Eval_Header_Id`, `Eval_header_name`, `Order_v
 -- Table structure for table `evaluation_metrics`
 --
 
-DROP TABLE IF EXISTS `evaluation_metrics`;
-CREATE TABLE IF NOT EXISTS `evaluation_metrics` (
-  `Eval_Metric_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `evaluation_metrics` (
+  `Eval_Metric_Id` int(11) NOT NULL,
   `Eval_Header_Id` int(11) NOT NULL,
   `Metric_desc` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Eval_Metric_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_metrics`
@@ -848,18 +851,16 @@ INSERT INTO `evaluation_metrics` (`Eval_Metric_Id`, `Eval_Header_Id`, `Metric_de
 -- Table structure for table `file_attachments`
 --
 
-DROP TABLE IF EXISTS `file_attachments`;
-CREATE TABLE IF NOT EXISTS `file_attachments` (
-  `File_Attachment_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `file_attachments` (
+  `File_Attachment_Id` int(11) NOT NULL,
   `Filename_path` text NOT NULL,
   `File_Type_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL,
   `Added_by` int(11) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`File_Attachment_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -867,15 +868,13 @@ CREATE TABLE IF NOT EXISTS `file_attachments` (
 -- Table structure for table `file_types`
 --
 
-DROP TABLE IF EXISTS `file_types`;
-CREATE TABLE IF NOT EXISTS `file_types` (
-  `File_Type_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `file_types` (
+  `File_Type_Id` int(11) NOT NULL,
   `File_type_name` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`File_Type_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -883,29 +882,27 @@ CREATE TABLE IF NOT EXISTS `file_types` (
 -- Table structure for table `grade_remarks`
 --
 
-DROP TABLE IF EXISTS `grade_remarks`;
-CREATE TABLE IF NOT EXISTS `grade_remarks` (
-  `Grade_Remark_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `grade_remarks` (
+  `Grade_Remark_Id` int(11) NOT NULL,
   `Grade_remark` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Grade_indicator` varchar(255) DEFAULT NULL,
   `Range_from` decimal(10,2) DEFAULT NULL,
   `Range_to` decimal(10,2) NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Grade_Remark_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `grade_remarks`
 --
 
 INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `Grade_indicator`, `Range_from`, `Range_to`, `Time_added`, `Status`) VALUES
-(1, 'Passed', '2025-06-23', 'text-success', '1.00', '3.00', '21:02:30', 1),
-(2, 'Conditional', '2025-06-23', 'text-warning', '4.00', '4.00', '21:02:30', 1),
-(3, 'Failed', '2025-08-17', 'text-danger', '5.00', '5.00', '04:38:22', 1),
-(4, 'Removal', '2025-10-13', 'text-info', '7.00', '7.00', '02:12:21', 0),
-(9, 'Incomplete', '2025-10-16', 'text-warning', '0.00', '0.00', '10:58:02', 1);
+(1, 'Passed', '2025-06-23', 'text-success', 1.00, 3.00, '21:02:30', 1),
+(2, 'Conditional', '2025-06-23', 'text-warning', 4.00, 4.00, '21:02:30', 1),
+(3, 'Failed', '2025-08-17', 'text-danger', 5.00, 5.00, '04:38:22', 1),
+(4, 'Removal', '2025-10-13', 'text-info', 7.00, 7.00, '02:12:21', 0),
+(9, 'Incomplete', '2025-10-16', 'text-warning', 0.00, 0.00, '10:58:02', 1);
 
 -- --------------------------------------------------------
 
@@ -913,13 +910,11 @@ INSERT INTO `grade_remarks` (`Grade_Remark_Id`, `Grade_remark`, `Date_added`, `G
 -- Table structure for table `levels`
 --
 
-DROP TABLE IF EXISTS `levels`;
-CREATE TABLE IF NOT EXISTS `levels` (
-  `Level_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `levels` (
+  `Level_Id` int(11) NOT NULL,
   `Level_name` varchar(255) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Level_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `levels`
@@ -937,15 +932,13 @@ INSERT INTO `levels` (`Level_Id`, `Level_name`, `Status`) VALUES
 -- Table structure for table `metric_values`
 --
 
-DROP TABLE IF EXISTS `metric_values`;
-CREATE TABLE IF NOT EXISTS `metric_values` (
-  `Metric_Val_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `metric_values` (
+  `Metric_Val_Id` int(11) NOT NULL,
   `Metric_val_no` int(11) NOT NULL,
   `Metric_val_desc` varchar(255) NOT NULL,
   `Metric_Q_desc` varchar(255) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Metric_Val_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `metric_values`
@@ -966,16 +959,14 @@ INSERT INTO `metric_values` (`Metric_Val_Id`, `Metric_val_no`, `Metric_val_desc`
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `Room_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rooms` (
+  `Room_Id` int(11) NOT NULL,
   `Room_name` varchar(255) NOT NULL,
   `Room_details` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Room_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rooms`
@@ -999,31 +990,30 @@ INSERT INTO `rooms` (`Room_Id`, `Room_name`, `Room_details`, `Date_added`, `Time
 -- Table structure for table `semesters`
 --
 
-DROP TABLE IF EXISTS `semesters`;
-CREATE TABLE IF NOT EXISTS `semesters` (
-  `Semester_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `semesters` (
+  `Semester_Id` int(11) NOT NULL,
   `Year_Level_Id` int(11) DEFAULT NULL COMMENT 'Disabled',
   `Semester_name` varchar(255) NOT NULL,
-  `Is_default` int(11) DEFAULT '0',
+  `Is_default` int(11) DEFAULT 0,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `semesters`
 --
 
 INSERT INTO `semesters` (`Semester_Id`, `Year_Level_Id`, `Semester_name`, `Is_default`, `Date_added`, `Time_added`, `Status`) VALUES
-(1, 1, '1st Semester A.Y. 2025-2026', 1, '2025-05-19', '06:49:52', 1),
+(1, 1, '1st Semester A.Y. 2025-2026', 2, '2025-05-19', '06:49:52', 1),
 (2, 1, '2nd Semester A.Y. 2025-2026', 0, '2025-05-19', '07:11:56', 0),
 (3, 2, '1st Semester A.Y. 2026-2027', 0, '2025-05-22', '09:12:21', 0),
 (4, 2, '2nd Semester A.Y. 2026 -2027', 0, '2025-06-07', '02:50:36', 0),
 (5, 3, '1st Semester A.Y. 2025 - 2026', 0, '2025-07-30', '08:54:59', 0),
 (6, 3, '2nd Semester A.Y. 2025 - 2026', 0, '2025-09-20', '11:16:33', 0),
 (7, NULL, 'Sample semester', 0, '2025-10-13', '09:54:00', 0),
-(8, NULL, 'Sample semester', 0, '2025-10-18', '05:19:51', 0);
+(8, NULL, 'Sample semester', 0, '2025-10-18', '05:19:51', 0),
+(9, NULL, '2nd Semester A.Y. 2025-2026', 1, '2025-11-08', '01:59:52', 1);
 
 -- --------------------------------------------------------
 
@@ -1031,15 +1021,13 @@ INSERT INTO `semesters` (`Semester_Id`, `Year_Level_Id`, `Semester_name`, `Is_de
 -- Table structure for table `settings`
 --
 
-DROP TABLE IF EXISTS `settings`;
-CREATE TABLE IF NOT EXISTS `settings` (
-  `Sett_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `settings` (
+  `Sett_Id` int(11) NOT NULL,
   `Sett_desc` varchar(255) NOT NULL,
   `Sett_val` text NOT NULL,
-  `Last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Sett_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+  `Last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `settings`
@@ -1059,9 +1047,8 @@ INSERT INTO `settings` (`Sett_Id`, `Sett_desc`, `Sett_val`, `Last_update`, `Stat
 -- Table structure for table `student_classes`
 --
 
-DROP TABLE IF EXISTS `student_classes`;
-CREATE TABLE IF NOT EXISTS `student_classes` (
-  `Student_Class_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `student_classes` (
+  `Student_Class_Id` int(11) NOT NULL,
   `Class_Schedule_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
   `Year_Level_Id` int(11) DEFAULT NULL,
@@ -1069,9 +1056,8 @@ CREATE TABLE IF NOT EXISTS `student_classes` (
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Last_update` date DEFAULT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Student_Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student_classes`
@@ -1110,7 +1096,8 @@ INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student
 (37, 2, 5, 3, 4, '2025-10-13', '10:43:39', '2025-10-13', 1),
 (38, 11, 9, 1, 4, '2025-10-18', '04:23:28', '2025-10-18', 1),
 (39, 14, 20, 1, 4, '2025-11-05', '12:17:00', '2025-11-05', 1),
-(40, 14, 23, 1, 4, '2025-11-05', '12:23:05', '2025-11-05', 1);
+(40, 14, 23, 1, 4, '2025-11-05', '12:23:05', '2025-11-05', 1),
+(41, 16, 20, 1, 4, '2025-11-08', '02:02:44', '2025-11-08', 1);
 
 -- --------------------------------------------------------
 
@@ -1118,9 +1105,8 @@ INSERT INTO `student_classes` (`Student_Class_Id`, `Class_Schedule_Id`, `Student
 -- Table structure for table `student_grades`
 --
 
-DROP TABLE IF EXISTS `student_grades`;
-CREATE TABLE IF NOT EXISTS `student_grades` (
-  `Grade_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `student_grades` (
+  `Grade_Id` int(11) NOT NULL,
   `Semester_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
   `Subject_Id` int(11) NOT NULL,
@@ -1132,20 +1118,19 @@ CREATE TABLE IF NOT EXISTS `student_grades` (
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Last_updated_date` timestamp NULL DEFAULT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Grade_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student_grades`
 --
 
 INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_Id`, `Midterm_grade`, `Tentative_final`, `Grade_val`, `Remarks`, `Evaluated_by`, `Date_added`, `Time_added`, `Last_updated_date`, `Status`) VALUES
-(1, 1, 5, 2, '5.00', '0.00', '0.00', '9', 4, '2025-10-16', '11:18:35', '2025-10-09 17:44:03', 1),
-(2, 1, 5, 1, '3.00', '2.50', '2.75', '1', 4, '2025-10-16', '11:17:43', '2025-10-16 03:01:32', 1),
-(3, 1, 7, 1, '2.75', '2.50', '2.63', '1', 4, '2025-10-02', '04:16:55', '2025-10-16 03:01:32', 1),
-(4, 1, 8, 3, '2.30', '3.00', '2.65', '1', 6, '2025-10-08', '05:24:55', '2025-10-16 03:20:24', 1),
-(5, 1, 9, 3, '3.00', '2.25', '2.63', '1', 4, '2025-10-18', '04:28:12', '2025-10-16 03:20:24', 1);
+(1, 1, 5, 2, 5.00, 0.00, 0.00, '9', 4, '2025-10-16', '11:18:35', '2025-10-09 17:44:03', 1),
+(2, 1, 5, 1, 3.00, 2.50, 2.75, '1', 4, '2025-10-16', '11:17:43', '2025-10-16 03:01:32', 1),
+(3, 1, 7, 1, 2.75, 2.50, 2.63, '1', 4, '2025-10-02', '04:16:55', '2025-10-16 03:01:32', 1),
+(4, 1, 8, 3, 2.30, 3.00, 2.65, '1', 6, '2025-10-08', '05:24:55', '2025-10-16 03:20:24', 1),
+(5, 1, 9, 3, 3.00, 2.25, 2.63, '1', 4, '2025-10-18', '04:28:12', '2025-10-16 03:20:24', 1);
 
 -- --------------------------------------------------------
 
@@ -1153,9 +1138,8 @@ INSERT INTO `student_grades` (`Grade_Id`, `Semester_Id`, `Student_Id`, `Subject_
 -- Table structure for table `student_year_level`
 --
 
-DROP TABLE IF EXISTS `student_year_level`;
-CREATE TABLE IF NOT EXISTS `student_year_level` (
-  `SYL_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `student_year_level` (
+  `SYL_Id` int(11) NOT NULL,
   `Semester_Id` int(11) DEFAULT NULL,
   `Year_Level_Id` int(11) DEFAULT NULL,
   `Course_Id` int(11) NOT NULL,
@@ -1163,9 +1147,8 @@ CREATE TABLE IF NOT EXISTS `student_year_level` (
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Last_updated` timestamp NULL DEFAULT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`SYL_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `student_year_level`
@@ -1186,9 +1169,8 @@ INSERT INTO `student_year_level` (`SYL_Id`, `Semester_Id`, `Year_Level_Id`, `Cou
 -- Table structure for table `subjects`
 --
 
-DROP TABLE IF EXISTS `subjects`;
-CREATE TABLE IF NOT EXISTS `subjects` (
-  `Subject_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `subjects` (
+  `Subject_Id` int(11) NOT NULL,
   `Course_Id` int(11) NOT NULL,
   `Subject_name` varchar(255) NOT NULL,
   `Subject_code` varchar(255) NOT NULL,
@@ -1196,9 +1178,8 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `Classification` varchar(255) DEFAULT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Subject_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subjects`
@@ -1260,9 +1241,8 @@ INSERT INTO `subjects` (`Subject_Id`, `Course_Id`, `Subject_name`, `Subject_code
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `User_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `User_Id` int(11) NOT NULL,
   `FName` varchar(255) NOT NULL,
   `MName` varchar(255) DEFAULT NULL,
   `LName` varchar(255) NOT NULL,
@@ -1283,16 +1263,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
   `Last_update` date NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`User_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`, `Civil_status`, `Sex`, `Nationality`, `Email`, `Phone_no`, `Address`, `Guardian`, `G_relation`, `G_contactno`, `G_email`, `G_occupation`, `G_address`, `Date_added`, `Time_added`, `Last_update`, `Status`) VALUES
-(4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-11-03', 0),
+(4, 'Richard', NULL, 'Montero', '', NULL, NULL, NULL, NULL, 'registrar1@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-05-12', '11:08:06', '2025-11-03', 1),
 (5, 'Al', 'Montero', 'Conrado', NULL, '1998-12-20', 'Single', 'Male', 'Filipino', 'richarddel.altre@uratex.com.ph', '09631753678', 'GMA, Cavite', 'Rhea Montero', 'Mother', '09685218573', 'rhea.montero@gmail.com', 'Business Owner', 'GMA, Cavite', '2025-05-17', '09:58:35', '2025-11-03', 0),
 (6, 'Jane', 'Howell', 'Doe', '', '1988-12-04', 'Single', 'Female', 'Filipino', 'johnhowelldoe@gmail.com', '09095442181', 'Sample address', 'Sample Sample - edited', 'Sample', '09634187848', 'Sample@gmail.com', 'Sample', 'Sample', '2025-05-25', '02:29:30', '2025-11-03', 0),
 (7, 'Test', '', 'Student 1', NULL, '2025-06-07', 'Single', 'Male', 'Filipino', 'teststudent1@gmail.com', '090909090909', 'lorem Ipsum', 'Sample  guardian', 'Sample', '09090909099', 'sample.guardian@gmail.com', 'Sample', 'lorem Ipsum 2', '2025-06-07', '09:44:15', '2025-11-03', 0),
@@ -1319,15 +1298,13 @@ INSERT INTO `users` (`User_Id`, `FName`, `MName`, `LName`, `Suffix`, `Birthdate`
 -- Table structure for table `year_levels`
 --
 
-DROP TABLE IF EXISTS `year_levels`;
-CREATE TABLE IF NOT EXISTS `year_levels` (
-  `Year_Level_Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `year_levels` (
+  `Year_Level_Id` int(11) NOT NULL,
   `Year_name` varchar(255) NOT NULL,
   `Date_added` date NOT NULL,
   `Time_added` time NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Year_Level_Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `Status` int(11) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `year_levels`
@@ -1338,6 +1315,290 @@ INSERT INTO `year_levels` (`Year_Level_Id`, `Year_name`, `Date_added`, `Time_add
 (2, '2nd Year', '2025-09-20', '10:59:54', 1),
 (3, '3rd Year', '2025-09-20', '11:00:02', 1),
 (4, '4th Year', '2025-09-20', '11:00:16', 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`Account_Id`);
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD PRIMARY KEY (`Activity_Log_Id`);
+
+--
+-- Indexes for table `class_schedules`
+--
+ALTER TABLE `class_schedules`
+  ADD PRIMARY KEY (`Class_Schedule_Id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`Course_Id`);
+
+--
+-- Indexes for table `email_verification`
+--
+ALTER TABLE `email_verification`
+  ADD PRIMARY KEY (`Email_Verif_Id`);
+
+--
+-- Indexes for table `evaluation_grade`
+--
+ALTER TABLE `evaluation_grade`
+  ADD PRIMARY KEY (`Eval_Id`);
+
+--
+-- Indexes for table `evaluation_grades`
+--
+ALTER TABLE `evaluation_grades`
+  ADD PRIMARY KEY (`Eval_Grades_Id`);
+
+--
+-- Indexes for table `evaluation_headers`
+--
+ALTER TABLE `evaluation_headers`
+  ADD PRIMARY KEY (`Eval_Header_Id`);
+
+--
+-- Indexes for table `evaluation_metrics`
+--
+ALTER TABLE `evaluation_metrics`
+  ADD PRIMARY KEY (`Eval_Metric_Id`);
+
+--
+-- Indexes for table `file_attachments`
+--
+ALTER TABLE `file_attachments`
+  ADD PRIMARY KEY (`File_Attachment_Id`);
+
+--
+-- Indexes for table `file_types`
+--
+ALTER TABLE `file_types`
+  ADD PRIMARY KEY (`File_Type_Id`);
+
+--
+-- Indexes for table `grade_remarks`
+--
+ALTER TABLE `grade_remarks`
+  ADD PRIMARY KEY (`Grade_Remark_Id`);
+
+--
+-- Indexes for table `levels`
+--
+ALTER TABLE `levels`
+  ADD PRIMARY KEY (`Level_Id`);
+
+--
+-- Indexes for table `metric_values`
+--
+ALTER TABLE `metric_values`
+  ADD PRIMARY KEY (`Metric_Val_Id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`Room_Id`);
+
+--
+-- Indexes for table `semesters`
+--
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`Semester_Id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`Sett_Id`);
+
+--
+-- Indexes for table `student_classes`
+--
+ALTER TABLE `student_classes`
+  ADD PRIMARY KEY (`Student_Class_Id`);
+
+--
+-- Indexes for table `student_grades`
+--
+ALTER TABLE `student_grades`
+  ADD PRIMARY KEY (`Grade_Id`);
+
+--
+-- Indexes for table `student_year_level`
+--
+ALTER TABLE `student_year_level`
+  ADD PRIMARY KEY (`SYL_Id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`Subject_Id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`User_Id`);
+
+--
+-- Indexes for table `year_levels`
+--
+ALTER TABLE `year_levels`
+  ADD PRIMARY KEY (`Year_Level_Id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `Account_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `Activity_Log_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=481;
+
+--
+-- AUTO_INCREMENT for table `class_schedules`
+--
+ALTER TABLE `class_schedules`
+  MODIFY `Class_Schedule_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `Course_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `email_verification`
+--
+ALTER TABLE `email_verification`
+  MODIFY `Email_Verif_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `evaluation_grade`
+--
+ALTER TABLE `evaluation_grade`
+  MODIFY `Eval_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `evaluation_grades`
+--
+ALTER TABLE `evaluation_grades`
+  MODIFY `Eval_Grades_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+
+--
+-- AUTO_INCREMENT for table `evaluation_headers`
+--
+ALTER TABLE `evaluation_headers`
+  MODIFY `Eval_Header_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `evaluation_metrics`
+--
+ALTER TABLE `evaluation_metrics`
+  MODIFY `Eval_Metric_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `file_attachments`
+--
+ALTER TABLE `file_attachments`
+  MODIFY `File_Attachment_Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `file_types`
+--
+ALTER TABLE `file_types`
+  MODIFY `File_Type_Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `grade_remarks`
+--
+ALTER TABLE `grade_remarks`
+  MODIFY `Grade_Remark_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `Level_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `metric_values`
+--
+ALTER TABLE `metric_values`
+  MODIFY `Metric_Val_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `Room_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `semesters`
+--
+ALTER TABLE `semesters`
+  MODIFY `Semester_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `Sett_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `student_classes`
+--
+ALTER TABLE `student_classes`
+  MODIFY `Student_Class_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT for table `student_grades`
+--
+ALTER TABLE `student_grades`
+  MODIFY `Grade_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `student_year_level`
+--
+ALTER TABLE `student_year_level`
+  MODIFY `SYL_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `Subject_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `User_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `year_levels`
+--
+ALTER TABLE `year_levels`
+  MODIFY `Year_Level_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
