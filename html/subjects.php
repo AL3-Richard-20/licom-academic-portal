@@ -863,6 +863,7 @@
                 })
             }
 
+
             function fetchYearLevels(subject_Id, group_by){
 
                 if(group_by == 'Year Level'){

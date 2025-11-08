@@ -223,7 +223,7 @@
                                         AND student_classes.Status = 1 
                                         AND student_classes.Student_Id = '".$evaluated_by."' ";
                                 
-                            if($_POST['subjectid'] != ''){
+                            if(isset($_POST['subjectid']) && $_POST['subjectid'] != ''){
 
                                 $subject_Id = $_POST['subjectid'];
 
@@ -235,9 +235,18 @@
 
                             $fetch1 = mysqli_query($con, $query1);
 
-                            $row1 = mysqli_fetch_assoc($fetch1);
+                            $count1 = mysqli_num_rows($fetch1);
 
-                            $is_under_subject = $row1['Total'];
+                            if($count1 > 0){
+
+                                $row1 = mysqli_fetch_assoc($fetch1);
+    
+                                $is_under_subject = $row1['Total'];
+                            }
+                            else{
+
+                                $is_under_subject = 0;
+                            }
                         }
                     // ========== Filter by Subject END ==========
 
