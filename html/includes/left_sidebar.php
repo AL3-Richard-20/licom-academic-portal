@@ -268,12 +268,12 @@
                             </a>
 
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <!-- <li class="sidebar-item">
-                                    <a href="students.php" class="sidebar-link">
+                                <li class="sidebar-item">
+                                    <a href="students.php?perinstructor=1" class="sidebar-link">
                                         <i class="icon-Record"></i>
                                         <span class="hide-menu">View All</span>
                                     </a>
-                                </li> -->
+                                </li>
                                 <li class="sidebar-item">
                                     <a href="bulk_grades2.php" class="sidebar-link">
                                         <i class="icon-Record"></i>
