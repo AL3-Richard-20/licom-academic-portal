@@ -253,7 +253,11 @@
 
             if($semester_val == 'all' || $semester_val == ''){
 
-                $query="SELECT 
+                if(isset($_POST['perinstructor']) && $_POST['perinstructor'] == 1){
+
+                    $query="SELECT 
+                            student_classes.Student_Class_Id,
+                            class_schedules.Class_Schedule_Id, 
                             users.User_Id,
                             users.FName, 
                             users.MName, 
@@ -261,20 +265,50 @@
                             users.Phone_no,
                             users.Date_added, 
                             users.Time_added,
-                            users.Status  
+                            users.Status 
                         FROM 
-                            users 
+                            student_classes 
                         LEFT JOIN 
-                            accounts 
+                            class_schedules
                         ON 
-                            users.User_Id = accounts.User_Id
+                            student_classes.Class_Schedule_Id = class_schedules.Class_Schedule_Id 
+                        LEFT JOIN 
+                            users 
+                        ON 
+                            student_classes.Student_Id = users.User_Id 
                         WHERE 
-                            users.Status = 1 
-                            AND accounts.Level_Id = 3 
-                        ORDER BY 
-                            users.User_Id DESC,
-                            users.Date_added DESC, 
-                            users.Time_added DESC ";
+                            class_schedules.Status = 1 
+                            AND student_classes.Status = 1 
+                            AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' 
+                        GROUP BY 
+                            student_classes.Student_Id ";
+                }
+                else{
+
+                    $query="SELECT 
+                                users.User_Id,
+                                users.FName, 
+                                users.MName, 
+                                users.LName, 
+                                users.Phone_no,
+                                users.Date_added, 
+                                users.Time_added,
+                                users.Status  
+                            FROM 
+                                users 
+                            LEFT JOIN 
+                                accounts 
+                            ON 
+                                users.User_Id = accounts.User_Id
+                            WHERE 
+                                users.Status = 1 
+                                AND accounts.Level_Id = 3 ";
+                    
+                    $query .="ORDER BY 
+                                users.User_Id DESC,
+                                users.Date_added DESC, 
+                                users.Time_added DESC ";
+                }
             }
             else{
 
@@ -302,8 +336,14 @@
                         WHERE 
                             class_schedules.Semester_Id = '".$semester_val."' 
                             AND class_schedules.Status = 1 
-                            AND student_classes.Status = 1 
-                        GROUP BY 
+                            AND student_classes.Status = 1 ";
+
+                if(isset($_POST['perinstructor']) && $_POST['perinstructor'] == 1){
+
+                    $query .="AND class_schedules.Instructor_Id = '".$_SESSION["licom_usr_Id"]."' ";
+                }
+                
+                $query .="GROUP BY 
                             student_classes.Student_Id ";
             }
 

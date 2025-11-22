@@ -310,7 +310,9 @@
                         <div class="col-lg-6">
                             <?php
                                 
-                                if($_SESSION["licom_usr_level"] == 3 || $_SESSION["licom_usr_level"] == 1){ ?>
+                                if( $_SESSION["licom_usr_level"] == 1 || 
+                                    $_SESSION["licom_usr_level"] == 3 || 
+                                    $_SESSION["licom_usr_level"] == 4){ ?>
 
                                     <h4 class="font-weight-bold">Remarks: </h4>
                                     <span><?= $remarks ?></span>

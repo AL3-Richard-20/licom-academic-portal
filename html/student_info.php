@@ -164,13 +164,20 @@
                                         <h1 style="font-size:100px;"><span class="fa fa-user"></span></h1>
                                         <h4 class="font-weight-bold mb-2" id="user_fullname_txt">Full name</h4>
                                         <p class="mb-4" id="stud_year_course">---</p>
-                                        <button 
-                                            type="button" 
-                                            class="btn btn-primary btn-sm font-weight-bold text-uppercase" 
-                                            accstat="0"
-                                            id="status_change_btn">
-                                            <span id="status_change_txt">Set as Inactive</span>
-                                        </button>
+                                        <?php
+
+                                            if($_SESSION["licom_usr_level"] != 4){ ?>
+
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-primary btn-sm font-weight-bold text-uppercase" 
+                                                    accstat="0"
+                                                    id="status_change_btn">
+                                                    <span id="status_change_txt">Set as Inactive</span>
+                                                </button>
+
+                                            <?php }
+                                        ?>
                                     </div>
                                     <table class="table table-sm mt-4">
                                         <tbody>
@@ -235,16 +242,23 @@
 
                                         <div class="tab-pane container active" id="menu1"><br>
 
-                                            <div class="text-right">
-                                                <button 
-                                                    type="button" 
-                                                    class="btn btn-outline-light" 
-                                                    title="Edit Information" 
-                                                    data-toggle="tooltip"
-                                                    onclick="editPersonalInfo()">
-                                                    <span class="fa fa-pencil-alt text-primary"></span>
-                                                </button>
-                                            </div>
+                                            <?php
+
+                                                if($_SESSION["licom_usr_level"] != 4){ ?>
+
+                                                    <div class="text-right">
+                                                        <button 
+                                                            type="button" 
+                                                            class="btn btn-outline-light" 
+                                                            title="Edit Information" 
+                                                            data-toggle="tooltip"
+                                                            onclick="editPersonalInfo()">
+                                                            <span class="fa fa-pencil-alt text-primary"></span>
+                                                        </button>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            ?>
 
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
@@ -434,16 +448,23 @@
 
                                         <div class="tab-pane container fade" id="menu2"><br>
 
-                                            <div class="text-right">
-                                                <button 
-                                                    type="button" 
-                                                    class="btn btn-outline-light" 
-                                                    title="Edit Contact Information"
-                                                    data-toggle="tooltip" 
-                                                    onclick="editContactInfo()">
-                                                    <span class="fa fa-pencil-alt text-primary"></span>
-                                                </button>
-                                            </div>
+                                            <?php
+
+                                                if($_SESSION["licom_usr_level"] != 4){ ?>
+
+                                                    <div class="text-right">
+                                                        <button 
+                                                            type="button" 
+                                                            class="btn btn-outline-light" 
+                                                            title="Edit Contact Information"
+                                                            data-toggle="tooltip" 
+                                                            onclick="editContactInfo()">
+                                                            <span class="fa fa-pencil-alt text-primary"></span>
+                                                        </button>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            ?>
 
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
@@ -651,16 +672,23 @@
 
                                         <div class="tab-pane container fade" id="menu3"><br>
 
-                                            <div class="text-right">
-                                                <button 
-                                                    type="button" 
-                                                    class="btn btn-outline-light" 
-                                                    title="Edit Account Information"
-                                                    data-toggle="tooltip" 
-                                                    onclick="editAccountInfo()">
-                                                    <span class="fa fa-pencil-alt text-primary"></span>
-                                                </button>
-                                            </div>
+                                            <?php
+
+                                                if($_SESSION["licom_usr_level"] != 4){ ?>
+
+                                                    <div class="text-right">
+                                                        <button 
+                                                            type="button" 
+                                                            class="btn btn-outline-light" 
+                                                            title="Edit Account Information"
+                                                            data-toggle="tooltip" 
+                                                            onclick="editAccountInfo()">
+                                                            <span class="fa fa-pencil-alt text-primary"></span>
+                                                        </button>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            ?>
 
                                             <table class="table table-sm" style="width:50%;">
                                                 <tbody>
@@ -678,16 +706,23 @@
 
                                         <div class="tab-pane container fade" id="menu4"><br>
 
-                                            <div class="text-right">
-                                                <button 
-                                                    type="button" 
-                                                    class="btn btn-outline-light" 
-                                                    title="Edit Account Information" 
-                                                    data-toggle="tooltip" 
-                                                    onclick="editYearLevelCourse()">
-                                                    <span class="fa fa-pencil-alt text-primary"></span>
-                                                </button>
-                                            </div>
+                                            <?php
+
+                                                if($_SESSION["licom_usr_level"] != 4){ ?>
+
+                                                    <div class="text-right">
+                                                        <button 
+                                                            type="button" 
+                                                            class="btn btn-outline-light" 
+                                                            title="Edit Account Information" 
+                                                            data-toggle="tooltip" 
+                                                            onclick="editYearLevelCourse()">
+                                                            <span class="fa fa-pencil-alt text-primary"></span>
+                                                        </button>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            ?>
 
                                             <table class="table table-sm">
                                                 <tbody>
@@ -1946,9 +1981,22 @@
 
                                 var editStudentGrade = 'editStudentGrade(`'+semester_Id+'`, `'+subject_Id+'`, `'+subject_name+'`, `'+student_Id+'`)'
 
-                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" onclick="'+ editStudentGrade +'">'
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" id="edit_grade_btn_'+ subject_Id +'" onclick="'+ editStudentGrade +'" style="display:none;">'
                                 output+='<span class="fa fa-pencil-alt"></span>'
                                 output+='</button>'
+
+                                var allowEditStudentGrade = 'editStudentGradeAccess(`'+semester_Id+'`, `'+subject_Id+'`, `'+student_Id+'`, `Allow`)'
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" id="allow_edit_grade_btn_'+ subject_Id +'" onclick="'+ allowEditStudentGrade +'" style="display:none;">'
+                                output+='Allow Edit'
+                                output+='</button>'
+
+                                var disallowEditStudentGrade = 'editStudentGradeAccess(`'+semester_Id+'`, `'+subject_Id+'`, `'+student_Id+'`, `Disallow`)'
+
+                                output+='<button type="button" class="btn btn-outline-light btn-sm text-primary" id="disallow_edit_grade_btn_'+ subject_Id +'" onclick="'+ disallowEditStudentGrade +'" style="display:none;">'
+                                output+='Disallow Edit'
+                                output+='</button>'
+
                                 output+='</td>'
                                 output+='</tr>'
                             })
@@ -1963,7 +2011,7 @@
                         $('#student_subjects').html(output)
                     }
                 })
-            }
+            }   
 
             function fetchStudentGrades(semester_Id, subject_Id, student_Id){
 
@@ -1976,7 +2024,7 @@
                         studentid:student_Id,
                         action:"fetch_student_grades"
                     },
-                    dataType: "JSON",
+                    dataType: "JSON",   
                     success: function (response) {
 
                         $.each(response, function(key, value){
@@ -1986,6 +2034,25 @@
                             $('#stud_subj_grade_txt'+subject_Id).html(value.GradeVal)
                             $('#stud_subj_remark_txt'+subject_Id).html('<span class="font-weight-bold '+ value.ColorInd +'">'+value.Remarks+'</span>')
                             $('#stud_subj_remark_Id_txt'+subject_Id).html(value.RemarksId)
+
+                            if(value.IsAdmin != 1){
+
+                                if(value.IsEditable == 1){
+
+                                    $('#edit_grade_btn_'+subject_Id).show()
+                                }
+                            }
+                            else if(value.IsAdmin == 1){
+
+                                if(value.IsEditable == 0){
+
+                                    $('#allow_edit_grade_btn_'+subject_Id).show()
+                                }
+                                else{
+                                    
+                                    $('#disallow_edit_grade_btn_'+subject_Id).show()
+                                }
+                            }
                         })                        
                     }
                 })
@@ -2020,6 +2087,40 @@
             function editYearLevelCourse(){
 
                 $('#editYearLevelMod').modal('show')
+            }
+
+            function editStudentGradeAccess(semester_Id, subject_Id, student_Id, access_type){
+
+                $.ajax({
+                    type: "POST",
+                    url: "models/GradesModel.php",
+                    data: {
+                        semid:semester_Id,
+                        subjectid:subject_Id,
+                        studentid:student_Id,
+                        accesstype:access_type,
+                        action:"edit_grade_access"
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        
+                        if(response == 1){
+
+                            var semester_Id = $('#sg_semester_dd_val').val()
+
+                            if(semester_Id != ''){
+
+                                fetchStudentSubjects(semester_Id)
+                            }
+
+                            toastr.success('You added student grade record', 'SUCCESSFULLY ADDED')
+                        }
+                        else{
+
+                            toastr.error('Something went wrong', 'Please contact your developer')
+                        }
+                    }
+                })
             }
 
         </script>

@@ -18,27 +18,28 @@
                         Remarks, 
                         Evaluated_by, 
                         Date_added, 
-                        Time_added 
+                        Time_added,
+                        Is_editable  
                     FROM 
                         student_grades 
                     WHERE 
                         Status = 1 ";
                 
-            if($_POST['semesterid'] != ''){
+            if(isset($_POST['semesterid']) && $_POST['semesterid'] != ''){
 
                 $semester_Id = $_POST['semesterid'];
 
                 $query .="AND Semester_Id = '".$semester_Id."' ";
             }
 
-            if($_POST['studentid'] != ''){
+            if(isset($_POST['studentid']) && $_POST['studentid'] != ''){
 
                 $student_Id  = $_POST['studentid'];
 
                 $query .="AND Student_Id = '".$student_Id."' ";
             }
 
-            if($_POST['subjectid'] != ''){
+            if(isset($_POST['subjectid']) && $_POST['subjectid'] != ''){
 
                 $subject_Id  = $_POST['subjectid'];
 
@@ -59,6 +60,7 @@
                     $tentative_grade = $row['Tentative_final'];
                     $grade_val       = $row['Grade_val'];
                     $remarks         = $row['Remarks'];
+                    $is_editable     = $row['Is_editable'];
 
                     // ============= Fetch Grade Remarks =================
                         $query2 ="SELECT 
@@ -83,6 +85,8 @@
                     $date_added     = $row['Date_added'];
                     $time_added     = $row['Time_added'];
 
+                    $is_admin       = ($_SESSION["licom_usr_level"] == 1) ? 1 : 0;
+
                     $result_arr = array(
                         'MidtermGrade' => $midterm_grade,
                         'TentativeGrade' => $tentative_grade,
@@ -92,7 +96,9 @@
                         'ColorInd' => $color_indicator,
                         'EvaluatedBy' => $evaluated_by,
                         'DateAdded' => $date_added,
-                        'TimeAdded' => $time_added
+                        'TimeAdded' => $time_added,
+                        'IsEditable' => $is_editable,
+                        'IsAdmin' => $is_admin
                     );
 
                     array_push($results_arr, $result_arr);
@@ -730,6 +736,36 @@
                     'WithErrsArr' => $with_errs_arr
                 )
             );
+        }
+
+        else if($_POST['action'] == 'edit_grade_access'){
+
+            $semester_Id = $_POST['semid'];
+            $subject_Id  = $_POST['subjectid'];
+            $student_Id  = $_POST['studentid'];
+            $access_type = $_POST['accesstype'];
+
+            $is_editable = ($access_type == 'Allow') ? 1 : 0;
+
+            $data1   = [ "Is_editable" => $is_editable ];
+            $where1  = [
+                "Semester_Id" => $semester_Id,
+                "Student_Id" => $student_Id,
+                "Subject_Id" => $subject_Id,
+                "Status" => 1
+            ];
+            $update1 = update($student_grades, $data1, $where1);
+
+            if($update1 == 1){
+
+                $res_req = 1;
+            }
+            else{
+
+                $res_req = 2;
+            }
+
+            echo json_encode($res_req);
         }
     }
 

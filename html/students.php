@@ -1,6 +1,11 @@
 <?php
 
     include "includes/db.php";
+
+    if(isset($_GET['perinstructor']) && $_GET['perinstructor'] != ''){
+
+        $per_instructor = $_GET['perinstructor'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -139,6 +144,10 @@
                 <!-- ============================================================== -->
                 <div class="container-fluid">
 
+                    <!-- =========== Parameters =============== -->
+                        <input type="hidden" name="per_instructor" id="per_instructor" value="<?= $per_instructor ?>">
+                    <!-- =========== Parameters END =========== -->
+
                     <div class="card">
 
                         <div class="card-header bg-white">
@@ -215,97 +224,7 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody class="table-sm">
-
-                                        <?php
-
-                                            // $query="SELECT 
-                                            //             users.User_Id,
-                                            //             users.FName, 
-                                            //             users.MName, 
-                                            //             users.LName, 
-                                            //             users.Phone_no,
-                                            //             users.Date_added, 
-                                            //             users.Time_added,
-                                            //             users.Status  
-                                            //         FROM 
-                                            //             users 
-                                            //         LEFT JOIN 
-                                            //             accounts 
-                                            //         ON 
-                                            //             users.User_Id = accounts.User_Id
-                                            //         WHERE 
-                                            //             users.Status = 1 
-                                            //             AND accounts.Level_Id = 3 
-                                            //         ORDER BY 
-                                            //             users.User_Id DESC,
-                                            //             users.Date_added DESC, 
-                                            //             users.Time_added DESC ";
-
-                                            // $fetch = mysqli_query($con, $query);
-
-                                            // $count = mysqli_num_rows($fetch);
-
-                                            // if($count > 0){
-
-                                            //     while($row = mysqli_fetch_assoc($fetch)){
-
-                                            //         $user_Id    = $row['User_Id'];
-                                            //         $fname      = $row['FName'];
-                                            //         $mname      = $row['MName'];
-                                            //         $lname      = $row['LName'];
-                                            //         $phone_no   = $row['Phone_no'];
-                                            //         $date_added = $row['Date_added'];
-                                            //         $time_added = $row['Time_added'];
-                                            //         $status     = $row['Status'];
-
-                                            //         $student_fullname = $fname." ".$lname;
-
-                                            //         echo "<tr>";
-                                            //         echo "<td class='text-left'>".$user_Id."</td>";
-                                            //         echo "<td class='font-weight-bold'>".$fname." ".$mname." ".$lname."</td>";
-                                            //         echo "<td class='text-left'>".$phone_no."</td>";
-                                            //         echo "<td>".dateFormat($date_added)."</td>";
-                                            //         echo "<td>".timeFormat($time_added)."</td>";
-
-                                            //         if($status == 1){
-
-                                            //             $status_txt = '<span class="badge badge-success font-weight-bold text-uppercase">Active</span>';
-                                            //         }
-                                            //         else if($status == 2){
-
-                                            //             $status_txt = '<span class="badge badge-danger font-weight-bold text-uppercase">Inactive</span>';
-                                            //         }
-
-                                            //         echo "<td>".$status_txt."</td>";
-                                            //         echo "<td class='text-center'>
-                                            //                 <button 
-                                            //                     type='button' 
-                                            //                     class='btn btn-outline-light btn-sm text-primary' 
-                                            //                     onclick='location.href=`student_info.php?studid=".$user_Id."`;' 
-                                            //                     title='Edit record'>
-                                            //                     <span class='fa fa-pencil-alt'></span>
-                                            //                 </button>
-                                            //                 <button 
-                                            //                     type='button' 
-                                            //                     class='btn btn-outline-light btn-sm text-dark' 
-                                            //                     title='Input grades' 
-                                            //                     onclick='inputGradesModal(`".$user_Id."`, `".$student_fullname."`)'>
-                                            //                     <span class='fa fa-file-alt'></span>
-                                            //                 </button>
-                                            //             </td>";
-                                            //         echo "</tr>";
-                                            //     }
-                                            // }
-                                            // else{
-
-                                            //     echo "<tr>";
-                                            //     echo "<td class='text-center' colspan='7'>No data available in the table.</td>";
-                                            //     echo "</tr>";
-                                            // }
-                                        ?>
-
-                                    </tbody>
+                                    <tbody class="table-sm"></tbody>
 
                                 </table>
 
@@ -635,6 +554,8 @@
 
         <script>
 
+            var per_instructor = $('#per_instructor').val()
+
             $(document).ready(function () {
 
                 // ============ Select2 ================
@@ -643,7 +564,7 @@
                     })
                 // ============ Select2 END ============
                 
-                studentsTbl('')
+                studentsTbl('', per_instructor)
 
                 // $('#students_tbl').DataTable({
                     
@@ -666,7 +587,7 @@
 
                     $('#students_tbl').DataTable().destroy()
 
-                    studentsTbl(semester_Id)
+                    studentsTbl(semester_Id, per_instructor)
 
                     // if(semester_Id != ''){
 
@@ -851,7 +772,7 @@
             }
 
 
-            function studentsTbl(semester_val){
+            function studentsTbl(semester_val, per_instructor){
 
                 var stud_table = $('#students_tbl').DataTable({
 
@@ -872,6 +793,7 @@
                         'url':'models/StudentModel.php',
                         'data':{
                             semesterval:semester_val,
+                            perinstructor:per_instructor,
                             action:"fetch_students"
                         },
                     },
