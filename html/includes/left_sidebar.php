@@ -1,4 +1,4 @@
-<aside class="left-sidebar">
+<aside class="left-sidebar dontprint">
 
 
 <!-- Sidebar scroll-->
@@ -6,7 +6,7 @@
 
 
     <!-- Sidebar navigation-->
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav dontprint">
 
         
         <ul id="sidebarnav">
