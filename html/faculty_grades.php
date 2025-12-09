@@ -50,7 +50,15 @@
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+        
     <![endif]-->
+
+        <style type="text/css" media="print">
+            .dontprint
+            { display: none; }
+        </style>
+
     </head>
 
     <body>
@@ -103,7 +111,7 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                <div class="page-breadcrumb">
+                <div class="page-breadcrumb dontprint">
                     <div class="row">
                         <div class="col-5 align-self-center">
                             <h4 class="page-title font-weight-bold text-uppercase">Evaluation Grades</h4>
@@ -138,7 +146,7 @@
 
                     <input type="hidden" name="instructor_Id_val" id="instructor_Id_val" value="<?= $_SESSION["licom_usr_Id"] ?>">
 
-                    <div class="row">
+                    <div class="row dontprint">
 
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -202,16 +210,46 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-4 text-right">
+                            <p style="color:transparent;">Action</p>
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-dark font-weight-bold dontprint" 
+                                id="print_pdf_btn"
+                                onclick="
+                                    $('#main-wrapper').attr('data-sidebartype', 'mini-sidebar'); 
+                                    $('#main-wrapper').addClass('mini-sidebar'); 
+                                    window.print();
+                                "
+                                disabled>
+                                <span class="fa fa-file"></span>
+                                &nbspPrint PDF
+                            </button>
+                        </div>
+
                     </div>
 
                     <br>
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <h4>Instructor: <?= $_SESSION["licom_usr_fname"]." ".$_SESSION["licom_usr_lname"] ?></h4><br>
+                            <p><b>Semester:</b> <span id="semester_txt"></span></p>
+                            <p><b>Subject:</b> <span id="subject_txt"></span></p>
+                        </div>
+
+                    </div>
+
+                    <hr>
 
                     <table class="table table-bordered display nowrap" style="width:100%;">
                         <thead class="font-weight-bold text-uppercase">
                             <tr>
                                 <th>Date Added</th>
                                 <th>Grade</th>
-                                <th class="text-center">Action</th>
+                                <th>Comment</th>
+                                <th class="text-center dontprint">Action</th>
                             </tr>
                         </thead>
                         <tbody id="faculty_eval_grades">
@@ -225,11 +263,13 @@
 
                     <div class="row">
 
-                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                            <h4 class="font-weight-bold">Total Students: <span class="text-info" id="total_student_txt">0</span></h4>
+                        </div>
 
                         <div class="col-lg-6 text-right">
 
-                            <h4 class="font-weight-bold">Final Grade: </h4>
+                            <h4 class="font-weight-bold">Final Ratings: </h4>
                             <h2><span class="text-info" id="final_grade_txt">0</span></h2>
                             <span id="final_grade_desc"></span>
                         </div>
@@ -346,6 +386,20 @@
 
                     $('#subject_dd_val').prop('disabled', false)
 
+
+                    var sem_data = $('#semester_dd').select2('data')
+                    var semester_txt = sem_data[0].text
+
+                    $('#semester_txt').html(semester_txt)
+
+
+                    var subject_data = $('#subject_dd_val').select2('data')
+                    var subject_txt = subject_data[0].text
+
+                    $('#subject_txt').html(subject_txt)
+
+                    $('#print_pdf_btn').prop('disabled', false)
+
                 }, 1000)
 
 
@@ -359,6 +413,17 @@
                         facultyGrades(semester_Id, subject_Id)
 
                         subjectDD(semester_Id)
+
+                        var sem_data = $('#semester_dd').select2('data')
+                        var semester_txt = sem_data[0].text
+
+                        $('#semester_txt').html(semester_txt)
+
+                        
+                        var subject_data = $('#subject_dd_val').select2('data')
+                        var subject_txt = subject_data[0].text
+
+                        $('#subject_txt').html(subject_txt)
                     }
                 })
 
@@ -370,6 +435,17 @@
                     if(semester_Id != ''){
 
                         facultyGrades(semester_Id, subject_Id)
+
+                        var sem_data = $('#semester_dd').select2('data')
+                        var semester_txt = sem_data[0].text
+
+                        $('#semester_txt').html(semester_txt)
+
+                        
+                        var subject_data = $('#subject_dd_val').select2('data')
+                        var subject_txt = subject_data[0].text
+
+                        $('#subject_txt').html(subject_txt)
                     }
                 })
             })
@@ -377,6 +453,7 @@
             function facultyGrades(semester_Id, subject_Id){
 
                 var output='';
+                var counter=0
 
                 $.ajax({
                     type: "POST",
@@ -397,7 +474,8 @@
                                 output+='<tr>'
                                 output+='<td>'+ value.DateAdded +' | '+ value.TimeAdded +'</td>'
                                 output+='<td><h5 class="font-weight-bold">'+ value.GradeVal +' - '+ value.MetricDesc +'</h5></td>'
-                                output+='<td class="text-center">'
+                                output+='<td><small>'+ value.Remarks +'</small></td>'
+                                output+='<td class="text-center dontprint">'
 
                                 var eval_results_page = 'location.href=`eval_results.php?evalid='+value.EvalId+'`'
 
@@ -407,6 +485,7 @@
                                 output+='</td>'
                                 output+='</tr>'
 
+                                counter++
                             })
 
                             $('#final_grade_txt').html(response.TotalGrade)
@@ -420,6 +499,7 @@
                         }
 
                         $('#faculty_eval_grades').html(output)
+                        $('#total_student_txt').html(counter)
                     }
                 })
             }

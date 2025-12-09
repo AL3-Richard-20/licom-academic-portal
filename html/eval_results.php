@@ -326,7 +326,7 @@
 
                                 if($_SESSION["licom_usr_level"] == 4 || $_SESSION["licom_usr_level"] == 1){ ?>
 
-                                    <h4 class="font-weight-bold">Final Grade: </h4>
+                                    <h4 class="font-weight-bold">Final Ratings: </h4>
                                     <h2><span class="text-info"><?= $grade_val ?></span></h2>
                                     <span>(<?= $metric_val_desc2 ?>)</span>
 
